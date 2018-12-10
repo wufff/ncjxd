@@ -23,7 +23,7 @@ require(["layui", "path","tools","page"], function(layui, path,tools,pages) {
 		        var notice_id = $(_this).parents("tr").data("id");
 		        var url = path.api + '/api/delManageNoticeData';
                 var current = $("#pageNum_"+type).find(".current").text();
-                console.log(current);
+                // console.log(current);
 		        $.get(url,{notice_id:notice_id},function(res){
 		        	if(res.data.code == 1000){
 		        		initPage (type,current);

@@ -1,14 +1,16 @@
 
 require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
+    console.log('已进入');
     var layer = layui.layer;
     var form = layui.form;
     var $ = jQuery = layui.jquery; 
     var url = path.api+"/api/getManageRecommendList";
     var page;
     var dialog;
+    var editeId;
     initPage (1);
     upLoad.img('upImg','previewImage');
-  
+    
 
     $("#add").click(function() {
       $("#controlTpye").val(0);
@@ -32,15 +34,17 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
    $("body").on("click",".change",function(){
         $("#controlTpye").val(1);
         var tr = $(this).parents("tr");
-        var id = $(this).data("id");
+        editeId = tr.data("id");
         var obj = {};
         obj.sort = tr.find(".sort").text();
         obj.title = tr.find(".title").text();
         obj.goto_url = tr.find(".goto_url").text();
         obj.img = tr.find(".img").attr("src");
+        obj.cover_img = "";
+
         $("#previewImage").attr("src",obj.img);
         initContorl (obj);
-        layer.open({
+        dialog = layer.open({
                 type: 1,
                 title:"修改推荐",
                 content: $('#control'),
@@ -53,7 +57,12 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
    })
 
 
-
+  $("body").on("click",".del",function(){
+     layer.confirm('确定删除此条推荐吗?', {icon: 3, title:'提示'}, 
+        function(index){
+         layer.close(index);
+      });
+   })
     
 
     
@@ -62,14 +71,42 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
        var controlTpye = $("#controlTpye").val();
        var url = path.api + '/api/addManageRecommend';
        var getData = data.field;
+       getData.type = 1;
+       // console.log(getData);
        if(controlTpye == 0) {
+          if(getData.cover_img == ""){
+             layer.msg("没有上传图片",{icon:5,time:1200})
+             return false; 
+          }
+           var url = path.api+"/api/addManageRecommend";
+           var loading = layer.load(3);
+           $.get(url,getData,function(res){
+              if(res.data.code == 1000) {
+                layer.msg("添加成功！",{time:1200});
+                initPage (1);
+                layer.close(loading);
+                layer.close(dialog);
+              } 
+          });
+       }
 
-          alert(0);
-       }
        if(controlTpye == 1){
-          alert(1);
+          var url = path.api+"/api/modifyManageRecommendData";
+          var loading = layer.load(3);
+          var current = $("#pageNum").find(".current").text();
+          getData.id = editeId;
+          console.log(getData);
+           $.get(url,getData,function(res){
+               console.log(res);
+              if(res.data.code == 1000) {
+                layer.msg("修改成功！",{time:1200});
+                initPage (current);
+                layer.close(loading);
+                layer.close(dialog);
+              } 
+          });
        }
-       return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+      return false; 
   });
 
 
@@ -92,6 +129,7 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
         "title": "" 
         ,"url": ""
         ,"sort": ""
+        ,"cover_img":""
       })
     }
   }
