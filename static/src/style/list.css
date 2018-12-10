@@ -1,0 +1,202 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors Your Name (you@example.org)
+ * @date    2018-11-05 15:04:23
+ * @version $Id$
+ */
+/**
+ * 
+ * @authors Your Name (you@example.org)
+ * @date    2018-11-05 14:25:13
+ * @version $Id$
+ */
+.singleText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.imgview-mask {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 999998;
+  left: 0;
+  top: 0;
+  background: #000;
+  opacity: 0.75;
+  filter: alpha(opacity=75);
+  text-align: center;
+  display: none;
+}
+.show-img a {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  right: -40px;
+  top: -40px;
+  background: url("../img/index-close.png") -10px -10px no-repeat;
+}
+.show-img a:hover {
+  background-position: -10px -78px;
+}
+.show-img {
+  position: fixed;
+  width: 200px;
+  height: 100px;
+  left: 50%;
+  top: 50%;
+  margin: -50px 0 0 -100px;
+  background: #000;
+  z-index: 999999;
+  text-align: center;
+}
+.imgbox {
+  text-align: center;
+}
+#header {
+  height: 110px;
+  background: #eef7ff;
+}
+#header .container {
+  position: relative;
+}
+#header .title {
+  width: 300px;
+  position: absolute;
+  top: 8px;
+  left: 0;
+}
+#header .title p {
+  color: #a6a6a6;
+}
+#header h3 {
+  font-family: 'Microsoft YaHei', 'simsun';
+  color: #337ab7;
+  font-weight: bold;
+}
+#header .nav {
+  position: absolute;
+  top: 30px;
+  right: -15px;
+}
+#header .nav a {
+  color: #777;
+  font-size: 18px;
+  font-weight: bord;
+}
+#header .nav .dropdown-menu a {
+  font-size: 16px;
+}
+#header .nav .open > a {
+  background: transparent;
+  color: #1b6bb1;
+}
+#header .nav > li {
+  margin-left: 10px;
+}
+#header .nav > li.active > a {
+  color: #1b6bb1;
+}
+#header .nav > li > a:focus {
+  background: #fff;
+  color: #777;
+}
+#header .nav > li > a:active,
+#header .nav > li > a:focus,
+#header .nav > li > a:visited {
+  background: transparent;
+}
+#header .nav > li > a:hover {
+  text-decoration: none;
+  background: transparent;
+  color: #1b6bb1;
+}
+#list h5 {
+  color: #666;
+  margin-bottom: 10px;
+}
+#list h5 a {
+  color: #666;
+}
+.section {
+  border: 1px solid #ddd;
+  width: 825px;
+  min-height: 500px;
+  padding: 10px 25px;
+}
+.section ul {
+  font-size: 16px;
+}
+.section li {
+  position: relative;
+  border-bottom: 1px dashed #ddd;
+  color: #666;
+}
+.section li.nohave {
+  border-bottom: none;
+}
+.section li span {
+  position: absolute;
+  right: 0;
+  top: 10px;
+  color: #888;
+  font-size: 14px;
+}
+.section li i {
+  color: #1E9FFF;
+  font-size: 20px;
+  margin-right: 7px;
+}
+.section li a {
+  height: 40px;
+  line-height: 40px;
+  color: #666;
+}
+.article .list {
+  border: 1px solid #ddd;
+  width: 340px;
+  height: 242px;
+  padding: 10px 15px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+.article h4 {
+  border-bottom: 1px solid #cccccc;
+  padding-bottom: 10px;
+  margin-bottom: 0px;
+}
+.article .head {
+  position: relative;
+}
+.article .head a {
+  position: absolute;
+  right: 0;
+  top: -9px;
+  font-size: 14px;
+  color: #666666;
+}
+.article .body {
+  height: 175px;
+  padding: 5px 0px;
+  overflow: hidden;
+  background-color: #fff;
+  font-size: 14px;
+}
+.article .body i {
+  font-size: 16px;
+  color: #5bc0de;
+  margin-right: 2px;
+}
+.article li {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #666;
+}
+.article a {
+  color: #666;
+  height: 35px;
+  line-height: 35px;
+  font-size: 15px;
+}

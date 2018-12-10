@@ -1,0 +1,200 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors Your Name (you@example.org)
+ * @date    2018-11-20 09:37:22
+ * @version $Id$
+ */
+@charset "UTF-8";
+/**
+ * 
+ * @authors Your Name (you@example.org)
+ * @date    2018-11-19 15:17:18
+ * @version $Id$
+ */
+@import "config.less";
+@import "./modules/head.less";
+@import "./public.less";
+
+
+
+
+.liveDetail_top {
+	 h5 {
+    	color:#666;
+    	margin-bottom: 10px;
+    	a {
+    		 color:#666;
+    	}
+    }
+
+
+
+.section 
+{
+	background: #000;
+	width: 837px;
+	height: 500px;
+    .mediaBox {
+    	 margin-bottom: 35px;
+    }
+    .cell {
+    	 margin-bottom: 15px;
+    	  background: #f5f5f5;
+    	  padding: 10px 15px;
+    }
+}
+
+
+.article  {
+	.list {
+		width: 363px;
+		height: 250px;
+		padding: 10px 15px;
+		overflow: hidden;
+		background: #666666;
+    color:#fff;
+    margin-bottom: 1px;
+	}
+    h4 {
+      border-bottom:1px solid #999; 
+      padding-bottom: 10px;
+      margin-bottom: 0px;
+      color:#999;
+         }
+
+
+   .head {
+     position: relative;
+     a { 
+        position: absolute;
+        right:0;
+        top:-9px;
+        font-size: 14px;
+      }
+   }
+   .body {
+      height: 175px;
+      padding: 5px 0px;
+      overflow: hidden;
+      font-size: 14px;
+        i {
+           font-size: 16px;
+           color: #5bc0de;
+           margin-right: 2px;
+         }
+   }
+
+    
+
+   ul {
+      
+   }
+   li {
+     .singleText();
+     color:@font_color;
+     
+     
+     span {
+     	    background: url("../img/file_type_sprite_large.png") no-repeat;
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            vertical-align: middle;
+            margin-right: 5px;
+           
+     }
+     span.mp4{
+     	    background-position: 0 -30px;
+     }
+     span.word {
+     	    background-position: 0 0;
+     }
+      span.ppt {
+     	   background-position: -120px -60px;
+     }
+   }
+
+   a {
+       color:#ccc;
+      height: 35px;
+      line-height: 35px;
+      font-size: 15px;
+      
+   } 
+}
+}
+
+.liveDetail_bottom {
+	 .cell {
+	 	 margin-bottom: 35px;
+	 	 width: 830px;
+	 	 p { 
+	 	 	 
+             font-size: 14px;
+             color:#777;
+	 	  }
+	 }
+	 .textarea {
+	 	width: 700px;
+	 	position: relative;
+	 	margin-bottom: 40px;
+	 	button {
+	 		 position: absolute;
+	 		 right:-80px;
+	 		 bottom: 0px;
+	 	}
+	 	i {
+	 		 font-size: 24px;
+	 		 position: absolute;
+	 		 right:-40px;
+	 		 top: 0px;
+	 		 cursor: pointer;
+	 	}
+	 }
+	 .comment {
+    #commentContent {
+        width: 830px; 
+        .loadingImg {margin-left: 300px;}
+    }
+	 	.item {
+	 		 min-height: 80px;
+	 		 max-height: 120px;
+	 		 overflow: hidden;
+             margin-bottom: 15px;
+             border-bottom:1px solid #f2f2f2; 
+	 	}
+	 	.title{ 
+
+            margin-bottom: 15px;
+	 	 }
+	 	.name {
+	 		 font-size: 16px;
+	 		 margin-right: 10px;
+	 	}
+	 	a {
+	 	    margin-right: 12px;
+	 	}
+	 	img.author { 
+              width:50px;
+              height: 50px;
+	 	  }
+       .media-heading {
+       	 margin-bottom: 5px;
+       }
+       .content {
+       	 margin-bottom: 10px;
+       }
+
+	 }
+	
+}
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// 表情
+
+.dodoFace { background-color: #f0f0f0; border: 1px solid #cbcbcb; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); position: absolute; display: none; z-index: 1000; padding: 5px; margin-top: 10px; }
+.dodoFace.left { margin: -140px 0 0 -310px; }
+.dodoFace table td { padding: 5px; }
+.dodoFace table td img { cursor: pointer; }

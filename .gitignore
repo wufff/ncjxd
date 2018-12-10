@@ -1,0 +1,8 @@
+# Config/cache.inc.php
+# Config/db.inc.php
+# Config/url.inc.php
+# Config/webservices.inc.php
+static/ftp/re-config.js
+static/ftp/test.js
+static/build/*
+test.html

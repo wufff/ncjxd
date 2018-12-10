@@ -1,0 +1,176 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors Your Name (you@example.org)
+ * @date    2018-11-07 17:18:17
+ * @version $Id$
+ */
+@import "config.less";
+@import "./modules/filter.less";
+@import "./modules/table.less";
+@import "./modules/head.less";
+
+
+
+.week {
+   width: 128px;
+   
+
+   span {
+     padding: 15px 10px; 
+
+   }
+   span.bar {
+     cursor: pointer;
+      
+   }
+}
+
+.tag-selected {
+   border: 1px solid #1E9FFF;
+   float: left;
+   padding: 0 7px;
+   color: #1E9FFF;
+   margin-right: 10px;
+   margin-top: 3px;
+  
+   >span.inner{
+     font-size: 15px;
+     
+     position: relative;
+     top:1px;
+   }
+   >span.del {
+     cursor: pointer;
+     font-weight: bold;
+     margin-left: 5px;
+     font-size: 22px;
+     vertical-align: middle;
+   }
+}
+
+
+
+
+.table {
+  border: 1px solid #e6e6e6;
+  padding: 15px 25px;
+   .week {
+       position: absolute;
+       right:490px;
+       top:8px;
+   }
+	.header{ 
+    overflow: hidden;
+	  font-size: 16px;
+	  margin-bottom: 15px;
+    position: relative;
+
+
+    .title {
+       position: absolute;
+       top: 9px;
+       font-size: 18px;
+       color:#666666;
+       small{
+        margin-left: 20px;
+        color:#909090;
+       }
+    }
+     .layui-btn-group {
+        float: right;
+        margin-left: 10px;
+     }
+     > button {
+        float: right;
+
+      }  
+
+
+      span.tot {
+      	 color:@color_main;
+      }
+      span.run {
+      	 color: green;
+      }
+      span.over{
+      	 color: #9c999f;
+      } 
+      span.ready {
+      	  color:orange;
+      }
+       span.min {
+            color: @font_fu_color ;
+            font-size: @font_fu;
+            margin-left: 20px;
+        }
+	 }
+}
+
+
+
+.chooseTag {
+     height: 100%;
+
+   .inTag {
+           width: 245px;
+           padding: 10px;
+           float: right;
+           .tag-selected { margin-bottom: 5px; }
+        }
+
+   .main {
+     .searchWap {
+       margin-bottom: 15px;
+     }
+     padding: 20px;
+     height: 100%;
+     float: left;
+     width: 550px;
+     border-right: 1px solid #ddd;
+     input.searchText {
+       width: 200px;
+       float: left;
+       border-radius: 0;
+       border-right: none;
+       margin-left: 138px;
+     }
+     button.searchBtn {
+        float: left;
+       
+     }
+    .layui-tab-title { 
+        height: auto;
+        float: left;
+        border-bottom: 0px;
+        width: 100px;
+        li { width: 100px;display: block; background-color: #f3f5f6;border:none;margin-bottom: 1px;}
+        .layui-this { 
+          background-color: #fff;
+          border-color: #fff;
+          &:after{
+            border-color:#ddd;
+            border-left-color: @color_main;
+            border-right:none;
+            }
+         }
+        
+     }
+     .layui-tab-content {
+       float:right;
+       padding-left: 30px;
+      
+       // border-top:1px solid #ddd;
+       width: 409px;
+     }
+
+     .tag_content {
+        span.tag {
+            cursor: pointer;
+            display: inline-block;
+            padding: 10px 10px;
+        }
+
+     }
+   }
+}

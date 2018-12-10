@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+<title>学校管理</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<!--[if lt IE 10]>
+        <script src="/ncjxdPage/static/src/js/ie_update.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="/ncjxdPage/static/src/layui/css/layui.css">
+<link rel="stylesheet" type="text/css" href="../static/src/style/public.css">
+<link rel="stylesheet" type="text/css" href="../static/src/style/manage.css">
+</head>
+<body>    
+
+  	  <div class="container page_wrap">
+  	  	  <div class="article pull-left">
+  	  	  	  <div class="title">
+  	  	  	  	<i class="fa fa-book"></i>
+  	  	  	  	咨询管理
+  	  	  	  </div>
+  	  	  	  <ul>
+  	  	  	  	<li>
+  	  	  	  		<a href="manage_n.html">动态通知公告</a>
+  	  	  	  	</li>
+  	  	  	  	<li>
+  	  	  	  		<a href="manage_t.html">首页推荐</a>
+  	  	  	  	</li>
+  	  	  	  	<li >
+  	  	  	  		<a href="javascript:void(0)">首页照片推荐 </a>
+  	  	  	  	</li>
+  	  	  	  	<li >
+  	  	  	  		 <a href="manage_r.html">资源推荐</a>
+  	  	  	  	</li>
+  	  	  	  </ul>
+  	  	  	  <div class="title">
+  	  	  	  	<i class="fa fa-tags"></i>
+  	  	  	  	活动管理
+  	  	  	  </div>
+  	  	  	  <ul>
+  	  	  	  	<li >
+  	  	  	  		<a href="manage_n.html">活动列表</a>
+  	  	  	  	</li>
+  	  	  	  </ul>
+  	  	  	   <div class="title">
+  	  	  	  	<i class="fa fa-cog" aria-hidden="true"></i>
+  	  	  	  	用户管理
+  	  	  	  </div>
+  	  	  	  <ul>
+  	  	  	  	<li >
+  	  	  	  		<a href="manage_mange.html">管理员管理</a>
+  	  	  	  	</li>
+  	  	  	    <li >
+  	  	  	  		<a href="manage_lower.html">下级管理</a>
+  	  	  	  	</li>
+  	  	  	  </ul>
+  	  	  	  <div class="title">
+  	  	  	  	<i class="fa fa-home"></i>
+  	  	  	  	学校管理
+  	  	  	  </div>
+  	  	  	  <ul>
+  	  	  	  	<li class="active">
+  	  	  	  		<a href="manage_school.html">学校管理</a>
+  	  	  	  	</li>
+  	  	  	    <li >
+  	  	  	  		<a href="manage_teacher.html">教师管理</a>
+  	  	  	  	</li>
+  	  	  	  </ul>
+  	  	  	   <div class="title">
+  	  	  	  	  <i class="fa fa-user"></i>
+  	  	  	  	账号管理
+  	  	  	  </div>
+              <ul>
+                <li>
+                  <a href="manage_school.html">学校管理</a>
+                </li>
+                <li >
+                  <a href="manage_teacher.html">教师管理</a>
+                </li>
+              </ul>
+  	  	  </div>
+  	  	  <div class="seciton pull-right" id="manage_manager">
+	  	  	  	 <div class="head clear">
+  	  	  	  	 	<span>说明：本页面是对后台管理员的添加、编辑和管理，仅对系统管理员（省管理员）开放</span>
+  	  	  	   </div>
+              <div class="layui-form filter">
+                   <dl class="clear">
+                      <dt>
+                        地区 :
+                      </dt>
+                      <dd class="area">
+                          <select name="city" lay-verify="required">
+                              <option value="0">湖北省</option>
+                              <option value="1">账号</option>
+                           </select>
+                      </dd>
+                      <dd class="area">
+                          <select name="city" lay-verify="required">
+                              <option value="0">湖北省</option>
+                              <option value="1">账号</option>
+                           </select>
+                      </dd>
+                       <dt style="margin-left: 10px;">
+                          类别 ：
+                       </dt>
+                       <dd class="searchType">
+                          <select name="city" lay-verify="required">
+                              <option value="0">中心学校</option>
+                              <option value="1">教学点</option>
+                           </select>
+                       </dd>
+
+                       <dd class="searchText">
+                          <input type="text" class="layui-input" placeholder="学校名称" name="">
+                       </dd>
+                       <dd class="width-atuo">
+                          <button class="layui-btn layui-btn-normal">查询</button>
+                       </dd>
+                   </dl>
+              </div>
+        <div class="body table_b">
+                  <table class="layui-table" style="margin-top: 0">
+                      <thead>
+                          <tr>
+                             <th></th>
+                             <th>中心校名称</th>
+                             <th>学校类型</th>
+                             <th>所在行政区</th>
+                             <th>关联学校</th>
+                             <th>主讲教室</th>
+                             <th>接收教室</th>
+                             <th>学校教师数</th>
+                             <th>管理员用户名</th>
+                             <th>操作</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                           <tr>
+                              <td>1</td>
+                              <td>崇阳实验小学</td>
+                             <td>中心校</td>
+                              <td>湖北省-咸宁市-崇阳县</td>
+                              <td>
+                                 <a class="Untying">3</a>
+                              </td>
+                              <td>1</td>
+                              <td>0</td>
+                              <td>20</td>
+                              <td>xncysyxx</td>
+                              <td>
+                                 <a class="edit">编辑教室</a>
+                                 <a class="related">关联学校</a>
+                              </td>
+                           </tr>
+                      </tbody>
+                  </table>
+           </div>
+                
+  	  </div>
+  	  	  	 </div>
+  	
+
+
+
+<!-- =--------------------弹窗 -------------------------------->
+
+  <div id="controluntySchool" style="display: none;">
+     <div class="control_table_wrap table_b">
+         <table class="layui-table">
+             <thead>
+                <th></th>
+                <th>关联学校名称</th>
+                <th>操作</th>
+             </thead>
+             <tbody>
+                <tr>
+                   <td>1</td>
+                    <td>112123</td>
+                    <td>
+                       <span class="UntyBtn">解绑</span>
+                    </td>
+                </tr>
+                
+                <tr>
+                   <td>2</td>
+                    <td>112123</td>
+                    <td>
+                       <span class="UntyActive">已解绑</span>
+                    </td>
+                </tr>
+             </tbody>
+         </table>
+     </div>
+  </div>
+
+
+
+
+   <div id="conrolEditClass" style="display: none;">
+     <div class="control_table_wrap table_b">
+         <button id="addClassbtn" class="layui-btn layui-btn-normal layui-btn-sm" style="margin-top: 10px;">添加教室</button>
+         <table class="layui-table">
+             <thead>
+                <th></th>
+                <th>教室名称</th>
+                <th>教室类型</th>
+                <th>学生数</th>
+                <th>状态</th>
+                <th>操作</th>
+             </thead>
+             <tbody>
+                <tr>
+                   <td>1</td>
+                   <td>教室1</td>
+                   <td>主讲教室1</td>
+                   <td>30</td>
+                   <td>正常</td>
+                   <td>
+                     <a class="editClass">编辑</a>
+                   </td>
+                </tr>
+                
+              
+             </tbody>
+         </table>
+     </div>
+  </div>
+
+
+
+  <div id="conrolEditClassAdd" style="display: none;">
+     <div class="control layui-form">
+          <div class="layui-form-item">
+            <label class="layui-form-label">
+                <span class="red">*</span> 教室类型：
+            </label>
+            <div class="layui-input-block selectClass">
+               <select>
+                  <option>主讲教室</option>
+                  <option>接收教室</option>
+               </select>
+           </div>
+          </div>
+          <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="red">*</span> 教室名称：
+              </label>
+              <div class="layui-input-block ">
+                 <input type="text" name="title" required  lay-verify="required" placeholder="排序" autocomplete="off" class="layui-input" value="8">
+             </div>
+          </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="red">*</span> 学生人数：
+              </label>
+              <div class="layui-input-block num">
+                 <input type="text" name="title" required  lay-verify="required" placeholder="排序" autocomplete="off" class="layui-input" value="8">
+             </div>
+          </div>
+          <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="red">*</span> 状态：
+              </label>
+              <div class="layui-input-block">
+                 <input type="radio" name="status" value="normal" title="正常" checked>
+                 <input type="radio" name="status" value="dis" title="禁用">
+             </div>
+          </div>
+             <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="white">*</span> 互动地址：
+              </label>
+              <div class="layui-input-block">
+                 <input type="text" name="title" required  lay-verify="required" placeholder="互动地址" autocomplete="off" class="layui-input">
+             </div>
+          </div>
+     </div>
+  </div>
+
+
+ <div id="conrolEditClassEdit" style="display: none;">
+     <div class="control layui-form">
+          <div class="layui-form-item">
+            <label class="layui-form-label">
+                <span class="red">*</span> 教室类型：
+            </label>
+            <div class="layui-input-block selectClass">
+               <select>
+                  <option>主讲教室</option>
+                  <option>接收教室</option>
+               </select>
+           </div>
+          </div>
+          <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="red">*</span> 教室名称：
+              </label>
+              <div class="layui-input-block ">
+                 <input type="text" name="title" required  lay-verify="required" placeholder="排序" autocomplete="off" class="layui-input" value="8">
+             </div>
+          </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="red">*</span> 学生人数：
+              </label>
+              <div class="layui-input-block num">
+                 <input type="text" name="title" required  lay-verify="required" placeholder="排序" autocomplete="off" class="layui-input" value="8">
+             </div>
+          </div>
+          <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="red">*</span> 状态：
+              </label>
+              <div class="layui-input-block">
+                 <input type="radio" name="status" value="normal" title="正常" checked>
+                 <input type="radio" name="status" value="dis" title="禁用">
+             </div>
+          </div>
+             <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="white">*</span> 互动地址：
+              </label>
+              <div class="layui-input-block">
+                 <input type="text" name="title" required  lay-verify="required" placeholder="互动地址" autocomplete="off" class="layui-input">
+             </div>
+          </div>
+     </div>
+  </div>
+</body>
+<script src="/ncjxdPage/static/src/js/lib/require.js"></script>
+<script src="/ncjxdPage/static/src/js/re-config.js"></script>
+<script src="/ncjxdPage/static/src/js/manage_school.js"></script>
+</html>

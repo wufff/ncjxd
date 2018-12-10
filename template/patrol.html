@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+<title>巡课互动</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<!--[if lt IE 10]>
+        <script src="/ncjxdPage/static/src/js/ie_update.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="/ncjxdPage/static/src/layui/css/layui.css">
+<link rel="stylesheet" type="text/css" href="/ncjxdPage/static/src/style/lib/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../static/src/style/public.css">
+<link rel="stylesheet" type="text/css" href="../static/src/style/patrol.css">
+</head>
+<body>    
+  <div id="header">
+  <div class="container">
+    <div class="title">
+        <h3>湖北省农村教学点网校</h3>
+        <p>— 管理与服务平台 —</p>
+    </div>
+   <ul class="nav navbar-nav">
+    <li>
+      <a href="##">首页</a>
+    </li>
+    <li class="active">
+       <a href="#">巡课互动</a>
+    </li>
+     <li>
+       <a href="#">直播活动</a>
+    </li>
+    <li class="dropdown">
+        <a href="##" data-toggle="dropdown" class="dropdown-toggle">课程表<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="##">计划列表</a></li>
+          <li><a href="##">开课确认</a></li>
+        </ul>
+     </li>
+      <li class="dropdown">
+        <a href="##" data-toggle="dropdown" class="dropdown-toggle">数字资源<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">学科资源</a></li>
+          <li><a href="#">教学点录课</a></li>
+        </ul>
+     </li>
+      <li>
+         <a href="#">教师研修</a>
+      </li>
+      <li><a href="##">在线统计</a></li>
+   </ul>
+</div>
+</div>
+   <div class="container page_wrap">
+   	  <h4>巡课互动</h4>
+   	  <div class="layui-form" id="filter">
+   	  	 <dl class="clear">
+   	  	 	<dt class="two">&nbsp地&nbsp&nbsp区：</dt>
+   	  	 	<dd>
+   	  	 		<select name="city" lay-verify="required">
+			        <option value="">全部</option>
+			        <option value="0">北京</option>
+			        <option value="1">上海</option>
+			        <option value="2">广州</option>
+			        <option value="3">深圳</option>
+			        <option value="4">杭州</option>
+               </select>
+            </dd>
+            <dd class="margin">
+            	<select name="city" lay-verify="required">
+			        <option value="">全部</option>
+			        <option value="0">岐山县</option>
+			        <option value="1">眉山县</option>
+			        <option value="2">鄠县</option>
+               </select>
+            </dd>
+           <dt class="two">&nbsp年&nbsp&nbsp级：</dt>
+          <dd>
+            <select name="city" lay-verify="required">
+              <option value="">三年级</option>
+              <option value="0">四年级</option>
+              <option value="1">五年级</option>
+               </select>
+          </dd >
+          <dt class="two">&nbsp学&nbsp&nbsp科：</dt>
+          <dd>
+            <select name="city" lay-verify="required">
+              <option value="0">全部</option>
+              <option value="1">语文</option>
+              <option value="2">数学</option>
+              <option value="3">英语</option>
+              <option value="4">美术</option>
+               </select>
+          </dd>      
+   	  	 </dl>
+   	  	  <dl class="clear">
+   	  	 	<dt class="padding">上课模式：</dt>
+   	  	 	<dd class="tag">
+   	  	 		<span >全部</span>
+   	  	 		<span class="active">一拖一</span>
+   	  	 		<span>一拖二</span>
+   	  	 		<span>一拖三</span>
+            </dd>
+   	  	 </dl>
+          <button class="layui-btn layui-btn-normal patrol_btn">查询</button>
+   	  </div>
+   	  <div class="table">
+   	  	  <div class="title">
+   	  	  	   当前区域内今日计划中 <span class="tot">课堂总数</span>：
+   	  	  	   <span class="tot">33</span> 节,
+   	  	  	   其中<span class="run">进行的</span>：
+   	  	  	   <span class="run">3</span> 节,
+   	  	  	   <span class="ready">未开始的</span>： 
+   	  	  	   <span class="ready">19</span> 节,
+   	  	  	   <span class="over">已结束的</span>课堂： 
+   	  	  	   <span class="over">11</span> 节。
+   	  	  </div>
+   	  	  <div class="body">
+   	  	  	  	   <table class="layui-table" lay-even>
+					  <colgroup>
+					    <col>
+					    <col>
+					    <col>
+               <col>
+              <col>
+              <col>
+              <col>
+               <col>
+              <col>
+              <col width="170">
+					  </colgroup>
+					  <thead>
+					    <tr>
+					      <th>学校</th>
+					      <th>所在市</th>
+					      <th>所在县</th>
+					      <th>所在乡镇</th>
+					      <th>年级</th>
+					      <th>学科</th>
+					      <th>主讲教师</th>
+					      <th>节次</th>
+					      <th>状态</th>
+					      <th>操作</th>
+					    </tr> 
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <td>崇阳实验小学</td>
+					      <td>荆门市</td>
+					      <td>京山县</td>
+					      <td>黄岐镇</td>
+					      <td>三年级</td>
+					      <td>语文</td>
+					      <td>李红</td>
+					      <td>5</td>
+					      <td>进行中</td>
+					      <td>
+					      	 <a href="" class="open">进入课堂</a>
+					      	 <a href="" class="go">发起互动</a>
+					      </td>
+					    </tr>
+					    <tr>
+					      <td>崇阳实验小学</td>
+					      <td>荆门市</td>
+					      <td>京山县</td>
+					      <td>黄岐镇</td>
+					      <td>三年级</td>
+					      <td>语文</td>
+					      <td>李红</td>
+					      <td>5</td>
+					      <td>进行中</td>
+					      <td>
+					      	 <a href="" class="open">进入课堂</a>
+					      	 <a href="" class="go">发起互动</a>
+					      </td>
+					    </tr>
+              <tr>
+					       <td>崇阳实验小学</td>
+					      <td>荆门市</td>
+					      <td>京山县</td>
+					      <td>黄岐镇</td>
+					      <td>三年级</td>
+					      <td>语文</td>
+					      <td>李红</td>
+					      <td>5</td>
+					      <td>进行中</td>
+					      <td>
+					      	 <a href="" class="open">进入课堂</a>
+					      	 <a href="" class="go">发起互动</a>
+					      </td>
+					    </tr>
+					    <tr>
+					       <td>崇阳实验小学</td>
+					      <td>荆门市</td>
+					      <td>京山县</td>
+					      <td>黄岐镇</td>
+					      <td>三年级</td>
+					      <td>语文</td>
+					      <td>李红</td>
+					      <td>5</td>
+					      <td>进行中</td>
+					     <td>
+					      	 <a href="" class="open">进入课堂</a>
+					      	 <a href="" class="go">发起互动</a>
+					      </td>
+					    </tr>
+					    <tr>
+					       <td>长江实验modules小学</td>
+					      <td>荆门市</td>
+					      <td>京山县</td>
+					      <td>黄岐镇</td>
+					      <td>三年级</td>
+					      <td>语文</td>
+					      <td>李红</td>
+					      <td>5</td>
+					      <td>进行中</td>
+					      <td>
+					      	 <a href="" class="open">进入课堂</a>
+					      	 <a href="" class="go">发起互动</a>
+					      </td>
+					    </tr>
+               <tr>
+                 <td>崇阳实验小学</td>
+                <td>荆门市</td>
+                <td>京山县</td>
+                <td>黄岐镇</td>
+                <td>三年级</td>
+                <td>语文</td>
+                <td>李红</td>
+                <td>5</td>
+                <td>进行中</td>
+                <td>
+                   <a href="" class="open">进入课堂</a>
+                   <a href="" class="go">发起互动</a>
+                </td>
+              </tr>
+               <tr>
+                 <td>崇阳实验小学</td>
+                <td>荆门市</td>
+                <td>京山县</td>
+                <td>黄岐镇</td>
+                <td>三年级</td>
+                <td>语文</td>
+                <td>李红</td>
+                <td>5</td>
+                <td>进行中</td>
+                <td>
+                   <a href="" class="open">进入课堂</a>
+                   <a href="" class="go">发起互动</a>
+                </td>
+              </tr>
+               <tr>
+                 <td>崇阳实验小学</td>
+                <td>荆门市</td>
+                <td>京山县</td>
+                <td>黄岐镇</td>
+                <td>三年级</td>
+                <td>语文</td>
+                <td>李红</td>
+                <td>5</td>
+                <td>进行中</td>
+                <td>
+                   <a href="" class="open">进入课堂</a>
+                   <a href="" class="go">发起互动</a>
+                </td>
+              </tr>
+               <tr>
+                 <td>崇阳实验小学</td>
+                <td>荆门市</td>
+                <td>京山县</td>
+                <td>黄岐镇</td>
+                <td>三年级</td>
+                <td>语文</td>
+                <td>李红</td>
+                <td>5</td>
+                <td>进行中</td>
+                <td>
+                   <a href="" class="open">进入课堂</a>
+                   <a href="" class="go">发起互动</a>
+                </td>
+              </tr>
+               <tr>
+                 <td>崇阳实验小学</td>
+                <td>荆门市</td>
+                <td>京山县</td>
+                <td>黄岐镇</td>
+                <td>三年级</td>
+                <td>语文</td>
+                <td>李红</td>
+                <td>5</td>
+                <td>进行中</td>
+                <td>
+                   <a href="" class="open">进入课堂</a>
+                   <a href="" class="go">发起互动</a>
+                </td>
+              </tr>
+               <tr>
+                 <td>崇阳实验小学</td>
+                <td>荆门市</td>
+                <td>京山县</td>
+                <td>黄岐镇</td>
+                <td>三年级</td>
+                <td>语文</td>
+                <td>李红</td>
+                <td>5</td>
+                <td>进行中</td>
+                <td>
+                   <a href="" class="open">进入课堂</a>
+                   <a href="" class="go">发起互动</a>
+                </td>
+              </tr>
+               <tr>
+                 <td>崇阳实验小学</td>
+                <td>荆门市</td>
+                <td>京山县</td>
+                <td>黄岐镇</td>
+                <td>三年级</td>
+                <td>语文</td>
+                <td>李红</td>
+                <td>5</td>
+                <td>进行中</td>
+                <td>
+                   <a href="" class="open">进入课堂</a>
+                   <a href="" class="go">发起互动</a>
+                </td>
+              </tr>
+					  </tbody>
+				  </table>
+   	  	  </div>
+   	  </div>
+   </div>
+
+
+
+
+
+
+
+
+
+
+ 	   
+
+
+
+
+
+</body>
+<!-- <script src="/ncjxdPage/static/src/layui/layui.js"></script>
+<script src="/ncjxdPage/static/src/layui/js/layui-config.js"></script>
+<script src="/ncjxdPage/static/src/layui/js/patrol.js"></script> -->
+
+
+<script src="/ncjxdPage/static/src/js/lib/require.js"></script>
+<script src="/ncjxdPage/static/src/js/re-config.js"></script>
+<script src="/ncjxdPage/static/src/js/patrol.js"></script>
+</html>

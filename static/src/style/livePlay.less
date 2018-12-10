@@ -1,0 +1,63 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors Your Name (you@example.org)
+ * @date    2018-11-08 10:49:30
+ * @version $Id$
+ */
+@import "config.less";
+@import "modules/head.less";
+@import "./public.less";
+@import "./modules/filter.less";
+
+#live {
+       margin-bottom: 35px;
+	.body{ width: 100%; border:15px solid #cccccc; }
+	.mediaBox {
+		 width: 865px; background: #211f1a;
+		 height: 500px;
+         overflow: hidden;
+         img { height: 100%;display: block;margin: 0 auto; }
+	}
+	.mediaInfo { 
+		width: 305px; background: #555;height: 500px; color:#fff;
+          padding: 25px 18px 28px 24px;
+            .title {
+            	 font-size: 17px;
+            	 margin-bottom: 25px;
+            	 max-height:72px;
+            	 overflow: hidden;
+            }
+            .title_min {
+            	 margin-bottom: 15px;
+            }
+            .content {
+            	 color: #eee;
+            	 max-height:340px;
+            	 overflow: hidden;
+            }
+		 }
+}
+
+
+#more {
+    .item {margin-bottom: 40px;}  
+    .media {
+        a { width: 210px; height: 110px; overflow: hidden;margin-right:5px;}
+        img { height: 100%;margin: 0 auto; }
+        .media-heading { 
+            color: @font_zhu_color;font-size: @font_zhu;margin-bottom: 15px;
+            width: 370px;
+            .singleText()
+        }
+        .title_min{
+            color: @font_fu_color;font-size: @font_fu;margin-bottom: 10px;
+            height:40px;
+            width: 370px;
+            overflow: hidden;
+        }
+        .title_beizhu{
+            color: @font_beizhu_color;font-size: @font_beizhu;
+        }
+    }
+}

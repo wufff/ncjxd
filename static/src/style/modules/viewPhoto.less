@@ -1,0 +1,40 @@
+.imgview-mask {
+ position:fixed;
+ height:100%;
+ width:100%;
+ z-index:999998;
+ left:0;
+ top:0;
+ background:#000;
+ opacity:.75;
+ filter:alpha(opacity=75);
+ text-align:center;
+ display:none
+}
+.show-img a {
+ position:absolute;
+ width:40px;
+ height:40px;
+ right:-40px;
+ top:-40px;
+ background: url("../img/index-close.png")  -10px -10px  no-repeat;
+}
+
+.show-img a:hover {
+ background-position:-10px -78px
+}
+.show-img {
+ position:fixed;
+ width:200px;
+ height:100px;
+ left:50%;
+ top:50%;
+ margin:-50px 0 0 -100px;
+ background:#000;
+ z-index:999999;
+ text-align:center
+}
+.imgbox {
+ text-align:center
+}
+

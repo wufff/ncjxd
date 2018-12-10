@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+<title>课表管理</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<!--[if lt IE 10]>
+        <script src="/njx/static/src/js/ie_update.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="../static/src/layui/css/layui.css">
+<!-- <link rel="stylesheet" type="text/css" href="../static/src/style/lib/bootstrap/bootstrap.min.css"> -->
+<link rel="stylesheet" type="text/css" href="../static/src/style/public.css">
+<link rel="stylesheet" type="text/css" href="../static/src/style/tableClass.css">
+<!-- <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"/> -->
+</head>
+<body>    
+  <div id="header">
+  <div class="container">
+    <div class="title">
+        <h3>湖北省农村教学点网校</h3>
+        <p>— 管理与服务平台 —</p>
+    </div>
+   <ul class="nav navbar-nav">
+    <li>
+      <a href="##">首页</a>
+    </li>
+    <li>
+       <a href="#">巡课互动</a>
+    </li>
+     <li>
+       <a href="#">直播活动</a>
+    </li>
+    <li class="active">
+       
+        <a href="#">课表管理</a>
+     </li>
+      <li class="dropdown">
+        <a href="##" data-toggle="dropdown" class="dropdown-toggle">数字资源<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">学科资源</a></li>
+          <li><a href="#">教学点录课</a></li>
+        </ul>
+     </li>
+      <li>
+         <a href="#">教师研修</a>
+      </li>
+      <li><a href="##">在线统计</a></li>
+   </ul>
+</div>
+</div>
+   <div class="container page_wrap">
+      <h4>课表管理</h4>
+      <div class="layui-form" id="filter">
+         <dl class="clear">
+          <dt class="two">&nbsp地&nbsp&nbsp区：</dt>
+          <dd>
+            <select name="city" lay-verify="required">
+              <option value="">全部</option>
+              <option value="0">北京</option>
+              <option value="1">上海</option>
+              <option value="2">广州</option>
+              <option value="3">深圳</option>
+              <option value="4">杭州</option>
+               </select>
+            </dd>
+            <dd class="margin">
+              <select name="city" lay-verify="required">
+              <option value="">全部</option>
+              <option value="0">岐山县</option>
+              <option value="1">眉山县</option>
+              <option value="2">鄠县</option>
+               </select>
+            </dd>
+          <dt class="two">&nbsp学&nbsp&nbsp校：</dt>
+          <dd class="shoolSelect">
+            <select name="city" lay-verify="required">
+              <option value="0">全部</option>
+              <option value="1">语文</option>
+              <option value="2">数学</option>
+              <option value="3">英语</option>
+              <option value="4">美术</option>
+               </select>
+          </dd>      
+         </dl>
+          <dl class="clear">
+          <dt class="padding">&nbsp教&nbsp&nbsp室：</dt>
+          <dd class="tag">
+            <span>教室一</span>
+            <span>教室二</span>
+            </dd>
+         </dl>
+         <dl class="clear tag-right">
+           <dt class="padding">&nbsp课&nbsp&nbsp表：</dt>
+          <dd class="tag">
+            <span >发起</span>
+            <span class="active">接收</span>
+          </dd>
+         </dl>
+          <button class="layui-btn layui-btn-normal tab_btn">查询</button>
+      </div>
+        <div class="table">
+          <div class="header">
+             <div class="title">
+                 2018-2019上学期课表
+              <small>
+                  2018-09-01至2019-01-04
+              </small>
+             </div>
+             
+
+              <div class="week">
+                 <span class="bar Add">
+                     <i class="fa fa-angle-left" aria-hidden="true"></i>
+                 </span>
+                 <span class="main">
+                    第 1 周
+                 </span>
+                 <span class="bar sub">
+                     <i class="fa fa-angle-right" aria-hidden="true"></i>
+                 </span>
+              </div>
+
+              <div class="layui-btn-group">
+                   <button class="layui-btn layui-btn-primary">开课确认</button>
+                  <button class="layui-btn layui-btn-primary">编辑课表</button>          
+                </div>
+              <div class="layui-btn-group">
+                  <button class="layui-btn layui-btn-primary">设置</button>
+                </div>
+            
+          </div>
+          <div class="body">
+                   <table class="layui-table" lay-even>
+            <colgroup>
+              <col>
+              <col>
+              <col>
+               <col>
+              <col>
+              <col>
+              <col>
+               <col>
+              <col>
+              <col width="170">
+            </colgroup>
+            <thead>
+              <tr>
+                <th>学校</th>
+                <th>所在市</th>
+                <th>所在县</th>
+                <th>所在乡镇</th>
+                <th>年级</th>
+                <th>学科</th>
+                <th>主讲教师</th>
+                <th>节次</th>
+                <th>状态</th>
+                <th>操作</th>
+              </tr> 
+            </thead>
+            <tbody>
+              <tr>
+                <td>崇阳实验小学</td>
+                <td>荆门市</td>
+                <td>京山县</td>
+                <td>黄岐镇</td>
+                <td>三年级</td>
+                <td>语文</td>
+                <td>李红</td>
+                <td>5</td>
+                <td>进行中</td>
+                <td>
+                   <a href="" class="open">进入课堂</a>
+                   <a href="" class="go">发起互动</a>
+                </td>
+              </tr>
+              <tr>
+                <td>崇阳实验小学</td>
+                <td>荆门市</td>
+                <td>京山县</td>
+                <td>黄岐镇</td>
+                <td>三年级</td>
+                <td>语文</td>
+                <td>李红</td>
+                <td>5</td>
+                <td>进行中</td>
+                <td>
+                   <a href="" class="open">进入课堂</a>
+                   <a href="" class="go">发起互动</a>
+                </td>
+              </tr>
+              <tr>
+                 <td>崇阳实验小学</td>
+                <td>荆门市</td>
+                <td>京山县</td>
+                <td>黄岐镇</td>
+                <td>三年级</td>
+                <td>语文</td>
+                <td>李红</td>
+                <td>5</td>
+                <td>进行中</td>
+                <td>
+                   <a href="" class="open">进入课堂</a>
+                   <a href="" class="go">发起互动</a>
+                </td>
+              </tr>
+              <tr>
+                 <td>崇阳实验小学</td>
+                <td>荆门市</td>
+                <td>京山县</td>
+                <td>黄岐镇</td>
+                <td>三年级</td>
+                <td>语文</td>
+                <td>李红</td>
+                <td>5</td>
+                <td>进行中</td>
+               <td>
+                   <a href="" class="open">进入课堂</a>
+                   <a href="" class="go">发起互动</a>
+                </td>
+              </tr>
+              <tr>
+                 <td>长江实验modules小学</td>
+                <td>荆门市</td>
+                <td>京山县</td>
+                <td>黄岐镇</td>
+                <td>三年级</td>
+                <td>语文</td>
+                <td>李红</td>
+                <td>5</td>
+                <td>进行中</td>
+                <td>
+                   <a href="" class="open">进入课堂</a>
+                   <a href="" class="go">发起互动</a>
+                </td>
+              </tr>
+               <tr>
+                 <td>崇阳实验小学</td>
+                <td>荆门市</td>
+                <td>京山县</td>
+                <td>黄岐镇</td>
+                <td>三年级</td>
+                <td>语文</td>
+                <td>李红</td>
+                <td>5</td>
+                <td>进行中</td>
+                <td>
+                   <a href="" class="open">进入课堂</a>
+                   <a href="" class="go">发起互动</a>
+                </td>
+              </tr>
+               <tr>
+                 <td>崇阳实验小学</td>
+                <td>荆门市</td>
+                <td>京山县</td>
+                <td>黄岐镇</td>
+                <td>三年级</td>
+                <td>语文</td>
+                <td>李红</td>
+                <td>5</td>
+                <td>进行中</td>
+                <td>
+                   <a href="" class="open">进入课堂</a>
+                   <a href="" class="go">发起互动</a>
+                </td>
+              </tr>
+               <tr>
+                 <td>崇阳实验小学</td>
+                <td>荆门市</td>
+                <td>京山县</td>
+                <td>黄岐镇</td>
+                <td>三年级</td>
+                <td>语文</td>
+                <td>李红</td>
+                <td>5</td>
+                <td>进行中</td>
+                <td>
+                   <a href="" class="open">进入课堂</a>
+                   <a href="" class="go">发起互动</a>
+                </td>
+              </tr>
+               <tr>
+                 <td>崇阳实验小学</td>
+                <td>荆门市</td>
+                <td>京山县</td>
+                <td>黄岐镇</td>
+                <td>三年级</td>
+                <td>语文</td>
+                <td>李红</td>
+                <td>5</td>
+                <td>进行中</td>
+                <td>
+                   <a href="" class="open">进入课堂</a>
+                   <a href="" class="go">发起互动</a>
+                </td>
+              </tr>
+               <tr>
+                 <td>崇阳实验小学</td>
+                <td>荆门市</td>
+                <td>京山县</td>
+                <td>黄岐镇</td>
+                <td>三年级</td>
+                <td>语文</td>
+                <td>李红</td>
+                <td>5</td>
+                <td>进行中</td>
+                <td>
+                   <a href="" class="open">进入课堂</a>
+                   <a href="" class="go">发起互动</a>
+                </td>
+              </tr>
+               <tr>
+                 <td>崇阳实验小学</td>
+                <td>荆门市</td>
+                <td>京山县</td>
+                <td>黄岐镇</td>
+                <td>三年级</td>
+                <td>语文</td>
+                <td>李红</td>
+                <td>5</td>
+                <td>进行中</td>
+                <td>
+                   <a href="" class="open">进入课堂</a>
+                   <a href="" class="go">发起互动</a>
+                </td>
+              </tr>
+               <tr>
+                 <td>崇阳实验小学</td>
+                <td>荆门市</td>
+                <td>京山县</td>
+                <td>黄岐镇</td>
+                <td>三年级</td>
+                <td>语文</td>
+                <td>李红</td>
+                <td>5</td>
+                <td>进行中</td>
+                <td>
+                   <a href="" class="open">进入课堂</a>
+                   <a href="" class="go">发起互动</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+      </div>
+   </div>
+
+
+
+
+
+
+
+
+
+
+
+     
+
+
+
+
+
+</body>
+<!-- <script src="/njx/static/src/layui/layui.js"></script>
+<script src="/njx/static/src/layui/js/layui-config.js"></script>
+<script src="/njx/static/src/layui/js/patrol.js"></script> -->
+
+
+<script src="../static/src/js/lib/require.js"></script>
+<script src="../static/src/js/re-config.js"></script>
+<script src="../static/src/js/table.js"></script>
+</html>

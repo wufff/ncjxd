@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+<title>教师管理</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<!--[if lt IE 10]>
+        <script src="/ncjxdPage/static/src/js/ie_update.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="/ncjxdPage/static/src/layui/css/layui.css">
+<link rel="stylesheet" type="text/css" href="../static/src/style/public.css">
+<link rel="stylesheet" type="text/css" href="../static/src/style/manage.css">
+</head>
+<body>    
+
+  	  <div class="container page_wrap">
+  	  	  <div class="article pull-left">
+  	  	  	  <div class="title">
+  	  	  	  	<i class="fa fa-book"></i>
+  	  	  	  	咨询管理
+  	  	  	  </div>
+  	  	  	  <ul>
+  	  	  	  	<li>
+  	  	  	  		<a href="manage_n.html">动态通知公告</a>
+  	  	  	  	</li>
+  	  	  	  	<li>
+  	  	  	  		<a href="manage_t.html">首页推荐</a>
+  	  	  	  	</li>
+  	  	  	  	<li >
+  	  	  	  		<a href="javascript:void(0)">首页照片推荐 </a>
+  	  	  	  	</li>
+  	  	  	  	<li >
+  	  	  	  		 <a href="manage_r.html">资源推荐</a>
+  	  	  	  	</li>
+  	  	  	  </ul>
+  	  	  	  <div class="title">
+  	  	  	  	<i class="fa fa-tags"></i>
+  	  	  	  	活动管理
+  	  	  	  </div>
+  	  	  	  <ul>
+  	  	  	  	<li >
+  	  	  	  		<a href="manage_n.html">活动列表</a>
+  	  	  	  	</li>
+  	  	  	  </ul>
+  	  	  	   <div class="title">
+  	  	  	  	<i class="fa fa-cog" aria-hidden="true"></i>
+  	  	  	  	用户管理
+  	  	  	  </div>
+  	  	  	  <ul>
+  	  	  	  	<li  >
+  	  	  	  		<a >管理员管理</a>
+  	  	  	  	</li>
+  	  	  	    <li >
+  	  	  	  		<a href="manage_lower.html">下级管理</a>
+  	  	  	  	</li>
+  	  	  	  </ul>
+  	  	  	  <div class="title">
+  	  	  	  	<i class="fa fa-home"></i>
+  	  	  	  	学校管理
+  	  	  	  </div>
+  	  	  	  <ul>
+  	  	  	  	<li >
+  	  	  	  		<a href="manage_school.html">学校管理</a>
+  	  	  	  	</li>
+  	  	  	    <li class="active">
+  	  	  	  		<a href="manage_teacher.html">教师管理</a>
+  	  	  	  	</li>
+  	  	  	  </ul>
+  	  	  	   <div class="title">
+  	  	  	  	  <i class="fa fa-user" aria-hidden="true"></i>
+  	  	  	  	账号管理
+  	  	  	  </div>
+              <ul>
+                <li>
+                  <a href="manage_userInfo.html">基本资料</a>
+                </li>
+                <li >
+                  <a href="manage_userPassWrod.html">修改密码</a>
+                </li>
+              </ul>
+  	  	  </div>
+  	  	  <div class="seciton pull-right" id="manage_manager">
+	  	  	  	 <div class="head clear">
+  	  	  	  	 	<span>说明：此处为首页“精品资源”内容管理，默认将显示最新添加的10个资源。</span>
+  	  	  	   </div>
+              <div class="layui-form filter">
+                   <dl class="clear">
+                    <dd class="width-auto">
+                       <button class="layui-btn layui-btn-normal" id="addTeacherBtn">添加教师</button>
+                    </dd>
+                    <dt>
+                      查找教师 :
+                    </dt>
+                   
+                    <dd class="area">
+                        <select name="city" lay-verify="required">
+                          <option value="">任教年级</option>
+                          <option value="0">用户名</option>
+                          <option value="1">账号</option>
+                         </select>
+                    </dd>
+                    <dd class="area">
+                        <select name="city" lay-verify="required">
+                          <option value="">任教学科</option>
+                          <option value="0">用户名</option>
+                          <option value="1">账号</option>
+                         </select>
+                    </dd>
+                     <dd class="name">
+                       <input type="text" class="layui-input" name="" placeholder="查询教师的名字">
+                    </dd>
+                    <dd class="width-auto">
+                       <button class="layui-btn layui-btn-normal">查询</button>
+                    </dd>
+                   </dl>
+              </div>
+               <div class="body table_b">
+                  <table class="layui-table" style="margin-top: 0">
+                      <thead>
+                          <tr>
+                             <th>序号</th>
+                             <th>教师姓名</th>
+                             <th>任教年级</th>
+                             <th>任教学科</th>
+                             <th>联系电话</th>
+                             <th>状态</th>
+                             <th>操作</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                           <tr>
+                              <td>1</td>
+                              <td>adfasfsadf</td>
+                              <td>张英</td>
+                              <td>系统管理员</td>
+                              <td>正常</td>
+                              <td>2018-10-10</td>
+                              <td>
+                                 <a class="edit">编辑</a>
+                                 <a class="del">删除</a>
+                              </td>
+                           </tr>
+                      </tbody>
+                  </table>
+               </div>
+                
+  	      </div>
+  	  	  	 
+  	 </div>
+
+
+ 
+ 
+  <div id="controlAddteacher"  class="control"  style="display: none;">
+      <div class="layui-form" action="">
+          <div class="layui-form-item">
+            <label class="layui-form-label">
+             <span class="red">*</span> 用户名：
+            </label>
+            <div class="layui-input-block">
+              <input type="text" name="title"  lay-verify="required" placeholder="请输入多多社区用户名" autocomplete="off" class="layui-input">
+           </div>
+        </div>
+         <div class="layui-form-item">
+            <label class="layui-form-label">
+             <span class="red">*</span> 姓名：
+            </label>
+            <div class="layui-input-block text">
+               自动获取教室姓名
+           </div>
+        </div>
+         <div class="layui-form-item">
+            <label class="layui-form-label">
+                <span class="red">*</span> 任教年级：
+            </label>
+            <div class="layui-input-block">
+                    <input type="checkbox" name="" title="一年级">
+                    <input type="checkbox" name="" title="二年级" checked>
+                    <input type="checkbox" name="" title="三年级">
+                    <input type="checkbox" name="" title="四年级" checked>
+                    <input type="checkbox" name="" title="五年级">
+                    <input type="checkbox" name="" title="六年级">
+           </div>
+        </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">
+                <span class="red">*</span> 任教学科：
+            </label>
+            <div class="layui-input-block">
+
+                    <input type="checkbox" name="" title="语文">
+                    <input type="checkbox" name="" title="数学" checked>
+                    <input type="checkbox" name="" title="英语">
+                    <input type="checkbox" name="" title="音乐" checked>
+                    <input type="checkbox" name="" title="美术">
+                    <input type="checkbox" name="" title="科学">
+                    <input type="checkbox" name="" title="心理健康">
+                    <input type="checkbox" name="" title="生命安全">
+           </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">
+                <span class="white">*</span> 联系电话：
+            </label>
+            <div class="layui-input-block">
+               <input type="text" name="title" lay-verify="required" placeholder="联系电话" autocomplete="off" class="layui-input" value="">
+           </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">
+                <span class="red">*</span> 状态：
+            </label>
+            <div class="layui-input-block">
+               <input type="radio" name="status" value="normal" title="正常" checked>
+               <input type="radio" name="status" value="dis" title="禁用">
+           </div>
+          </div>
+       </div>
+   </div>
+
+
+</body>
+<script src="/ncjxdPage/static/src/js/lib/require.js"></script>
+<script src="/ncjxdPage/static/src/js/re-config.js"></script>
+<script src="/ncjxdPage/static/src/js/manage_userInfo.js"></script>
+</html>

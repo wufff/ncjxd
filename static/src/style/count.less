@@ -1,0 +1,59 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors Your Name (you@example.org)
+ * @date    2018-11-07 17:18:17
+ * @version $Id$
+ */
+@import "config.less";
+@import "./modules/filter.less";
+@import "./modules/table.less";
+
+
+
+
+#tab {
+  span {
+      float: left;
+      font-size: 15px;
+      margin:0px 10px 10px 0;
+      cursor: pointer;
+      padding: 10px 20px ;
+  }
+  span.active {
+      color: #ff6600;
+  }
+}
+
+
+.table {
+	border: 1px solid #e6e6e6;
+	padding: 20px 25px;
+	.title{ 
+	  font-size: 16px;
+	  margin-bottom: 20px;
+        position: relative;
+      button {
+        position: absolute;
+        right:0;
+        top: 0;
+      }  
+      span.tot {
+      	 color:@color_main;
+      }
+      span.run {
+      	 color: green;
+      }
+      span.over{
+      	 color: #9c999f;
+      } 
+      span.ready {
+      	  color:orange;
+      }
+       span.min {
+            color: @font_fu_color ;
+            font-size: @font_fu;
+            margin-left: 20px;
+        }
+	 }
+}

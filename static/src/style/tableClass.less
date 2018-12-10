@@ -1,0 +1,101 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors Your Name (you@example.org)
+ * @date    2018-11-07 17:18:17
+ * @version $Id$
+ */
+@import "config.less";
+@import "./public.less";
+@import "./modules/head.less";
+@import "./modules/filter.less";
+@import "./modules/table.less";
+
+
+
+
+.week {
+   width: 128px;
+   
+
+   span {
+     padding: 15px 10px; 
+   }
+   span.bar {
+     cursor: pointer;
+      
+   }
+}
+
+.tag-selected {
+   border: 1px solid #1E9FFF;
+   float: left;
+   padding: 2px 7px;
+   color: #1E9FFF;
+   margin-right: 10px;
+   font-size: 16px;
+   >span {
+     cursor: pointer;
+     font-weight: bold;
+     margin-left: 10px;
+     font-size: 22px;
+   }
+}
+
+
+
+
+.table {
+  border: 1px solid #e6e6e6;
+  padding: 15px 25px;
+   .week {
+       position: absolute;
+       right:490px;
+       top:8px;
+   }
+	.header{ 
+    overflow: hidden;
+	  font-size: 16px;
+	  margin-bottom: 15px;
+    position: relative;
+
+
+    .title {
+       position: absolute;
+       top: 9px;
+       font-size: 18px;
+       color:#666666;
+       small{
+        margin-left: 20px;
+        color:#909090;
+       }
+    }
+     .layui-btn-group {
+        float: right;
+        margin-left: 10px;
+     }
+     > button {
+        float: right;
+
+      }  
+
+
+      span.tot {
+      	 color:@color_main;
+      }
+      span.run {
+      	 color: green;
+      }
+      span.over{
+      	 color: #9c999f;
+      } 
+      span.ready {
+      	  color:orange;
+      }
+       span.min {
+            color: @font_fu_color ;
+            font-size: @font_fu;
+            margin-left: 20px;
+        }
+	 }
+}

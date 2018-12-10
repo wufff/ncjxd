@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+<title>编辑课表</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<!--[if lt IE 10]>
+        <script src="/ncjxdPage/static/src/js/ie_update.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="/ncjxdPage/static/src/layui/css/layui.css">
+<link rel="stylesheet" type="text/css" href="/ncjxdPage/static/src/style/lib/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../static/src/style/public.css">
+<link rel="stylesheet" type="text/css" href="../static/src/style/table_edit.css">
+<link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+</head>
+<body>    
+  <div id="header">
+  <div class="container">
+    <div class="title">
+        <h3>湖北省农村教学点网校</h3>
+        <p>— 管理与服务平台 —</p>
+    </div>
+   <ul class="nav navbar-nav">
+    <li>
+      <a href="##">首页</a>
+    </li>
+    <li>
+       <a href="#">巡课互动</a>
+    </li>
+     <li>
+       <a href="#">直播活动</a>
+    </li>
+    <li class="active">
+       
+        <a href="#">课表管理</a>
+     </li>
+      <li class="dropdown">
+        <a href="##" data-toggle="dropdown" class="dropdown-toggle">数字资源<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">学科资源</a></li>
+          <li><a href="#">教学点录课</a></li>
+        </ul>
+     </li>
+      <li>
+         <a href="#">教师研修</a>
+      </li>
+      <li><a href="##">在线统计</a></li>
+   </ul>
+   </div>
+</div>
+   <div class="container page_wrap">
+   	  <h4>编辑课表</h4>
+      <h5 style="text-align: right;color: #999; ">步骤1/2 配置课程</h5>
+   	  <div class="layui-form" id="filter">
+         <dl class="clear">
+           <dt class="padding">课程信息：</dt>
+           <dd class="button_wrap">
+             <button class="layui-btn layui-btn-primary" id="classTagBt">设置</button>
+          </dd> 
+          <dd class="tabTag" id="classTag">
+                <span class="tag-selected">
+                    <span class="inner">第一周</span>
+                    <span class="del">×</span>
+               </span>
+             
+          </dd>
+         </dl>
+        <dl class="clear">
+           <dt class="padding">接受教室：</dt>
+           <dd class="button_wrap">
+             <button class="layui-btn layui-btn-primary" id="roomTagBt">设置</button>
+          </dd> 
+          <dd class="tabTag" id="roomTag">
+             
+          </dd>
+         </dl>
+   	  	 <dl class="clear">
+           <dt class="padding">上课周次：</dt>
+          
+          <dd class="radio_wrap">
+            <input type="radio" name="week" lay-filter="week" value="all" title="全部" checked>
+          </dd>
+          <dd class="radio_wrap">
+             <input type="radio" name="week" lay-filter="week" value="week" title="当前选择周">
+          </dd>
+          <dd class="radio_wrap">
+            <input type="radio" name="week" lay-filter="week" value="cum" title="自定义" >
+          </dd>
+          <dd class="button_wrap controlWeek" style="display: none">
+             <button class="layui-btn layui-btn-primary" id="weekTagBt" >设置</button>
+          </dd> 
+          <dd class="tabTag" id="weekTagbox">
+              <span class="tag-selected">
+                    <span class="inner">第一周</span>
+                    <span class="del">×</span>
+               </span>
+          </dd>
+         </dl>
+           
+        
+          <button class="layui-btn layui-btn-primary tab_btn">清空</button>
+   	  </div>
+        <h5 style="text-align:right; color: #999;">步骤2/2 点击空白处添加配置好的课程</h5>
+   	    <div class="table">
+          <div class="header">
+             <div class="title">
+              2018--2019上学期/主讲教室1
+              <small>
+                  <span></span>
+                  起止时间 : 2018-08-31至2019-02-12
+              </small>
+             </div>
+              <div class="week">
+                 <span class="bar Add">
+                     <i class="fa fa-angle-left" aria-hidden="true"></i>
+                 </span>
+                 <span class="main">
+                    第 1 周
+                 </span>
+                 <span class="bar sub">
+                     <i class="fa fa-angle-right" aria-hidden="true"></i>
+                 </span>
+              </div>
+
+              <div class="layui-btn-group">
+                  <button class="layui-btn layui-btn-primary">完成</button>          
+              </div>       
+          </div>
+          <div class="body">
+                   <table class="layui-table" lay-even>
+            <colgroup>
+              <col>
+              <col>
+              <col>
+               <col>
+              <col>
+              <col>
+              <col>
+               <col>
+              <col>
+              <col width="170">
+            </colgroup>
+            <thead>
+              <tr>
+                <th>午别</th>
+                <th>节次</th>
+                <th>
+                   <div>星期一</div>
+                   <div>2018-10-1</div>
+                </th>
+                <th>
+                   <div>星期一</div>
+                   <div>2018-10-1</div>
+                </th>
+                <th>
+                   <div>星期一</div>
+                   <div>2018-10-1</div>
+                </th>
+                <th>
+                   <div>星期一</div>
+                   <div>2018-10-1</div>
+                </th>
+                <th>
+                   <div>星期一</div>
+                   <div>2018-10-1</div>
+                </th>
+                <th>
+                   <div>星期一</div>
+                   <div>2018-10-1</div>
+                </th>
+                <th>
+                   <div>星期一</div>
+                   <div>2018-10-1</div>
+                </th>
+              </tr> 
+            </thead>
+            <tbody>
+             
+            
+              
+              
+             
+              
+            
+             
+            </tbody>
+          </table>
+          </div>
+      </div>
+   </div>
+
+
+ 
+
+
+
+
+
+
+
+<!-- 弹窗 -->
+ 	   <div id="classTagControl" class="chooseTag clearfix" style="display: none;">
+               <div class="main">
+                  <div class="searchWap layui-form clearfix">
+                     
+                     <input type="text" name="" class="layui-input  searchText" placeholder="搜索学校">
+                      <button class="layui-btn layui-btn-primary searchBtn">
+                          <i class="fa fa-search"></i>
+                      </button>
+                   </div>  
+                  <div class="layui-tab" lay-filter="classTagTab">
+                      <ul class="layui-tab-title">
+                        <li class="layui-this">网站设置</li>
+                        
+                      </ul>
+                      <div class="layui-tab-content tag_content">
+                        <div class="layui-tab-item layui-show">
+                           <div data-oder="0" class="tagTabContentWrap">
+                               <span class="tag">内容1</span>
+                               <span class="tag">内容1</span>
+                               <span class="tag">内容1</span>
+                               <span class="tag">内容1</span>
+                               <span class="tag">内容1</span>
+                               <span class="tag">内容1</span>
+                               <span class="tag">内容1</span>
+                               <span class="tag">内容1</span>
+                               <span class="tag">内容1</span>
+                               <span class="tag">内容1</span>
+                               <span class="tag">内容1</span>
+                               <span class="tag">内容1</span>
+                           </div>
+                        </div>
+                        
+                    
+                      </div>
+                  </div>
+                  
+               </div>
+               <div class="inTag">
+                  <span class="tag-selected">
+                        <span class="inner">一年级-教学</span>
+                        <span class="del">×</span>
+                   </span>
+                   <span class="tag-selected">
+                        <span class="inner">乌龟石小学-接收教室1-崔老师</span>
+                        <span class="del">×</span>
+                   </span>
+                   <span class="tag-selected">
+                        <span class="inner">崇阳实验小学-主讲教室4-唐嘉璐</span>
+                        <span class="del">×</span>
+                   </span>
+                   <span class="tag-selected">
+                        <span class="inner">崇阳实验小学-主讲教室4-唐嘉璐</span>
+                        <span class="del">×</span>
+                   </span>
+               </div>
+    </div>
+     
+
+
+
+
+
+</body>
+<!-- <script src="/ncjxdPage/static/src/layui/layui.js"></script>
+<script src="/ncjxdPage/static/src/layui/js/layui-config.js"></script>
+<script src="/ncjxdPage/static/src/layui/js/patrol.js"></script> -->
+
+
+<script src="/ncjxdPage/static/src/js/lib/require.js"></script>
+<script src="/ncjxdPage/static/src/js/re-config.js"></script>
+<script src="/ncjxdPage/static/src/js/table_edit.js"></script>
+</html>
