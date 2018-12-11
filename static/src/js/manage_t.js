@@ -1,10 +1,9 @@
 
 require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
-    console.log('已进入');
     var layer = layui.layer;
     var form = layui.form;
     var $ = jQuery = layui.jquery; 
-    var url = path.api+"/api/getManageRecommendList";
+    var url = path.api+"/api/getManageRecommendList?time=";
     var page;
     var dialog;
     var editeId;
@@ -41,7 +40,6 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
         obj.goto_url = tr.find(".goto_url").text();
         obj.img = tr.find(".img").attr("src");
         obj.cover_img = "";
-
         $("#previewImage").attr("src",obj.img);
         initContorl (obj);
         dialog = layer.open({
@@ -58,9 +56,21 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
 
 
   $("body").on("click",".del",function(){
+     var tr = $(this).parents("tr");
      layer.confirm('确定删除此条推荐吗?', {icon: 3, title:'提示'}, 
         function(index){
-         layer.close(index);
+         var url = path.api+'/api/delManageRecommendData';
+         var obj = {};
+         obj.id = tr.data("id");
+         obj.type = 1;
+         $.get(url,obj,function(res){
+             if(res.data.code == 1000) {
+                 layer.msg("删除成功！",{time:1200});
+                 layer.close(index);
+                 refrechData();
+             }
+            
+         })
       });
    })
     
@@ -81,9 +91,9 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
            var url = path.api+"/api/addManageRecommend";
            var loading = layer.load(3);
            $.get(url,getData,function(res){
-              if(res.data.code == 1000) {
+              if(res.type == "success") {
                 layer.msg("添加成功！",{time:1200});
-                initPage (1);
+                refrechData();
                 layer.close(loading);
                 layer.close(dialog);
               } 
@@ -93,14 +103,12 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
        if(controlTpye == 1){
           var url = path.api+"/api/modifyManageRecommendData";
           var loading = layer.load(3);
-          var current = $("#pageNum").find(".current").text();
           getData.id = editeId;
           console.log(getData);
            $.get(url,getData,function(res){
-               console.log(res);
               if(res.data.code == 1000) {
                 layer.msg("修改成功！",{time:1200});
-                initPage (current);
+                refrechData();
                 layer.close(loading);
                 layer.close(dialog);
               } 
@@ -111,11 +119,7 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
 
 
 
-    $(".del").click(function(){
-         layer.confirm('确定删除此条推荐吗?', {icon: 3, title:'提示'}, function(index){
-          layer.close(index);
-        });
-    })
+  
 
 
 
@@ -135,7 +139,14 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
   }
 
 
-
+  function refrechData() {
+    var current = $("#pageNum").find(".current").text();
+    if (current) {
+      initPage(current);
+    } else {
+      initPage(1);
+    }
+  }
 
 
 
@@ -145,20 +156,21 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
 
  function initPage (goPage){
       var url = path.api+"/api/getManageRecommendList";
-      var getData = "type=1&page=1&page_count=3";
+      var getData = "type=1&page=1&page_count=5&v="+ new Date().getTime() ;
       pages.getAjax(url,getData,function(data){
-         if( data.data.code == 1000){
+         if( data.type == "success"){
              var total = data.data.data.total;
-             page =  new pages.jsPage(total, "pageNum","3",url,getData,buildTable,goPage,null);
+             page =  new pages.jsPage(total, "pageNum","5",url,getData,buildTable,goPage,null);
              pages.pageMethod.call(page); 
            }else{
-             $("#tbody").html('<tr><td colspan="4">暂无数据~！</td></td>');
+             $("#tbody").html('<tr><td colspan="7">暂无数据~！</td></td>');
+            $(".tableLoading").html('');
              return;
          }
       })
      
     function buildTable(list) {
-    if (list.data.code == 1000) {
+    if (list.type == "success") {
       var data = list.data.data.list.map(function(item) {
         return {
           sn:item.r_sn,
@@ -182,15 +194,14 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
         html += '<td>' + data[i].time + '</td>'
         html += '<td><a class="change">修改</a><a class="del">删除</a></td>'
         html += ' </tr>'
-
       }
-
+      $(".tableLoading").html(' ');
       $("#tbody").html(html);
 
     }
-    if(list.data.code == 1003) {
-       var mun = goPage - 1;
-        pages.gotopage.call(page_1,mun,false);
+    if(list.type == "error") {
+        var mun = goPage - 1;
+        pages.gotopage.call(page,mun,false);
     }
   }
  }

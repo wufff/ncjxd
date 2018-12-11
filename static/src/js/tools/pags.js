@@ -39,6 +39,9 @@ define(['jquery','path'], function($,path) {
 		ready2go: function(isBack) {
 			var obj = this;
 			$("#"+obj.page_obj_id).off("click","a").on("click","a", function() {
+				if($(".tableLoading")){
+					$(".tableLoading").html('<div>表格数据加载中...</div>');
+				}
 				// $("#"+obj.page_obj_id).prev().html('<div style="padding:40px 0 0 0;text-align:center;"><img src="'+path.img+'/rjsAjaxloading.gif"></div>');
 				obj.target_p = parseInt($(this).attr("pageIndex"));
 				_self.gotopage.call(obj, obj.target_p, isBack);
