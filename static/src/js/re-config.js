@@ -1,6 +1,6 @@
 require.config({
-	baseUrl: "http://images.dev.dodoedu.com/ncjxdPage/static/src/js",
-	urlArgs: "v=" + new Date().getTime(),
+	baseUrl: "http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/js",
+	// urlArgs: "v=" + new Date().getTime(),
 	paths: {
 			"jquery": "./lib/jquery/jquery",
 			"bootstrap":"./lib/bootstrap/bootstrap.min.3.3.7",
@@ -13,8 +13,12 @@ require.config({
 			"viewPhoto":"./ui/viewPhoto",
 			"layui":"../layui/layui.all",
 			"tools":"./tools/tools",
+			"api":"./tools/api",
 			"expression":"./ui/expression",
-			"ZeroClipboard":"./lib/ueditor/third-party/zeroclipboard/ZeroClipboard.min"
+			"ZeroClipboard":"./lib/ueditor/third-party/zeroclipboard/ZeroClipboard.min",
+			"plupload":"./lib/plupload/plupload.dev",
+			"moxie":"./lib/plupload/moxie",
+			"upLoad":"./tools/upLoad"
 	},
 	shim: {
 		 "Swiper":["jquery"],
@@ -28,9 +32,6 @@ require.config({
          },
          "ckplayer":{
          	exports:"ckplayer"
-         },
-         "normalize":{
-         	exports:"normalize"
          }
 	}
 });

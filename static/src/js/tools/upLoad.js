@@ -22,6 +22,7 @@ define(["path"],function(path){
 				init: {
 					PostInit: function() {
 						document.getElementById('imglist').innerHTML = '';
+
 					},
 
 					FilesAdded: function(up, files) {
@@ -113,7 +114,7 @@ define(["path"],function(path){
 				init: {
 					PostInit: function() {
 						// document.getElementById('imglist').innerHTML = '';
-						console.log("init");
+						alert("已进入");
 					},
 
 					FilesAdded: function(up, files) {
@@ -133,7 +134,7 @@ define(["path"],function(path){
 						}); 
 
                         var length = 8 > arry.length ?  arry.length : 8;
-						    for(var i=0; i<length;i++){
+						    for(var i=0; i<arry.length;i++){
 						    
 						    	  html +=  '<div class="item" id="' + arry[i].id + '">'
 					              html +=  '<div class="info"  style="height:40px;">' + arry[i].name + '('+arry[i].size+')<b></b></div>'
@@ -142,7 +143,8 @@ define(["path"],function(path){
 					              html +=  ' </div>'
 					             
 						    }
-						    document.getElementById('imglist').innerHTML = html;
+						    $("#imglist").append(html);
+						   
                         plupload.each(files, function(file) {
 							    previewImage(file, function(url) {
 							    $("#"+file.id).find("img").attr("src", url);
@@ -177,9 +179,9 @@ define(["path"],function(path){
 				if (msg.code == 1000) {
 					// console.log(msg.data);
 				    // upVlue.push(msg.data.file_path);
-					document.getElementById('img_file_path').value +=  ","+msg.data.file_path;
-					// doument.getElementById('img_str').value = document.getElementById('img_str').value + msg.data.file_path + ",";
-					console.log(document.getElementById('img_file_path').value);
+					document.getElementById('img_file_path').value +=  msg.data.file_path+",";
+					// // doument.getElementById('img_str').value = document.getElementById('img_str').value + msg.data.file_path + ",";
+					// console.log(document.getElementById('img_file_path').value);
 				}
 			});
 			uploader.init();
@@ -208,6 +210,7 @@ define(["path"],function(path){
 				}
 
 			}
+			return uploader;
 		}
 
 

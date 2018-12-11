@@ -2,13 +2,13 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
     var layer = layui.layer;
     var form = layui.form;
     var $ = jQuery = layui.jquery; 
-    var url = path.api+"/api/getManageRecommendList";
     var page;
-    var dialog;
     var editeId;
-
+    var Upvalue = [];
+    console.log("已进入");
+    var upLoad = upLoad.imgMost('upbtn');
     // initPage (1);
-    upLoad.imgMost('upbtn','previewImage');
+    
     
 
 
@@ -17,6 +17,9 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
 
 
    $("#add").click(function() {
+      upLoad.splice(0,99);
+      $("#imglist").html(" ");
+      document.getElementById('img_file_path').value = "";
       layer.open({
         type: 1,
         title:"上传新图片",
@@ -26,8 +29,30 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
         yes: function(index, layero){
           var value = $("#img_file_path").val();
           var arry = value.split(',');
-          console.log(arry);
-          
+          console.log(arry.length);
+          if(arry.length > 8){
+            var getData = [];
+            for(var i = 0;i<8;i++){
+              var temp = {
+                  r_cover_img:arry[i]
+              }
+              getData.push(temp);
+            }
+            console.log(getData);
+          }
+          if(arry.length == 1){
+               alert("没传东西");
+          } 
+          if( arry.length < 9){
+          var getData = [];
+            for(var i = 0;i<arry.length-1;i++){
+              var temp = {
+                  r_cover_img:arry[i]
+              }
+              getData.push(temp);
+            }
+           console.log(getData);
+          }
         }
       });
     })
