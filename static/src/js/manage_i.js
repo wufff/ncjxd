@@ -6,8 +6,9 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
     var page;
     var dialog;
     var editeId;
+
     // initPage (1);
-    // upLoad.img('upImg','previewImage');
+    upLoad.imgMost('upbtn','previewImage');
     
 
 
@@ -21,9 +22,12 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
         title:"上传新图片",
         content: $('#controlImg'),
         area:["650px","500px"],
-      
+        btn:["确认","取消"],
         yes: function(index, layero){
-          layer.close(index); 
+          var value = $("#img_file_path").val();
+          var arry = value.split(',');
+          console.log(arry);
+          
         }
       });
     })
@@ -32,13 +36,13 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
 
 
   $("body").on("click",".del",function(){
-     var tr = $(this).parents("tr");
+     var id = $(this).attr("id");
      layer.confirm('确定删除此条推荐吗?', {icon: 3, title:'提示'}, 
         function(index){
          var url = path.api+'/api/delManageRecommendData';
          var obj = {};
-         obj.id = tr.data("id");
-         obj.type = 1;
+         obj.id = id;
+         obj.type = 2;
          $.get(url,obj,function(res){
              if(res.data.code == 1000) {
                  layer.msg("删除成功！",{time:1200});
@@ -51,47 +55,7 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
    })
     
 
-    
 
-  form.on('submit(control)', function(data){
-       var controlTpye = $("#controlTpye").val();
-       var url = path.api + '/api/addManageRecommend';
-       var getData = data.field;
-       getData.type = 1;
-       // console.log(getData);
-       if(controlTpye == 0) {
-          if(getData.cover_img == ""){
-             layer.msg("没有上传图片",{icon:5,time:1200})
-             return false; 
-          }
-           var url = path.api+"/api/addManageRecommend";
-           var loading = layer.load(3);
-           $.get(url,getData,function(res){
-              if(res.type == "success") {
-                layer.msg("添加成功！",{time:1200});
-                refrechData();
-                layer.close(loading);
-                layer.close(dialog);
-              } 
-          });
-       }
-
-       if(controlTpye == 1){
-          var url = path.api+"/api/modifyManageRecommendData";
-          var loading = layer.load(3);
-          getData.id = editeId;
-          console.log(getData);
-           $.get(url,getData,function(res){
-              if(res.data.code == 1000) {
-                layer.msg("修改成功！",{time:1200});
-                refrechData();
-                layer.close(loading);
-                layer.close(dialog);
-              } 
-          });
-       }
-      return false; 
-  });
 
 
 
@@ -145,14 +109,11 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
          }
       })
      
+
     function buildTable(list) {
     if (list.type == "success") {
-      console.log(list);
       var data = list.data.data.list.map(function(item) {
         return {
-          sn:item.r_sn,
-          title: item.r_title,
-          sort: item.r_sort,
           img:item.r_cover_img,
           url: item.r_goto_url,
           time: item.r_createtime,
@@ -160,22 +121,21 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
         }
       })
      
+
       var html = '';
       for (var i = 0; i < data.length; i++) {
-        html += '<tr data-id="' + data[i].encrypt_id + '">'
-        html += '<td class="sn">' + data[i].sn + '</td>'
-        html += '<td class="title">' + data[i].title + '</td>'
-        html += '<td class="sort">' + data[i].sort + '</td>'
-        html += '<td ><a href="'+ data[i].img +'"><img  class="img" src="' + data[i].img + '"></a></td>'
-        html += '<td class="goto_url">' + data[i].url + '</td>'
-        html += '<td>' + data[i].time + '</td>'
-        html += '<td><a class="change">修改</a><a class="del">删除</a></td>'
-        html += ' </tr>'
-
+        html +=  '<div class="layui-col-md3">'
+        html +=  '<div class="inner">'
+        html +=  '<img src="'+ data[i].img +'">'
+        html +=     '</div>'
+        html +=   '<p class="title_main">上传时间：'+data[i].time  
+        html +=   '</p>'
+        html +=   '<a class="del" id="'+ data[i].encrypt_id +'">删除照片</a>'
+        html +=   '</div>'
       }
-      // $(".tableLoading").html(' ');
-      
-
+      $(".tableLoading").html('');
+      $(".layui-row").html(html);
+ 
     }
     if(list.type == "error") {
         var mun = goPage - 1;
