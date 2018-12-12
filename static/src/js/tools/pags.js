@@ -42,6 +42,9 @@ define(['jquery','path'], function($,path) {
 				if($(".tableLoading")){
 					$(".tableLoading").html('<div>表格数据加载中...</div>');
 				}
+				if($(".layui-row")){
+					$(".layui-row").html('<div style="padding:40px 0 0 0;text-align:center;"><img src="'+path.img+'/rjsAjaxloading.gif"></div>');
+				}
 				// $("#"+obj.page_obj_id).prev().html('<div style="padding:40px 0 0 0;text-align:center;"><img src="'+path.img+'/rjsAjaxloading.gif"></div>');
 				obj.target_p = parseInt($(this).attr("pageIndex"));
 				_self.gotopage.call(obj, obj.target_p, isBack);

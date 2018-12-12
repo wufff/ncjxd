@@ -114,7 +114,6 @@ define(["path"],function(path){
 				init: {
 					PostInit: function() {
 						// document.getElementById('imglist').innerHTML = '';
-						alert("已进入");
 					},
 
 					FilesAdded: function(up, files) {
