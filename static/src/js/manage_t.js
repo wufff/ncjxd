@@ -189,7 +189,7 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
         html += '<td class="sn">' + data[i].sn + '</td>'
         html += '<td class="title">' + data[i].title + '</td>'
         html += '<td class="sort">' + data[i].sort + '</td>'
-        html += '<td ><a href="'+ data[i].img +'"><img  class="img" src="' + data[i].img + '"></a></td>'
+        html += '<td ><a href="'+ data[i].img +'" class="inner_img"><img  src="' + data[i].img + '"></a></td>'
         html += '<td class="goto_url">' + data[i].url + '</td>'
         html += '<td>' + data[i].time + '</td>'
         html += '<td><a class="change">修改</a><a class="del">删除</a></td>'
