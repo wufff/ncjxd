@@ -64,7 +64,7 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
          obj.id = tr.data("id");
          obj.type = 1;
          $.get(url,obj,function(res){
-             if(res.data.code == 1000) {
+             if(res.type == "success") {
                  layer.msg("删除成功！",{time:1200});
                  layer.close(index);
                  refrechData();

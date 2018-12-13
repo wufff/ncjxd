@@ -13,17 +13,37 @@ require(["layui", "path","page"], function(layui, path,pages) {
 
 
 
-    $("body").on("click",".del",function(){
+   
 
-       layer.confirm('确定删除此条推荐吗?', {icon: 3, title:'提示'}, function(index){
-          layer.close(index);
-        });
-    })
-
-
+  $("body").on("click",".del",function(){
+     var tr = $(this).parents("tr");
+     layer.confirm('确定删除此条推荐吗?', {icon: 3, title:'提示'}, 
+        function(index){
+         var url = path.api+'/api/delManageActivityData';
+         var obj = {};
+         obj.id = tr.data("id");
+         $.get(url,obj,function(res){
+             if(res.type == "success") {
+                 layer.msg("删除成功！",{time:1200});
+                 layer.close(index);
+                 refrechData();
+             }else{
+               alert(res.message);
+             }
+            
+         })
+      });
+   })
 
     
-
+  function refrechData() {
+    var current = $("#pageNum").find(".current").text();
+    if (current) {
+      initPage(current);
+    } else {
+      initPage(1);
+    }
+  }
 
  
 
@@ -47,7 +67,6 @@ require(["layui", "path","page"], function(layui, path,pages) {
       })
      
     function buildTable(list) {
-      console.log(list);
     if (list.type == "success") {
       var data = list.data.data.list.map(function(item) {
         return {
