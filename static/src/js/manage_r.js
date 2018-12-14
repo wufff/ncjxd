@@ -47,13 +47,33 @@ require(["layui", "path","page"], function(layui, path,pages) {
 
 
 
+  $("#xiaoyan").click(function(){
+       var id = $("input[name=res_id").val();
+       var url = path.api + "/api/getResCenterResourceInfoByResId";
+       var getData = {};
+       getData.res_id = id;
+       $.get(url,getData,function(res){
+            var data = res.data.data;
+            $("#res_title").text(data.res_title);
+            $("#res_type").text(data.res_ext);
+            $("input[name=res_encrypt_id]").val(data.res_encrypt_id);
+       }) 
+       return false;
+  })
+
+
+
+
+
    
   form.on('submit(control)', function(data){
        var controlTpye = $("#controlTpye").val();
+       if(!data.field.res_encrypt_id){
+          layer.msg("未校验，或者校验未通过~!",{icon:5})
+          return false; 
+       }
        var getData = data.field;
        getData.type = 3;
-       console.log(getData);
-       console.log(controlTpye);
        if(controlTpye == 0) {
            var url = path.api+"/api/addManageRecommend";
            var loading = layer.load(3);
@@ -71,20 +91,6 @@ require(["layui", "path","page"], function(layui, path,pages) {
            return false; 
        }
 
-       if(controlTpye == 1){
-          var url = path.api+"/api/modifyManageRecommendData";
-          var loading = layer.load(3);
-          getData.id = editeId;
-          console.log(getData);
-           $.get(url,getData,function(res){
-              if(res.data.code == 1000) {
-                layer.msg("修改成功！",{time:1200});
-                refrechData();
-                layer.close(loading);
-                layer.close(dialog);
-              } 
-          });
-       }
       return false; 
   });
 
@@ -97,8 +103,11 @@ require(["layui", "path","page"], function(layui, path,pages) {
     }else {
       form.val("control", 
       {
-        "url": "" 
+        "res_encrypt_id": "" ,
+        "res_id":""
       })
+       $("#res_title").text("点击校验自动获取资源标题");
+       $("#res_type").text("点击校验自动获取文件类型");
     }
   }
 
