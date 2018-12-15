@@ -1,182 +1,260 @@
+
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-<title>个人中心</title>
-<meta name="description" content="">
-<meta name="keywords" content="">
-<!--[if lt IE 10]>
-        <script src="/ncjxdPage/static/src/js/ie_update.js"></script>
-<![endif]-->
-<link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-<link rel="stylesheet" type="text/css" href="/ncjxdPage/static/src/layui/css/layui.css">
-<link rel="stylesheet" type="text/css" href="../static/src/style/public.css">
-<link rel="stylesheet" type="text/css" href="../static/src/style/manage.css">
-</head>
-<body>    
-  	 <div class="container page_wrap">
-  	  	  <div class="article pull-left">
-  	  	  	  <div class="title">
-  	  	  	  	<i class="fa fa-book" aria-hidden="true"></i>
-  	  	  	  	咨询管理
-  	  	  	  </div>
-  	  	  	  <ul>
-                <li class="indexN">
-                  <a href="manage_n.html">动态通知公告</a>
-                </li>
-                <li class="indexT active">
-                  <a href="javascript:void(0)">首页推荐</a>
-                </li>
-                <li class="indexI">
-                  <a href="manage_i.html">首页照片推荐 </a>
-                </li>
-                <li class="recT">
-                   <a href="manage_r.html">资源推荐</a>
-                </li>
-              </ul>
-  	  	  </div>
-  	  	  <div class="seciton pull-right">
-  	  	  	 <div id="indexT" class="table_b">
-	  	  	  	 <div class="head">
-	  	  	  	 	 <button class="layui-btn layui-btn-normal" id="add">
-	  	  	  	 	 	<i class="fa fa-plus" aria-hidden="true"></i>
-	  	  	  	 	    添加推荐
-	  	  	  	 	</button>
-		  	  	  	 <span>说明：此处为首页滚动banner管理，最多推荐5个，图片规格为xxx*xxx</span>
-	  	  	  	 </div>
-                 <div class="body">
-                 	<table class="layui-table">
-                 		<thead>
-                 			<tr>
-                 			  <th>ID</th>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+        <title>管理页面</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <!--[if lt IE 10]>
+                <script src="/ncjxdPage/static/src/js/ie_update.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+                        <link  href="http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/layui/css/layui.css" rel="stylesheet" type="text/css"/>
+                <link  href="http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/style/public.css" rel="stylesheet" type="text/css"/>
+                <link  href="http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/style/manage.css" rel="stylesheet" type="text/css"/>
+         
+            </head>
+    <body>
+        <div id="header">
+            <div class="container">
+    <div class="title">
+        <h3>湖北省农村教学点网校</h3>
+        <p>— 管理与服务平台 —</p>
+    </div>
+    <ul class="nav navbar-nav">
+        <li class="active">
+            <a href="/">首页</a>
+        </li>
+        <li>
+            <a href="#">巡课互动</a>
+        </li>
+        <li>
+            <a href="/live">直播活动</a>
+        </li>
+        <li class="dropdown">
+           <!--  <a href="/course" data-toggle="dropdown" class="dropdown-toggle">课程表<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="##">计划列表</a></li>
+                <li><a href="##">开课确认</a></li>
+            </ul> -->
+            <a href="/course">课程表</a>
+        </li>
+        <li class="dropdown">
+            <a href="##" data-toggle="dropdown" class="dropdown-toggle">数字资源<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">学科资源</a></li>
+                <li><a href="#">教学点录课</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="http://wangyong.yanxiu.dev.dodoedu.com">教师研修</a>
+        </li>
+        <li><a href="/analytics">在线统计</a></li>
+    </ul>
+</div>        </div>
+        <div>
+            <div class="container page_wrap">
+                <div class="article pull-left">
+                    <div class="title">
+                        <i class="fa fa-book"></i>
+                        咨询管理
+                    </div>
+                    <ul>
+                        <li class="}">
+                            <a href="/manage/noticelist">动态通知公告</a>
+                        </li>
+                        <li class=" active }">
+                            <a href="/manage/bannerlist">首页推荐</a>
+                        </li>
+                        <li class="}">
+                            <a href="/manage/photolist">首页照片推荐 </a>
+                        </li>
+                        <li class="}">
+                            <a href="/manage/resourcelist">资源推荐</a>
+                        </li>
+                    </ul>
+                    <div class="title">
+                        <i class="fa fa-tags"></i>
+                        活动管理
+                    </div>
+                    <ul>
+                        <li class="}">
+                            <a href="/manage/activitylist">活动列表</a>
+                        </li>
+                    </ul>
+                    <div class="title">
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                        用户管理
+                    </div>
+                    <ul>
+                        <li class="}">
+                            <a href="#">管理员管理</a>
+                        </li>
+                        <li class="}">
+                            <a href="#">下级管理</a>
+                        </li>
+                    </ul>
+                    <div class="title">
+                        <i class="fa fa-home"></i>
+                        学校管理
+                    </div>
+                    <ul>
+                        <li class="}">
+                            <a href="#">学校管理</a>
+                        </li>
+                        <li class="}">
+                            <a href="/manage/teacherlist">教师管理</a>
+                        </li>
+                    </ul>
+                    <div class="title">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        账号管理
+                    </div>
+                </div>
+                <!--主内容开始-->
+                <script type="text/javascript" src="http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/js/lib/plupload/plupload.full.min.js"></script>
+<div class="seciton pull-right">
+    <div id="indexT" class="table_b">
+        <div class="head">
+            <button class="layui-btn layui-btn-normal" id="add">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                添加推荐
+            </button>
+            <span>说明：此处为首页滚动banner管理，最多推荐5个，图片规格为jpeg,jpg,png</span>
+        </div>
+        <div class="body">
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
                         <th>内容标题</th>
                         <th>排序</th>
                         <th>图片预览</th>
                         <th>链接</th>
                         <th>推荐时间</th>
                         <th>操作</th>
-                 			</tr>
-                 		</thead>
-                 		<tbody>
-                 			<tr>
-                 				<td>2</td>
-                 				<td>这里是推荐内容的标题标题</td>
-                 				<td>3</td>
-                 				<td><img src="https://img.alicdn.com/tps/i4/TB1XmmdkAvoK1RjSZPfSutPKFXa.jpg_1080x1800Q70s50.jpg"></td>
-                 				<td>www.baiud.com</td>
-                 				<td>2018.0.0</td>
-                 				<td><a class="change">修改</a><a class="del">删除</a></td>
-                 			</tr>
-                 			<tr>
-                 				<td>3</td>
-                 				<td>这里是推荐内容的标题标题</td>
-                 				<td>3</td>
-                 				<td><img src="https://img.alicdn.com/tps/i4/TB1XmmdkAvoK1RjSZPfSutPKFXa.jpg_1080x1800Q70s50.jpg"></td>
-                 				<td>www.baiud.com</td>
-                 				<td>2018.0.0</td>
-                 				<td><a class="change">修改</a><a class="del">删除</a></td>
-                 			</tr>
-                 		</tbody>
-                 	</table>
-                 </div>
-                
-  	  	  	 </div>
-  	  	  </div>
-  	</div>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                  <!--                       <tr>
+                        <td class="r_title">60</td>
+                        <td class="">ABC</td>
+                        <td class="r_cover_img">213</td>
+                        <td><img src="http://images.dev.dodoedu.com/wenku/4d4b524ac1c5fafa.jpg"></td>
+                        <td>www.coacomm.com123</td>
+                        <td>2018-12-11 11:51:54</td>
+                        <td><a class="change">修改</a><a class="del">删除</a></td>
+                    </tr>
+                                        <tr>
+                        <td class="r_title">45</td>
+                        <td class="">????o????????o?</td>
+                        <td class="r_cover_img">123</td>
+                        <td><img src="http://images.dev.dodoedu.com/wenku/789e9f6fbb360c0c.png"></td>
+                        <td>123</td>
+                        <td>2018-12-11 09:35:22</td>
+                        <td><a class="change">修改</a><a class="del">删除</a></td>
+                    </tr>
+                                        <tr>
+                        <td class="r_title">46</td>
+                        <td class="">123123</td>
+                        <td class="r_cover_img">123</td>
+                        <td><img src="http://images.dev.dodoedu.com/wenku/d2818f496eebeff0.png"></td>
+                        <td>123</td>
+                        <td>2018-12-11 09:35:53</td>
+                        <td><a class="change">修改</a><a class="del">删除</a></td>
+                    </tr>
+                                        <tr>
+                        <td class="r_title">47</td>
+                        <td class="">123qweqwe</td>
+                        <td class="r_cover_img">123</td>
+                        <td><img src="http://images.dev.dodoedu.com/wenku/7f20d2641b10d1cd.png"></td>
+                        <td>123</td>
+                        <td>2018-12-11 09:38:17</td>
+                        <td><a class="change">修改</a><a class="del">删除</a></td>
+                    </tr>
+                                        <tr>
+                        <td class="r_title">50</td>
+                        <td class="">123</td>
+                        <td class="r_cover_img">123</td>
+                        <td><img src="http://images.dev.dodoedu.com/wenku/b30d99893edf9d11.png"></td>
+                        <td>123</td>
+                        <td>2018-12-11 09:42:09</td>
+                        <td><a class="change">修改</a><a class="del">删除</a></td>
+                    </tr>
+                      -->
+                  
+                </tbody>
+
+            </table>
+            <div class="tableLoading">
+                  <div>表格数据加载中...</div>
+            </div>
+             <div id="pageNum" class="comm-page"></div>
+        </div>
+
+    </div>
+</div>
 
 
-    <div id="controlAdd"  class="control" style="display: none;">
-       <div class="layui-form" action="">
+
+<input type="hidden" id="controlTpye" value="0">
+<div id="control"  class="control" style="display: none;">
+       <form class="layui-form" lay-filter="control">
           <div class="layui-form-item">
             <label class="layui-form-label">
              <span class="red">*</span> 标题：
             </label>
             <div class="layui-input-block">
-              <input type="text" name="title" required  lay-verify="required" placeholder="标题" autocomplete="off" class="layui-input">
+              <input type="text" name="title" required  
+              lay-verify="required" 
+              placeholder="标题" 
+              class="layui-input">
            </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">
+            <label class="layui-form-label" id="upImgWrap">
                 <span class="red">*</span> 配图：
             </label>
-             <button class="layui-btn layui-btn-normal layui-btn-sm" id="upbtn">                
+             <button class="layui-btn layui-btn-normal layui-btn-sm upbtn" id="upImg">                
                   选择图片
             </button>
-            <span>图片大小1200X600</span>
+            <span>尺寸: 1540X400</span>
+            <div id="imglist" class="upImgList"></div>
             <div class="layui-input-block inner">
-               <img src="">
+               <img src="" id="previewImage" class="img-v">
+               <input type="hidden" id="img_file_path" name="cover_img">
            </div>
+
         </div>
          <div class="layui-form-item">
             <label class="layui-form-label">
-                <span class="red">*</span> 链接：
+                <span class="white">*</span> 链接：
             </label>
             <div class="layui-input-block">
-               <input type="text" name="title" required  lay-verify="required" placeholder="跳转链接" autocomplete="off" class="layui-input">
+               <input type="text" 
+               name="goto_url"  
+               placeholder="跳转链接" 
+               class="layui-input">
            </div>
         </div>
           <div class="layui-form-item">
             <label class="layui-form-label">
-                <span class="red">*</span> 排序：
+                <span class="white">*</span> 排序：
             </label>
             <div class="layui-input-block sortWrap">
-               <input type="text" name="title" required  lay-verify="required" placeholder="排序" autocomplete="off" class="layui-input">
+               <input type="text" name="sort"  placeholder="排序" class="layui-input">
            </div>
         </div>
-       </div>
-    </div>
-
-   <div id="controlChange"  class="control"  style="display: none;">
-      <div class="layui-form" action="">
-          <div class="layui-form-item">
-            <label class="layui-form-label">
-             <span class="red">*</span> 标题：
-            </label>
-            <div class="layui-input-block">
-              <input type="text" name="title" required  lay-verify="required" placeholder="标题" autocomplete="off" class="layui-input" value="这是推荐标题">
-           </div>
+        <button lay-submit lay-filter="control" id="submitControlBt"></button>  
+       </form>
+</div>                <!--主内容结束-->
+            </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">
-                <span class="red">*</span> 配图：
-            </label>
-             <button class="layui-btn layui-btn-normal layui-btn-sm" id="upbtn">       
-                  更改图片
-            </button>
-            <span>图片大小1200X600</span>
-            <div class="layui-input-block inner">
-               <img src="https://img.alicdn.com/tps/i4/TB1XmmdkAvoK1RjSZPfSutPKFXa.jpg_1080x1800Q70s50.jpg">
-           </div>
-        </div>
-         <div class="layui-form-item">
-            <label class="layui-form-label">
-                <span class="red">*</span> 链接：
-            </label>
-            <div class="layui-input-block">
-               <input type="text" name="title" required  lay-verify="required" placeholder="跳转链接" autocomplete="off" class="layui-input" value="www.baidu.com">
-           </div>
-        </div>
-          <div class="layui-form-item">
-            <label class="layui-form-label">
-                <span class="red">*</span> 排序：
-            </label>
-            <div class="layui-input-block sortWrap">
-               <input type="text" name="title" required  lay-verify="required" placeholder="排序" autocomplete="off" class="layui-input" value="8">
-           </div>
-        </div>
-       </div>
-   </div>
-
-
-   
 </body>
-
-<!-- <script src="/ncjxdPage/static/src/layui/layui.js"></script>
-<script src="/ncjxdPage/static/src/layui/js/manage_t.js"></script> -->
-
-<script src="/ncjxdPage/static/src/js/lib/require.js"></script>
-<script src="/ncjxdPage/static/src/js/re-config.js"></script>
-<script src="/ncjxdPage/static/src/js/manage_t.js"></script>
-
+<script type="text/javascript" src="http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/js/lib/require.js" ></script>
+<script type="text/javascript" src="http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/js/re-config.js" ></script>
+<script type="text/javascript" src="http://wufff.static.dev.dodoedu.com/ncjxdPage/static//src/js/manage_t.js" ></script>
+ 
 </html>

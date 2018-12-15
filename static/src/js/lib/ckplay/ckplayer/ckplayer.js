@@ -340,7 +340,7 @@ function ckplayerConfig() {
 		//全局变量，保存当前缩放比例
 		this.videoScale = 1;
 		//全局变量：设置字体
-		this.fontFamily = '"Microsoft YaHei"; YaHei; "\5FAE\8F6F\96C5\9ED1"; SimHei; "\9ED1\4F53";Arial';
+		this.fontFamily = 'Microsoft YaHei';
 		//全局变量：记录第一次拖动进度按钮时的位置
 		this.timeSliderLeftTemp = 0;
 		//全局变量：判断是否记录了总时间

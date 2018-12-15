@@ -1,5 +1,5 @@
 require.config({
-	baseUrl: "http://ncjxd.images.dev.dodoedu.com/static/src/js",
+	baseUrl: "/ncjxd/static/src/js",
 	// urlArgs: "v=" + new Date().getTime(),
 	paths: {
 			"jquery": "./lib/jquery/jquery",
@@ -11,7 +11,7 @@ require.config({
 			"page": "./tools/pags",
 			"ckplayer":"./lib/ckplay/ckplayer/ckplayer",
 			"viewPhoto":"./ui/viewPhoto",
-			"layui":"../layui/layui.all",
+			"layui":"./lib/layui/layui.all",
 			"tools":"./tools/tools",
 			"api":"./tools/api",
 			"expression":"./ui/expression",
