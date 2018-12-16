@@ -91,7 +91,7 @@ define(["path"],function(path){
 			}
 		},
 
-
+         //注意预览包裹层为
 		 imgMost:function(button,Image){
 			var uploader = new plupload.Uploader({
 				runtimes: 'html5,flash,silverlight,html4',
@@ -121,7 +121,7 @@ define(["path"],function(path){
             //             if(uploader.files.length>8){ // 最多上传8张图
 				        //     uploader.splice(8,999);
 				        // }
-				        console.log(uploader.files.length);
+				        // console.log(uploader.files.length);
                         var arry = [];
                         var html ="";
 						plupload.each(files, function(file) {
@@ -132,15 +132,12 @@ define(["path"],function(path){
                                 arry.push(obj);
 						}); 
 
-                        var length = 8 > arry.length ?  arry.length : 8;
 						    for(var i=0; i<arry.length;i++){
-						    
 						    	  html +=  '<div class="item" id="' + arry[i].id + '">'
 					              html +=  '<div class="info"  style="height:40px;">' + arry[i].name + '('+arry[i].size+')<b></b></div>'
 					              html +=  '<div class="inner"><img src=""></div>'
 					              html +=  '</div>'
 					              html +=  ' </div>'
-					             
 						    }
 						    $("#imglist").append(html);
 						   

@@ -16,9 +16,7 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
 
 
    $("#add").click(function() {
-      upLoad.splice(0,99);
-      $("#imglist").html(" ");
-      document.getElementById('img_file_path').value = "";
+      initContorl (null);
       layer.open({
         type: 1,
         title:"上传新图片",
@@ -92,6 +90,9 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
     if(data){
     form.val("control",data)
     }else {
+      upLoad.splice(0,99);
+      $("#imglist").html(" ");
+      document.getElementById('img_file_path').value = "";
       form.val("control", 
       {
         "title": "" 
