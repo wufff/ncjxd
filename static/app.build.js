@@ -9,6 +9,7 @@
    //    name:"active_list"
    // },{
    //    name:"active_list_add"
+
    // },{
    //    name:"index"
    // },{
@@ -45,7 +46,7 @@
    //    name:"table_edit"
    // }]
    modules:[{
-        name:"manage_r",
+       name:"manage_r",
         excludeShallow:["layui"]
    }]
 })
