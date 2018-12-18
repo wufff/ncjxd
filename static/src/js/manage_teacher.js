@@ -4,6 +4,7 @@ require(["layui", "path","page","tools"], function(layui, path,pages,tools) {
     var $ = jQuery = layui.jquery; //用他的jquey否则弹窗会有问题
     var form = layui.form;
     var page;
+    var dialog;
 
   
 
@@ -48,10 +49,30 @@ form.on('select(grade)', function(data){
 
 
 
+  
+  function initContorl (data){
+    if(data){
+    form.val("control",data)
+    }else {
+      $(".controlText").text("系统自动获取教师姓名");
+      $("input:checkbox").attr("checked",false);
+      form.val("control", 
+      {
+        "teacher_id": ""
+        ,"mobile": ""
+
+      })
+    }
+  }
+
+
+
 
 
     $("#addTeacherBtn").click(function() {
-      layer.open({
+      $("#controlTpye").val(0);
+        initContorl(null)
+        dialog = layer.open({
         type: 1,
         title:"添加教师",
         content: $('#controlAddteacher'),
@@ -68,12 +89,34 @@ form.on('select(grade)', function(data){
   form.on('submit(control)', function(data){
        var controlTpye = $("#controlTpye").val();
        var getData = data.field;
-       getData.type = 3;
-       console.log(getData);
-       console.log(controlTpye);
+       var gradeArr = new Array();
+        $("input:checkbox[name='grade']:checked").each(function(i){
+              gradeArr[i] = $(this).val();
+        });
+       if(gradeArr.length > 0){
+         var gradeValue = gradeArr.join("|");
+         getData.grade = gradeValue;
+       }else{
+          layer.msg("请至少选中一个年级",{icon:5})
+          return false;
+       }
+       
+      var subjectArry = new Array();
+       $("input:checkbox[name='subject']:checked").each(function(i){
+              subjectArry[i] = $(this).val();
+        });
+
+       if(subjectArry.length > 0){
+         var subjectValue = subjectArry.join("|");
+         getData.subject = subjectValue;
+       }else{
+         layer.msg("请至少选中一个学科",{icon:5})
+         return false;
+       }
+   
        if(controlTpye == 0) {
-           var url = path.api+"/api/addManageRecommend";
-           var loading = layer.load(3);
+           var url = path.api+"/api/addSchoolTeacher";
+           // var loading = layer.load(3);
           //  $.get(url,getData,function(res){
           //     console.log(res);
           //     if(res.type == "success") {
@@ -85,8 +128,7 @@ form.on('select(grade)', function(data){
           //        alert(res.type);
           //     }
           // });
-          alert(0);
-           return false; 
+         return false; 
        }
 
        if(controlTpye == 1){
@@ -110,21 +152,34 @@ form.on('select(grade)', function(data){
 
 
 
+function refrechData() {
+    var current = $("#pageNum").find(".current").text();
+    if (current) {
+      initPage(current);
+    } else {
+      initPage(1);
+    }
+  }
 
 
-
-
-
-
-  
   
 
   $("body").on("click",".del",function(){
         layer.confirm('确定删除此条推荐吗?', {icon: 3, title:'提示'}, function(index){
         layer.close(index);
       });
+  })
+
+
+
+
+ $("body").on("click",".change",function(){
+        layer.confirm('确定删除此条推荐吗?', {icon: 3, title:'提示'}, function(index){
+        layer.close(index);
+      });
 
   })
+
 
     
 
@@ -132,14 +187,14 @@ form.on('select(grade)', function(data){
   function getUserListBySchoolId (){
     var url = path.api+'/api/getUserListBySchoolId';
     $.get(url,function(data){
+       // console.log(data);
       if(data.type == 'success'){
           var list = data.data.data;
           var html = "";
           for(var i=0;i<list.length;i++){
-             html += '<option value="'+ list[i].school_encrypt_id +'">'+ list[i].user_realname+'</option>'
+             html += '<option value="'+ list[i].user_encrypt_id +'">'+ list[i].user_realname+'</option>'
           }
-         $("select[name=schoolname]").append(html);
-         $("select[name=schoolname]").val(" ");
+         $("select[name=teacher_id]").append(html);
          form.render('select','control');
       }
     })
@@ -151,12 +206,16 @@ form.on('select(grade)', function(data){
           var getData = {};
           getData.grade_id = 1;
           $.get(url,getData,function(data){
-             console.log(data);
+             // console.log(data);
              if(data.type == "success"){
                 var list = data.data.data.list;
                 var html = "";
                 for(var i=0;i<list.length;i++){
-                   html += '<input type="checkbox" name="subject" value="'+ list[i].ss_id +'" title="'+ list[i].ss_name +'">'
+                  if(i == 0){
+                     html += '<input type="checkbox" name="subject" value="'+ list[i].ss_id +'" title="'+ list[i].ss_name +'" checked>'
+                  }else{
+                     html += '<input type="checkbox" name="subject" value="'+ list[i].ss_id +'" title="'+ list[i].ss_name +'">'
+                  }
                 }
                $("#subjectWrap").append(html);
                form.render('checkbox','control');
@@ -192,6 +251,7 @@ form.on('select(grade)', function(data){
       })
      
     function buildTable(list) {
+      console.log(list);
     if (list.type == "success") {
       var data = list.data.data.list.map(function(item) {
         return {
