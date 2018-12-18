@@ -10,6 +10,7 @@
         <script src="/njx/static/src/js/ie_update.js"></script>
 <![endif]-->
 <link rel="stylesheet" type="text/css" href="../static/src/layui/css/layui.css">
+<link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
 <!-- <link rel="stylesheet" type="text/css" href="../static/src/style/lib/bootstrap/bootstrap.min.css"> -->
 <link rel="stylesheet" type="text/css" href="../static/src/style/public.css">
 <link rel="stylesheet" type="text/css" href="../static/src/style/tableClass.css">
@@ -52,7 +53,7 @@
 </div>
    <div class="container page_wrap">
       <h4>课表管理</h4>
-      <div class="layui-form" id="filter">
+      <div class="layui-form filter">
          <dl class="clear">
           <dt class="two">&nbsp地&nbsp&nbsp区：</dt>
           <dd>
@@ -101,7 +102,7 @@
           <button class="layui-btn layui-btn-normal tab_btn">查询</button>
       </div>
         <div class="table">
-          <div class="header">
+          <div class="header clear">
              <div class="title">
                  2018-2019上学期课表
               <small>
@@ -121,227 +122,98 @@
                      <i class="fa fa-angle-right" aria-hidden="true"></i>
                  </span>
               </div>
-
               <div class="layui-btn-group">
+                  <div  id="configBt">配置  
+                     <ul class="content">
+                       <li>
+                        <a href="">编辑学期</a>
+                       </li>
+                       <li>
+                         <a href="">设置上课时间</a>
+                       </li>
+                       <li>
+                         <a href="">历史课表</a>
+                       </li>
+                       <li>
+                         <a href="">操作日志</a>
+                       </li>
+                     </ul>
+                  </div>
+                </div>
+              <div class="layui-btn-group">
+                   <button class="layui-btn layui-btn-primary">编辑课表</button>
                    <button class="layui-btn layui-btn-primary">开课确认</button>
-                  <button class="layui-btn layui-btn-primary">编辑课表</button>          
                 </div>
-              <div class="layui-btn-group">
-                  <button class="layui-btn layui-btn-primary">设置</button>
-                </div>
+              
             
           </div>
           <div class="body">
-                   <table class="layui-table" lay-even>
-            <colgroup>
-              <col>
-              <col>
-              <col>
-               <col>
-              <col>
-              <col>
-              <col>
-               <col>
-              <col>
-              <col width="170">
-            </colgroup>
-            <thead>
-              <tr>
-                <th>学校</th>
-                <th>所在市</th>
-                <th>所在县</th>
-                <th>所在乡镇</th>
-                <th>年级</th>
-                <th>学科</th>
-                <th>主讲教师</th>
-                <th>节次</th>
-                <th>状态</th>
-                <th>操作</th>
-              </tr> 
-            </thead>
-            <tbody>
-              <tr>
-                <td>崇阳实验小学</td>
-                <td>荆门市</td>
-                <td>京山县</td>
-                <td>黄岐镇</td>
-                <td>三年级</td>
-                <td>语文</td>
-                <td>李红</td>
-                <td>5</td>
-                <td>进行中</td>
-                <td>
-                   <a href="" class="open">进入课堂</a>
-                   <a href="" class="go">发起互动</a>
-                </td>
-              </tr>
-              <tr>
-                <td>崇阳实验小学</td>
-                <td>荆门市</td>
-                <td>京山县</td>
-                <td>黄岐镇</td>
-                <td>三年级</td>
-                <td>语文</td>
-                <td>李红</td>
-                <td>5</td>
-                <td>进行中</td>
-                <td>
-                   <a href="" class="open">进入课堂</a>
-                   <a href="" class="go">发起互动</a>
-                </td>
-              </tr>
-              <tr>
-                 <td>崇阳实验小学</td>
-                <td>荆门市</td>
-                <td>京山县</td>
-                <td>黄岐镇</td>
-                <td>三年级</td>
-                <td>语文</td>
-                <td>李红</td>
-                <td>5</td>
-                <td>进行中</td>
-                <td>
-                   <a href="" class="open">进入课堂</a>
-                   <a href="" class="go">发起互动</a>
-                </td>
-              </tr>
-              <tr>
-                 <td>崇阳实验小学</td>
-                <td>荆门市</td>
-                <td>京山县</td>
-                <td>黄岐镇</td>
-                <td>三年级</td>
-                <td>语文</td>
-                <td>李红</td>
-                <td>5</td>
-                <td>进行中</td>
-               <td>
-                   <a href="" class="open">进入课堂</a>
-                   <a href="" class="go">发起互动</a>
-                </td>
-              </tr>
-              <tr>
-                 <td>长江实验modules小学</td>
-                <td>荆门市</td>
-                <td>京山县</td>
-                <td>黄岐镇</td>
-                <td>三年级</td>
-                <td>语文</td>
-                <td>李红</td>
-                <td>5</td>
-                <td>进行中</td>
-                <td>
-                   <a href="" class="open">进入课堂</a>
-                   <a href="" class="go">发起互动</a>
-                </td>
-              </tr>
-               <tr>
-                 <td>崇阳实验小学</td>
-                <td>荆门市</td>
-                <td>京山县</td>
-                <td>黄岐镇</td>
-                <td>三年级</td>
-                <td>语文</td>
-                <td>李红</td>
-                <td>5</td>
-                <td>进行中</td>
-                <td>
-                   <a href="" class="open">进入课堂</a>
-                   <a href="" class="go">发起互动</a>
-                </td>
-              </tr>
-               <tr>
-                 <td>崇阳实验小学</td>
-                <td>荆门市</td>
-                <td>京山县</td>
-                <td>黄岐镇</td>
-                <td>三年级</td>
-                <td>语文</td>
-                <td>李红</td>
-                <td>5</td>
-                <td>进行中</td>
-                <td>
-                   <a href="" class="open">进入课堂</a>
-                   <a href="" class="go">发起互动</a>
-                </td>
-              </tr>
-               <tr>
-                 <td>崇阳实验小学</td>
-                <td>荆门市</td>
-                <td>京山县</td>
-                <td>黄岐镇</td>
-                <td>三年级</td>
-                <td>语文</td>
-                <td>李红</td>
-                <td>5</td>
-                <td>进行中</td>
-                <td>
-                   <a href="" class="open">进入课堂</a>
-                   <a href="" class="go">发起互动</a>
-                </td>
-              </tr>
-               <tr>
-                 <td>崇阳实验小学</td>
-                <td>荆门市</td>
-                <td>京山县</td>
-                <td>黄岐镇</td>
-                <td>三年级</td>
-                <td>语文</td>
-                <td>李红</td>
-                <td>5</td>
-                <td>进行中</td>
-                <td>
-                   <a href="" class="open">进入课堂</a>
-                   <a href="" class="go">发起互动</a>
-                </td>
-              </tr>
-               <tr>
-                 <td>崇阳实验小学</td>
-                <td>荆门市</td>
-                <td>京山县</td>
-                <td>黄岐镇</td>
-                <td>三年级</td>
-                <td>语文</td>
-                <td>李红</td>
-                <td>5</td>
-                <td>进行中</td>
-                <td>
-                   <a href="" class="open">进入课堂</a>
-                   <a href="" class="go">发起互动</a>
-                </td>
-              </tr>
-               <tr>
-                 <td>崇阳实验小学</td>
-                <td>荆门市</td>
-                <td>京山县</td>
-                <td>黄岐镇</td>
-                <td>三年级</td>
-                <td>语文</td>
-                <td>李红</td>
-                <td>5</td>
-                <td>进行中</td>
-                <td>
-                   <a href="" class="open">进入课堂</a>
-                   <a href="" class="go">发起互动</a>
-                </td>
-              </tr>
-               <tr>
-                 <td>崇阳实验小学</td>
-                <td>荆门市</td>
-                <td>京山县</td>
-                <td>黄岐镇</td>
-                <td>三年级</td>
-                <td>语文</td>
-                <td>李红</td>
-                <td>5</td>
-                <td>进行中</td>
-                <td>
-                   <a href="" class="open">进入课堂</a>
-                   <a href="" class="go">发起互动</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+           
+          <table class="layui-table" style="margin-top: 0">
+                       <colgroup>
+                          <col width="66">
+                          <col>
+                          <col>
+                           <col>
+                          <col>
+                          <col>
+                          <col>
+                           <col>
+                          <col>
+                          
+                        </colgroup>
+                      <thead>
+                          <tr>
+                          <th>午别</th>
+                          <th>节次</th>
+                          <th>
+                          星期一
+                          <div class="smallTitle">12月17日</div>
+                        </th>
+                          <th>
+                            星期一
+                          <div class="smallTitle">12月18日</div>
+                          </th>
+                          <th>星期三</th>
+                          <th>星期四</th>
+                          <th>星期五</th>
+                          <th>星期六</th>
+                          <th>星期日</th>
+                        </tr> 
+                      </thead>
+                      <tbody>
+                            <tr>
+                                <td rowspan="4" class="Bold">上午</td>
+                                <td style="font-size: 12px; line-height: 20px;">
+                                  <div>一</div>
+                                </td>
+                                <td position="1,1">1</td>
+                                <td position="1,2" class="today">2</td>
+                                <td position="1,3"></td><td position="1,4">3</td>
+                                <td position="1,5"></td><td position="1,6">4</td>
+                                <td position="1,7">6</td>
+                            </tr>
+                             <tr>
+                                <td style="font-size: 12px; line-height: 20px;">
+                                  <div>二</div>
+                                </td>
+                                  <td position="2,1"></td>
+                                  <td position="2,2" class="today"></td>
+                                  <td position="2,3"></td><td position="2,4"></td>
+                                  <td position="2,5"></td><td position="2,6"></td>
+                                  <td position="2,7"></td></tr><tr><td style="font-size: 12px; line-height: 20px;">
+                                    <div>三</div>
+                                  </td>
+                                  <td position="3,1"></td>
+                                  <td position="3,2" class="today"></td>
+                                  <td position="3,3"></td>
+                                  <td position="3,4"></td>
+                                  <td position="3,5"></td>
+                                  <td position="3,6"></td>
+                                  <td position="3,7"></td>
+                                </tr>
+                      </tbody>
+                  </table>
           </div>
       </div>
    </div>

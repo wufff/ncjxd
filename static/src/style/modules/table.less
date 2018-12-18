@@ -12,7 +12,7 @@
 .table {
 
 
-.layui-table thead tr th { background: #e6f4ff; }
+.layui-table thead tr  { background: #e6f4ff;}
 .layui-table  th { padding: 15px}
 .layui-table thead tr th { text-align: center;}
 .layui-table  tbody tr td { text-align: center;}
@@ -25,8 +25,9 @@
 .layui-table-hover, .layui-table-mend, 
 .layui-table-patch, .layui-table-tool { background-color: transparent; }
 }
-
-
+//ie兼容
+// .layui-table td, 
+.layui-table th {position: static;}
 .table_b {
    .layui-table thead tr th { background: #e6f4ff;}
    .layui-table thead tr th { text-align: center;}

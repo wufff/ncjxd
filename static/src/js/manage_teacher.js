@@ -11,7 +11,7 @@ require(["layui", "path","page","tools"], function(layui, path,pages,tools) {
 
 initPage (1);
 getUserListBySchoolId();
-controlGetSubject()
+controlGetSubject();
 
 
 

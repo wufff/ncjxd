@@ -13,19 +13,7 @@
 
 
 
-
-.week {
-   width: 128px;
-   
-
-   span {
-     padding: 15px 10px; 
-   }
-   span.bar {
-     cursor: pointer;
-      
-   }
-}
+a{ color:#555; }
 
 .tag-selected {
    border: 1px solid #1E9FFF;
@@ -52,9 +40,17 @@
        position: absolute;
        right:490px;
        top:8px;
+        width: 140px;
+  
+         span {
+           padding: 15px 10px; 
+         }
+         span.bar {
+           cursor: pointer;
+            
+         }
    }
 	.header{ 
-    overflow: hidden;
 	  font-size: 16px;
 	  margin-bottom: 15px;
     position: relative;
@@ -98,4 +94,34 @@
             margin-left: 20px;
         }
 	 }
+}
+
+#configBt {
+  position: relative;
+  font-size: 14px;
+  border:1px solid #c9c9c9;
+  border-radius: 2px;
+  height: 38px;
+  padding: 9px 15px 0 15px;
+  &:hover {
+      .content {
+         display: block;
+      }
+  }
+  .content {  
+    position: absolute;background-color: #fff;z-index: 999999999999;
+    left:0px;top:37px; border:1px solid #c9c9c9;text-align: center;
+    display: none;
+    li{
+       height: 35px;line-height: 35px;cursor: pointer;
+       width: 110px;
+       a {
+         display: block;
+       }
+       &:hover{
+           background-color:#c9c9c9;
+          a { color: #1E9FFF;text-decoration: none; }
+       }
+    }
+   }
 }

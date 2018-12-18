@@ -1,5 +1,5 @@
 require.config({
-	baseUrl: "/ncjxd/static/src/js",
+	baseUrl: "/ncjxd_images/static/src/js",
 	// urlArgs: "v=" + new Date().getTime(),
 	paths: {
 			"jquery": "./lib/jquery/jquery",
@@ -11,16 +11,18 @@ require.config({
 			"page": "./tools/pags",
 			"ckplayer":"./lib/ckplay/ckplayer/ckplayer",
 			"viewPhoto":"./ui/viewPhoto",
-			"layui":"./lib/layui/layui.all",
+			"layui":"../layui/layui.all",
 			"tools":"./tools/tools",
 			"api":"./tools/api",
 			"expression":"./ui/expression",
 			"ZeroClipboard":"./lib/ueditor/third-party/zeroclipboard/ZeroClipboard.min",
 			"plupload":"./lib/plupload/plupload.dev",
 			"moxie":"./lib/plupload/moxie",
-			"upLoad":"./tools/upLoad"
+			"upLoad":"./tools/upLoad",
+			"zTree":"./lib/zTree/jquery.ztree.all.min"
 	},
 	shim: {
+
 		 "Swiper":["jquery"],
          "bootstrap":["jquery"],
          "boot-dropdown":["jquery"],
@@ -32,7 +34,10 @@ require.config({
          },
          "ckplayer":{
          	exports:"ckplayer"
-         }
+         },
+         "zTree":{
+         	deps:['jquery']
+         },
 	}
 });
 
