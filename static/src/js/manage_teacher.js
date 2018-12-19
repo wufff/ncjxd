@@ -5,7 +5,7 @@ require(["layui", "path","page","tools"], function(layui, path,pages,tools) {
     var form = layui.form;
     var page;
     var dialog;
-
+    alert("已进入");
   
 
 

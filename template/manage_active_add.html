@@ -1,214 +1,257 @@
+
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-<title>活动管理</title>
-<meta name="description" content="">
-<meta name="keywords" content="">
-<!--[if lt IE 10]>
-        <script src="/ncjxdPage/static/src/js/ie_update.js"></script>
-<![endif]-->
-<link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-<link rel="stylesheet" type="text/css" href="/ncjxdPage/static/src/layui/css/layui.css">
-<link rel="stylesheet" type="text/css" href="../static/src/style/public.css">
-<link rel="stylesheet" type="text/css" href="../static/src/style/manage.css">
-</head>
-<body>    
-  <div>
-  	  <div class="container page_wrap">
-  	  	  <div class="article pull-left">
-  	  	  	  <div class="title">
-  	  	  	  	<i class="fa fa-book"></i>
-  	  	  	  	咨询管理
-  	  	  	  </div>
-  	  	  	  <ul>
-  	  	  	  	<li>
-  	  	  	  		<a href="manage_n.html">动态通知公告</a>
-  	  	  	  	</li>
-  	  	  	  	<li>
-  	  	  	  		<a href="manage_t.html">首页推荐</a>
-  	  	  	  	</li>
-  	  	  	  	<li >
-  	  	  	  		<a href="javascript:void(0)">首页照片推荐 </a>
-  	  	  	  	</li>
-  	  	  	  	<li >
-  	  	  	  		 <a href="manage_r.html">资源推荐</a>
-  	  	  	  	</li>
-  	  	  	  </ul>
-  	  	  	  <div class="title">
-  	  	  	  	<i class="fa fa-tags"></i>
-  	  	  	  	活动管理
-  	  	  	  </div>
-  	  	  	  <ul>
-  	  	  	  	<li class="active">
-  	  	  	  		<a href="manage_n.html">活动列表</a>
-  	  	  	  	</li>
-  	  	  	  </ul>
-  	  	  	   <div class="title">
-  	  	  	  	<i class="fa fa-cog" aria-hidden="true"></i>
-  	  	  	  	用户管理
-  	  	  	  </div>
-  	  	  	  <ul>
-  	  	  	  	<li class="indexN">
-  	  	  	  		<a href="manage_n.html">管理员管理</a>
-  	  	  	  	</li>
-  	  	  	    <li class="indexN">
-  	  	  	  		<a href="manage_n.html">下级管理</a>
-  	  	  	  	</li>
-  	  	  	  </ul>
-  	  	  	  <div class="title">
-  	  	  	  	<i class="fa fa-home"></i>
-  	  	  	  	学校管理
-  	  	  	  </div>
-  	  	  	  <ul>
-  	  	  	  	<li class="indexN">
-  	  	  	  		<a href="manage_n.html">学校管理</a>
-  	  	  	  	</li>
-  	  	  	    <li class="indexN">
-  	  	  	  		<a href="manage_n.html">教师管理</a>
-  	  	  	  	</li>
-  	  	  	  </ul>
-  	  	  	   <div class="title">
-  	  	  	  	<i class="fa fa-user" aria-hidden="true"></i>
-  	  	  	  	账号管理
-  	  	  	  </div>
-  	  	  </div>
-  	  	  <div class="seciton pull-right">
-	  	  	  	 <div class="head clear">
-  	  	  	  	 	<button class="layui-btn layui-btn-primary pull-left">返回列表</button>
-  	  	  	  	 	<button class="rightBtn layui-btn layui-btn-normal">确认发布</button>
-  	  	  	   </div>
-               <div class="body">
-                  <div class="formWrap">
-                      <div class="layui-form">
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">
-                            <span class="red">* </span>
-                            活动标题:
-                           </label>
-                          <div class="layui-input-inline active_title">
-                            <input type="text" name="title"  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-                          </div>
-                        </div>
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">
-                            <span class="red">* </span>
-                            主讲人:
-                           </label>
-                          <div class="layui-input-inline active_author">
-                            <input type="text" name="title"  lay-verify="required" placeholder="主讲人" autocomplete="off" class="layui-input">
-                          </div>
-                        </div>
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">
-                            <span class="red">* </span>
-                            时间:
-                           </label>
-                          <div class="layui-input-inline active_time">
-                            <input type="text" name="title"  lay-verify="required" placeholder="请输选择时间" autocomplete="off" class="layui-input">
-                          </div>
-                        </div>
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">
-                            <span class="red">* </span>
-                            简介:
-                           </label>
-                          <div class="layui-input-inline active_info">
-                             <textarea class="layui-textarea"></textarea>
-                          </div>
-                        </div>
-                         <div class="layui-form-item">
-                          <label class="layui-form-label">
-                            <span class="red">* </span>
-                            活动封面
-                           </label>
-                          <div class="layui-input-inline active_upload">
-                              <button class="layui-btn layui-btn-normal" id="upImg">选择文件上传</button>
-                              <span>（尺寸大于280像素*157像素，大小小于5M，支持JPG/JPEG/PNG/GIF/BMP类型的图片）</span>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+        <title>管理页面</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <!--[if lt IE 10]>
+                <script src="/ncjxdPage/static/src/js/ie_update.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+                        <link  href="http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/layui/css/layui.css" rel="stylesheet" type="text/css"/>
+                <link  href="http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/style/public.css" rel="stylesheet" type="text/css"/>
+                <link  href="http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/style/manage.css" rel="stylesheet" type="text/css"/>
+         
+            </head>
+    <body>
+        <div id="header">
+            <div class="container">
+    <div class="title">
+        <h3>湖北省农村教学点网校</h3>
+        <p>— 管理与服务平台 —</p>
+    </div>
+    <ul class="nav navbar-nav">
+        <li class="active">
+            <a href="/">首页</a>
+        </li>
+        <li>
+            <a href="#">巡课互动</a>
+        </li>
+        <li>
+            <a href="/live">直播活动</a>
+        </li>
+        <li class="dropdown">
+           <!--  <a href="/course" data-toggle="dropdown" class="dropdown-toggle">课程表<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="##">计划列表</a></li>
+                <li><a href="##">开课确认</a></li>
+            </ul> -->
+            <a href="/course">课程表</a>
+        </li>
+        <li class="dropdown">
+            <a href="##" data-toggle="dropdown" class="dropdown-toggle">数字资源<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">学科资源</a></li>
+                <li><a href="#">教学点录课</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="http://wangyong.yanxiu.dev.dodoedu.com">教师研修</a>
+        </li>
+        <li><a href="/analytics">在线统计</a></li>
+    </ul>
+</div>        </div>
+        <div>
+            <div class="container page_wrap">
+                <div class="article pull-left">
+                    <div class="title">
+                        <i class="fa fa-book"></i>
+                        咨询管理
+                    </div>
+                    <ul>
+                        <li class="}">
+                            <a href="/manage/noticelist">动态通知公告</a>
+                        </li>
+                        <li class="}">
+                            <a href="/manage/bannerlist">首页推荐</a>
+                        </li>
+                        <li class="}">
+                            <a href="/manage/photolist">首页照片推荐 </a>
+                        </li>
+                        <li class="}">
+                            <a href="/manage/resourcelist">资源推荐</a>
+                        </li>
+                    </ul>
+                    <div class="title">
+                        <i class="fa fa-tags"></i>
+                        活动管理
+                    </div>
+                    <ul>
+                        <li class=" active }">
+                            <a href="/manage/activitylist">活动列表</a>
+                        </li>
+                    </ul>
+                    <div class="title">
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                        用户管理
+                    </div>
+                    <ul>
+                        <li class="}">
+                            <a href="#">管理员管理</a>
+                        </li>
+                        <li class="}">
+                            <a href="#">下级管理</a>
+                        </li>
+                    </ul>
+                    <div class="title">
+                        <i class="fa fa-home"></i>
+                        学校管理
+                    </div>
+                    <ul>
+                        <li class="}">
+                            <a href="#">学校管理</a>
+                        </li>
+                        <li class="}">
+                            <a href="/manage/teacherlist">教师管理</a>
+                        </li>
+                    </ul>
+                    <div class="title">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        账号管理
+                    </div>
+                </div>
+                <!--主内容开始-->
+                <script type="text/javascript" src="/static/js/plupload/js/plupload.full.min.js"></script>
+<div class="seciton pull-right">
+    <div class="head clear">
+        <button class="layui-btn layui-btn-primary pull-left" id="goback">返回列表</button>
+        <button class="rightBtn layui-btn layui-btn-normal" id="publishBt">确认发布</button>
+    </div>
+    <div class="body">
+        <div class="formWrap">
+            <form class="layui-form" lay-filter="form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="red">* </span>
+                        活动标题:
+                    </label>
+                    <div class="layui-input-inline active_title">
+                        <input type="text" name="title"  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="red">* </span>
+                        主讲人:
+                    </label>
+                    <div class="layui-input-inline active_author">
+                        <input type="text" name="name"  lay-verify="required" placeholder="主讲人" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="red">* </span>
+                        时间:
+                    </label>
+                    <div class="layui-input-inline active_time">
+                        <input type="text" name="title"  lay-verify="required" placeholder="请输选择时间" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="red">* </span>
+                        简介:
+                    </label>
+                    <div class="layui-input-inline active_info">
+                        <textarea class="layui-textarea" name='describe' placeholder="请输入活动简介1000字以内"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="red">* </span>
+                        活动封面
+                    </label>
+                     <div class="layui-input-inline active_upload">
+                              <button class="layui-btn layui-btn-primary" id="upImg">选择图片</button>
+                              <span>（尺寸大于280像素*157像素，大小小于5M，支持JPG/JPEG/PNG类型的图片）</span>
                           </div>
 
                           <div class="layui-form-item">
+                              <input type="hidden" name="cover_img" value="">
                               <div class="layui-input-block">
+                               <div id="imglist" class="upImgList"></div>
                                <div class="inner">
-                                  <img src="" id="viewImg" 
-                                   alt="封面图预览" 
-                                  >
+                                 <input type="hidden" id="img_file_path" name="cover_img">
+                                 <img src="" id="previewImage" class="img-v">
                                </div>
                             </div>
-                          </div>
+                          </div> 
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="red">* </span>
+                        活动视频
+                    </label>
+                    <div>
 
-                          
+                        <!-- mp4_names -->
+                        <div class="layui-input-inline active_upload">
+                              <button class="layui-btn layui-btn-primary" id="upVideos">选择视频</button>
+                                <span>（支持格式mp4,大小不超过1024mb）</span>
+                          </div>
+                        
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block upTable">
+                        <div id="mp4list">
+                            
                         </div>
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">
-                            <span class="red">* </span>
-                            活动视频
-                           </label>
-                          <div class="layui-input-inline active_upload">
-                              <button class="layui-btn layui-btn-primary" id="selectVideo">选择文件</button>
-                              <button class="layui-btn layui-btn-normal" id="upVideo">批量上传</button>
-                              <span> （单个视频不超过500MB，支持MP4格式，最多可添加5个视频）</span>
-                          </div>
-                          <div class="layui-form-item">
-                              <div class="layui-input-block upTable">
-                                 <div class="layui-upload-list">
-                                      <table class="layui-table">
-                                        <thead>
-                                          <tr><th>文件名</th>
-                                          <th>大小</th>
-                                          <th>状态</th>
-                                          <th>操作</th>
-                                        </tr></thead>
-                                        <tbody id="demoList"></tbody>
-                                      </table>
-                                    </div>
-                               </div>
-                          </div>
+                        <!-- <input type="hidden"  name="mp4_file_path" id="mp4_file_path" /> -->
+                        <!-- <input type="hidden"  name="mp4_str" id="mp4_str" /> -->
+                        <!-- <input type="hidden"  name="mp4_file_size" id="mp4_file_size" /> -->
                         </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">
-                              <span class="red">* </span>
-                              相关文档
-                             </label>
-                              <div class="layui-input-inline active_upload">
-                                  <button class="layui-btn layui-btn-primary" id="selectWord">选择文件</button>
-                                  <button class="layui-btn layui-btn-normal" id="upWord">批量上传</button>
-                                  <span>（支持格式：office文档、图片、pdf文档，最多可添加5个文件）</span>
-                              </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <!-- doc_paths -->
+                        <span class="red">* </span>
+                        相关文档
+                    </label>
+                    <div>
+                        <div id="container">
+                            <a id="docfiles" href="javascript:;">[选择文件]</a>
                         </div>
-                           <div class="layui-form-item">
-                              <div class="layui-input-block upTable">
-                                 <div class="layui-upload-list">
-                                      <table class="layui-table">
-                                        <thead>
-                                          <tr><th>文件名</th>
-                                          <th>大小</th>
-                                          <th>状态</th>
-                                          <th>操作</th>
-                                        </tr></thead>
-                                        <tbody id="wordView"></tbody>
-                                      </table>
-                                    </div>
-                               </div>
-                          </div>
-                      </div>
-                  </div>
-               </div>
-                
-  	  	  	 </div>
-  	  	  	 
-  	  	  	</div>
-  	  	  </div>
-  	  </div>
-  </div>
-
-
-
-
-
+                        <div id="doclist"></div>
+                        <pre id="doc_console" style="display: none;"></pre>
+                        <input type="hidden"  name="doc_file_path" id="doc_file_path" />
+                        <input type="hidden"  name="doc_str" id="doc_str" />
+                        <input type="hidden"  name="doc_file_size" id="doc_file_size" />
+                        <div class="doc_info"><span class="ui-form-other"></span></div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block upTable">
+                        <div class="layui-upload-list">
+                            <table class="layui-table">
+                                <thead>
+                                    <tr><th>文件名</th>
+                                        <th>大小</th>
+                                        <th>状态</th>
+                                        <th>操作</th>
+                                    </tr></thead>
+                                <tbody id="wordView"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <button lay-submit lay-filter="form" id="submit"></button>  
+            </form>
+        </div>
+    </div>
+</div>
+                <!--主内容结束-->
+            </div>
+        </div>
 </body>
-<script src="/ncjxdPage/static/src/js/lib/require.js"></script>
-<script src="/ncjxdPage/static/src/js/re-config.js"></script>
-<script src="/ncjxdPage/static/src/js/active_list_add.js"></script>
+<script type="text/javascript" src="http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/js/lib/require.js" ></script>
+<script type="text/javascript" src="http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/js/re-config.js" ></script>
+<script type="text/javascript" src="http://wufff.static.dev.dodoedu.com/ncjxdPage/static//src/js/active_list_add.js" ></script>
+<script type="text/javascript">
+    alert("已经进入");
+</script>
+ 
 </html>

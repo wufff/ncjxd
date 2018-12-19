@@ -1,4 +1,4 @@
-require(["jquery","layui", "path","upLoad"], function($,layui, path,upLoad) {
+require(["jquery","layui","path","upLoad"], function($,layui, path,upLoad) {
     var layer = layui.layer;
     var upload = layui.upload;
     var form = layui.form;
@@ -14,16 +14,23 @@ require(["jquery","layui", "path","upLoad"], function($,layui, path,upLoad) {
        $("#submit").click();
    })
 
+  //删除待上传的pm4
+
+
  //提交
   form.on('submit(form)', function(data){
        var fieldData = data.field;
+       console.log(fieldData);
+       return false;
   });
 
 
 
+   
 
-
-
+  $("#mp4list").on("click",".del",function(){
+     $(this).parent().remove();
+  })
 
 
 //上传视频
@@ -40,7 +47,7 @@ require(["jquery","layui", "path","upLoad"], function($,layui, path,upLoad) {
 
 
 
-
+  
 
     
 })

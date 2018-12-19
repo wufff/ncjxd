@@ -218,7 +218,7 @@ define(["path"],function(path){
 			    flash_swf_url : '../static/plupload/js/Moxie.swf',
 			    silverlight_xap_url : '../static/plupload/js/Moxie.xap',
 			    max_file_size : '1024mb',  // 文件上传最大限制。
-			    unique_names : true, // 上传的文件名是否唯一
+			    unique_names:false, // 上传的文件名是否唯一
 			    chunk_size: '5mb', // 分片大小
 			    filters : {
 			        mime_types: [
@@ -227,20 +227,27 @@ define(["path"],function(path){
 			    },
 			    init: {
 			            PostInit: function() {
-			                    document.getElementById('mp4list').innerHTML = '';
+			                    // document.getElementById('mp4list').innerHTML = '';
 			            },
 
 			            FilesAdded: function(up, files) {
 			                    plupload.each(files, function(file) {
-			                    	    var html = '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div><div></div>'
-			                            document.getElementById('mp4list').innerHTML += ;
-			                            document.getElementById('mp4_file_size').value = file.size;
+			                    	    if(!$(".vidoe_item") || $(".vidoe_item").length < 4) {
+			                    	    	var html = '<div id="' + file.id + '" class="vidoe_item">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b> <a href="javascript:void(0)" class="del">删除</a>'
+			                                html += '<input type="hidden" name="vidoePath" value=""></div>'	
+			                                $("#mp4list").append(html);
+			                    	    }
+			                    	    
+			                            // document.getElementById('mp4_file_size').value = file.size;
 			                    });
-			                    // uploader_mp4.start();
+			                    uploader_mp4.start();
 			            },
 
 			            UploadProgress: function(up, file) {
-			                document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+			            	if(document.getElementById(file.id)){
+			            		document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+			            	}
+			                
 			            },
 
 			            Error: function(up, err) {
@@ -256,8 +263,8 @@ define(["path"],function(path){
 			uploader_mp4.bind('FileUploaded',function(uploader,file,responseObject){
 			    var msg = JSON.parse(responseObject.response);
 			    if (msg.code == 1000) {
-			        document.getElementById('mp4_file_path').value = msg.data.file_path;
-			        document.getElementById('mp4_str').value = document.getElementById('mp4_str').value + msg.data.file_path + ",";
+			    	var html = '<input type="" name="">'
+			       $("#"+file.id).find("input[name=vidoePath]").val(msg.data.file_path);
 			    }
 			});
 			uploader_mp4.init();
@@ -283,8 +290,14 @@ define(["path"],function(path){
 
 
 
-
-
-
+      //多余div删除
+      removeDom:function(ele,num){
+      	var most = num-1
+      	$(ele).each(function(i,el){
+           if(i>most){
+           	  $(el).remove;
+           }
+      	})
+      }
 	}
 })
