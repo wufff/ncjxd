@@ -9,6 +9,13 @@ define(function(){
 		        var m = date.getMinutes() + ':';
 		        var s = date.getSeconds();
 		        return Y+M+D;
+         },
+         fomartNone:function(a){
+         	  if(!a && a != 0){
+                  return "";
+         	  }else{
+         	  	return a;
+         	  }
          }
      }
 })

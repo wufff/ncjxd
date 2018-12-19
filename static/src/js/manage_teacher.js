@@ -18,9 +18,7 @@ controlGetSubject();
 
 
 form.on('select(grade)', function(data){
-  // console.log(data.elem); //得到select原始DOM对象
-   // console.log(data.othis); //得到美化后的DOM对象
-   console.log(data.value); //得到被选中的值
+   // console.log(data.value);
    var url = path.api + "/api/getSubjectCodeList";
    var getData = {};
    getData.grade_id = data.value;
@@ -48,27 +46,6 @@ form.on('select(grade)', function(data){
 
 
 
-
-  
-  function initContorl (data){
-    if(data){
-    form.val("control",data)
-    }else {
-      $(".controlText").text("系统自动获取教师姓名");
-      $("input:checkbox").attr("checked",false);
-      form.val("control", 
-      {
-        "teacher_id": ""
-        ,"mobile": ""
-
-      })
-    }
-  }
-
-
-
-
-
     $("#addTeacherBtn").click(function() {
       $("#controlTpye").val(0);
         initContorl(null)
@@ -86,11 +63,77 @@ form.on('select(grade)', function(data){
 
 
 
+
+  $("body").on("click",".del",function(){
+        layer.confirm('确定删除此条推荐吗?', {icon: 3, title:'提示'}, function(index){
+        layer.close(index);
+      });
+  })
+
+
+ $("#searchBt").click(function(){
+     alert(123);
+     initPage (1);
+ })
+
+
+
+
+
+
+ $("body").on("click",".change",function(){
+        $("#controlTpye").val(1);
+        initContorl (null);
+        var tr = $(this).parents("tr");
+        var moblie = tr.find(".moblie").text();
+        var useId = tr.attr("data-user");
+        var gardeArr = tr.attr("data-grade");
+        var subject = tr.attr("data-subject");
+        var subjectBbj = JSON.parse(subject);
+        var gardeBbj = JSON.parse(gardeArr);
+        var intdata = {
+            teacher_id:useId,
+            mobile:moblie
+        }
+        
+       //多选赋值年级
+        $(gardeBbj).each(function(index, el) {
+           intdata["grade["+el.st_grade+"]"] = true; 
+        });   
+
+       //多选赋值学科
+        $(subjectBbj).each(function(index, el) {
+           intdata["subject["+el.st_grade+"]"] = true; 
+        }); 
+        
+        initContorl (intdata);
+        dialog = layer.open({
+        type: 1,
+        title:"修改教师",
+        content: $('#controlAddteacher'),
+        area:["600px","540px"],
+        btn: ['确定', '取消'],
+        yes: function(index, layero){
+          $("#submitControlBt").click();
+        }
+      });
+  })
+
+
+
+
+
+//此页面添加和修改是同一个接口
   form.on('submit(control)', function(data){
        var controlTpye = $("#controlTpye").val();
-       var getData = data.field;
+       var fieldData = data.field;
+       var getData = {};
+       getData.teacher_id = fieldData.teacher_id;
+       getData.subject = fieldData.subject;
+       getData.grade = fieldData.grade
+       
        var gradeArr = new Array();
-        $("input:checkbox[name='grade']:checked").each(function(i){
+        $("input:checkbox[name^='grade']:checked").each(function(i){
               gradeArr[i] = $(this).val();
         });
        if(gradeArr.length > 0){
@@ -102,7 +145,7 @@ form.on('select(grade)', function(data){
        }
        
       var subjectArry = new Array();
-       $("input:checkbox[name='subject']:checked").each(function(i){
+       $("input:checkbox[name^='subject']:checked").each(function(i){
               subjectArry[i] = $(this).val();
         });
 
@@ -116,38 +159,42 @@ form.on('select(grade)', function(data){
    
        if(controlTpye == 0) {
            var url = path.api+"/api/addSchoolTeacher";
-           // var loading = layer.load(3);
-          //  $.get(url,getData,function(res){
-          //     console.log(res);
-          //     if(res.type == "success") {
-          //       layer.msg("添加成功！",{time:1200});
-          //       refrechData();
-          //       layer.close(loading);
-          //       layer.close(dialog);
-          //     }else{
-          //        alert(res.type);
-          //     }
-          // });
+           var loading = layer.load(3);
+           $.get(url,getData,function(res){
+              console.log(res);
+              if(res.type == "success") {
+                layer.msg("添加成功！",{time:1200});
+                refrechData();
+                layer.close(loading);
+                layer.close(dialog);
+              }else{
+                 alert(res.type);
+                 console.log(res);
+              }
+          });
          return false; 
        }
 
        if(controlTpye == 1){
-          var url = path.api+"/api/modifyManageRecommendData";
-          var loading = layer.load(3);
-          // getData.id = editeId;
-          // console.log(getData);
-          //  $.get(url,getData,function(res){
-          //     if(res.data.code == 1000) {
-          //       layer.msg("修改成功！",{time:1200});
-          //       refrechData();
-          //       layer.close(loading);
-          //       layer.close(dialog);
-          //     } 
-          // });
-          alert(1);
+           var url = path.api+"/api/addSchoolTeacher";
+           var loading = layer.load(3);
+           $.get(url,getData,function(res){
+              console.log(res);
+              if(res.type == "success") {
+                layer.msg("修改成功！",{time:1200});
+                refrechData();
+                layer.close(loading);
+                layer.close(dialog);
+              }else{
+                 alert(res.type);
+              }
+          });
+         return false; 
        }
       return false; 
   });
+
+
 
 
 
@@ -162,23 +209,25 @@ function refrechData() {
   }
 
 
+
   
+  function initContorl (data){
+    if(data){
+    form.val("control",data)
+     
+     $("input:checkbox[value=GS001]").attr("checked",true);
+    }else {
+      $(".controlText").text("系统自动获取教师姓名");
+      $("input:checkbox").attr("checked",false);
+      form.val("control", 
+      {
+        "teacher_id": ""
+        ,"mobile": ""
 
-  $("body").on("click",".del",function(){
-        layer.confirm('确定删除此条推荐吗?', {icon: 3, title:'提示'}, function(index){
-        layer.close(index);
-      });
-  })
-
-
-
-
- $("body").on("click",".change",function(){
-        layer.confirm('确定删除此条推荐吗?', {icon: 3, title:'提示'}, function(index){
-        layer.close(index);
-      });
-
-  })
+      })
+    }
+  }
+  
 
 
     
@@ -211,11 +260,7 @@ function refrechData() {
                 var list = data.data.data.list;
                 var html = "";
                 for(var i=0;i<list.length;i++){
-                  if(i == 0){
-                     html += '<input type="checkbox" name="subject" value="'+ list[i].ss_id +'" title="'+ list[i].ss_name +'" checked>'
-                  }else{
-                     html += '<input type="checkbox" name="subject" value="'+ list[i].ss_id +'" title="'+ list[i].ss_name +'">'
-                  }
+                   html += '<input type="checkbox" name="subject['+ list[i].ss_id +']" value="'+ list[i].ss_id +'" title="'+ list[i].ss_name +'">'
                 }
                $("#subjectWrap").append(html);
                form.render('checkbox','control');
@@ -251,16 +296,18 @@ function refrechData() {
       })
      
     function buildTable(list) {
-      console.log(list);
     if (list.type == "success") {
       var data = list.data.data.list.map(function(item) {
         return {
           id:item.st_id,
           username:item.st_username,
+          user:item.st_uid,
           name:item.st_realname,
           grade:item.st_grade_str,
+          gradeValue:item.st_grade_list,
           title: item.r_title,
           subject:item.st_subject_str,
+          subjectValue:item.st_subject_list,
           moblie:item.st_mobile,
           time:item.st_createtime,
           encrypt_id: item.st_encrypt_id
@@ -269,13 +316,13 @@ function refrechData() {
      
       var html = '';
       for (var i = 0; i < data.length; i++) {
-        html += '<tr data-id="' + data[i].encrypt_id + '">'
+        html += '<tr data-id="' + data[i].encrypt_id + '" data-grade=' + JSON.stringify(data[i].gradeValue) + ' data-subject=' + JSON.stringify(data[i].subjectValue) + ' data-user="' + data[i].user + '">'
         html += '<td class="id">' + data[i].id + '</td>'
         html += '<td class="username">' + data[i].username + '</td>'
         html += '<td class="name">' + data[i].name + '</td>'
         html += '<td class="grade">' + data[i].grade + '</td>'
         html += '<td class="subject">' + data[i].subject + '</td>'
-        html += '<td class="moblie">' + data[i].moblie + '</td>'
+        html += '<td class="moblie">' + tools.fomartNone(data[i].moblie) + '</td>'
         html += '<td class="timel">' + tools.fomartTime(data[i].time) + '</td>'
         html += '<td><a class="change">修改</a><a class="del">删除</a></td>'
         html += ' </tr>'
