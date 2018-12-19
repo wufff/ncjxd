@@ -6,7 +6,7 @@ define(["path"],function(path){
 				browse_button: button,
 				// container: document.getElementById('upImgWrap'),
 				multi_selection: false, //是否多选
-				url: path.upLoad+'/upload',
+				url: location.protocol + '//' + document.domain + '/upload',
 				flash_swf_url: '../static/plupload/js/Moxie.swf',
 				silverlight_xap_url: '../static/plupload/js/Moxie.xap',
 				max_file_size: '30mb', // 文件上传最大限制。
@@ -98,7 +98,7 @@ define(["path"],function(path){
 				browse_button: button,
 				// container: document.getElementById('upImgWrap'),
 				multi_selection: true, //是否多选
-				url: path.upLoad+'/upload',
+				url: location.protocol + '//' + document.domain + '/upload',
 				flash_swf_url: '../static/plupload/js/Moxie.swf',
 				silverlight_xap_url: '../static/plupload/js/Moxie.xap',
 				max_file_size: '30mb', // 文件上传最大限制。
@@ -207,7 +207,62 @@ define(["path"],function(path){
 
 			}
 			return uploader;
-		}
+		},
+
+		videos:function(button){
+               var uploader_mp4 = new plupload.Uploader({
+			    runtimes : 'html5,flash,silverlight,html4',
+			    browse_button : button,
+			    // container: document.getElementById('container'),
+			    url : location.protocol + '//' + document.domain + '/upload',
+			    flash_swf_url : '../static/plupload/js/Moxie.swf',
+			    silverlight_xap_url : '../static/plupload/js/Moxie.xap',
+			    max_file_size : '1024mb',  // 文件上传最大限制。
+			    unique_names : true, // 上传的文件名是否唯一
+			    chunk_size: '5mb', // 分片大小
+			    filters : {
+			        mime_types: [
+			            {title : "video files", extensions : "mp4"},
+			        ]
+			    },
+			    init: {
+			            PostInit: function() {
+			                    document.getElementById('mp4list').innerHTML = '';
+			            },
+
+			            FilesAdded: function(up, files) {
+			                    plupload.each(files, function(file) {
+			                    	    var html = '<div id="' + file.id + '">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b></div><div></div>'
+			                            document.getElementById('mp4list').innerHTML += ;
+			                            document.getElementById('mp4_file_size').value = file.size;
+			                    });
+			                    // uploader_mp4.start();
+			            },
+
+			            UploadProgress: function(up, file) {
+			                document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+			            },
+
+			            Error: function(up, err) {
+			                document.getElementById('mp4_console').appendChild(document.createTextNode("\nError #" + err.code + ": " + err.message));
+			            },
+			            
+			            OptionChanged: function(up, option_name, new_value, old_value) {
+			                
+			            }
+			    }
+			});
+
+			uploader_mp4.bind('FileUploaded',function(uploader,file,responseObject){
+			    var msg = JSON.parse(responseObject.response);
+			    if (msg.code == 1000) {
+			        document.getElementById('mp4_file_path').value = msg.data.file_path;
+			        document.getElementById('mp4_str').value = document.getElementById('mp4_str').value + msg.data.file_path + ",";
+			    }
+			});
+			uploader_mp4.init();
+			return uploader_mp4;
+		},
 
 
 
