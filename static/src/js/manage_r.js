@@ -78,7 +78,7 @@ require(["layui", "path","page"], function(layui, path,pages) {
            var url = path.api+"/api/addManageRecommend";
            var loading = layer.load(3);
            $.get(url,getData,function(res){
-              console.log(res);
+              // console.log(res);
               if(res.type == "success") {
                 layer.msg("添加成功！",{time:1200});
                 refrechData();

@@ -209,7 +209,7 @@ define(["path"],function(path){
 			return uploader;
 		},
 
-		videos:function(button){
+		videos:function(button,num){
                var uploader_mp4 = new plupload.Uploader({
 			    runtimes : 'html5,flash,silverlight,html4',
 			    browse_button : button,
@@ -218,7 +218,7 @@ define(["path"],function(path){
 			    flash_swf_url : '../static/plupload/js/Moxie.swf',
 			    silverlight_xap_url : '../static/plupload/js/Moxie.xap',
 			    max_file_size : '1024mb',  // 文件上传最大限制。
-			    unique_names:false, // 上传的文件名是否唯一
+			    unique_names:true, // 上传的文件名是否唯一
 			    chunk_size: '5mb', // 分片大小
 			    filters : {
 			        mime_types: [
@@ -232,9 +232,9 @@ define(["path"],function(path){
 
 			            FilesAdded: function(up, files) {
 			                    plupload.each(files, function(file) {
-			                    	    if(!$(".vidoe_item") || $(".vidoe_item").length < 4) {
-			                    	    	var html = '<div id="' + file.id + '" class="vidoe_item">' + file.name + ' (' + plupload.formatSize(file.size) + ') <b></b> <a href="javascript:void(0)" class="del">删除</a>'
-			                                html += '<input type="hidden" name="vidoePath" value=""></div>'	
+			                    	    if(!$(".vidoe_item") || $(".vidoe_item").length < num) {
+			                    	    	var html = '<div id="' + file.id + '" class="vidoe_item">' + '<span class="mp4Name">'+file.name + '</span>'+' (' + plupload.formatSize(file.size) + ') <b></b> <a href="javascript:void(0)" class="del">删除</a>'
+			                                html += '<input type="hidden" class="vidoePath" value=""></div>'	
 			                                $("#mp4list").append(html);
 			                    	    }
 			                    	    
@@ -263,15 +263,76 @@ define(["path"],function(path){
 			uploader_mp4.bind('FileUploaded',function(uploader,file,responseObject){
 			    var msg = JSON.parse(responseObject.response);
 			    if (msg.code == 1000) {
-			    	var html = '<input type="" name="">'
-			       $("#"+file.id).find("input[name=vidoePath]").val(msg.data.file_path);
+			    
+			       $("#"+file.id).find(".vidoePath").val(msg.data.file_path);
 			    }
 			});
 			uploader_mp4.init();
 			return uploader_mp4;
 		},
 
+		doc: function(button,num) {
+			var uploader_doc = new plupload.Uploader({
+				runtimes: 'html5,flash,silverlight,html4',
+				browse_button: button,
+				// container: document.getElementById('container'),
+				url: location.protocol + '//' + document.domain + '/upload',
+				flash_swf_url: '../static/plupload/js/Moxie.swf',
+				silverlight_xap_url: '../static/plupload/js/Moxie.xap',
+				max_file_size: '100mb', // 文件上传最大限制。
+				unique_names: true, // 上传的文件名是否唯一
+				chunk_size: '5mb', // 分片大小
 
+				filters: {
+					mime_types: [{
+						title: "doc files",
+						extensions: "doc,docx,ppt,pptx,xls,xlsx,vsd,pot,pps,ppsx,rtf,wps,et,dps,pdf,txt,epub,epub"
+					}, ]
+				},
+
+				init: {
+					PostInit: function() {
+						// document.getElementById('doclist').innerHTML = '';
+					},
+
+					FilesAdded: function(up, files) {
+                          plupload.each(files, function(file) {
+         
+                                   if(!$(".doc_item") || $(".doc_item").length < num){
+                                   	   var html = '<div id="' + file.id + '" class="doc_item">' + '<span class="fileName">' + file.name +'</span>'+ ' (' + plupload.formatSize(file.size) + ') <b></b> <a href="javascript:void(0)" class="del">删除</a>';
+	                                   html += '<input type="hidden" class="docPath" value=""></div>'
+	                                   $("#doclist").append(html);   
+                                   }
+		                    });
+		                    uploader_doc.start();
+
+					},
+
+					UploadProgress: function(up, file) {
+						if(document.getElementById(file.id)){
+			            		document.getElementById(file.id).getElementsByTagName('b')[0].innerHTML = '<span>' + file.percent + "%</span>";
+			            	}
+					},
+
+					Error: function(up, err) {
+						document.getElementById('doc_console').appendChild(document.createTextNode("\nError #" + err.code + ": " + err.message));
+					},
+
+					OptionChanged: function(up, option_name, new_value, old_value) {
+
+					}
+				}
+			});
+
+			uploader_doc.bind('FileUploaded', function(uploader, file, responseObject) {
+				var msg = JSON.parse(responseObject.response);
+			    if (msg.code == 1000) {
+			       $("#"+file.id).find(".docPath").val(msg.data.file_path);
+			    }
+			});
+			uploader_doc.init();
+			return uploader_doc;
+		},
 
 
 
