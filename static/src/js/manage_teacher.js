@@ -5,7 +5,7 @@ require(["layui", "path","page","tools"], function(layui, path,pages,tools) {
     var form = layui.form;
     var page;
     var dialog;
-    alert("已进入");
+    
   
 
 
@@ -27,11 +27,11 @@ form.on('select(grade)', function(data){
         // console.log(data);
        if(data.type == "success") {
           var list = data.data.data.list;
-          var html = "";
+          var html = "<option value="">选择学科</option>";
           for(var i=0;i<list.length;i++){
              html += '<option value="'+ list[i].ss_id +'">'+ list[i].ss_name+'</option>'
           }
-         $("select[name=subject]").append(html);
+         $("select[name=subject]").html(html);
          $("select[name=subject]").val(" ");
          form.render('select','subject');
        }
@@ -72,7 +72,6 @@ form.on('select(grade)', function(data){
 
 
  $("#searchBt").click(function(){
-     alert(123);
      initPage (1);
  })
 
