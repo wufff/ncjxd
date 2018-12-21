@@ -24,7 +24,7 @@ form.on('select(grade)', function(data){
    getData.grade_id = data.value;
    if(data.value){
        $.get(url,getData,function(data){
-        console.log(data);
+        // console.log(data);
        if(data.type == "success") {
           var list = data.data.data.list;
           var html = "";

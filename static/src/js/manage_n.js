@@ -5,7 +5,8 @@ require(["layui", "path","tools","page"], function(layui, path,tools,pages) {
             var page_1;
             var page_2;
             var page_3;
-            
+            var dialog;
+            var current = 1;
         
         initPage (1,1);
         setTimeout(function(){
@@ -14,6 +15,22 @@ require(["layui", "path","tools","page"], function(layui, path,tools,pages) {
         setTimeout(function(){
         	initPage (3,1);
         },400) 
+
+
+
+         
+
+       element.on('tab(docDemoTabBrief)', function(data){
+		
+		  current = data.index + 1;
+		  console.log(current);
+		
+		});
+
+
+
+
+
 
 
 		$("body").on("click",".del",function(){
@@ -33,18 +50,22 @@ require(["layui", "path","tools","page"], function(layui, path,tools,pages) {
 		      });
 
 		  })
+  
+
+       $("#add").click(function(){
+            dialog =   layer.open({
+		        type: 1,
+		        title:"添加公告",
+		        content: $('#issueControl'),
+		        area:["850px","650px"],
+		        btn:["确认","取消"],
+		        yes: function(index, layero){
+		        
+		        }
+            });
+        })
 
 
-
-
-
-
-
-
-       
-     
-
-     
 
 
 
