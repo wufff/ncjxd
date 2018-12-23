@@ -7,10 +7,9 @@
  */
  
 require(["jquery","layui"],function($,layui){
-      var layer = layui.layer;
-      var form =  layui.form;
-     
-
+   var layer = layui.layer;
+   var form =  layui.form;
+   alert(123);
    form.on('select(city)', function(data){
      $("select[name=school]").html('<option value="">请先选地区</option>');
      $("select[name=school]").val("");
@@ -38,6 +37,7 @@ require(["jquery","layui"],function($,layui){
      }
  
 });  
+
 
  form.on('select(area)', function(data){
      // console.log(data.value);
@@ -69,6 +69,9 @@ require(["jquery","layui"],function($,layui){
      }
  
 });  
+
+
+
 
 
  form.on('select(school)', function(data){
