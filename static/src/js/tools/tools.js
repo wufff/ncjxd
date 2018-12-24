@@ -16,6 +16,16 @@ define(function(){
          	  }else{
          	  	return a;
          	  }
-         }
+         },
+        prevWeek:function(dateStr){
+                var sdate = new Date(Date.parse(dateStr.replace(/-/g, "/")))
+                var prevDate = new Date(sdate.getTime() - 7 * 24 *60 *60 *1000);
+                
+            },
+        nextWeek:function(dateStr){
+                var sdate = new Date(Date.parse(dateStr.replace(/-/g, "/")))
+                var nextDate = new Date(sdate.getTime() + 7 * 24 *60 *60 *1000);
+                
+        },
      }
 })
