@@ -126,3 +126,55 @@ a{ color:#555; }
     }
    }
 }
+
+.noneTd{
+   height: 180px;
+}
+
+td { 
+   position: relative;
+   .info {
+     position: absolute;
+     top: -127px;
+     left: -240px;
+     width: 230px;
+     border: 1px solid #ddd;
+     border-radius: 5px;
+     background:#fff;
+     z-index: 9999;
+     min-height: 280px;
+     padding-bottom: 0px;
+     display: none;
+     padding-bottom: 10px;
+     .title {
+       background: #fbb432eb;
+       // background: #e6f4ff;
+       color:#fff;
+       font-size: 15px;
+       height: 40px;
+       line-height: 40px;
+       
+     }
+     h5 {
+        font-weight: bold;
+        text-align: left;
+        padding: 0 15px;
+        margin-top: 15px;
+        margin-bottom: 5px;
+     }
+     p{
+        text-align: left;
+         padding: 0 15px;
+         margin-bottom: 5px;
+     }
+     i {
+        display: block;
+        position: absolute;
+        top: 150px;
+        right: -10px;
+        width: 10px;
+        height: 16px;
+        background:url(../img/cert.png) no-repeat; 
+     }
+   }
+ }

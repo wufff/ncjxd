@@ -20,6 +20,9 @@ define(function(){
         prevWeek:function(dateStr){
                 var sdate = new Date(Date.parse(dateStr.replace(/-/g, "/")))
                 var prevDate = new Date(sdate.getTime() - 7 * 24 *60 *60 *1000);
+                var Reznow = prevDate.toLocaleDateString();
+                Rez = Reznow.replace(/\//g,'-')
+                return Rez;
                 
             },
         nextWeek:function(dateStr){
@@ -29,3 +32,4 @@ define(function(){
         },
      }
 })
+
