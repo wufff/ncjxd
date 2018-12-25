@@ -18,6 +18,7 @@ require(["jquery","layui","path","num","tools"],function($,layui,path,num,tools)
    var weekData = now.replace(/\//g,'-');
    var totWeek;
    var type = 0;
+   var holidays = [];
  
 form.on('select(city)', function(data){
      $("select[name=school]").html('<option value="">请先选区县</option>');
@@ -93,14 +94,52 @@ form.on('select(school)', function(data){
 
    //切换周
 $("body").on("click",".Add",function(){
-        
+      var currtWeek = $("#week").text();
+      if(currtWeek == totWeek){
+         return;
+      }
+      weekData = tools.nextWeek(weekData);
+      studyTime (school_id,weekData);
+      formHeadtime(school_id,weekData);
+      renderClassTd(school_id,weekData);
+   
 })
   
 $("body").on("click",".sub",function(){
+      var currtWeek = $("#week").text();
+      if(currtWeek == 1){
+         return;
+      }
       weekData = tools.prevWeek(weekData);
       studyTime (school_id,weekData);
       formHeadtime(school_id,weekData);
       renderClassTd(school_id,weekData);
+})
+
+
+ //切换教室
+$(".classRoom").on("click","span",function(){
+    if($(this).hasClass("active")){
+         return;
+       }
+     room_id = $(this).attr("data-id");
+     $(this).siblings("span").removeClass('active');
+     $(this).addClass('active');
+     renderClassTd(school_id,weekData);
+})
+
+ //发起接受切换
+$(".classType").on("click","span",function(){
+     if($(this).hasClass("active")){
+       return;
+     }
+     tpye = $(this).attr("data-tpye");
+     if(tpye == 1){
+
+     }
+     $(this).siblings("span").removeClass('active');
+     $(this).addClass('active');
+     renderClassTd(school_id,weekData);
 })
 
 
@@ -120,14 +159,21 @@ $("body").on("click",".sub",function(){
        // console.log(res);
        if(res.type == "success") {
          var data = res.data.data;
+         console.log(data);
          if(data.length > 0) {
             var html = "<th>午别</th><th>节次</th>";
              for(var i = 0;i<data.length;i++){
                    var str = i+1
+                   var className = "";
+                   if(!data[i].is_holiday) {
+                      holidays.push(i);
+                      className ="holiday"
+                   }
                    var weeks =  num.Hanzi(str) == '七' ? '日' : num.Hanzi(str) 
-                   html += '<th position="0,'+(i+1)+'">星期'+weeks+'<br/>'+data[i].date_time+'</th>'
+                   html += '<th class="'+ className +'" position="0,'+(i+1)+'">星期'+weeks+'<br/>'+data[i].date_time+'</th>'
              }
              $("#theadtr").html(html);
+             console.log(holidays);
          }
        }
      })
@@ -151,10 +197,10 @@ $("body").on("click",".sub",function(){
             var html = "";
             for(var i =0;i<list.length;i++){
               if(i == 0){
-                 html += '<span class="active" data-id="'+list[i].sr_school_encrypt_id+'">'+list[i].sr_name+'</span>'
-                 room_id = list[i].sr_school_encrypt_id;
+                 html += '<span class="active" data-id="'+list[i].sr_encrypt_id+'">'+list[i].sr_name+'</span>'
+                 room_id = list[i].sr_encrypt_id;
               }else {
-                 html += '<span  data-id="'+ list[i].sr_school_encrypt_id +'">'+list[i].sr_name+'</span>'
+                 html += '<span  data-id="'+ list[i].sr_encrypt_id +'">'+list[i].sr_name+'</span>'
               }
             }
              $(".classRoom").html(html);
@@ -183,6 +229,8 @@ $("body").on("click",".sub",function(){
          var data = res.data.data;
          term_id = data.term_id;
          week = data.term_week;
+         totWeek = data.total_week;
+         // console.log("studyTime"+week);
          $("#schoolTerm").html(data.year);
          $("#week_time").html(data.week_time);
          $("#week").text(data.term_week);
@@ -190,8 +238,8 @@ $("body").on("click",".sub",function(){
      })
    }
 
-
-
+  
+ 
 
 
 //渲染上午下午管关联渲染课程
@@ -259,7 +307,7 @@ function renderClassTd(school_id,weekData){
               $("#tbody").append('<tr>'+ uphtml +'</tr>');
               uphtml = "";
          }
-
+          
          renderClass(school_id,room_id,term_id,type,week);
        }
 
@@ -291,7 +339,7 @@ function renderClassTd(school_id,weekData){
              type:type
           }
          $.get(classUrl,getClassDate,function(res){
-              console.log(res);
+              // console.log(res);
               if(res.type == "success"){
                 if ( res.data.length == 0 ){
                    return;

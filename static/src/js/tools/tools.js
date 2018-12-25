@@ -1,4 +1,4 @@
-define(function(){
+define(['path'],function(path){
      return {
          fomartTime:function(timestamp){
          	    var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -28,8 +28,10 @@ define(function(){
         nextWeek:function(dateStr){
                 var sdate = new Date(Date.parse(dateStr.replace(/-/g, "/")))
                 var nextDate = new Date(sdate.getTime() + 7 * 24 *60 *60 *1000);
-                
-        },
+                var Reznow = nextDate.toLocaleDateString();
+                Rez = Reznow.replace(/\//g,'-')
+                return Rez;
+        }
      }
 })
 
