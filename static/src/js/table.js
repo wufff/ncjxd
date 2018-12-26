@@ -9,10 +9,10 @@
 require(["jquery","layui","path","num","tools"],function($,layui,path,num,tools){
    var layer = layui.layer;
    var form =  layui.form;
-   var weekOff = false;
    var school_id = "";
    var room_id;
    var term_id;
+   var room_name;
    var week;
    var now =(new Date()).toLocaleDateString();
    var weekData = now.replace(/\//g,'-');
@@ -20,6 +20,8 @@ require(["jquery","layui","path","num","tools"],function($,layui,path,num,tools)
    var type = 0;
    var holidays = [];
  
+
+
 form.on('select(city)', function(data){
      $("select[name=school]").html('<option value="">请先选区县</option>');
      $("select[name=school]").val("");
@@ -135,13 +137,21 @@ $(".classType").on("click","span",function(){
      }
      tpye = $(this).attr("data-tpye");
      if(tpye == 1){
-
+         $(".editeFormWrap").hide();
+     }else {
+          $(".editeFormWrap").show();
      }
      $(this).siblings("span").removeClass('active');
      $(this).addClass('active');
      renderClassTd(school_id,weekData);
 })
 
+
+
+
+$("#goToEdite").click(function(){
+    window.location.href="/course/edit?school_id="+school_id+"&room_id="+room_id+"&weekData="+weekData+"&term_id="+term_id+"&week="+week+"&room_name="+room_name;
+})
 
 
 
@@ -159,21 +169,22 @@ $(".classType").on("click","span",function(){
        // console.log(res);
        if(res.type == "success") {
          var data = res.data.data;
-         console.log(data);
+         // console.log(data);
+         holidays = [];
          if(data.length > 0) {
             var html = "<th>午别</th><th>节次</th>";
              for(var i = 0;i<data.length;i++){
                    var str = i+1
                    var className = "";
-                   if(!data[i].is_holiday) {
-                      holidays.push(i);
-                      className ="holiday"
+                   if(data[i].is_holiday) {
+                      holidays.push(str);
+                      className ="holiday";
                    }
                    var weeks =  num.Hanzi(str) == '七' ? '日' : num.Hanzi(str) 
                    html += '<th class="'+ className +'" position="0,'+(i+1)+'">星期'+weeks+'<br/>'+data[i].date_time+'</th>'
              }
              $("#theadtr").html(html);
-             console.log(holidays);
+             // console.log(holidays);
          }
        }
      })
@@ -199,6 +210,8 @@ $(".classType").on("click","span",function(){
               if(i == 0){
                  html += '<span class="active" data-id="'+list[i].sr_encrypt_id+'">'+list[i].sr_name+'</span>'
                  room_id = list[i].sr_encrypt_id;
+                 room_name = list[i].sr_name;
+                 console.log(room_name);
               }else {
                  html += '<span  data-id="'+ list[i].sr_encrypt_id +'">'+list[i].sr_name+'</span>'
               }
@@ -224,7 +237,7 @@ $(".classType").on("click","span",function(){
           date:weekData
      }  
     $.get(WeeKurl,getData,function(res){
-       // console.log(res);
+       console.log(res);
        if(res.type == "success") {
          var data = res.data.data;
          term_id = data.term_id;
@@ -233,6 +246,7 @@ $(".classType").on("click","span",function(){
          // console.log("studyTime"+week);
          $("#schoolTerm").html(data.year);
          $("#week_time").html(data.week_time);
+         $("#totalweek").html(data.total_week);
          $("#week").text(data.term_week);
        }
      })
@@ -278,13 +292,13 @@ function renderClassTd(school_id,weekData){
              if(i == 0){
                 uphtml += '<td rowspan="'+ up+'" class="Bold">上午</td>';     
                 uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ times[i].st_start_time +'-'+times[i].st_end_time +'</td>';
-                for(var j =0; j<7 ;j++ ){
-                 uphtml += '<td positon="'+(i)+','+j+'"></td>'
+                for(var j =1; j<8 ;j++ ){
+                 uphtml += '<td positon="'+(i+1)+','+j+'"></td>'
                }
              }else{
                 uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ times[i].st_start_time +'-'+times[i].st_end_time +'</td>';
                 for(var j =1; j<8 ;j++ ){
-                 uphtml += '<td positon="'+(i)+','+j+'"></td>'
+                 uphtml += '<td positon="'+(i+1)+','+j+'"></td>'
                }
              }
               $("#tbody").append('<tr>'+ uphtml +'</tr>');
@@ -295,19 +309,24 @@ function renderClassTd(school_id,weekData){
              if(i == up){
                 uphtml += '<td rowspan="'+ down+'" class="Bold">下午</td>';     
                 uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ times[i].st_start_time +'-'+times[i].st_end_time +'</td>';
-                for(var j =0; j<7 ;j++ ){
-                 uphtml += '<td positon="'+(i)+','+j+'"></td>'
+                for(var j =1; j<8 ;j++ ){
+                 uphtml += '<td positon="'+(i+1)+','+j+'"></td>'
                }
              }else{
                 uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ times[i].st_start_time +'-'+times[i].st_end_time +'</td>';
                 for(var j =1; j<8 ;j++ ){
-                 uphtml += '<td positon="'+(i)+','+j+'"></td>'
+                 uphtml += '<td positon="'+(i+1)+','+j+'"></td>'
                }
              }
               $("#tbody").append('<tr>'+ uphtml +'</tr>');
               uphtml = "";
          }
           
+        //渲染假期效果
+          ui_holiday();  
+
+
+        //添加课程
          renderClass(school_id,room_id,term_id,type,week);
        }
 
@@ -339,7 +358,7 @@ function renderClassTd(school_id,weekData){
              type:type
           }
          $.get(classUrl,getClassDate,function(res){
-              // console.log(res);
+              console.log(res);
               if(res.type == "success"){
                 if ( res.data.length == 0 ){
                    return;
@@ -369,14 +388,16 @@ function renderClassTd(school_id,weekData){
                              html +=      '<p>'+ tr[k].cn_status+'</p>' 
                              html +=     '<i></i>'
                              html +=     '</div>'
-                             $("td[positon='"+i+","+k+"']").html(html);
-                             ui();
+                             $("td[positon='"+(i+1)+","+(k+1)+"']").html(html);
+                             
                          }
                        }
                     }
                    
                  }
+                  ui();
               }
+             
          })
     }
 
@@ -402,8 +423,17 @@ function renderClassTd(school_id,weekData){
 	 }
 
 
+ function ui_holiday(){
+    if(holidays.length>0){
+     for(var i = 0;i<holidays.length;i++){
+        $("td[positon$=',"+holidays[i]+"']").removeClass().addClass("holidayTd");
+     }
+    }
+   
 
-  
+    // $("td[position$=',9']").removeClass().addClass(dayClass);
+ }
+
 
   function ui(){
       $("td").hover(function() {
@@ -419,9 +449,10 @@ function renderClassTd(school_id,weekData){
             info.hide();
          }
       });
-
-      // 周切换
    }
+
+  
+
 
 
 

@@ -15,20 +15,6 @@
 
 a{ color:#555; }
 
-.tag-selected {
-   border: 1px solid #1E9FFF;
-   float: left;
-   padding: 2px 7px;
-   color: #1E9FFF;
-   margin-right: 10px;
-   font-size: 16px;
-   >span {
-     cursor: pointer;
-     font-weight: bold;
-     margin-left: 10px;
-     font-size: 22px;
-   }
-}
 
 
 
@@ -40,7 +26,7 @@ a{ color:#555; }
        position: absolute;
        right:490px;
        top:8px;
-        width: 140px;
+        width: 180px;
   
          span {
            padding: 15px 10px; 
@@ -72,10 +58,8 @@ a{ color:#555; }
      }
      > button {
         float: right;
-
       }  
-
-
+      
       span.tot {
       	 color:@color_main;
       }
@@ -178,3 +162,109 @@ td {
      }
    }
  }
+
+
+
+.holiday {
+   background: url("../img/holiday.png") no-repeat right top;
+ }
+
+
+
+
+
+ .holidayTd {
+    background:#f2f2f2;
+ }
+
+
+// 编辑课表
+ .tag-selected {
+   border: 1px solid #1E9FFF;
+   float: left;
+   padding: 0 7px;
+   color: #1E9FFF;
+   margin-right: 10px;
+   margin-top: 3px;
+  
+   >span.inner{
+     font-size: 15px;
+     position: relative;
+     top:1px;
+   }
+   >span.del {
+     cursor: pointer;
+     font-weight: bold;
+     margin-left: 5px;
+     font-size: 22px;
+     vertical-align: middle;
+   }
+}
+
+
+
+.chooseTag {
+     height: 100%;
+
+   .inTag {
+           width: 245px;
+           padding: 10px;
+           float: right;
+           .tag-selected { margin-bottom: 5px; }
+        }
+
+   .main {
+     .searchWap {
+       margin-bottom: 15px;
+     }
+     padding: 20px;
+     height: 100%;
+     float: left;
+     width: 550px;
+     border-right: 1px solid #ddd;
+     input.searchText {
+       width: 200px;
+       float: left;
+       border-radius: 0;
+       border-right: none;
+       margin-left: 138px;
+     }
+     button.searchBtn {
+        float: left;
+       
+     }
+    .layui-tab-title { 
+        height: auto;
+        float: left;
+        border-bottom: 0px;
+        width: 100px;
+        li { width: 100px;display: block; background-color: #f3f5f6;border:none;margin-bottom: 1px;}
+        .layui-this { 
+          background-color: #fff;
+          border-color: #fff;
+          &:after{
+            border-color:#ddd;
+            border-left-color: @color_main;
+            border-right:none;
+            }
+         }
+        
+     }
+     .layui-tab-content {
+       float:right;
+       padding-left: 30px;
+      
+       // border-top:1px solid #ddd;
+       width: 409px;
+     }
+
+     .tag_content {
+        span.tag {
+            cursor: pointer;
+            display: inline-block;
+            padding: 10px 10px;
+        }
+
+     }
+   }
+}
