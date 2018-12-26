@@ -1,4 +1,4 @@
-define(['path'],function(path){
+define(['jquery','path'],function(path){
      return {
          fomartTime:function(timestamp){
          	    var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -43,7 +43,42 @@ define(['path'],function(path){
             }
             }
             return theRequest[paramName];
-          }
-       }  
+          },
+        request:function  (name) {
+        var args = getQueryStringArgs ()
+        var result = "";
+        if (args) {
+            $.each(args, function (key, value) {
+                if (key == name) {
+                    result = value;
+                    //退出遍历
+                    return false;
+                }
+            });
+        }
+        return result;
+       }
+    }  
 })
 
+function getQueryStringArgs () {
+        //取得查询字符串并去掉问号
+        var qs = location.search.length > 0 ? location.search.substring(1) : "";
+        //保存数据的对象
+        var args = {};
+        //取得每一项
+        var items = qs.length ? qs.split("&") : [];
+        var item = null;
+        var value = null;
+        var len = items.length;
+        for (var i = 0; i < len; i++) {
+            item = items[i].split("=");
+            //参数解码
+            name = decodeURIComponent(item[0])
+            value = decodeURIComponent(item[1]);
+            if (name.length) {
+                args[name] = value;
+            }
+        }
+        return args;
+    };
