@@ -42,7 +42,7 @@ define(['path'],function(path){
             theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
             }
             }
-            return theRequest;
+            return theRequest[paramName];
           }
        }  
 })

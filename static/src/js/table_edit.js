@@ -10,21 +10,22 @@ require(["layui","path","tools","num"],function(layui,path,tools,num){
       var form = layui.form;
       var element = layui.element;
       var $ = jquery = layui.jquery;
-      // var school_id = tools.queryString("school_id");
-      // var room_id = tools.queryString("room_id");
-      // var term_id = tools.queryString("term_id");
-      // var week = tools.queryString("week");
-      // var weekData = tools.queryString("weekData");
-      // var room_name = tools.queryString("room_name");
+      var school_id = tools.queryString("school_id");
+      var room_id = tools.queryString("room_id");
+      var term_id = tools.queryString("term_id");
+      var week = tools.queryString("week");
+      var weekData = tools.queryString("weekData");
+      var room_name = tools.queryString("room_name");
       var type = 0;
       var holidays = [];
       var totWeek;
-      // studyTime (school_id,weekData);
-      // formHeadtime(school_id,weekData);
-      // renderClassTd(school_id,weekData);
+      TagUi();
+      studyTime(school_id,weekData);
+      formHeadtime(school_id,weekData);
+      renderClassTd(school_id,weekData);
      // $("#classroomName").text(room_name)
 
-     console.log(tools.queryString("room_id"));
+     // console.log(tools.queryString("room_id"));
 
       // console.log(school_id);
       //  console.log(room_id);
@@ -33,33 +34,36 @@ require(["layui","path","tools","num"],function(layui,path,tools,num){
       //  console.log(weekData);
   
 
-      
+
+
+    //切换周
+$("body").on("click",".Add",function(){
+      var currtWeek = $("#week").text();
+      if(currtWeek == totWeek){
+         return;
+      }
+      weekData = tools.nextWeek(weekData);
+      studyTime (school_id,weekData);
+      formHeadtime(school_id,weekData);
+      renderClassTd(school_id,weekData);
+   
+})
+  
+$("body").on("click",".sub",function(){
+      var currtWeek = $("#week").text();
+      if(currtWeek == 1){
+         return;
+      }
+      weekData = tools.prevWeek(weekData);
+      studyTime (school_id,weekData);
+      formHeadtime(school_id,weekData);
+      renderClassTd(school_id,weekData);
+})
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     $("#classTagBt").click(function() {
+$("#classTagBt").click(function() {
       layer.open({
         type: 1,
         title:"设置课程",
@@ -75,29 +79,55 @@ require(["layui","path","tools","num"],function(layui,path,tools,num){
 
 
 
-
   $("body").on("click","#classTagControl .tag",
     function(){
         var oder = $(this).parent().data("oder");
-        var next = oder + 1;
-         $(".tagTabContentWrap").each(function(index,item){
-            console.log(index);
-            if(index > oder) {
-                element.tabDelete('classTagTab', index)
-            }
-        })
+        if( oder == 0 ){
+              var id = $(this).attr("data-id");
+              $.get("/api/getSubjectCodeList", {
+                grade_id: id
+              }, function(res) {
+                if (res.type == "success") {
+                  $(".tagTabContentWrap").each(function(index, item) {
+                    if (index > 0) {
+                      element.tabDelete('classTagTab',index)
+                    }
+                  }) 
+                  var list = res.data.data.list;
+                  var html = '';
+                  for (var i = 0; i < list.length; i++) {
+                    if(i == 0 ){
+                        html += '<span class="tag active" data-id="' + list[i].ss_id + '"  data-grade="' + id + '">' + list[i].ss_name + '</span>'
+                    }else {
+                         html += '<span class="tag" data-id="' + list[i].ss_id + '">' + list[i].ss_name + '</span>'
+                    }
+                  }
+                  element.tabAdd('classTagTab', {
+                    title: '学科',
+                    content: '<div data-oder="1" class="tagTabContentWrap">'+html+'</div>',
+                    id: 1
+                  })
+                  element.tabChange('classTagTab', 1);
+                } else {
+                  alert(res.type);
+                }
+              })
+           }
+       if (oder == 1)   {
+           var id = $(this).attr("data-id");
+           var grade = $(this).attr("data-grade");
+       } 
+      
 
-        element.tabAdd('classTagTab', {
-         title: '新选项'+ (Math.random()*1000|0) 
-        ,content: '<div data-oder="'+next+'" class="tagTabContentWrap">'
-                   +'<span class="tag">1</span>'
-                   +'<span class="tag">2</span>'
-                   +'<span class="tag">3</span>'
-                 +'</div>'
-        ,id: next
-    })
-        element.tabChange('classTagTab', next); 
-       
+
+
+
+
+
+
+
+
+
        
    })
 
@@ -114,25 +144,6 @@ require(["layui","path","tools","num"],function(layui,path,tools,num){
          $("#weekTagbox").html("");
       }
     });  
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -207,12 +218,13 @@ require(["layui","path","tools","num"],function(layui,path,tools,num){
 //渲染学期和周
    function studyTime (school_id,weekData) {
     var WeeKurl =  path.api+"/api/getSchoolCourseTimeNode";
+
     var getData = {
           school_id:school_id,
           date:weekData
      }  
     $.get(WeeKurl,getData,function(res){
-       console.log(res);
+       // console.log(res);
        if(res.type == "success") {
          var data = res.data.data;
          term_id = data.term_id;
@@ -307,33 +319,6 @@ function renderClassTd(school_id,weekData){
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //渲染课程
     function renderClass  (school_id,room_id,term_id,type,week){
         var classUrl = path.api +"/api/getSchoolRoomCourcePlan";
@@ -351,7 +336,7 @@ function renderClassTd(school_id,weekData){
              type:type
           }
          $.get(classUrl,getClassDate,function(res){
-              // console.log(res);
+              console.log(res);
               if(res.type == "success"){
                 if ( res.data.length == 0 ){
                    return;
@@ -381,7 +366,7 @@ function renderClassTd(school_id,weekData){
                              html +=      '<p>'+ tr[k].cn_status+'</p>' 
                              html +=     '<i></i>'
                              html +=     '</div>'
-                             $("td[positon='"+i+","+k+"']").html(html);
+                             $("td[positon='"+(i+1)+","+(k+1)+"']").html(html);
                              
                          }
                        }
@@ -393,16 +378,6 @@ function renderClassTd(school_id,weekData){
              
          })
     }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -444,9 +419,11 @@ function renderClassTd(school_id,weekData){
       });
    }
 
-
-  
-
-
+ function TagUi(){
+     $("body").on("click","#classTagControl .tag",function(){
+            $(this).siblings().removeClass('active');
+            $(this).addClass('active');
+     })
+ }
 
 })
