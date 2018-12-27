@@ -19,7 +19,6 @@ require(["layui","path","tools","num"],function(layui,path,tools,num){
       var type = 0;
       var holidays = [];
       var totWeek;
-      TagUi();
       studyTime(school_id,weekData);
       formHeadtime(school_id,weekData);
       renderClassTd(school_id,weekData);
@@ -64,6 +63,19 @@ $("body").on("click",".sub",function(){
 
 
 $("#classTagBt").click(function() {
+      //外面没选中的就清空弹窗
+       var tags =  $("#classTag").find(".tag-selected");
+       if(tags.length == 0){
+          $(".tagTabContentWrap").each(function(index, item) {
+              if (index > 0 ){
+                element.tabDelete('classTagTab',index)
+               }
+          });
+          $("#teachersTag").html("");   
+          $("#classTagControl .tag").removeClass('active');
+       }
+
+
       layer.open({
         type: 1,
         title:"设置课程",
@@ -71,16 +83,41 @@ $("#classTagBt").click(function() {
         area:["800px","500px"],
         btn: ['确定', '取消'],
         yes: function(index, layero){
+          var html = $("#teachersTag").html();
+          $("#classTag").html(html);
           layer.close(index); 
         }
       });
     })
 
 
+//删除课程Tag
+$("#classTag").on("click",".del",function(){
+    $(this).parent().remove();
+    //清空弹窗
+    $(".tagTabContentWrap").each(function(index, item) {
+        if (index > 0 ){
+          element.tabDelete('classTagTab',index)
+         }
+    });
+    $("#teachersTag").html("");   
+    $("#classTagControl .tag").removeClass('active');
+})
+$("#teachersTag").on("click",".del",function(){
+    $(this).parent().remove();
+    //清空弹窗
+    $(".tagTeacher").removeClass('active');
+})
 
 
+//老师关联选择
   $("body").on("click","#classTagControl .tag",
     function(){
+       if ($(this).hasClass('active')){
+         return;
+       }
+        $(this).siblings().removeClass('active');
+        $(this).addClass('active');
         var oder = $(this).parent().data("oder");
         if( oder == 0 ){
               var id = $(this).attr("data-id");
@@ -96,11 +133,7 @@ $("#classTagBt").click(function() {
                   var list = res.data.data.list;
                   var html = '';
                   for (var i = 0; i < list.length; i++) {
-                    if(i == 0 ){
-                        html += '<span class="tag active" data-id="' + list[i].ss_id + '"  data-grade="' + id + '">' + list[i].ss_name + '</span>'
-                    }else {
-                         html += '<span class="tag" data-id="' + list[i].ss_id + '">' + list[i].ss_name + '</span>'
-                    }
+                      html += '<span class="tag" data-subject="' + list[i].ss_id + '" data-grade="' + id + '">' + list[i].ss_name + '</span>'
                   }
                   element.tabAdd('classTagTab', {
                     title: '学科',
@@ -109,27 +142,298 @@ $("#classTagBt").click(function() {
                   })
                   element.tabChange('classTagTab', 1);
                 } else {
-                  alert(res.type);
+                  layer.msg("此年级下无学科",{icon:5})
                 }
               })
            }
        if (oder == 1)   {
            var id = $(this).attr("data-id");
            var grade = $(this).attr("data-grade");
+           var subject = $(this).attr("data-subject");
+           var zh = $(this).text();
+           var url = path.api + "/api/getSchoolTeacherList";
+           $.get(url,{school_id:school_id,grade:grade,subject:subject},function(res){
+                 console.log(res);
+                if(res.type == "success"){
+                    $(".tagTabContentWrap").each(function(index, item) {
+
+                    if (index > 1) {
+                      element.tabDelete('classTagTab',index)
+                     }
+                   }) 
+                    var list = res.data.data.list;
+                    var html = "";
+                    for (var i = 0; i < list.length; i++) {
+                      html += '<span class="tag tagTeacher" data-zh="' + zh + '" data-subject="' + subject + '" data-grade="' + grade + '" data-tecacher="' + list[i].st_encrypt_uid + '">' 
+                      html += list[i].st_realname + '</span>'
+                  }
+                   element.tabAdd('classTagTab', {
+                    title: '老师',
+                    content: '<div data-oder="2" class="tagTabContentWrap">'+html+'</div>',
+                    id: 2
+                  })
+                   element.tabChange('classTagTab', 2);
+                }else{
+                   layer.msg("此科目下无老师",{icon:5,time:500})
+                }
+           })
        } 
-      
-
-
-
-
-
-
-
-
-
-
-       
+       if (oder == 2)   {
+           var id = $(this).attr("data-tecacher");
+           var grade = $(this).attr("data-grade");
+           var subject = $(this).attr("data-subject");
+           var zh = $(this).attr("data-zh");
+           var text = $(this).text();
+           var html = '<span class="tag-selected" data-grade="' + grade + '" data-subject="' + subject + '">'
+               html +=   '<span class="inner">'+ num.Hanzi(grade) +'年级-'+zh +'-'+text+'</span>'     
+               html +=       '<span class="del">×</span>'
+               html +=   '</span>'
+           $("#teachersTag").html(html);
+       } 
    })
+
+// ==========================教室弹窗===========================
+$("#roomTagBt").click(function() {
+     //外面没选中的就清空弹窗
+       var tags =  $("#roomTag").find(".tag-selected");
+       console.log(tags.length)
+       if(tags.length == 0){
+          $(".tagTabContentWrap_room").each(function(index, item) {
+              if (index > 0 ){
+                element.tabDelete('classRoomTagTab',index)
+               }
+          });
+          $("#roomsTag").html("");   
+          $("#classRoomTagControl .tag").removeClass('active');
+       }
+
+      layer.open({
+        type: 1,
+        title:"接受教室",
+        content: $('#classRoomTagControl'),
+        area:["800px","500px"],
+        btn: ['确定', '取消'],
+        yes: function(index, layero){
+          var html = $("#roomsTag").html();
+          $("#roomTag").html(html);
+          layer.close(index); 
+          layer.close(index); 
+        }
+      });
+    })
+
+//教室关联选择
+  $("body").on("click","#classRoomTagControl .tag",
+    function(){
+       var _this = this;
+       if ($(this).hasClass('active')){
+         return;
+       }
+      
+        var oder = $(this).parent().data("oder");
+        if( oder == 0 ){
+              var id = $(this).attr("data-id");
+              // console.log(id);
+              $.get("/api/getAreaList", {
+                area_id:id,
+                type:3
+              }, function(res) {
+                if (res.type == "success") {
+                    $(_this).siblings().removeClass('active');
+                    $(_this).addClass('active');
+                  $(".tagTabContentWrap_room").each(function(index, item) {
+                    if (index > 0) {
+                      element.tabDelete('classRoomTagTab',index)
+                    }
+                  }) 
+                  var list = res.data.data.list;
+                  var html = '';
+                  // console.log(list);
+                  for (var i = 0; i < list.length; i++) {
+                      html += '<span class="tag" data-area="' + id + '" data-area2="' + list[i].node_encrypt_id + '">' + list[i].node_name + '</span>'
+                  }
+                  element.tabAdd('classRoomTagTab', {
+                    title: '县区',
+                    content: '<div data-oder="1" class="tagTabContentWrap_room">'+html+'</div>',
+                    id: 1
+                  })
+                  element.tabChange('classRoomTagTab', 1);
+                } else {
+                  layer.msg("此地区下无数据",{icon:5});
+
+                }
+              })
+           }
+       if (oder == 1)   {
+           var area2 = $(this).attr("data-area2");
+           // var area = $(this).attr("data-grade");
+           var url = "/api/getSchoolListByAreaId";
+           $.get(url,{area_id:area2},function(res){
+                 // console.log(res);
+                if(res.type == "success"){
+                    $(_this).siblings().removeClass('active');
+                    $(_this).addClass('active');
+                    $(".tagTabContentWrap_room").each(function(index, item) {
+                    if (index > 1) {
+                      element.tabDelete('classRoomTagTab',index)
+                     }
+                   }) 
+                    var list = res.data.data.list;
+                    var html = "";
+                    console.log(list);
+                    for (var i = 0; i < list.length; i++) {
+                      html += '<span class="tag" data-school="' + list[i].school_encrypt_id + '">' 
+                      html += list[i].school_name + '</span>'
+                  }
+                   element.tabAdd('classRoomTagTab', {
+                    title: '学校',
+                    content: '<div data-oder="2" class="tagTabContentWrap_room">'+html+'</div>',
+                    id: 2
+                  })
+                   element.tabChange('classRoomTagTab', 2);
+                }else{
+                   layer.msg("此地区下无学校",{icon:5,time:500})
+
+                }
+           })
+       } 
+      if (oder == 2)   {
+           var school_id = $(this).attr("data-school");
+           var school_name = $(this).text();
+           var url = "/api/getRoomListBySchoolId";
+          $.get(url,{school_id:school_id,date:weekData},function(res){
+                 // console.log(res);
+                if(res.type == "success"){
+                    $(_this).siblings().removeClass('active');
+                    $(_this).addClass('active');
+                    $(".tagTabContentWrap_room").each(function(index, item) {
+                    if (index > 2) {
+                      element.tabDelete('classRoomTagTab',index)
+                     }
+                   }) 
+                    var list = res.data.data.list;
+                    var html = "";
+                    // console.log(list);
+                    for (var i = 0; i < list.length; i++) {
+                      html += '<span class="tag" data-class="' + list[i].sr_encrypt_id + '" data-school="' + school_id + '" data-schoolZb="' + school_name + '">' 
+                      html += list[i].sr_name + '</span>'
+                  }
+                   element.tabAdd('classRoomTagTab', {
+                    title: '教室',
+                    content: '<div data-oder="3" class="tagTabContentWrap_room">'+html+'</div>',
+                    id: 3
+                  })
+                   element.tabChange('classRoomTagTab', 3);
+                }else{
+                   layer.msg("此学校下无教室",{icon:5,time:500})
+                }
+           })
+       } 
+
+       if (oder == 3)   {
+         var school_id = $(this).attr("data-school");
+         var school_name = $(this).attr("data-schoolZb");
+         var class_name = $(this).text();
+          var url = "/api/getSchoolTeacherList";
+          $.get(url,{school_id:school_id},function(res){
+                 // console.log(res);
+                if(res.type == "success"){
+                    $(_this).siblings().removeClass('active');
+                    $(_this).addClass('active');
+                    $(".tagTabContentWrap_room").each(function(index, item) {
+                    if (index > 3) {
+                      element.tabDelete('classRoomTagTab',index)
+                     }
+                   }) 
+                    var list = res.data.data.list;
+                    var html = "";
+                    // console.log(list);
+                  for (var i = 0; i < list.length; i++) {
+                       var roomsTags =$("#roomsTag").find(".del");
+                       if(roomsTags.length > 0){
+                         roomsTags.each(function(index, el) {
+                           var teacherid =  $(el).attr("data-teacher");
+                           console.log(teacherid);
+                           if( teacherid &&teacherid == list[i].st_encrypt_uid){
+                           }else {
+                               html += '<span class="tag lastRoomTag" data-zn="' + list[i].st_realname + '" data-teacher="'+ list[i].st_encrypt_uid+'" data-schoolZb="' + school_name + '" data-classZb="' + class_name + '">' 
+                               html += list[i].st_realname + '</span>'
+                           }
+                        });
+                       }else{
+                           html += '<span class="tag lastRoomTag" data-zn="' + list[i].st_realname + '" data-teacher="'+ list[i].st_encrypt_uid+'" data-schoolZb="' + school_name + '" data-classZb="' + class_name + '">' 
+                           html += list[i].st_realname + '</span>'
+                       }
+                  }
+                   element.tabAdd('classRoomTagTab', {
+                    title: '老师',
+                    content: '<div data-oder="4" class="tagTabContentWrap_room">'+html+'</div>',
+                    id: 4
+                  })
+                   element.tabChange('classRoomTagTab',4);
+                }else{
+                   layer.msg("该学校无老师信息",{icon:5,time:500})
+                }
+           })
+       } 
+       if (oder == 4)   {
+          if($(_this).hasClass('active')){
+            return;
+          }
+          $(_this).addClass('active');
+          var teacher = $(this).text();
+          var teacher_id = $(this).attr("data-teacher");
+          var school = $(this).attr('data-schoolzb');
+          var room = $(this).attr('data-classzb');
+          var html = '<span class="tag-selected">'
+              html +=        '<span class="inner">'+school+'-'+room +'-'+ teacher +'</span>'
+              html +=            '<span class="del" data-teacher="'+teacher_id+'">×</span>'
+              html +=      '</span>'
+          // console.log(html)    
+         var selected = $("#roomsTag").find('.tag-selected');
+         //最多选中3个;
+         if(selected.length<3){
+           $("#roomsTag").append(html); 
+         }else{
+            layer.msg("最多选择3个",{icon:5})
+         }
+       } 
+   })
+
+//里面的tag
+$("#roomsTag").on("click",".del",function(){
+    $(this).parent().remove();
+    var thisTeacherId = $(this).attr("data-teacher");
+    console.log(thisTeacherId);
+    //去掉弹窗里面active
+    $(".lastRoomTag").each(function(index, el) {
+       if($(el).attr("data-teacher") == thisTeacherId){
+         $(el).removeClass('active');
+       }
+    });
+})
+
+//外面的tag
+$("#roomTag").on("click",".del",function(){
+    var tags = $("#roomTag").find(".del");
+    var tagsIncontrol = $("#roomsTag").find(".tag-selected");
+    var index = tags.index($(this));
+    tagsIncontrol.eq(index).remove();
+    $(this).parent().remove();
+     console.log(tags.length)
+    if(tags.length == 1){
+        $(".tagTabContentWrap_room").each(function(index, item) {
+            if (index > 0 ){
+              element.tabDelete('classRoomTagTab',index)
+             }
+        });
+        $("#roomsTag").html("");   
+        $("#classRoomTagControl .tag").removeClass('active');
+    }
+   
+})
+
+
 
 
 
@@ -336,7 +640,7 @@ function renderClassTd(school_id,weekData){
              type:type
           }
          $.get(classUrl,getClassDate,function(res){
-              console.log(res);
+              // console.log(res);
               if(res.type == "success"){
                 if ( res.data.length == 0 ){
                    return;

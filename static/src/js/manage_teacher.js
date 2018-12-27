@@ -27,7 +27,7 @@ form.on('select(grade)', function(data){
         // console.log(data);
        if(data.type == "success") {
           var list = data.data.data.list;
-          var html = "<option value="">选择学科</option>";
+          var html = '<option value="">选择学科</option>';
           for(var i=0;i<list.length;i++){
              html += '<option value="'+ list[i].ss_id +'">'+ list[i].ss_name+'</option>'
           }
@@ -226,10 +226,7 @@ function refrechData() {
       })
     }
   }
-  
 
-
-    
 
 // 弹窗里面东西
   function getUserListBySchoolId (){
