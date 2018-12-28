@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+<title>首页</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link rel="stylesheet" type="text/css" href="">
+<link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<style type="text/css">
+    body {
+       background-color: #f4f4f4;
+    }
+    .container {
+       padding: 0;
+    }
+    
+      a {
+         color: #999;
+         text-decoration: none;
+      }
+      a:hover {
+         text-decoration: none;
+         opacity: 0.8
+      }
+     h4 {
+        padding-left: 15px;
+        border-left: 2px solid #ddd;
+     }
+
+    ul {
+       padding: 0;
+    }
+
+    li {
+       padding: 0;
+       list-style: none;
+    }
+
+    .rec {
+       margin-top: 20px;
+    }
+    .inner {
+        display: block;
+        width: 100%;
+    }
+
+   .ejb_head {
+       height: 80px;
+       width: 100%;
+       background-color: #fff;
+       margin-bottom:20px;
+   }
+
+   .ejb_index_foot {
+          text-align: center;
+          line-height: 24px;
+          padding-top: 30px;
+          padding-bottom: 40px;
+          color:#333333;
+          background: #ffff;
+       }
+       .ejb_row {
+          overflow: hidden;
+          margin-left: -15px;
+          margin-right: -15px;
+       }
+
+
+ .rec .inner{
+     text-align: center;
+     padding-top: 144px;
+  }
+  .rec .inner .title {
+     font-size: 18px;
+    
+  }
+
+
+
+     .rec  .ejb_row .cell {
+         float: left;
+         width: 25%;
+         /*background-color: pink;*/
+         padding: 0 15px;
+         box-sizing: border-box;
+       }
+
+     .rec  .ejb_row .inner{
+          width: 100%;
+         /* background-color: pink;*/
+          display: block;
+          height: 234px;
+          color:#fff;
+          margin-bottom: 15px;
+       }
+    
+    .rec .inner1 {
+        background: url("../hout2/img/item1.png") no-repeat;
+        background-size: contain;
+     }
+
+    .rec .inner2 {
+        background: url("../hout2/img/item2.png") no-repeat;
+        background-size: contain;
+     }
+  .rec .inner3 {
+        background: url("../hout2/img/item3.png") no-repeat;
+        background-size: contain;
+     } .rec .inner4 {
+        background: url("../hout2/img/item4.png") no-repeat;
+        background-size: contain;
+     } .rec .inner5 {
+        background: url("../hout2/img/item5.png") no-repeat;
+        background-size: contain;
+     } .rec .inner6 {
+        background: url("../hout2/img/item6.png") no-repeat;
+        background-size: contain;
+     } .rec .inner7 {
+        background: url("../hout2/img/item7.png") no-repeat;
+        background-size: contain;
+     }
+
+
+/*=====================rec======================*/
+
+
+
+
+
+
+
+      .localClass .ejb_row .cell {
+         float: left;
+         width: 25%;
+        /* background-color: pink;*/
+         padding: 0 15px;
+         box-sizing: border-box;
+       }
+     .localClass .inner {
+         padding-top: 45px;
+         padding-bottom: 55px;
+         text-align: center;
+         color: #fff;
+     }
+     .localClass .inner .title {
+        font-size: 24px;
+        display: block;
+        height: 50px;
+        margin-bottom: 20px;
+     }
+     .localClass .inner p {
+        color: #fff;
+        font-size: 15px;
+     }
+     .localClass .inner img {
+        margin-bottom: 40px;
+     }
+     .localClass  .inner1 {
+         background-color: #ff6f42;
+     }
+
+     .localClass  .inner2 {
+         background-color: #ffb43c;
+     }
+     .localClass  .inner3 {
+         background-color: #48b24d;
+     }
+     .localClass .inner4 {
+         background-color: #1ec4d9;
+     }
+
+     .localClass .inner4   img {
+        border: 6px solid #3eccde;
+        height: 93px; 
+        width: 93px;
+        border-radius: 50%; 
+        background-color: #fff;
+
+     }
+
+
+/*=====================studyRec======================*/
+
+.studyRec .main { overflow: hidden; }
+.studyRec .main .left { float: left;width: 270px;background-color: #0089cc;padding-top: 20px;}
+.studyRec .main .right { float: right;width: 870px; height: 327px;overflow: hidden;}
+.studyRec .content { width: 100%; background-color: #029ae4;overflow: hidden;}
+
+.studyRec .title { text-align: center; color: #fff;font-size: 16px; padding: 20px; }
+.studyRec .content  .item { float: left;width: 50%;text-align: center; padding: 15px 0; }
+
+.studyRec .left a { color: #fff;font-size: 16px }
+.studyRec  li a { color:#666; }
+.studyRec  a:hover{text-decoration: underline;}
+.studyRec .foot { text-align: center;background-color: #029ae4;padding-top: 20px; padding-bottom: 40px;}
+.studyRec .doc { float: left;width: 33.33%;padding:0 10px; }
+.doc_icon { width: 15px; height: 15px;display: inline-block;background: url("img/file_type_sprite.png")  no-repeat; vertical-align: text-bottom;}
+.studyRec .doc li { margin-bottom: 15px; font-size: 16px;}
+
+.doc_icon_doc { background-position: -3px -22px; }
+.doc_icon_ppt {background-position: -22px -22px;}
+.doc_icon_mp4 {background-position: -3px -43px;}
+
+  .localClass, .studyRec, .rec {
+         margin-bottom: 35px;
+        overflow: hidden;
+      }
+
+  .codeIMg {
+     width: 90px;
+     display: block;
+     margin: 20px auto;
+  }
+
+</style>
+
+<body>  
+<div class="ejb_head">
+    <div class="container">
+      <h2 style="font-weight:bold;color:#888;">
+         鄂教版教材数字化支撑平台
+      </h2>
+    </div>
+</div>
+<style type="text/css">
+ 
+</style>
+<div class="container">
+   <div class="rec">
+      <div class="ejb_row">
+        <div class="cell">
+          <a class="inner inner1" href="#">        
+                 <span class="title">资源中心</span><br/>
+                 <span class="min_title">配套鄂教版教材，共享共建</span>
+          </a>
+        </div>
+         <div class="cell">
+          <a class="inner inner2" href="#">        
+                  <span class="title">在线备课</span><br/>
+                  <span class="min_title">教学设计工具和备课资源服务</span>
+          </a>
+        </div>
+        <div class="cell">
+          <a class="inner inner3" href="#">        
+                  <span class="title">在线测试</span><br/>
+                  <span class="min_title">课程主题测评，测试活动参与</span>
+          </a>
+        </div>
+        <div class="cell">
+          <a class="inner inner4" href="#">        
+                  <span class="title">网络研修</span><br/>
+                  <span class="min_title">教师继续教育网络研修平台</span>
+          </a>
+        </div>
+        <div class="cell">
+          <a class="inner inner5" href="#">        
+                  <span class="title">课程助手</span><br/>
+                  <span class="min_title">海量优质试题库，个性化组卷</span>
+          </a>
+        </div>
+        <div class="cell">
+          <a class="inner inner6" href="#">        
+                  <span class="title">题库中心</span><br/>
+                  <span class="min_title">海量优质试题库，个性化组卷</span>
+          </a>
+        </div>
+         <div class="cell">
+          <a class="inner inner7" href="#">        
+                  <span class="title">在线问答</span><br/>
+                  <span class="min_title">高质量问答，关联课程、知识点</span>
+          </a>
+        </div>
+         <div class="cell">
+          <div class="inner" style="background-color: #fe9e4e;padding-top:20px;">        
+                <img class="codeIMg" src="https://mobile.dodoedu.com/lkApp/img/lj_ewm.png">
+                <div>教师助手app</div>
+                <span>随时随地，做你的口袋教学助手</span>
+          </div>
+        </div>
+    </div>
+   </div>
+   <div class="localClass">
+       <h4>地方课程</h4>
+      <div class="ejb_row">
+        <div class="cell">
+          <a class="inner inner1" href="#">     
+              <img src="https://static.dodoedu.com/jiaocaiPage/v1.2.0/static/images/indexNew/logo_smaq.png">   
+              <div class="title">综合实践活动</div>
+              <div class="info">
+                <p>义教研修群1：106084003</p>
+                <p>义教研修群2：58696956</p>
+                <p>高中研修群：55787867</p>
+              </div>
+          </a>
+        </div>
+        <div class="cell">
+          <a class="inner inner2" href="#">     
+              <img src="https://static.dodoedu.com/jiaocaiPage/v1.2.0/static/images/indexNew/logo_xljk.png">   
+              <div class="title">信息技术</div>
+              <div class="info">
+                <p>义教研修群1：192792990</p>
+                <p>义教研修群2：438724660</p>
+                <p>高中研修群：567583253</p>
+              </div>
+          </a>
+        </div>
+         <div class="cell">
+          <div class="inner inner3" >     
+              <img src="img/footboot.png" style="height: 92px; width: 92px;">   
+              <div class="title">足球</div>
+              <div class="info">
+               
+                <p style="font-size:23px; margin-top: 30px;padding-bottom: 42px;">敬请期待</p>
+               
+              </div>
+          </a>
+         </div>
+        </div>
+        <div class="cell">
+          <div class="inner inner4" href="#" >     
+              <img src="img/xq.png" style="">   
+              <div class="title">戏曲</div>
+              <div class="info">
+                <p style="font-size:23px; margin-top: 30px;padding-bottom: 42px;">敬请期待</p>
+              </div>
+           </div>
+        </div>
+        
+     </div>
+   </div>
+   <div class="studyRec">
+       <h4>备课资源</h4>
+        <div class="main">
+          <div class="left">
+              <div class="title">
+                 共 4219256 个资源
+              </div>
+              <div class="content">
+                 <span class="item">
+                    <a href="">语文</a>
+                 </span>
+                 <span class="item">
+                    <a href="">数学</a>
+                 </span>
+                 <span class="item">
+                    <a href="">英语</a>
+                 </span>
+                 <span class="item">
+                    <a href="">科学</a>
+                 </span>
+                 <span class="item">
+                   <a href="">信息技术</a>
+                 </span>
+                  <span class="item">
+                   <a href="">综合实践活动</a>
+                 </span>
+              </div>
+              <div class="foot">
+                 <a href="">更多>></a>
+              </div>
+          </div>
+          <div class="right">
+             <div class="doc">
+                <ul>
+                  <li>
+                     <span class="doc_icon doc_icon_doc"></span>
+                     <a>新民主主义革命.doc</a>
+                  </li>
+                   <li>
+                     <span class="doc_icon doc_icon_doc"></span>
+                     <a>新民主主义革命.doc</a>
+                  </li>
+                    <li>
+                     <span class="doc_icon doc_icon_doc"></span>
+                     <a>新民主主义革命.doc</a>
+                  </li>
+                 
+                </ul>
+             </div>
+
+                <div class="doc">
+                <ul>
+                  <li>
+                     <span class="doc_icon doc_icon_ppt"></span>
+                     <a>新民主主义革命.doc</a>
+                  </li>
+                   <li>
+                     <span class="doc_icon doc_icon_ppt"></span>
+                     <a>新民主主义革命.doc</a>
+                  </li>
+                    <li>
+                     <span class="doc_icon doc_icon_ppt"></span>
+                     <a>新民主主义革命.doc</a>
+                  </li>
+                   <li>
+                     <span class="doc_icon doc_icon_ppt"></span>
+                     <a>新民主主义革命.doc</a>
+                  </li>
+                  <li>
+                     <span class="doc_icon doc_icon_ppt"></span>
+                     <a>新民主主义革命.doc</a>
+                  </li>
+                </ul>
+             </div>
+             <div class="doc">
+                 <ul>
+                  <li>
+                     <span class="doc_icon doc_icon_mp4"></span>
+                     <a>新民主主义革命.doc</a>
+                  </li>
+                   <li>
+                     <span class="doc_icon doc_icon_mp4"></span>
+                     <a>新民主主义革命.doc</a>
+                  </li>
+                    <li>
+                     <span class="doc_icon doc_icon_mp4"></span>
+                     <a>新民主主义革命.doc</a>
+                  </li>
+                   <li>
+                     <span class="doc_icon doc_icon_mp4"></span>
+                     <a>新民主主义革命.doc</a>
+                  </li>
+                  <li>
+                     <span class="doc_icon doc_icon_mp4"></span>
+                     <a>新民主主义革命.doc</a>
+                  </li>
+                </ul>
+             </div>
+          </div>
+   </div>
+        
+     </div>
+   </div>
+</div>
+
+
+
+     
+<div class="ejb_index_foot">
+    <div class="container">
+      主管单位：湖北省教育厅 <br/>
+      网站管理：湖北省教育信息化发展中心 湖北省电化教育馆<br/>
+      内容版权所有：湖北省教育厅<br/>
+    </div>
+</div>
+</body>
+
+</html>

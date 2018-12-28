@@ -22,18 +22,6 @@ require(["layui","path","tools","num"],function(layui,path,tools,num){
       studyTime(school_id,weekData);
       formHeadtime(school_id,weekData);
       renderClassTd(school_id,weekData);
-     // $("#classroomName").text(room_name)
-
-     // console.log(tools.queryString("room_id"));
-
-      // console.log(school_id);
-      //  console.log(room_id);
-      //  console.log(term_id);
-      //  console.log(week);
-      //  console.log(weekData);
-  
-
-
 
     //切换周
 $("body").on("click",".Add",function(){
@@ -60,8 +48,6 @@ $("body").on("click",".sub",function(){
 })
 
 
-
-
 $("#classTagBt").click(function() {
       //外面没选中的就清空弹窗
        var tags =  $("#classTag").find(".tag-selected");
@@ -74,8 +60,6 @@ $("#classTagBt").click(function() {
           $("#teachersTag").html("");   
           $("#classTagControl .tag").removeClass('active');
        }
-
-
       layer.open({
         type: 1,
         title:"设置课程",
@@ -85,6 +69,7 @@ $("#classTagBt").click(function() {
         yes: function(index, layero){
           var html = $("#teachersTag").html();
           $("#classTag").html(html);
+          verify();
           layer.close(index); 
         }
       });
@@ -103,6 +88,7 @@ $("#classTag").on("click",".del",function(){
     $("#teachersTag").html("");   
     $("#classTagControl .tag").removeClass('active');
 })
+
 $("#teachersTag").on("click",".del",function(){
     $(this).parent().remove();
     //清空弹窗
@@ -196,7 +182,7 @@ $("#teachersTag").on("click",".del",function(){
 $("#roomTagBt").click(function() {
      //外面没选中的就清空弹窗
        var tags =  $("#roomTag").find(".tag-selected");
-       console.log(tags.length)
+       // console.log(tags.length)
        if(tags.length == 0){
           $(".tagTabContentWrap_room").each(function(index, item) {
               if (index > 0 ){
@@ -216,8 +202,9 @@ $("#roomTagBt").click(function() {
         yes: function(index, layero){
           var html = $("#roomsTag").html();
           $("#roomTag").html(html);
+          verify();
           layer.close(index); 
-          layer.close(index); 
+          
         }
       });
     })
@@ -411,6 +398,7 @@ $("#roomsTag").on("click",".del",function(){
          $(el).removeClass('active');
        }
     });
+    verify();
 })
 
 //外面的tag
@@ -430,11 +418,13 @@ $("#roomTag").on("click",".del",function(){
         $("#roomsTag").html("");   
         $("#classRoomTagControl .tag").removeClass('active');
     }
-   
+   verify();
 })
 
 
 
+
+// ==========================自定义周===========================
 
 
 //周选择自定义
@@ -446,8 +436,155 @@ $("#roomTag").on("click",".del",function(){
          $(".controlWeek").hide();
          $("#weekTagbox").hide();
          $("#weekTagbox").html("");
+         //弹窗内的
+         $("#tagWeekWrap .tag").removeClass('active');
       }
     });  
+
+
+
+ $("#weekTagBt").click(function(){
+     layer.open({
+        type: 1,
+        title:"设置周",
+        content: $('#classWeekTagControl'),
+        area:["550px","500px"],
+        btn: ['确定', '取消'],
+        yes: function(index, layero){
+          var actives = $("#tagWeekWrap").find(".active");
+          if(actives.length > 0 ){
+              var html = "";
+              actives.each(function(index, el) {
+                  var weekid =  $(el).attr("data-id");
+                  html += '<span class="tag-selected">'
+                  html +=       '<span class="inner" >第'+ num.Hanzi(weekid) +'周</span>'
+                  html +=           '<span class="del" data-id="'+ weekid +'">×</span>'
+                  html +=  '</span>'
+              });
+              $("#weekTagbox").html(html);
+              layer.close(index); 
+              verify ()
+          }else{
+             layer.close(index); 
+          } 
+        }
+      });
+ })
+
+
+// 周tag删除
+  $("#weekTagbox").on("click",".del",function(){
+       $(this).parent().remove();
+       var id = $(this).attr("data-id");
+       $("#tagWeekWrap .tag").each(function(index, el) {
+           var tagId = $(el).attr("data-id");
+           // console.log(tagId);
+           // console.log(id);
+           if(id ==  tagId){
+              $(el).removeClass('active');
+           }
+       });
+  })
+
+//清空
+ $("#clearConfigBt").click(function(){
+     console.log(1);
+     clearTag1();
+     clearTag2();
+     clearTag3();
+ })
+
+
+
+
+
+
+
+//添加课程
+
+  $("body").on("click","td",function(){
+      if($(this).attr("positon")){
+         alert(123);
+      }
+  }) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ==================================================================================
+
+
+
+//验证是否可以添加课程
+  function verify () {
+    var  tags1 = $("#classTag").find(".tag-selected").length;
+    var tags2 = $("#roomTag").find(".tag-selected").length;
+    // var tags3 = $("#weekTagbox").find(".tag-selected").length;
+    if(tags1 && tags2) {
+       
+    }
+  }
+
+
+
+
+
+
+
+
+//清空3个tag
+   function clearTag1() {
+         $(".tagTabContentWrap").each(function(index, item) {
+              if (index > 0 ){
+                element.tabDelete('classTagTab',index)
+               }
+          });
+          $("#teachersTag").html("");   
+          $("#classTag").html("");
+          $("#classTagControl .tag").removeClass('active');
+   }
+
+    function clearTag2() {
+         $(".tagTabContentWrap_room").each(function(index, item) {
+              if (index > 0 ){
+                element.tabDelete('classRoomTagTab',index)
+               }
+          });
+          $("#roomsTag").html("");   
+          $("#roomTag").html("");
+          $("#classRoomTagControl .tag").removeClass('active');
+   }
+
+  function clearTag3() {
+         $("#tagWeekWrap .tag").removeClass('active');
+         $("#weekTagbox").html("");
+         $("input[value=all]").prop("checked",true);
+         form.render("radio"); 
+         $(".controlWeek").hide();
+   }
+
+
+
+
+
 
 
 
@@ -528,12 +665,20 @@ $("#roomTag").on("click",".del",function(){
           date:weekData
      }  
     $.get(WeeKurl,getData,function(res){
-       // console.log(res);
+      
        if(res.type == "success") {
          var data = res.data.data;
          term_id = data.term_id;
          week = data.term_week;
          totWeek = data.total_week;
+         //渲染弹框里面内容
+         var html = ""
+         for(var i = 0;i<totWeek;i++){
+             var str = i+1
+             html += '<span class="tag" data-id="'+ str +'">第'+ num.Hanzi(str) +'周</span>'
+         }
+          $("#tagWeekWrap").html(html);
+          TagWeekUi(true);
          // console.log("studyTime"+week);
          $("#schoolTerm").html(data.year);
          $("#week_time").html(data.week_time);
@@ -613,7 +758,6 @@ function renderClassTd(school_id,weekData){
         //渲染假期效果
           ui_holiday();  
 
-
         //添加课程
          renderClass(school_id,room_id,term_id,type,week);
        }
@@ -626,12 +770,6 @@ function renderClassTd(school_id,weekData){
 //渲染课程
     function renderClass  (school_id,room_id,term_id,type,week){
         var classUrl = path.api +"/api/getSchoolRoomCourcePlan";
-        // var getClassDate = {
-        //      school_id:2790183,
-        //      room_id:1490493,
-        //      term_id:1,
-        //      week:23
-        //   }
        var getClassDate = {
              school_id:school_id,
              room_id:room_id,
@@ -652,11 +790,11 @@ function renderClassTd(school_id,weekData){
                       for(var k = 0;k< tr.length;k++){
                          if(JSON.stringify(tr[k]) != "{}"){
                          var grade = num.Hanzi(tr[k].cn_grade)
-                         var html = tr[k].cn_subject + '</br>'
+                         var html = tr[k].cn_subject_chs + '</br>'
                              html += '( '+ tr[k].cn_sponsor_teacher_name +' )'
                              html +='<div class="info" data-id="'+ tr[k].cp_encrypt_id+'">'
                              html += '<div class="title">'
-                             html +=      grade +'年级 '+ tr[k].cn_subject
+                             html +=      grade +'年级 '+ tr[k].cn_subject_chs
                              html +=      '</div>'
                              html +=      '<h5>主讲教室</h5>'
                              html +=     '<p>'+ tr[k].cn_sponsor_school_name+'</p>'
@@ -701,9 +839,6 @@ function renderClassTd(school_id,weekData){
         $("td[positon$=',"+holidays[i]+"']").removeClass().addClass("holidayTd");
      }
     }
-   
-
-    // $("td[position$=',9']").removeClass().addClass(dayClass);
  }
 
 
@@ -723,11 +858,18 @@ function renderClassTd(school_id,weekData){
       });
    }
 
- function TagUi(){
-     $("body").on("click","#classTagControl .tag",function(){
-            $(this).siblings().removeClass('active');
-            $(this).addClass('active');
+ function TagWeekUi(boolean){
+   if(boolean){
+     $("body").on("click","#tagWeekWrap .tag",function(){
+           if(!$(this).hasClass('active')){
+             $(this).addClass('active');
+           }else{
+              $(this).removeClass('active');
+           }
+           
      })
+   }else {
+     $("#tagWeekWrap .tag").removeClass('active');
+    }
  }
-
 })

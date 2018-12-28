@@ -358,7 +358,7 @@ function renderClassTd(school_id,weekData){
              type:type
           }
          $.get(classUrl,getClassDate,function(res){
-              console.log(res);
+              // console.log(res);
               if(res.type == "success"){
                 if ( res.data.length == 0 ){
                    return;
@@ -370,11 +370,11 @@ function renderClassTd(school_id,weekData){
                       for(var k = 0;k< tr.length;k++){
                          if(JSON.stringify(tr[k]) != "{}"){
                          var grade = num.Hanzi(tr[k].cn_grade)
-                         var html = tr[k].cn_subject + '</br>'
+                         var html = tr[k].cn_subject_chs + '</br>'
                              html += '( '+ tr[k].cn_sponsor_teacher_name +' )'
                              html +='<div class="info" data-id="'+ tr[k].cp_encrypt_id+'">'
                              html += '<div class="title">'
-                             html +=      grade +'年级 '+ tr[k].cn_subject
+                             html +=      grade +'年级 '+ tr[k].cn_subject_chs
                              html +=      '</div>'
                              html +=      '<h5>主讲教室</h5>'
                              html +=     '<p>'+ tr[k].cn_sponsor_school_name+'</p>'
