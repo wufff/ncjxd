@@ -17,12 +17,14 @@ require(["jquery","layui","path","num","tools"],function($,layui,path,num,tools)
    var now =(new Date()).toLocaleDateString();
    var weekData = now.replace(/\//g,'-');
    var totWeek;
+   var school_name;
    var type = 0;
    var holidays = [];
  
 
 
 form.on('select(city)', function(data){
+     // console.log(data.value)
      $("select[name=school]").html('<option value="">请先选区县</option>');
      $("select[name=school]").val("");
      intInfo();
@@ -30,9 +32,10 @@ form.on('select(city)', function(data){
      	area_id:data.value,
      	type:3
      }
-     var url = "/api/getAreaList"
+     var url = "/api/getAreaList";
      if(data.value){
      	$.get(url,getData,function(res){
+         // console.log(res);
      	  if(res.type == "success") {
           var list = res.data.data.list;
           var html = '<option value="">请选择</option>';
@@ -84,6 +87,10 @@ form.on('select(school)', function(data){
        if(data.value == school_id){
          return;
        }
+      var ele = data.elem
+      
+      var text = $(ele).find("option:selected").text();
+       school_name = text;
        school_id = data.value;
       renderClassRoom (school_id,weekData);
       studyTime (school_id,weekData);
@@ -150,7 +157,7 @@ $(".classType").on("click","span",function(){
 
 
 $("#goToEdite").click(function(){
-    window.location.href="/course/edit?school_id="+school_id+"&room_id="+room_id+"&weekData="+weekData+"&term_id="+term_id+"&week="+week+"&room_name="+room_name;
+    window.location.href="/course/edit?school_id="+school_id+"&room_id="+room_id+"&weekData="+weekData+"&term_id="+term_id+"&week="+week+"&room_name="+room_name+"&school_name="+school_name;
 })
 
 
@@ -211,7 +218,7 @@ $("#goToEdite").click(function(){
                  html += '<span class="active" data-id="'+list[i].sr_encrypt_id+'">'+list[i].sr_name+'</span>'
                  room_id = list[i].sr_encrypt_id;
                  room_name = list[i].sr_name;
-                 console.log(room_name);
+                 // console.log(room_name);
               }else {
                  html += '<span  data-id="'+ list[i].sr_encrypt_id +'">'+list[i].sr_name+'</span>'
               }
