@@ -1,69 +1,72 @@
+
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-<title>编辑课表</title>
-<meta name="description" content="">
-<meta name="keywords" content="">
-<!--[if lt IE 10]>
-        <script src="/ncjxdPage/static/src/js/ie_update.js"></script>
-<![endif]-->
-<link rel="stylesheet" type="text/css" href="../static/src/layui/css/layui.css">
-<link rel="stylesheet" type="text/css" href="../static/src/style/lib/bootstrap/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="../static/src/style/public.css">
-<link rel="stylesheet" type="text/css" href="../static/src/style/table_edit.css">
-<link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-</head>
-<body>    
-  <div id="header">
-  <div class="container">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+        <title>首页</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <!--[if lt IE 10]>
+                <script src="http://images.dev.dodoedu.com/ncjxdPage/static/src/js/ie_update.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"/>        
+                                    <link  href="http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/layui/css/layui.css" rel="stylesheet" type="text/css"/>
+                            <link  href="http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/style/public.css" rel="stylesheet" type="text/css"/>
+                            <link  href="http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/style/tableClass.css" rel="stylesheet" type="text/css"/>
+             
+            </head>
+    <body>  
+        <div id="header">
+            <div class="container">
     <div class="title">
         <h3>湖北省农村教学点网校</h3>
         <p>— 管理与服务平台 —</p>
     </div>
-   <ul class="nav navbar-nav">
-    <li>
-      <a href="##">首页</a>
-    </li>
-    <li>
-       <a href="#">巡课互动</a>
-    </li>
-     <li>
-       <a href="#">直播活动</a>
-    </li>
-    <li class="active">
-       
-        <a href="#">课表管理</a>
-     </li>
-      <li class="dropdown">
-        <a href="##" data-toggle="dropdown" class="dropdown-toggle">数字资源<span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">学科资源</a></li>
-          <li><a href="#">教学点录课</a></li>
-        </ul>
-     </li>
-      <li>
-         <a href="#">教师研修</a>
-      </li>
-      <li><a href="##">在线统计</a></li>
-   </ul>
-   </div>
-</div>
-   <div class="container page_wrap">
-   	  <h4>编辑课表</h4>
-      <h5 style="text-align: right;color: #999; ">步骤1/2 配置课程</h5>
-   	  <div class="layui-form filter">
+    <ul class="nav navbar-nav">
+        <li class="active">
+            <a href="/">首页</a>
+        </li>
+        <li>
+            <a href="#">巡课互动</a>
+        </li>
+        <li>
+            <a href="/live">直播活动</a>
+        </li>
+        <li class="dropdown">
+           <!--  <a href="/course" data-toggle="dropdown" class="dropdown-toggle">课程表<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="##">计划列表</a></li>
+                <li><a href="##">开课确认</a></li>
+            </ul> -->
+            <a href="/course">课程表</a>
+        </li>
+        <li class="dropdown">
+            <a href="##" data-toggle="dropdown" class="dropdown-toggle">数字资源<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">学科资源</a></li>
+                <li><a href="#">教学点录课</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="http://wangyong.yanxiu.dev.dodoedu.com">教师研修</a>
+        </li>
+        <li><a href="/analytics">在线统计</a></li>
+    </ul>
+</div>        </div>
+
+        <!--主内容开始-->
+            <div class="container page_wrap">
+    <h4>课表管理 - 编辑课表</h4>
+    <h5 style="text-align: right;color: #999; ">步骤1/2 配置课程</h5>
+   <div class="layui-form filter">
          <dl class="clear">
            <dt class="padding">课程信息：</dt>
            <dd class="button_wrap">
              <button class="layui-btn layui-btn-primary" id="classTagBt">设置</button>
           </dd> 
           <dd class="tabTag" id="classTag">
-                <span class="tag-selected">
-                    <span class="inner">第一周</span>
-                    <span class="del">×</span>
-               </span>
+                <span class="tag-selected" data-teacher="1490493" data-grade="1" data-subject="GS001"><span class="inner">一年级-语文-<span class="teacher_name">测试用户昵称</span></span><span class="del">×</span></span>
              
           </dd>
          </dl>
@@ -73,164 +76,134 @@
              <button class="layui-btn layui-btn-primary" id="roomTagBt">设置</button>
           </dd> 
           <dd class="tabTag" id="roomTag">
-             
+            <!--  <span class="tag-selected"><span class="inner">保康县黄堡镇同庆教学点-教室1-测试用户昵称</span><span class="del" data-teacher="1490493">×</span></span> -->
           </dd>
          </dl>
-   	  	 <dl class="clear">
+         <dl class="clear" lay-filter="radio">
            <dt class="padding">上课周次：</dt>
           
-          <dd class="radio_wrap">
-            <input type="radio" name="week" lay-filter="week" value="all" title="全部" checked>
+          <dd class="radio_wrap" >
+            <input type="radio" name="week"   lay-filter="week" value="all" title="全部" checked>
           </dd>
           <dd class="radio_wrap">
-             <input type="radio" name="week" lay-filter="week" value="week" title="当前选择周">
+             <input type="radio" name="week"  lay-filter="week"  value="week" title="当前选择周">
           </dd>
           <dd class="radio_wrap">
-            <input type="radio" name="week" lay-filter="week" value="cum" title="自定义" >
+            <input type="radio" name="week"  lay-filter="week" value="cum" title="自定义" >
           </dd>
           <dd class="button_wrap controlWeek" style="display: none">
-             <button class="layui-btn layui-btn-primary" id="weekTagBt" >设置</button>
+             <button class="layui-btn layui-btn-primary" id="weekTagBt">设置</button>
           </dd> 
-          <dd class="tabTag" id="weekTagbox">
-              <span class="tag-selected">
+          <dd class="tabTag" id="weekTagbox" style="height: auto;">
+              <!-- <span class="tag-selected">
                     <span class="inner">第一周</span>
                     <span class="del">×</span>
-               </span>
+               </span> -->
           </dd>
          </dl>
            
         
-          <button class="layui-btn layui-btn-primary tab_btn">清空</button>
-   	  </div>
-        <h5 style="text-align:right; color: #999;">步骤2/2 点击空白处添加配置好的课程</h5>
-   	    <div class="table">
-           <div>asfasdfsafdsd</div>
-          <div class="header">
-             <div class="title">
-              2018--2019上学期/主讲教室1
-              <small>
-                  <span></span>
-                  起止时间 : 2018-08-31至2019-02-12
-              </small>
-             </div>
-              <div class="week">
-                 <span class="bar Add">
-                     <i class="fa fa-angle-left" aria-hidden="true"></i>
-                 </span>
-                 <span class="main">
-                    第 1 周
-                 </span>
-                 <span class="bar sub">
-                     <i class="fa fa-angle-right" aria-hidden="true"></i>
-                 </span>
-              </div>
-
-              <div class="layui-btn-group">
-                  <button class="layui-btn layui-btn-primary">完成</button>          
-              </div>       
-          </div>
-          <div class="body">
-                   <table class="layui-table" lay-even>
-            <colgroup>
-              <col>
-              <col>
-              <col>
-               <col>
-              <col>
-              <col>
-              <col>
-               <col>
-              <col>
-              <col width="170">
-            </colgroup>
-            <thead>
-              <tr>
-                <th>午别</th>
-                <th>节次</th>
-                <th>
-                   <div>星期一</div>
-                   <div>2018-10-1</div>
-                </th>
-                <th>
-                   <div>星期一</div>
-                   <div>2018-10-1</div>
-                </th>
-                <th>
-                   <div>星期一</div>
-                   <div>2018-10-1</div>
-                </th>
-                <th>
-                   <div>星期一</div>
-                   <div>2018-10-1</div>
-                </th>
-                <th>
-                   <div>星期一</div>
-                   <div>2018-10-1</div>
-                </th>
-                <th>
-                   <div>星期一</div>
-                   <div>2018-10-1</div>
-                </th>
-                <th>
-                   <div>星期一</div>
-                   <div>2018-10-1</div>
-                </th>
-              </tr> 
-            </thead>
-            <tbody>
-             
-            
-              
-              
-             
-              
-            
-             
-            </tbody>
-          </table>
-          </div>
+          <button class="layui-btn layui-btn-primary tab_btn" id="clearConfigBt">清空</button>
       </div>
-   </div>
+    <h5 class="minTitle">步骤2/2 点击空白处添加配置好的课程</h5>
+    <div class="table">
+        <div style="font-size: 16px;text-align: center;padding:10px 0 10px 0;">
+          <span class="schoolName">234234324</span>
+          <span class="roomName"></span>
+        </div>
+        <div class="header clear">
+            <div class="title">
+               <!--  学期课表 -->
+                <span id="schoolTerm"></span>学期课表
+                <span></span>
+                <small>
+                   <span id="week_time"></span>
+                   <!--   -->
+                   
+                </small>
+                <span id="classroomName"></span>
+            </div>
+             <div class="week">
+                <span class="bar sub">
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                </span>
+                <span class="main">
+                   <!--  第  周 -->
+                   第 <span id="week">-</span>/<span id="totalweek" style="font-size: 14px;color:#999999"></span>周
+                </span> 
+                <span class="bar Add">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </span>
+            </div>
+
+            <div class="layui-btn-group" style="visibility: hidden;">
+                <button class="layui-btn layui-btn-primary">完成</button>          
+            </div>       
+        </div>
+        <div class="body">
+            <table class="layui-table">
+                <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col width="170">
+                </colgroup>
+                <thead id="thead">
+                    <tr id="theadtr">
+                        <th>午别</th>
+                        <th>节次</th>
+                        <th>星期一</th>
+                        <th>星期二</th>
+                        <th>星期三</th>
+                        <th>星期四</th>
+                        <th>星期五</th>
+                        <th>星期六</th>
+                        <th>星期天</th>
+                    </tr> 
+                </thead>
+                <tbody id="tbody">
+                   <!--    -->
+                    <tr>
+                      <td colspan="9" class="noneTd">加载中~！</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 
- 
-
-
-
-
-
-
-
-<!-- 弹窗 -->
- 	   <div id="classTagControl" class="chooseTag clearfix" style="display: none;">
+<!----------------- 弹窗 ------------------>
+       <div id="classTagControl" class="chooseTag clearfix" style="display: none;">
                <div class="main">
                   <div class="searchWap layui-form clearfix">
                      
-                     <input type="text" name="" class="layui-input  searchText" placeholder="搜索学校">
+                    <!--  <input type="text" name="" class="layui-input  searchText" placeholder="搜索学校">
                       <button class="layui-btn layui-btn-primary searchBtn">
                           <i class="fa fa-search"></i>
-                      </button>
+                      </button> -->
+                      <span style="color: #999">*说明： 请依次选择年级-班级-老师</span>
                    </div>  
                   <div class="layui-tab" lay-filter="classTagTab">
                       <ul class="layui-tab-title">
-                        <li class="layui-this">网站设置</li>
+                        <li class="layui-this">年级</li>
                         
                       </ul>
                       <div class="layui-tab-content tag_content">
                         <div class="layui-tab-item layui-show">
                            <div data-oder="0" class="tagTabContentWrap">
-                               <span class="tag">内容1</span>
-                               <span class="tag">内容1</span>
-                               <span class="tag">内容1</span>
-                               <span class="tag">内容1</span>
-                               <span class="tag">内容1</span>
-                               <span class="tag">内容1</span>
-                               <span class="tag">内容1</span>
-                               <span class="tag">内容1</span>
-                               <span class="tag">内容1</span>
-                               <span class="tag">内容1</span>
-                               <span class="tag">内容1</span>
-                               <span class="tag">内容1</span>
+                               <span class="tag" data-id="1">一年级</span>
+                               <span class="tag" data-id="2">二年级</span>
+                               <span class="tag" data-id="3">三年级</span>
+                               <span class="tag" data-id="4">四年级</span>
+                               <span class="tag" data-id="5">五年级</span>
+                               <span class="tag" data-id="6">六年级</span>
                            </div>
                         </div>
                         
@@ -239,8 +212,8 @@
                   </div>
                   
                </div>
-               <div class="inTag">
-                  <span class="tag-selected">
+               <div class="inTag" id="teachersTag">
+                  <!-- <span class="tag-selected">
                         <span class="inner">一年级-教学</span>
                         <span class="del">×</span>
                    </span>
@@ -255,22 +228,103 @@
                    <span class="tag-selected">
                         <span class="inner">崇阳实验小学-主讲教室4-唐嘉璐</span>
                         <span class="del">×</span>
-                   </span>
+                   </span> -->
                </div>
     </div>
-     
 
 
 
 
+    <!----------------- 弹窗 ------------------>
+       <div id="classRoomTagControl" class="chooseTag clearfix" style="display: none;">
+               <div class="main">
+                  <div class="searchWap layui-form clearfix">
+                     
+                    <!--  <input type="text" name="" class="layui-input  searchText" placeholder="搜索学校">
+                      <button class="layui-btn layui-btn-primary searchBtn">
+                          <i class="fa fa-search"></i>
+                      </button> -->
+                      <span style="color: #999">*说明： 请依次选择市-县区-学校-教室-老师,最多选择3个</span>
+                   </div>  
+                  <div class="layui-tab" lay-filter="classRoomTagTab">
+                      <ul class="layui-tab-title">
+                        <li class="layui-this">市</li>
+                        
+                      </ul>
+                      <div class="layui-tab-content tag_content">
+                        <div class="layui-tab-item layui-show">
+                           <div data-oder="0" class="tagTabContentWrap_room">
+                               <span class="tag" data-id="429000">省直辖行政单位</span>
+                               <span class="tag" data-id="422800">恩施土家族苗族自治州</span>
+                               <span class="tag" data-id="421300">随州市</span>
+                               <span class="tag" data-id="421200">咸宁市</span>
+                               <span class="tag" data-id="420800">荆州市</span>
+                               <span class="tag" data-id="420900">孝感市</span>
+                               <span class="tag" data-id="420700">鄂州市</span>
+                               <span class="tag" data-id="420600">襄阳市</span>
+                               <span class="tag" data-id="420500">宜昌市</span>
+                               <span class="tag" data-id="420300">十堰市</span>
+                               <span class="tag" data-id="420200">黄石市</span>
+                               <span class="tag" data-id="420100">武汉市</span>
+                           </div>
+                        </div>
 
-</body>
-<!-- <script src="/ncjxdPage/static/src/layui/layui.js"></script>
-<script src="/ncjxdPage/static/src/layui/js/layui-config.js"></script>
-<script src="/ncjxdPage/static/src/layui/js/patrol.js"></script> -->
+                      </div>
+                  </div>
+                  
+               </div>
+               <div class="inTag" id="roomsTag">
+                 
+               </div>
+    </div>
 
 
-<script src="../static/src/js/lib/require.js"></script>
-<script src="../static/src/js/re-config.js"></script>
-<script src="../static/src/js/table_edit.js"></script>
-</html>
+
+    <!----------------- 弹窗 ------------------>
+       <div id="classWeekTagControl" class="chooseTag clearfix" style="display: none;">
+               <div class="main">
+                  <div class="searchWap layui-form clearfix">
+                      <span style="color: #999">*说明： 请选择设置要设置的周</span>
+                   </div>  
+              
+                      <div class="tag_content" id="tagWeekWrap">
+                          <!--      <span class="tag" data-id="4721483">第一周</span>
+                               <span class="tag" data-id="4786389">第二周</span>
+                               <span class="tag" data-id="4785384">第二周</span>
+                               <span class="tag" data-id="4721483">第一周</span>
+                               <span class="tag" data-id="4786389">第二周</span>
+                               <span class="tag" data-id="4785384">第二周</span>
+                               <span class="tag" data-id="4721483">第一周</span>
+                               <span class="tag" data-id="4786389">第二周</span>
+                               <span class="tag" data-id="4785384">第二周</span>
+                               <span class="tag" data-id="4721483">第一周</span>
+                               <span class="tag" data-id="4786389">第二周</span>
+                               <span class="tag" data-id="4785384">第二周</span>
+                               <span class="tag" data-id="4721483">第一周</span>
+                               <span class="tag" data-id="4786389">第二周</span>
+                               <span class="tag" data-id="4785384">第二周</span>
+                               <span class="tag" data-id="4721483">第一周</span>
+                               <span class="tag" data-id="4786389">第二周</span>
+                               <span class="tag" data-id="4785384">第二周</span>
+                               <span class="tag" data-id="4721483">第一周</span>
+                               <span class="tag" data-id="4786389">第二周</span>
+                               <span class="tag" data-id="4785384">第二周</span>
+                               <span class="tag" data-id="4721483">第一周</span>
+                               <span class="tag" data-id="4786389">第二周</span>
+                               <span class="tag" data-id="4785384">第二周</span>
+                               <span class="tag" data-id="4721483">第一周</span>
+                               <span class="tag" data-id="4786389">第二周</span>
+                               <span class="tag" data-id="4785384">第二周</span>
+                               <span class="tag" data-id="4721483">第一周</span>
+                               <span class="tag" data-id="4786389">第二周</span>
+                               <span class="tag" data-id="4785384">第二周</span> -->
+                      </div>
+                  
+               </div>
+    </div>        <!--主内容结束-->
+    </body>
+                        <script type="text/javascript" src="http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/js/lib/require.js" ></script>
+                    <script type="text/javascript" src="http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/js/re-config.js" ></script>
+                    <script type="text/javascript" src="http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/js/table_edit.js" ></script>
+         
+    </html>

@@ -441,10 +441,13 @@ function renderClassTd(school_id,weekData){
     // $("td[position$=',9']").removeClass().addClass(dayClass);
  }
 
-
+alert(123);
   function ui(){
       $("td").hover(function() {
          var info = $(this).find(".info");
+         var positon = $(this).attr("positon").split(",");
+         var wz = positon[0];
+         console.log(wz);
          if(info.length == 1) {
             $(this).css("background","#fff4e6")
             info.show();

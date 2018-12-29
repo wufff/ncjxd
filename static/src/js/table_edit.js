@@ -22,6 +22,8 @@ require(["layui","path","tools","num"],function(layui,path,tools,num){
       var totWeek;
       var on_off = true;
       // console.log(school_name);
+      $(".schoolName").html(school_name);
+      $(".roomName").html(room_name);
       studyTime(school_id,weekData);
       formHeadtime(school_id,weekData);
       renderClassTd(school_id,weekData);
@@ -644,7 +646,7 @@ $("#roomTag").on("click",".del",function(){
             })
           })
          }else{
-           layer.msg("未配置完善，请位置完善",{icon:5})
+           layer.msg("未配置完善，请配置完善",{icon:5})
          }
       }
   }) 
@@ -708,7 +710,8 @@ $("#roomTag").on("click",".del",function(){
     var titlesUrl = path.api+"/api/getWeekHoliday";
     var getData = {
           school_id:school_id,
-          date:weekData
+          date:weekData,
+          v:new Date().getTime()
         }
     $.get(titlesUrl,getData,function(res){
        // console.log(res);
@@ -741,7 +744,8 @@ $("#roomTag").on("click",".del",function(){
    function renderClassRoom (school_id,weekData){
       var getData = {
           school_id:school_id,
-          date:weekData
+          date:weekData,
+          v:new Date().getTime()
         }
        var url = "/api/getRoomListBySchoolId";
       $.get(url,getData,function(res){
@@ -777,7 +781,8 @@ $("#roomTag").on("click",".del",function(){
 
     var getData = {
           school_id:school_id,
-          date:weekData
+          date:weekData,
+          v:new Date().getTime()
      }  
     $.get(WeeKurl,getData,function(res){
        if(res.type == "success") {
@@ -793,8 +798,8 @@ $("#roomTag").on("click",".del",function(){
              html += '<span class="tag" data-id="'+ str +'">第'+ num.Hanzi(str) +'周</span>'
          }
 
-          $("#tagWeekWrap").html(html);
-          TagWeekUi(true);
+         $("#tagWeekWrap").html(html);
+         
          // console.log("studyTime"+week);
          $("#schoolTerm").html(data.year);
          $("#week_time").html(data.week_time);
@@ -810,7 +815,8 @@ function renderClassTd(school_id,weekData){
    var WeeKurl =  path.api+"/api/getSchoolCourseTimeNode";
     var getData = {
       school_id:school_id,
-      date:weekData
+      date:weekData,
+      v:new Date().getTime()
      }
   $.get(WeeKurl,getData,function(res){
        // console.log(res);
@@ -891,7 +897,8 @@ function renderClassTd(school_id,weekData){
              room_id:room_id,
              term_id:term_id,
              week:week,
-             type:type
+             type:type,
+             v:new Date().getTime()
           }
          $.get(classUrl,getClassDate,function(res){
               // console.log(res);
@@ -939,6 +946,9 @@ function renderClassTd(school_id,weekData){
     }
 
 
+
+
+
  //清空学校信息
    function intInfo(){
      $(".classRoom").html(" ");
@@ -977,16 +987,18 @@ function renderClassTd(school_id,weekData){
 //z周选择样式
  function TagWeekUi(boolean){
    if(boolean){
-     $("body").on("click","#tagWeekWrap .tag",function(){
+     
+   }else {
+     $("#tagWeekWrap .tag").removeClass('active');
+    }
+ }
+
+  $("body").on("click","#tagWeekWrap .tag",function(){
            if(!$(this).hasClass('active')){
              $(this).addClass('active');
            }else{
               $(this).removeClass('active');
            }
            
-     })
-   }else {
-     $("#tagWeekWrap .tag").removeClass('active');
-    }
- }
+ });
 })
