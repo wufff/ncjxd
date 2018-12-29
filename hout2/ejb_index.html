@@ -12,7 +12,7 @@
 </head>
 <style type="text/css">
     body {
-       background-color: #f4f4f4;
+       background-color: #fff;
     }
     .container {
        padding: 0;
@@ -51,8 +51,9 @@
    .ejb_head {
        height: 80px;
        width: 100%;
-       background-color: #fff;
-       margin-bottom:20px;
+       background-color: #fafafa;
+       margin-bottom:40px;
+       border-bottom: 1px solid #ddd; 
    }
 
    .ejb_index_foot {
@@ -61,14 +62,13 @@
           padding-top: 30px;
           padding-bottom: 40px;
           color:#333333;
-          background: #ffff;
+          background: #fafafa;
        }
        .ejb_row {
           overflow: hidden;
           margin-left: -15px;
           margin-right: -15px;
        }
-
 
  .rec .inner{
      text-align: center;
@@ -78,8 +78,6 @@
      font-size: 18px;
     
   }
-
-
 
      .rec  .ejb_row .cell {
          float: left;
@@ -124,15 +122,7 @@
         background-size: contain;
      }
 
-
 /*=====================rec======================*/
-
-
-
-
-
-
-
       .localClass .ejb_row .cell {
          float: left;
          width: 25%;
@@ -186,30 +176,31 @@
 /*=====================studyRec======================*/
 
 .studyRec .main { overflow: hidden; }
-.studyRec .main .left { float: left;width: 270px;background-color: #0089cc;padding-top: 20px;}
+.studyRec .main .left { float: left;width: 270px;padding-top: 20px; background: url("img/cover-1.gif")  #029ae4 no-repeat 0 240px; height: 334px;}
 .studyRec .main .right { float: right;width: 870px; height: 327px;overflow: hidden;}
-.studyRec .content { width: 100%; background-color: #029ae4;overflow: hidden;}
+.studyRec .content { width: 75%; 
+  overflow: hidden;margin: 0 auto;}
 
-.studyRec .title { text-align: center; color: #fff;font-size: 16px; padding: 20px; }
-.studyRec .content  .item { float: left;width: 50%;text-align: center; padding: 15px 0; }
+.studyRec .title { text-align: center; color: #fff;font-size: 16px; padding: 15px; }
+.studyRec .content  .item { float: left;width: 50%;text-align: center; padding: 10px 0; }
 
 .studyRec .left a { color: #fff;font-size: 16px }
 .studyRec  li a { color:#666; }
 .studyRec  a:hover{text-decoration: underline;}
-.studyRec .foot { text-align: center;background-color: #029ae4;padding-top: 20px; padding-bottom: 40px;}
+.studyRec .foot { text-align: center;padding-top: 20px; padding-bottom: 40px; }
 .studyRec .doc { float: left;width: 33.33%;padding:0 10px; }
 .doc_icon { width: 15px; height: 15px;display: inline-block;background: url("img/file_type_sprite.png")  no-repeat; vertical-align: text-bottom;}
 .studyRec .doc li { margin-bottom: 15px; font-size: 16px;}
-
+.studyRec .head  {}
 .doc_icon_doc { background-position: -3px -22px; }
 .doc_icon_ppt {background-position: -22px -22px;}
 .doc_icon_mp4 {background-position: -3px -43px;}
-
-  .localClass, .studyRec, .rec {
-         margin-bottom: 35px;
-        overflow: hidden;
-      }
-
+.localClass, .studyRec, .rec {overflow: hidden;}
+.localClass, .studyRec, .rec {padding-bottom: 30px;}
+.localClass {background-color: #f4f4f4;padding-top: 30px;padding-bottom: 40px;}
+.studyRec {background-color: #fff;padding-top: 30px;padding-bottom: 45px;}
+.studyRec .head { font-size: 16px;height: 35px; border-bottom: 2px solid #ddd;margin-bottom: 17px; }
+.studyRec .head span { margin-right: 25px; }
   .codeIMg {
      width: 90px;
      display: block;
@@ -229,8 +220,9 @@
 <style type="text/css">
  
 </style>
-<div class="container">
+
    <div class="rec">
+    <div class="container">
       <div class="ejb_row">
         <div class="cell">
           <a class="inner inner1" href="#">        
@@ -277,13 +269,15 @@
          <div class="cell">
           <div class="inner" style="background-color: #fe9e4e;padding-top:20px;">        
                 <img class="codeIMg" src="https://mobile.dodoedu.com/lkApp/img/lj_ewm.png">
-                <div>教师助手app</div>
+                <div style="font-size: 18px;">教师助手app</div>
                 <span>随时随地，做你的口袋教学助手</span>
           </div>
         </div>
     </div>
+    </div>
    </div>
    <div class="localClass">
+     <div class="container">
        <h4>地方课程</h4>
       <div class="ejb_row">
         <div class="cell">
@@ -313,9 +307,7 @@
               <img src="img/footboot.png" style="height: 92px; width: 92px;">   
               <div class="title">足球</div>
               <div class="info">
-               
                 <p style="font-size:23px; margin-top: 30px;padding-bottom: 42px;">敬请期待</p>
-               
               </div>
           </a>
          </div>
@@ -328,11 +320,12 @@
                 <p style="font-size:23px; margin-top: 30px;padding-bottom: 42px;">敬请期待</p>
               </div>
            </div>
-        </div>
-        
+        </div> 
+     </div>
      </div>
    </div>
    <div class="studyRec">
+      <div class="container">
        <h4>备课资源</h4>
         <div class="main">
           <div class="left">
@@ -358,12 +351,15 @@
                   <span class="item">
                    <a href="">综合实践活动</a>
                  </span>
-              </div>
-              <div class="foot">
-                 <a href="">更多>></a>
+                  <span class="item">
+                   <a href="">更多>></a>
+                 </span>
               </div>
           </div>
           <div class="right">
+             <div class="head">
+                 <span>教案</span> <span>课件</span> <span>微视频</span>
+             </div>
              <div class="doc">
                 <ul>
                   <li>
@@ -386,7 +382,7 @@
                 <ul>
                   <li>
                      <span class="doc_icon doc_icon_ppt"></span>
-                     <a>新民主主义革命.doc</a>
+                     <a>新民主主义革命主义命主命主命主主义.doc</a>
                   </li>
                    <li>
                      <span class="doc_icon doc_icon_ppt"></span>
@@ -401,6 +397,34 @@
                      <a>新民主主义革命.doc</a>
                   </li>
                   <li>
+                     <span class="doc_icon doc_icon_ppt"></span>
+                     <a>新民主主义革命.doc</a>
+                  </li>
+                   <li>
+                     <span class="doc_icon doc_icon_ppt"></span>
+                     <a>新民主主义革命.doc</a>
+                  </li>
+                   <li>
+                     <span class="doc_icon doc_icon_ppt"></span>
+                     <a>新民主主义革命.doc</a>
+                  </li>
+                   <li>
+                     <span class="doc_icon doc_icon_ppt"></span>
+                     <a>新民主主义革命.doc</a>
+                  </li>
+                   <li>
+                     <span class="doc_icon doc_icon_ppt"></span>
+                     <a>新民主主义革命主义革主义革主义革主义革主义革主义革.doc</a>
+                  </li>
+                   <li>
+                     <span class="doc_icon doc_icon_ppt"></span>
+                     <a>新民主主义革命.doc</a>
+                  </li>
+                   <li>
+                     <span class="doc_icon doc_icon_ppt"></span>
+                     <a>新民主主义革命.doc</a>
+                  </li>
+                   <li>
                      <span class="doc_icon doc_icon_ppt"></span>
                      <a>新民主主义革命.doc</a>
                   </li>
@@ -431,8 +455,8 @@
                 </ul>
              </div>
           </div>
-   </div>
-        
+         </div>
+        </div>
      </div>
    </div>
 </div>
