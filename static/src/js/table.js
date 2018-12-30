@@ -20,7 +20,23 @@ require(["jquery","layui","path","num","tools"],function($,layui,path,num,tools)
    var school_name;
    var type = 0;
    var holidays = [];
- 
+   var laydate = layui.laydate;
+    // laydate.render({
+    //     elem: '#timebox'
+    //     ,type: 'time'
+    //     ,format: 'HH:mm'
+    //       ,btns: ['clear', 'confirm']
+    //     ,ready: formatminutes
+    //     ,range: '-'
+    //     ,value:'09:25 - 11:30'
+    // });
+    
+
+   // laydate.render({
+   //      elem: '#timebox2'
+   //  });
+  
+
 
 
 form.on('select(city)', function(data){
@@ -162,6 +178,155 @@ $("#goToEdite").click(function(){
 
 
 
+$("#configTimeBt").click(function(){
+   alert(123);
+})
+
+
+$("#upAddbt").click(function(){
+  var length = $(".up").find(".item").length;
+  if (length == 5){
+     layer.msg("已达上线",{icon:5});
+     return;
+  }
+  var id = 'uptimebox_'+(length+1);
+  var html = '<div class="item">'
+      html += '<span>节次：</span>'
+      html += '<span sort ="'+ (length+1) +'">'+ num.Hanzi(length+1)+'</span>'
+      html += '<span class="timebox">设置时间：'
+      html +=   '<input type="text" name="sort1_start" class="layui-input timeInput" id="'+ id +'">' 
+      html +=   '</span>'
+      html +=    '<span>'
+      html +=        '<button class="layui-btn layui-btn-sm layui-btn-primary del">删除</button>'
+      html +=     '</span>'
+      html +=  '</div>'
+  $(".up").append(html);
+  laydate.render({
+        elem: '#'+id
+        ,type: 'time'
+        ,format: 'HH:mm'
+          ,btns: ['clear', 'confirm']
+        ,ready: formatminutesUp
+        ,range: '-'
+        ,value:'11:00 - 11:00'
+    });
+})
+
+$("#downAddbt").click(function(){
+  var length = $(".down").find(".item").length;
+  if (length == 9){
+     layer.msg("已达上线",{icon:5});
+     return;
+  }
+  var id = 'downtimebox_'+(length+1);
+  var html = '<div class="item">'
+      html += '<span>节次：</span>'
+      html += '<span sort ="'+ (length+1) +'">'+ num.Hanzi(length+1)+'</span>'
+      html += '<span class="timebox">设置时间：'
+      html +=   '<input type="text" name="sort1_start" class="layui-input timeInput" id="'+ id +'">' 
+      html +=   '</span>'
+      html +=    '<span>'
+      html +=        '<button class="layui-btn layui-btn-sm layui-btn-primary del">删除</button>'
+      html +=     '</span>'
+      html +=  '</div>'
+  $(".down").append(html);
+  laydate.render({
+        elem: '#'+id
+        ,type: 'time'
+        ,format: 'HH:mm'
+          ,btns: ['clear', 'confirm']
+        ,ready: formatminutesDown
+        ,range: '-'
+        ,value:'16:00 - 16:00'
+    });
+})
+
+
+$("#controlstudyTime").on("click",".del",function(){
+   $(this).parents(".item").remove();
+})
+
+
+
+
+
+$(".two").click(function(){
+   var WeeKurl =  path.api+"/api/getSchoolCourseTimeNode";
+   var getData = {
+      school_id:school_id,
+      date:weekData
+     }
+   $.get(WeeKurl,getData,function(res){
+          if(res.type == "success"){
+             var list = res.data.data.course_time_node;
+             var up = res.data.data.noon_count.up;
+             var down = res.data.data.noon_count.down;
+             var  tat = up + down;
+             //渲染上午
+             $(".up").html("");
+             for (var i = 0; i<up;i++){
+                var id = 'uptimebox_'+(i+1);
+                var s = list[i].st_start_time;
+                var l = list[i].st_end_time;
+                var value =  s+" "+"-"+ " "+l 
+                var html = '<div class="item">'
+                html += '<span>节次：</span>'
+                html += '<span sort ="'+ (i+1) +'">'+ num.Hanzi(i+1)+'</span>'
+                html += '<span class="timebox">设置时间：'
+                html +=   '<input type="text" name="sort1_start" class="layui-input timeInput" id="'+ id +'">' 
+                html +=   '</span>'
+                html +=  '</div>'
+                $(".up").append(html);
+                laydate.render({
+                      elem: '#'+id
+                      ,type: 'time'
+                      ,format: 'HH:mm'
+                        ,btns: ['clear', 'confirm']
+                      ,ready: formatminutesUp
+                      ,range: '-'
+                      ,value:value
+                  }); 
+                    
+             }
+             //渲染下午
+             $(".down").html("");
+             for (var i = up; i<tat;i++){
+                var id = 'downtimebox_'+(i+1-up);
+                var s = list[i].st_start_time;
+                var l = list[i].st_end_time;
+                var value =  s+" "+"-"+ " "+l 
+                var html = '<div class="item">'
+                html += '<span>节次：</span>'
+                html += '<span sort ="'+ (i+1-up) +'">'+ num.Hanzi(i+1-up)+'</span>'
+                html += '<span class="timebox">设置时间：'
+                html +=   '<input type="text" name="sort1_start" class="layui-input timeInput" id="'+ id +'">' 
+                html +=   '</span>'
+                html +=  '</div>'
+                $(".down").append(html);
+                laydate.render({
+                      elem: '#'+id
+                      ,type: 'time'
+                      ,format: 'HH:mm'
+                        ,btns: ['clear', 'confirm']
+                      ,ready: formatminutesDown
+                      ,range: '-'
+                      ,value:value
+                  }); 
+                    
+             }
+          }
+   })
+   layer.open({
+            type: 1,
+            title:"设置上课时间",
+            content: $('#controlstudyTime'),
+            area:["500px","600px"],
+            btn:["确认","取消"],
+            yes: function(index, layero){
+               
+            }
+   });
+})
 
 
 
@@ -271,7 +436,7 @@ function renderClassTd(school_id,weekData){
       date:weekData
      }
   $.get(WeeKurl,getData,function(res){
-       // console.log(res);
+       console.log(res);
        if(res.type == "success") {
          $("#tbody").html("");
          var data = res.data.data;
@@ -298,12 +463,12 @@ function renderClassTd(school_id,weekData){
          for(var i = 0;i<up;i++){
              if(i == 0){
                 uphtml += '<td rowspan="'+ up+'" class="Bold">上午</td>';     
-                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ times[i].st_start_time +'-'+times[i].st_end_time +'</td>';
+                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ times[i].st_start_time +' - '+times[i].st_end_time +'</td>';
                 for(var j =1; j<8 ;j++ ){
                  uphtml += '<td positon="'+(i+1)+','+j+'"></td>'
                }
              }else{
-                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ times[i].st_start_time +'-'+times[i].st_end_time +'</td>';
+                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ times[i].st_start_time +' - '+times[i].st_end_time +'</td>';
                 for(var j =1; j<8 ;j++ ){
                  uphtml += '<td positon="'+(i+1)+','+j+'"></td>'
                }
@@ -315,12 +480,12 @@ function renderClassTd(school_id,weekData){
         for(var i = up;i<down+up;i++){
              if(i == up){
                 uphtml += '<td rowspan="'+ down+'" class="Bold">下午</td>';     
-                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ times[i].st_start_time +'-'+times[i].st_end_time +'</td>';
+                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ times[i].st_start_time +' - '+times[i].st_end_time +'</td>';
                 for(var j =1; j<8 ;j++ ){
                  uphtml += '<td positon="'+(i+1)+','+j+'"></td>'
                }
              }else{
-                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ times[i].st_start_time +'-'+times[i].st_end_time +'</td>';
+                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ times[i].st_start_time +' - '+times[i].st_end_time +'</td>';
                 for(var j =1; j<8 ;j++ ){
                  uphtml += '<td positon="'+(i+1)+','+j+'"></td>'
                }
@@ -441,13 +606,17 @@ function renderClassTd(school_id,weekData){
     // $("td[position$=',9']").removeClass().addClass(dayClass);
  }
 
-alert(123);
+
   function ui(){
       $("td").hover(function() {
          var info = $(this).find(".info");
-         var positon = $(this).attr("positon").split(",");
-         var wz = positon[0];
-         console.log(wz);
+         var positon = $(this).attr("positon");
+         if(positon){
+            var wz = positon.split(",");
+            console.log(wz);
+         }
+         
+         
          if(info.length == 1) {
             $(this).css("background","#fff4e6")
             info.show();
@@ -467,3 +636,69 @@ alert(123);
 
 
 })
+
+
+
+// 格式化时间框
+  function  formatminutesUp(date) {
+             $(".laydate-time-text").eq(0).html("上课时间");
+             $(".laydate-time-text").eq(1).html("下课时间");
+            $(".laydate-time-list").map(function(index,ele){
+                var am = $(ele).find("ol").eq(0).find('li');
+                for (var i = 0; i < am.length; i++) {
+                var am00 = am[i].innerText;
+                if (am00 != "08" && am00 != "09"  && am00 != "10" && am00 != "11" ) {
+                    am[i].remove()
+                  } 
+                }  
+             //    var showtime = $(ele).find("ol").eq(1).find('li');
+             //    for (var i = 0; i < showtime.length; i++) {
+             //    var t00 = showtime[i].innerText;
+             //    if (t00 != "00" && t00 != "15"  && t00 != "25" && t00 != "30"   && t00 != "40" && t00 != "45" ) {
+             //        showtime[i].remove()
+             //    }
+             // }
+              $(ele).find("ol").eq(2).find('li').remove();
+           })
+            // ar showtime = $(".laydate-time-livst li ol").eq(1).find("li");
+            // for (var i = 0; i < showtime.length; i++) {
+            //     var t00 = showtime[i].innerText;
+            //     if (t00 != "00" && t00 != "20"  && t00 != "25" && t00 != "30"  && t00 != "35" && t00 != "40" && t00 != "45" && t00 != "50") {
+            //         showtime[i].remove()
+            //     }
+            // }
+            // $($(".laydate-time-list li ol")[2]).find("li").remove();  //清空秒
+  
+       }
+
+       // 格式化时间框
+function  formatminutesDown(date) {
+             $(".laydate-time-text").eq(0).html("上课时间");
+             $(".laydate-time-text").eq(1).html("下课时间");
+            $(".laydate-time-list").map(function(index,ele){
+                var am = $(ele).find("ol").eq(0).find('li');
+                for (var i = 0; i < am.length; i++) {
+                var am00 = am[i].innerText;
+                if (am00 != "14" && am00 != "15"  && am00 != "16" && am00 != "18" && am00 != "19" && am00 != "20" ) {
+                    am[i].remove()
+                  } 
+                }  
+             //    var showtime = $(ele).find("ol").eq(1).find('li');
+             //    for (var i = 0; i < showtime.length; i++) {
+             //    var t00 = showtime[i].innerText;
+             //    if (t00 != "00" && t00 != "15"  && t00 != "25" && t00 != "30"   && t00 != "40" && t00 != "45" ) {
+             //        showtime[i].remove()
+             //    }
+             // }
+              $(ele).find("ol").eq(2).find('li').remove();
+           })
+            // ar showtime = $(".laydate-time-livst li ol").eq(1).find("li");
+            // for (var i = 0; i < showtime.length; i++) {
+            //     var t00 = showtime[i].innerText;
+            //     if (t00 != "00" && t00 != "20"  && t00 != "25" && t00 != "30"  && t00 != "35" && t00 != "40" && t00 != "45" && t00 != "50") {
+            //         showtime[i].remove()
+            //     }
+            // }
+            // $($(".laydate-time-list li ol")[2]).find("li").remove();  //清空秒
+  
+  }
