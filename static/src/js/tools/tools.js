@@ -1,5 +1,32 @@
-define(['jquery','path'],function(path){
+define(['jquery','path'],function($,path){
      return {
+         set:function(str,value){
+            var key = $("#wuf"+key);
+            if (key.length > 0) {
+                if(value && value != 0){
+                     key.val(value);
+                 }else{
+                     key.val("");
+                 }
+            }else{
+                 var str2 = "wf"+str;
+             if(value && value != 0){
+                  var html = '<input type="hidden" value="'+ value +'" id='+ str2 +'>';
+                  $("body").append(html);
+             }else{
+                  var html = '<input type="hidden" value="" id='+ str2 +'>';
+                  $("body").append($(html));
+             }
+            }
+         },
+         get:function(key){
+            if($("#wf"+key).length == 0){
+                console.log("key不存在")
+            }
+            var value = $("#wf"+key).val();
+            return value;
+         },
+
          fomartTime:function(timestamp){
          	    var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
 		        var Y = date.getFullYear() + '-';

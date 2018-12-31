@@ -19,7 +19,9 @@ a{ color:#555; }
 
 
 
+
 .table {
+  background: #fff;
   border: 1px solid #e6e6e6;
   padding: 15px 25px;
    .week {
@@ -119,8 +121,7 @@ td {
    position: relative;
    .info {
      position: absolute;
-     top: -127px;
-     left: -240px;
+     left: -231px;
      width: 230px;
      border: 1px solid #ddd;
      border-radius: 5px;
@@ -129,7 +130,7 @@ td {
      min-height: 280px;
      padding-bottom: 0px;
      display: none;
-     padding-bottom: 10px;
+    
      .title {
        background: #fbb432eb;
        // background: #e6f4ff;
@@ -139,6 +140,7 @@ td {
        line-height: 40px;
        
      }
+
      h5 {
         font-weight: bold;
         text-align: left;
@@ -151,6 +153,15 @@ td {
          padding: 0 15px;
          margin-bottom: 5px;
      }
+     .delitem {
+          color: #fff;
+          background: #fb9982;
+          height: 35px;
+          line-height: 35px;
+          cursor: pointer;
+          margin-top: 10px;
+          border-radius: 0 0 5px 5px; 
+     }
      // i {
      //    display: block;
      //    position: absolute;
@@ -161,6 +172,13 @@ td {
      //    background:url(../img/cert.png) no-repeat; 
      // }
    }
+    .topInfo{
+       top: -127px;
+    }
+
+    .bottomInfo {
+       bottom: -10px;
+   }  
  }
 
 
@@ -297,3 +315,61 @@ td {
 .minTitle.active{
     color: orange;
 }
+
+
+
+//选择时间弹窗
+
+ #controlstudyTime   span { margin-right: 20px; }
+    .layui-laydate-content>.layui-laydate-list {
+                padding-bottom: 0px;
+                overflow: hidden;
+            }
+            .layui-laydate-content>.layui-laydate-list>li{
+                width:50%
+            }
+ 
+            .merge-box .scrollbox .merge-list {
+                padding-bottom: 5px;
+            }
+     
+
+     #controlstudyTime {
+         padding: 20px 40px;
+    }
+    #controlstudyTime .item { 
+        margin-bottom: 10px;
+      }
+     
+    #controlstudyTime .timebox {
+         display: inline-block;
+      }
+
+    #controlstudyTime  .timeInput {
+         display: inline-block;
+         width: 130px;
+      }
+   #controlstudyTime .title {
+     /* border-bottom:  1px solid #ddd;*/
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      position: relative;
+   }
+   #controlstudyTime .title .addbt {
+     position: absolute;
+     right: 32px;
+      top:-4px;
+   }
+   #controlstudyTime .del {
+     display: inline-block;
+   }
+
+   #controlstudyTime .up {
+      border-bottom:  1px solid #ddd;
+      margin-bottom: 20px;
+   }
+
+   .layui-laydate .layui-this {
+    background-color: #1E9FFF!important;
+  }
+

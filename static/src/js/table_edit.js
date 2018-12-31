@@ -26,7 +26,7 @@ require(["layui","path","tools","num"],function(layui,path,tools,num){
       $(".roomName").html(room_name);
       studyTime(school_id,weekData);
       formHeadtime(school_id,weekData);
-      renderClassTd(school_id,weekData);
+    
 
     //切换周
 $("body").on("click",".Add",function(){
@@ -37,7 +37,7 @@ $("body").on("click",".Add",function(){
       weekData = tools.nextWeek(weekData);
       studyTime (school_id,weekData);
       formHeadtime(school_id,weekData);
-      renderClassTd(school_id,weekData);
+    
    
 })
   
@@ -47,9 +47,10 @@ $("body").on("click",".sub",function(){
          return;
       }
       weekData = tools.prevWeek(weekData);
-      studyTime (school_id,weekData);
       formHeadtime(school_id,weekData);
-      renderClassTd(school_id,weekData);
+      studyTime (school_id,weekData);
+      
+    
 })
 
 
@@ -635,13 +636,15 @@ $("#roomTag").on("click",".del",function(){
             getData.today=today;  //课程计划时间戳；
             getData.node_id = "";
             var url = path.api + "/api/setSchoolRoomCourcePlan";
+            console.log(getData);
             $.get(url,getData,function(res){
-                   console.log(res);
+                   // console.log(res);
                    if (res.type == "success"){
                       layer.msg("添加成功！");
                       studyTime (school_id,weekData);
                       formHeadtime(school_id,weekData);
-                      renderClassTd(school_id,weekData);
+                   }else{
+                      layer.msg(res.message,{icon:5});
                    }
             })
           })
@@ -805,11 +808,15 @@ $("#roomTag").on("click",".del",function(){
          $("#week_time").html(data.week_time);
          $("#totalweek").html(data.total_week);
          $("#week").text(data.term_week);
+         renderClassTd(school_id,weekData);
        }
      })
    }
 
   
+
+
+
 //渲染上午下午管关联渲染课程
 function renderClassTd(school_id,weekData){
    var WeeKurl =  path.api+"/api/getSchoolCourseTimeNode";
@@ -915,7 +922,7 @@ function renderClassTd(school_id,weekData){
                          var grade = num.Hanzi(tr[k].cn_grade)
                          var html = tr[k].cn_subject_chs + '</br>'
                              html += '( '+ tr[k].cn_sponsor_teacher_name +' )'
-                             html +='<div class="info" data-id="'+ tr[k].cp_encrypt_id+'">'
+                             html +='<div class="info topInfo" data-id="'+ tr[k].cp_encrypt_id+'">'
                              html += '<div class="title">'
                              html +=      grade +'年级 '+ tr[k].cn_subject_chs
                              html +=      '</div>'
@@ -929,7 +936,7 @@ function renderClassTd(school_id,weekData){
                              html +=     '<p>'+ tr[k].cn_receive_room+'</p>'
                              html +=      '<h5>状态</h5>' 
                              html +=      '<p>'+ tr[k].cn_status+'</p>' 
-                              html +=      '<div class="del" cp_encrypt_id ="'+tr[k].cp_encrypt_id +'">删除</div>' 
+                              html +=      '<div class="delitem" cp_encrypt_id ="'+tr[k].cp_encrypt_id +'">删除</div>' 
                              html +=     '<i></i>'
                              html +=     '</div>'
                              $("td[positon='"+(i+1)+","+(k+1)+"']").html(html);
@@ -939,11 +946,25 @@ function renderClassTd(school_id,weekData){
                     }
                    
                  }
-                  ui();
+                 hoverUi();
+                 delcongfig();
               }
              
          })
     }
+
+
+//删除按钮
+
+
+  function  delcongfig(){
+        if($(".delitem").length > 0){
+           $(".delitem").click(function(){
+             alert(123);
+             return false;
+           })
+        }
+      };
 
 
 
@@ -969,11 +990,20 @@ function renderClassTd(school_id,weekData){
  }
 
 //详情悬浮样式
-  function ui(){
+   function hoverUi(){
       $("td").hover(function() {
          var info = $(this).find(".info");
-         if(info.length == 1) {
-            $(this).css("background","#fff4e6")
+         var positon = $(this).attr("positon");
+         if(positon && info.length == 1){
+            var wz = positon.split(",");
+            if(wz[0] > 5){
+                info.addClass('bottomInfo');
+                info.removeClass('topInfo');
+            }else{
+               info.addClass('topInfo');
+               info.removeClass('bottomInfo');
+            }
+            $(this).css("background","#fff4e6");
             info.show();
          }
       }, function() {
@@ -984,6 +1014,9 @@ function renderClassTd(school_id,weekData){
          }
       });
    }
+
+
+ 
 //z周选择样式
  function TagWeekUi(boolean){
    if(boolean){

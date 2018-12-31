@@ -9,6 +9,7 @@
 require(["jquery","layui","path","num","tools"],function($,layui,path,num,tools){
    var layer = layui.layer;
    var form =  layui.form;
+   var $ = jQuery = layui.jquery; 
    var school_id = "";
    var room_id;
    var term_id;
@@ -21,24 +22,7 @@ require(["jquery","layui","path","num","tools"],function($,layui,path,num,tools)
    var type = 0;
    var holidays = [];
    var laydate = layui.laydate;
-    // laydate.render({
-    //     elem: '#timebox'
-    //     ,type: 'time'
-    //     ,format: 'HH:mm'
-    //       ,btns: ['clear', 'confirm']
-    //     ,ready: formatminutes
-    //     ,range: '-'
-    //     ,value:'09:25 - 11:30'
-    // });
-    
-
-   // laydate.render({
-   //      elem: '#timebox2'
-   //  });
-  
-
-
-
+   
 form.on('select(city)', function(data){
      // console.log(data.value)
      $("select[name=school]").html('<option value="">请先选区县</option>');
@@ -99,6 +83,7 @@ form.on('select(area)', function(data){
      }
 });  
 
+
 form.on('select(school)', function(data){
        if(data.value == school_id){
          return;
@@ -142,6 +127,7 @@ $("body").on("click",".sub",function(){
 })
 
 
+
  //切换教室
 $(".classRoom").on("click","span",function(){
     if($(this).hasClass("active")){
@@ -170,87 +156,14 @@ $(".classType").on("click","span",function(){
 })
 
 
-
-
+//去编辑课表
 $("#goToEdite").click(function(){
     window.location.href="/course/edit?school_id="+school_id+"&room_id="+room_id+"&weekData="+weekData+"&term_id="+term_id+"&week="+week+"&room_name="+room_name+"&school_name="+school_name;
 })
 
 
-
-$("#configTimeBt").click(function(){
-   alert(123);
-})
-
-
-$("#upAddbt").click(function(){
-  var length = $(".up").find(".item").length;
-  if (length == 5){
-     layer.msg("已达上线",{icon:5});
-     return;
-  }
-  var id = 'uptimebox_'+(length+1);
-  var html = '<div class="item">'
-      html += '<span>节次：</span>'
-      html += '<span sort ="'+ (length+1) +'">'+ num.Hanzi(length+1)+'</span>'
-      html += '<span class="timebox">设置时间：'
-      html +=   '<input type="text" name="sort1_start" class="layui-input timeInput" id="'+ id +'">' 
-      html +=   '</span>'
-      html +=    '<span>'
-      html +=        '<button class="layui-btn layui-btn-sm layui-btn-primary del">删除</button>'
-      html +=     '</span>'
-      html +=  '</div>'
-  $(".up").append(html);
-  laydate.render({
-        elem: '#'+id
-        ,type: 'time'
-        ,format: 'HH:mm'
-          ,btns: ['clear', 'confirm']
-        ,ready: formatminutesUp
-        ,range: '-'
-        ,value:'11:00 - 11:00'
-    });
-})
-
-$("#downAddbt").click(function(){
-  var length = $(".down").find(".item").length;
-  if (length == 9){
-     layer.msg("已达上线",{icon:5});
-     return;
-  }
-  var id = 'downtimebox_'+(length+1);
-  var html = '<div class="item">'
-      html += '<span>节次：</span>'
-      html += '<span sort ="'+ (length+1) +'">'+ num.Hanzi(length+1)+'</span>'
-      html += '<span class="timebox">设置时间：'
-      html +=   '<input type="text" name="sort1_start" class="layui-input timeInput" id="'+ id +'">' 
-      html +=   '</span>'
-      html +=    '<span>'
-      html +=        '<button class="layui-btn layui-btn-sm layui-btn-primary del">删除</button>'
-      html +=     '</span>'
-      html +=  '</div>'
-  $(".down").append(html);
-  laydate.render({
-        elem: '#'+id
-        ,type: 'time'
-        ,format: 'HH:mm'
-          ,btns: ['clear', 'confirm']
-        ,ready: formatminutesDown
-        ,range: '-'
-        ,value:'16:00 - 16:00'
-    });
-})
-
-
-$("#controlstudyTime").on("click",".del",function(){
-   $(this).parents(".item").remove();
-})
-
-
-
-
-
-$(".two").click(function(){
+//======================编辑上课时间弹窗===================
+$("#configClassTimeBt").click(function(){
    var WeeKurl =  path.api+"/api/getSchoolCourseTimeNode";
    var getData = {
       school_id:school_id,
@@ -329,44 +242,143 @@ $(".two").click(function(){
 })
 
 
+$("#upAddbt").click(function(){
+  var length = $(".up").find(".item").length;
+  if (length == 5){
+     layer.msg("已达上线",{icon:5});
+     return;
+  }
+  var id = 'uptimebox_'+(length+1);
+  var html = '<div class="item">'
+      html += '<span>节次：</span>'
+      html += '<span sort ="'+ (length+1) +'">'+ num.Hanzi(length+1)+'</span>'
+      html += '<span class="timebox">设置时间：'
+      html +=   '<input type="text" name="sort1_start" class="layui-input timeInput" id="'+ id +'">' 
+      html +=   '</span>'
+      html +=    '<span>'
+      html +=        '<button class="layui-btn layui-btn-sm layui-btn-primary del">删除</button>'
+      html +=     '</span>'
+      html +=  '</div>'
+  $(".up").append(html);
+  laydate.render({
+        elem: '#'+id
+        ,type: 'time'
+        ,format: 'HH:mm'
+          ,btns: ['clear', 'confirm']
+        ,ready: formatminutesUp
+        ,range: '-'
+        ,value:'11:00 - 11:00'
+    });
+})
 
-//表头日期
- function formHeadtime(school_id,weekData){
-    var titlesUrl = path.api+"/api/getWeekHoliday";
-    var getData = {
-          school_id:school_id,
-          date:weekData
-        }
-    $.get(titlesUrl,getData,function(res){
-       // console.log(res);
-       if(res.type == "success") {
-         var data = res.data.data;
-         // console.log(data);
-         holidays = [];
-         if(data.length > 0) {
-            var html = "<th>午别</th><th>节次</th>";
-             for(var i = 0;i<data.length;i++){
-                   var str = i+1
-                   var className = "";
-                   if(data[i].is_holiday) {
-                      holidays.push(str);
-                      className ="holiday";
-                   }
-                   var weeks =  num.Hanzi(str) == '七' ? '日' : num.Hanzi(str) 
-                   html += '<th class="'+ className +'" position="0,'+(i+1)+'">星期'+weeks+'<br/>'+data[i].date_time+'</th>'
-             }
-             $("#theadtr").html(html);
-             // console.log(holidays);
+$("#downAddbt").click(function(){
+  var length = $(".down").find(".item").length;
+  if (length == 9){
+     layer.msg("已达上线",{icon:5});
+     return;
+  }
+  var id = 'downtimebox_'+(length+1);
+  var html = '<div class="item">'
+      html += '<span>节次：</span>'
+      html += '<span sort ="'+ (length+1) +'">'+ num.Hanzi(length+1)+'</span>'
+      html += '<span class="timebox">设置时间：'
+      html +=   '<input type="text" name="sort1_start" class="layui-input timeInput" id="'+ id +'">' 
+      html +=   '</span>'
+      html +=    '<span>'
+      html +=        '<button class="layui-btn layui-btn-sm layui-btn-primary del">删除</button>'
+      html +=     '</span>'
+      html +=  '</div>'
+  $(".down").append(html);
+  laydate.render({
+        elem: '#'+id
+        ,type: 'time'
+        ,format: 'HH:mm'
+          ,btns: ['clear', 'confirm']
+        ,ready: formatminutesDown
+        ,range: '-'
+        ,value:'16:00 - 16:00'
+    });
+})
+
+
+$("#controlstudyTime").on("click",".del",function(){
+   $(this).parents(".item").remove();
+})
+
+
+//======================编辑上课时间弹窗结束===================
+
+
+
+//======================编辑学期弹窗===================
+$(".two").click(function(){
+// $("#configStudeyTimeBt").click(function(){
+    initstudyTimelang();
+    layer.open({
+            type: 1,
+            title:"设置学期",
+            content: $('#controlstudyTimelang'),
+            area:["900px","600px"],
+            btn:["确认","取消"],
+            yes: function(index, layero){
+               
+            }
+   });
+})
+function initstudyTimelang() {
+  laydate.render({
+    elem: '#studyStart_time'
+  });
+  laydate.render({
+    elem: '#studyEnd_time'
+  });
+  laydate.render({
+    elem: '#holidayStart_time'
+    ,calendar: true
+  });
+  laydate.render({
+    elem: '#holidayEnd_time'
+    ,calendar: true
+  });
+
+}
+
+
+//设置学校学期
+
+
+
+//学校设置假日
+$("#addHolidaysbt").click(function() {
+   var holiday = $("#holiday").val();
+   var End_time = $("#holidayEnd_time").val();
+   var Start_time =  $("#holidayStart_time").val();
+   if(holiday && End_time && Start_time){
+      var getData = {
+        start_time:Start_time,
+        end_time:End_time,
+        holiday:holiday
+      }
+      var url = '/api/setSchoolHoliday'
+      $.get(url,getData,function(res){
+         if(res.type == "success"){
+            layer.msg("设置成功",{time:800});
+            holiday.val("");
+            End_time.val("");
+            Start_time.val("");
          }
-       }
-     })
- }
+      })
+   }else{
+     layer.msg("输入信息不完整！~",{icon:5})
+   }
+});
+//======================编辑学期结束===================
 
 
+//======================渲染课表===================
 
-
-//渲染教室
-   function renderClassRoom (school_id,weekData){
+// 渲染教室
+function renderClassRoom (school_id,weekData){
       var getData = {
           school_id:school_id,
           date:weekData
@@ -401,6 +413,40 @@ $(".two").click(function(){
    }
 
 
+// 渲染表头日期
+ function formHeadtime(school_id,weekData){
+    var titlesUrl = path.api+"/api/getWeekHoliday";
+    var getData = {
+          school_id:school_id,
+          date:weekData
+        }
+    $.get(titlesUrl,getData,function(res){
+       // console.log(res);
+       if(res.type == "success") {
+         var data = res.data.data;
+         // console.log(data);
+         holidays = [];
+         if(data.length > 0) {
+            var html = "<th>午别</th><th>节次</th>";
+             for(var i = 0;i<data.length;i++){
+                   var str = i+1
+                   var className = "";
+                   if(data[i].is_holiday) {
+                      holidays.push(str);
+                      className ="holiday";
+                   }
+                   var weeks =  num.Hanzi(str) == '七' ? '日' : num.Hanzi(str) 
+                   html += '<th class="'+ className +'" position="0,'+(i+1)+'">星期'+weeks+'<br/>'+data[i].date_time+'</th>'
+             }
+             $("#theadtr").html(html);
+             // console.log(holidays);
+         }
+       }
+     })
+ }
+
+
+
 //渲染学期和周
    function studyTime (school_id,weekData) {
     var WeeKurl =  path.api+"/api/getSchoolCourseTimeNode";
@@ -424,8 +470,8 @@ $(".two").click(function(){
      })
    }
 
+
   
- 
 
 
 //渲染上午下午管关联渲染课程
@@ -507,12 +553,6 @@ function renderClassTd(school_id,weekData){
 }
 
 
-
-
-
-
-
-
 //渲染课程
     function renderClass  (school_id,room_id,term_id,type,week){
         var classUrl = path.api +"/api/getSchoolRoomCourcePlan";
@@ -544,7 +584,7 @@ function renderClassTd(school_id,weekData){
                          var grade = num.Hanzi(tr[k].cn_grade)
                          var html = tr[k].cn_subject_chs + '</br>'
                              html += '( '+ tr[k].cn_sponsor_teacher_name +' )'
-                             html +='<div class="info" data-id="'+ tr[k].cp_encrypt_id+'">'
+                             html +='<div class="info topInfo" data-id="'+ tr[k].cp_encrypt_id+'">'
                              html += '<div class="title">'
                              html +=      grade +'年级 '+ tr[k].cn_subject_chs
                              html +=      '</div>'
@@ -567,21 +607,11 @@ function renderClassTd(school_id,weekData){
                     }
                    
                  }
-                  ui();
+                  hoverUi();
               }
              
          })
     }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -601,24 +631,24 @@ function renderClassTd(school_id,weekData){
         $("td[positon$=',"+holidays[i]+"']").removeClass().addClass("holidayTd");
      }
     }
-   
 
-    // $("td[position$=',9']").removeClass().addClass(dayClass);
  }
 
 
-  function ui(){
+  function hoverUi(){
       $("td").hover(function() {
          var info = $(this).find(".info");
          var positon = $(this).attr("positon");
-         if(positon){
+         if(positon && info.length == 1){
             var wz = positon.split(",");
-            console.log(wz);
-         }
-         
-         
-         if(info.length == 1) {
-            $(this).css("background","#fff4e6")
+            if(wz[0] > 5){
+                info.addClass('bottomInfo');
+                info.removeClass('topInfo');
+            }else{
+               info.addClass('topInfo');
+               info.removeClass('bottomInfo');
+            }
+            $(this).css("background","#fff4e6");
             info.show();
          }
       }, function() {
@@ -629,11 +659,6 @@ function renderClassTd(school_id,weekData){
          }
       });
    }
-
-  
-
-
-
 
 })
 

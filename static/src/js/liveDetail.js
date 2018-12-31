@@ -96,8 +96,8 @@ require(["jquery","ckplayer","expression","api","path"],function($,ckplayer,face
             // uc_uid: "1490493"
             // uc_uname: "测试用户"
            if(data.type == "success"){
-                /*console.log(data);*/
-                var list = data.data.data.list;
+                console.log(data);
+                var list = data.data.list;
                 var html = "";
                 var mrAutor = path.img + "/user_mr.gif";
                 for(var i = 0; i < list.length; i++){
