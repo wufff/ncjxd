@@ -460,48 +460,9 @@ $("#roomTag").on("click",".del",function(){
 
 
 
- $("#weekTagBt").click(function(){
-     layer.open({
-        type: 1,
-        title:"设置周",
-        content: $('#classWeekTagControl'),
-        area:["550px","500px"],
-        btn: ['确定', '取消'],
-        yes: function(index, layero){
-          var actives = $("#tagWeekWrap").find(".active");
-          if(actives.length > 0 ){
-              var html = "";
-              actives.each(function(index, el) {
-                  var weekid =  $(el).attr("data-id");
-                  html += '<span class="tag-selected">'
-                  html +=       '<span class="inner" >第'+ num.Hanzi(weekid) +'周</span>'
-                  html +=           '<span class="del" data-id="'+ weekid +'">×</span>'
-                  html +=  '</span>'
-              });
-              $("#weekTagbox").html(html);
-              layer.close(index); 
-              verify ()
-          }else{
-             layer.close(index); 
-          } 
-        }
-      });
- })
 
 
-// 周tag删除
-  $("#weekTagbox").on("click",".del",function(){
-       $(this).parent().remove();
-       var id = $(this).attr("data-id");
-       $("#tagWeekWrap .tag").each(function(index, el) {
-           var tagId = $(el).attr("data-id");
-           // console.log(tagId);
-           // console.log(id);
-           if(id ==  tagId){
-              $(el).removeClass('active');
-           }
-       });
-  })
+
 
 //清空
  $("#clearConfigBt").click(function(){
@@ -929,7 +890,8 @@ function renderClassTd(school_id,weekData){
                          if(JSON.stringify(tr[k]) != "{}"){
                          var grade = num.Hanzi(tr[k].cn_grade)
                          var html = tr[k].cn_subject_chs + '</br>'
-                             html += '( '+ tr[k].cn_sponsor_teacher_name +' )'
+                             html += '( '+ tr[k].cn_sponsor_teacher_name +' )'+ '</br>'
+                             html += '<span class="makeClassStatus_'+tr[k].cn_status +'">'+ num.makeClassStatus(tr[k].cn_status) +'</span>'
                              html +='<div class="info topInfo" data-id="'+ tr[k].cp_encrypt_id+'">'
                              html += '<div class="title">'
                              html +=      grade +'年级 '+ tr[k].cn_subject_chs
@@ -944,7 +906,7 @@ function renderClassTd(school_id,weekData){
                              html +=     '<p>'+ tr[k].cn_receive_room+'</p>'
                              html +=      '<h5 style="color:green">'+ num.makeClassStatus(tr[k].cn_status)+'</h5>' 
                              // html +=      '<p>'+ tr[k].cn_status+'</p>' 
-                              html +=      '<div class="delitem" cp_encrypt_id ="'+tr[k].cp_encrypt_id +'" day ="'+ (k+1) +'">删除</div>' 
+                              html +=      '<div class="confirMitem" cp_encrypt_id ="'+tr[k].cp_encrypt_id +'" day ="'+ (k+1) +'">时间未到</div>' 
                              html +=     '<i class="i"></i>'
                              html +=     '</div>'
                              $("td[positon='"+(i+1)+","+(k+1)+"']").html(html);
@@ -955,31 +917,25 @@ function renderClassTd(school_id,weekData){
                    
                  }
                  hoverUi();
-                 delcongfig();
+                 confirmBtcongfig();
               }
              
          })
     }
 
 
+
 //删除按钮
-  function  delcongfig(){
-        if($(".delitem").length > 0){
-           $(".delitem").click(function(){
-             var id = $(this).attr("cp_encrypt_id");
-             var day = $(this).attr("day");
-             var url = path.api + "/api/delCoursePlan";
-             var getData = {
-                 plan_id:id,
-                 day:day
-             }
-             $.get(url,getData,function(res){
-                       console.log(res);
-                    if(res.type == "success"){
-                         studyTime (school_id,weekData);
-                         formHeadtime(school_id,weekData);
-                    }
-             })
+  function  confirmBtcongfig(){
+        if($(".yes").length > 0){
+           $(".confirMitem .yes").click(function(){
+             alert("yes");
+             return false;
+           })
+        }
+        if($(".confirMitem .no").length > 0){
+           $(".confirMitem .no").click(function(){
+             alert("no");
              return false;
            })
         }
@@ -988,16 +944,6 @@ function renderClassTd(school_id,weekData){
 
 
 
-
- //清空学校信息
-   function intInfo(){
-     $(".classRoom").html(" ");
-     $(".classType").html(" ");
-     $("#schoolTerm").html(" ");
-     $("#week_time").html(" ");
-     $("#week").text(" ");
-     $("#tbody").html('<tr><td colspan="9" class="noneTd">请选择学校查询对应课表~！</td></td>'); 
-   }
 
 //节假日样式
  function ui_holiday(){
@@ -1034,23 +980,4 @@ function renderClassTd(school_id,weekData){
       });
    }
 
-
- 
-//z周选择样式
- function TagWeekUi(boolean){
-   if(boolean){
-     
-   }else {
-     $("#tagWeekWrap .tag").removeClass('active');
-    }
- }
-
-  $("body").on("click","#tagWeekWrap .tag",function(){
-           if(!$(this).hasClass('active')){
-             $(this).addClass('active');
-           }else{
-              $(this).removeClass('active');
-           }
-           
- });
 })

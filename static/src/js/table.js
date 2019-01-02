@@ -160,10 +160,12 @@ $(".classType").on("click","span",function(){
 $("#goToEdite").click(function(){
     window.location.href="/course/edit?school_id="+school_id+"&room_id="+room_id+"&weekData="+weekData+"&term_id="+term_id+"&week="+week+"&room_name="+room_name+"&school_name="+school_name;
 })
-
+$("#goToConfirm").click(function(){
+    window.location.href="/course/confirm?school_id="+school_id+"&room_id="+room_id+"&weekData="+weekData+"&term_id="+term_id+"&week="+week+"&room_name="+room_name+"&school_name="+school_name;
+})
 
 //======================编辑上课时间弹窗===================
-$("#configClassTimeBt").click(function(){
+$(".configClassTimeBt").click(function(){
    var WeeKurl =  path.api+"/api/getSchoolCourseTimeNode";
    var getData = {
       school_id:school_id,
@@ -256,7 +258,7 @@ $("#upAddbt").click(function(){
       html +=   '<input type="text" name="sort1_start" class="layui-input timeInput" id="'+ id +'">' 
       html +=   '</span>'
       html +=    '<span>'
-      html +=        '<button class="layui-btn layui-btn-sm layui-btn-primary del">删除</button>'
+      html +=        '<button class="layui-btn layui-btn-sm layui-btn-primary del">-</button>'
       html +=     '</span>'
       html +=  '</div>'
   $(".up").append(html);
@@ -285,7 +287,7 @@ $("#downAddbt").click(function(){
       html +=   '<input type="text" name="sort1_start" class="layui-input timeInput" id="'+ id +'">' 
       html +=   '</span>'
       html +=    '<span>'
-      html +=        '<button class="layui-btn layui-btn-sm layui-btn-primary del">删除</button>'
+      html +=        '<button class="layui-btn layui-btn-sm layui-btn-primary del">-</button>'
       html +=     '</span>'
       html +=  '</div>'
   $(".down").append(html);
@@ -311,8 +313,8 @@ $("#controlstudyTime").on("click",".del",function(){
 
 
 //======================编辑学期弹窗===================
-$(".two").click(function(){
-// $("#configStudeyTimeBt").click(function(){
+
+$(".configStudeyTimeBt").click(function(){
     initstudyTimelang();
     layer.open({
             type: 1,
@@ -321,10 +323,11 @@ $(".two").click(function(){
             area:["900px","600px"],
             btn:["确认","取消"],
             yes: function(index, layero){
-               
+               layer.close(index);
             }
    });
 })
+
 function initstudyTimelang() {
   laydate.render({
     elem: '#studyStart_time'
@@ -344,7 +347,27 @@ function initstudyTimelang() {
 }
 
 
+
 //设置学校学期
+$("#addtimedaysbt").click(function(){
+    var Start_time = $("#studyStart_time").val();
+    var  End_time  = $("#studyEnd_time").val();
+    if(Start_time && End_time){
+       var url = "/api/setSchoolTerm";
+       var getData = {
+          start_time:Start_time,
+          end_time:End_time
+       }
+       $.get(url,getData,function(res){
+           console.log(res);
+           if(res.type == 'success'){
+              layer.msg("设置成功")
+           }else{ 
+               layer.msg(res.message,{icon:5})
+            }
+       })
+    }
+})
 
 
 
@@ -363,6 +386,7 @@ $("#addHolidaysbt").click(function() {
       $.get(url,getData,function(res){
          if(res.type == "success"){
             layer.msg("设置成功",{time:800});
+            redenerHoildForm();
             holiday.val("");
             End_time.val("");
             Start_time.val("");
@@ -372,7 +396,52 @@ $("#addHolidaysbt").click(function() {
      layer.msg("输入信息不完整！~",{icon:5})
    }
 });
-//======================编辑学期结束===================
+
+redenerHoildForm();
+function redenerHoildForm(){
+  $("#holidayTbody").html("");
+  var url = path.api + "/api/getSchoolHolidayList?v="+new Date().getTime();
+  $.get(url,function(res){
+      if(res.type == "success") {
+        var list  = res.data.data.list;
+        console.log(list);
+        for(var i =0;i<list.length;i++){
+            var html = "<tr>";
+            html += "<td>"+ list[i].sh_name +"</td>";
+            html += "<td>"+ list[i].sh_start_time_chs +"</td>";
+            html += "<td>"+ list[i].sh_end_time_chs+"</td>"
+            html += "<td><a style='color:#1E9FFF;cursor:pointer' class='del' id='"+ list[i].sh_id+"'>删除</a></td></tr>";
+            $("#holidayTbody").append(html);
+        }
+      }
+  })
+}
+
+//删除假期 
+ $("#holidayTbody").on("click",".del",function(){
+    var url = path.api + "/api/delSchoolHolidayData";
+    var id = $(this).attr("id");
+    var getData = {
+       holiday_id:id
+    }
+    $.get(url,getData,function(res){
+          if(res.type == "success") {
+              layer.msg("删除成功",{time:500});
+              redenerHoildForm();
+          }else{
+              layer.msg(res.message,{icon:5})
+          }
+    })
+     
+ });
+
+
+
+
+
+////======================编辑学期结束===================
+
+
 
 
 //======================渲染课表===================
@@ -583,7 +652,7 @@ function renderClassTd(school_id,weekData){
                          if(JSON.stringify(tr[k]) != "{}"){
                          var grade = num.Hanzi(tr[k].cn_grade)
                          var html = tr[k].cn_subject_chs + '</br>'
-                             html += '( '+ tr[k].cn_sponsor_teacher_name +' )'
+                             html += '( '+ tr[k].cn_sponsor_teacher_name +' )'+ '</br>'
                              html +='<div class="info topInfo" data-id="'+ tr[k].cp_encrypt_id+'">'
                              html += '<div class="title">'
                              html +=      grade +'年级 '+ tr[k].cn_subject_chs
@@ -596,9 +665,9 @@ function renderClassTd(school_id,weekData){
                              html +=     '<p>'+ tr[k].cn_receive_school+'</p>'
                              html +=     '<p>'+ tr[k].cn_receive_teacher+'</p>'
                              html +=     '<p>'+ tr[k].cn_receive_room+'</p>'
-                             html +=      '<h5>状态</h5>' 
-                             html +=      '<p>'+ tr[k].cn_status+'</p>' 
-                             html +=     '<i></i>'
+                             html +=      '<h5>'+ num.makeClassStatus(tr[k].cn_status)+'</h5>' 
+                             // html +=      '<p>'+ tr[k].cn_status+'</p>' 
+                             html +=     '<i class="i"></i>'
                              html +=     '</div>'
                              $("td[positon='"+(i+1)+","+(k+1)+"']").html(html);
                              

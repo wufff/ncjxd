@@ -84,7 +84,7 @@ define(['jquery','path'],function($,path){
             });
         }
         return result;
-       }
+       },
     }  
 })
 

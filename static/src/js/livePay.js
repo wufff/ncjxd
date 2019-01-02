@@ -12,11 +12,11 @@ require(["jquery","ckplayer"],function($,ckplayer){
      var res = $(".mediaBox").data("res");
      switch(RecType)
 	 {
-		case 0:                 //视频
+		case 1:                 //视频
 		  var html = '<img src="'+res +'" alt = "活动图片">';
           $(".mediaBox").html(html);
 		  break;
-		case 1:
+		case 0:
 		  var html = '<div id="video" style="width:865px;height:500px;"></div>';
           $(".mediaBox").html(html);
            var videoObject = {

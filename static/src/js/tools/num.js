@@ -51,6 +51,26 @@ define(function () {
             }
         }
         return hanzi;
-		}
+		},
+        makeClassStatus:function(data){
+           if(data == 1) {
+              return "实际已开";
+           }else{
+             return "";
+           }
+
+        },
+        patrolStatus:function(data){
+           if(data == 1) {
+              return "进行中";
+           }else if( data == 2) {
+              return "未开始";
+           }else if( data == 0) {
+               return "已结束";
+           }
+
+        }
+
+
 	}
 })
