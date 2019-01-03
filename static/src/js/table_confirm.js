@@ -60,9 +60,11 @@ $("#goToEdite").click(function(){
 $("#timeforopen").click(function(){
     if($(".filter").hasClass('hidde')){
          $(".filter").removeClass('hidde');
+         $("#timeforopen").text("临时开课 on")
          is_on = true;
     }else{
         $(".filter").addClass('hidde');
+        $("#timeforopen").text("临时开课 off")
         is_on = false;   
     }
 })

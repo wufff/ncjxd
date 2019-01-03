@@ -19,7 +19,7 @@ require.config({
 			"plupload":"./lib/plupload/plupload.dev",
 			"moxie":"./lib/plupload/moxie",
 			"upLoad":"./tools/upLoad",
-			"zTree":"./lib/zTree/jquery.ztree.all.min",
+			"num":"./tools/num"
 	},
 	shim: {
 
