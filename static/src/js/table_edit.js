@@ -54,6 +54,11 @@ $("body").on("click",".sub",function(){
 })
 
 
+$("#goToConfirm").click(function() {
+    window.location.href="/course/confirm?school_id="+school_id+"&room_id="+room_id+"&weekData="+weekData+"&term_id="+term_id+"&week="+week+"&room_name="+room_name+"&school_name="+school_name;
+});
+
+
 $("#classTagBt").click(function() {
       //外面没选中的就清空弹窗
        var tags =  $("#classTag").find(".tag-selected");
@@ -591,10 +596,19 @@ $("#roomTag").on("click",".del",function(){
               }
           
              tags3.each(function(index, el) {
-                 var id = $(el).attr("data-id");
+                   var id = $(el).attr("data-id");
                    weekArry.push(id);
+
+                   //配合后台修改自定义周对teday的赋值
+                   if(index == 0){
+                       var lang = id - week;
+                       if(lang != 0){
+                         weekData = tools.nextWeekPei(weekData,lang)
+                       }
+                   }
+
                 });
-                 weekValue=weekArry.join("|");
+                weekValue=weekArry.join("|");
             }
 
 

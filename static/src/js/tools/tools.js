@@ -59,6 +59,47 @@ define(['jquery','path'],function($,path){
                 Rez = Reznow.replace(/\//g,'-')
                 return Rez;
         },
+        nextWeekPei:function(dateStr,num){
+                var sdate = new Date(Date.parse(dateStr.replace(/-/g, "/")))
+                var nextDate = new Date(sdate.getTime() + num * 7 * 24 *60 *60 *1000);
+                var Reznow = nextDate.toLocaleDateString();
+                Rez = Reznow.replace(/\//g,'-')
+                return Rez;
+        },
+
+
+        calcDtScopeByMonth:function(index) {
+            serachIndex = index;
+            var today = new Date();
+            var month = today.getMonth();
+            var year = today.getFullYear();
+            var startS = new Date(year, month + index, 1);
+            var millisecond = 1000 * 60 * 60 * 24;
+            var lastDay = new Date(year, month + index + 1, 1);
+            var lastDay = new Date(lastDay.getTime() - millisecond);
+            var startDay = setStandardTimeto(startS);
+            var lastDay =  setStandardTimeto(lastDay);
+             return {
+               start:startDay,
+               last:lastDay
+             }
+        },
+        calcDtScopeByWeek(index){
+            serachIndex = index;
+            var today = new Date();
+            var day = today.getDate() == 0 ? 7 :today.getDay();
+            var millisecond = 1000 * 60 * 60 * 24;
+            var addDays = index * 7 - day + 1;
+            var mondayDt = new Date(today.getTime() + addDays * millisecond );
+            var sundayDt = new Date(today.getTime() + (addDays + 6) * millisecond );
+          
+            var  startDay = setStandardTimeto(mondayDt);
+            var  lastDay =  setStandardTimeto(sundayDt);
+            return {
+               start:startDay,
+               last:lastDay
+             }
+        },
         queryString:function(paramName){
             var url = location.search; //获取url中"?"符后的字串
             var theRequest = new Object();
@@ -109,3 +150,9 @@ function getQueryStringArgs () {
         }
         return args;
     };
+
+function  setStandardTimeto(d){
+    // + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+     youWant = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+     return youWant;      
+};

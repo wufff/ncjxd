@@ -21,12 +21,13 @@ require(["layui","path","tools","num"],function(layui,path,tools,num){
       var holidays = [];
       var totWeek;
       var on_off = true;
+      var is_on = false;
       // console.log(school_name);
       $(".schoolName").html(school_name);
       $(".roomName").html(room_name);
       studyTime(school_id,weekData);
       formHeadtime(school_id,weekData);
-    
+     
 
     //切换周
 $("body").on("click",".Add",function(){
@@ -53,6 +54,18 @@ $("body").on("click",".sub",function(){
     
 })
 
+$("#goToEdite").click(function(){
+    window.location.href="/course/edit?school_id="+school_id+"&room_id="+room_id+"&weekData="+weekData+"&term_id="+term_id+"&week="+week+"&room_name="+room_name+"&school_name="+school_name;
+})
+$("#timeforopen").click(function(){
+    if($(".filter").hasClass('hidde')){
+         $(".filter").removeClass('hidde');
+         is_on = true;
+    }else{
+        $(".filter").addClass('hidde');
+        is_on = false;   
+    }
+})
 
 $("#classTagBt").click(function() {
       //外面没选中的就清空弹窗
@@ -480,11 +493,13 @@ $("#roomTag").on("click",".del",function(){
          return;
        }
 
-      if($(this).hasClass('holidayTd')){
+
+      //拦截非添加状态
+      if(!is_on){
          return;
        }
 
-
+      
 
       if($(this).attr("positon")){
         var _this = this;
@@ -616,7 +631,7 @@ $("#roomTag").on("click",".del",function(){
             })
           })
          }else{
-           layer.msg("未配置完善，请配置完善",{icon:5})
+           layer.msg("未配置完善，请完善加课信息",{icon:5})
          }
       }
   }) 

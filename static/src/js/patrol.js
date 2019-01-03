@@ -1,10 +1,12 @@
 require(["jquery","layui","path","page","num"],function($,layui,path,pages,num){
   var layer = layui.layer;
   var form = layui.form;
+  var room_num = "";
+  ui();
   initPage(1);
 
   form.on('select(city)', function(data){
-     console.log(data.value)
+     // console.log(data.value)
      var getData = {
       area_id:data.value,
       type:3
@@ -14,7 +16,7 @@ require(["jquery","layui","path","page","num"],function($,layui,path,pages,num){
       $.get(url,getData,function(res){
         if(res.type == "success") {
           var list = res.data.data.list;
-          var html = '<option value="">请选择</option>';
+          var html = '<option value="">选择区县</option>';
           for(var i=0;i<list.length;i++){
              html += '<option value="'+ list[i].node_encrypt_id +'">'+ list[i].node_name+'</option>'
           }
@@ -25,7 +27,7 @@ require(["jquery","layui","path","page","num"],function($,layui,path,pages,num){
        }
      })
      }else{
-       $("select[name=area]").html('<option value="">请选择</option>');
+       $("select[name=area]").html('<option value="">全部</option>');
           form.render('select');
      }
 }); 
@@ -38,7 +40,7 @@ form.on('select(grade)', function(data){
    getData.grade_id = data.value;
    if(data.value){
        $.get(url,getData,function(data){
-        console.log(data);
+        // console.log(data);
        if(data.type == "success") {
           var list = data.data.data.list;
           var html = '<option value="">选择学科</option>';
@@ -66,10 +68,25 @@ form.on('select(grade)', function(data){
 
 
 
-// &v="+ new Date().getTime();
+// $(".tag").on("click","span",function(){
+//       if($(this).hasClass('active')){
+//         return;
+//       }
+//       alert(123);
+//    })
+$(".tagItem").click(function(){
+   if($(this).hasClass('active')){
+      return;
+   }
+   room_num = $(this).attr("room_num");
+
+})
+
+
+
+
 
   function initPage (goPage){
-    
       var data = {
        city_id:$("select[name=city]").val(),
        area_id:$("select[name=area]").val(),
@@ -77,14 +94,15 @@ form.on('select(grade)', function(data){
        subject_id:$("select[name=subject]").val(),
        page:1,
        page_count:10,
+       room_num:room_num,
        v:new Date().getTime()
    };
   
        var url = path.api+"/api/getTodayCentreSchoolPiliList";
-       var getData = "&page=1&page_count=12&city_id="+data.city_id+"&area_id="+data.area_id+"&stage_id="+data.stage_id+"&subject_id="+data.subject_id+"&v="+ new Date().getTime();
-      // console.log(getData);
+       var getData = "&page=1&page_count=12&city_id="+data.city_id+"&area_id="+data.area_id+"&stage_id="+data.stage_id+"&subject_id="+data.subject_id+"&room_num="+data.room_num+"&v="+ new Date().getTime();
+      console.log(getData);
       pages.getAjax(url,getData,function(data){
-          
+          // console.log(data);
          if( data.type == "success"){
              var total = data.data.data.total;
              page =  new pages.jsPage(total,"pageNum","12",url,getData,buildTable,goPage,null);
@@ -109,7 +127,8 @@ form.on('select(grade)', function(data){
           teacher: item.cn_teacher_name,
           cn_num:item.cn_num,
           statusClass:"status_"+item.cn_status,
-          status:num.patrolStatus(item.cn_status)
+          status:num.patrolStatus(item.cn_status),
+          id:item.cn_encrypt_id
         }
       })
      
@@ -124,7 +143,7 @@ form.on('select(grade)', function(data){
         html += '<td >' + data[i].teacher + '</td>'
         html += '<td>' + data[i].cn_num + '</td>'
         html += '<td class="'+data[i].statusClass+'">' + data[i].status + '</td>'
-        html += '<td><a href="" class="open">进入课堂</a><a href="" class="go">发起互动</a></td>'
+        html += '<td><a href="/Patrol/details?node_id='+ data[i].id +'" class="open">进入课堂</a><a href="" class="go">发起互动</a></td>'
         html += ' </tr>'
       }
       $(".tableLoading").html(' ');
@@ -137,6 +156,19 @@ form.on('select(grade)', function(data){
     }
   }
  }
+
+
+ 
+  function ui(){
+  $(".tag").on("click","span",function(){
+      if($(this).hasClass('active')){
+        return;
+      }
+      $(this).siblings().removeClass('active');
+      $(this).addClass('active');
+   })
+  }
+
 
 
 
