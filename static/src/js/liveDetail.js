@@ -15,11 +15,12 @@ require(["jquery","ckplayer","expression","api","path"],function($,ckplayer,face
 
  function  vidoe () {
    /*初始化*/ 
+    var mp4_rec = $("#aboutVidoe a").eq(0).attr("download");
     var videoObject = {
 		container: '#video',//“#”代表容器的ID，“.”或“”代表容器的class
 		variable: 'player',//该属性必需设置，值等于下面的new chplayer()的对象
 		flashplayer:false,//如果强制使用flashplayer则设置成true
-		video:'http://img.ksbbs.com/asset/Mon_1703/eb048d7839442d0.mp4',//视频地址
+		video:mp4_rec,//视频地址
     logo:null
 		};
 		var player = new ckplayer(videoObject);
@@ -35,7 +36,7 @@ require(["jquery","ckplayer","expression","api","path"],function($,ckplayer,face
 
    function comment () {
        var activity_id = $("input[name=activity_id]").val();
-       var requestData = "activity_id="+ activity_id +"&page_num=10&p=2";
+       var requestData = "activity_id="+ activity_id +"&page_num=10&page=1";
        api.ajaxPost(path.api+"/api/getActivityCommentList",requestData,renderComment); //渲染评论
        face.showFace("#showFace",".commentText");                                      //渲染表情  
        $("#commtentBt").click(function(){                                              //发表评论
@@ -113,9 +114,7 @@ require(["jquery","ckplayer","expression","api","path"],function($,ckplayer,face
                 html  +=    '</div>'
                 html  +=    '</div>'
                 html  +=  '</div>'
-
                 }
-               
                $("#commentContent").html(html);
            }
        }

@@ -22,6 +22,10 @@ require(["layui","path","tools","num"],function(layui,path,tools,num){
       var totWeek;
       var on_off = true;
       var is_on = false;
+
+      //is_over为0 可以设置
+      //is_over为1 不可以设置
+      var is_over = "";
       // console.log(school_name);
       $(".schoolName").html(school_name);
       $(".roomName").html(room_name);
@@ -62,10 +66,12 @@ $("#timeforopen").click(function(){
          $(".filter").removeClass('hidde');
          $("#timeforopen").text("临时开课 on")
          is_on = true;
+         $(".addTitle").show();
     }else{
         $(".filter").addClass('hidde');
         $("#timeforopen").text("临时开课 off")
         is_on = false;   
+        $(".addTitle").hide();
     }
 })
 
@@ -677,13 +683,7 @@ $("#roomTag").on("click",".del",function(){
           $("#classRoomTagControl .tag").removeClass('active');
    }
 
-  function clearTag3() {
-         $("#tagWeekWrap .tag").removeClass('active');
-         $("#weekTagbox").html("");
-         $("input[value=all]").prop("checked",true);
-         form.render("radio"); 
-         $(".controlWeek").hide();
-   }
+
 
 
 
@@ -736,7 +736,6 @@ $("#roomTag").on("click",".del",function(){
         }
        var url = "/api/getRoomListBySchoolId";
       $.get(url,getData,function(res){
-         // console.log(res);
         if(res.type == "success") {
             var list = res.data.data.list;
             // console.log(list);
@@ -812,7 +811,7 @@ function renderClassTd(school_id,weekData){
       v:new Date().getTime()
      }
   $.get(WeeKurl,getData,function(res){
-       // console.log(res);
+       console.log(res);
        if(res.type == "success") {
          $("#tbody").html("");
          var data = res.data.data;
@@ -821,6 +820,8 @@ function renderClassTd(school_id,weekData){
          var up = data.noon_count.up;
          var uphtml;
          var downHtml;
+         is_over = res.data.data.is_over;
+         console.log(is_over);
          // console.log(up);
          // console.log(down);
          // console.log(times);
@@ -922,8 +923,13 @@ function renderClassTd(school_id,weekData){
                              html +=     '<p>'+ tr[k].cn_receive_teacher+'</p>'
                              html +=     '<p>'+ tr[k].cn_receive_room+'</p>'
                              html +=      '<h5 style="color:green">'+ num.makeClassStatus(tr[k].cn_status)+'</h5>' 
-                             // html +=      '<p>'+ tr[k].cn_status+'</p>' 
-                              html +=      '<div class="confirMitem" cp_encrypt_id ="'+tr[k].cp_encrypt_id +'" day ="'+ (k+1) +'">时间未到</div>' 
+                             // 判断时间是否可以设置
+                             if( is_over == 0){
+                               html +=      '<div class="confirMitem" cp_encrypt_id ="'+tr[k].cp_encrypt_id +'" day ="'+ (k+1) +'"><span class="yes">确认已开 <i class="fa fa-check"></i></span><span class="no">确认未开 <i class="fa fa-times"></i></span></div>' 
+                             }
+                             if(is_over == 1) {
+                                html +=      '<div class="confirMitem" cp_encrypt_id ="'+tr[k].cp_encrypt_id +'" day ="'+ (k+1) +'">开课确认时间未到</div>' 
+                             }
                              html +=     '<i class="i"></i>'
                              html +=     '</div>'
                              $("td[positon='"+(i+1)+","+(k+1)+"']").html(html);
@@ -946,13 +952,24 @@ function renderClassTd(school_id,weekData){
   function  confirmBtcongfig(){
         if($(".yes").length > 0){
            $(".confirMitem .yes").click(function(){
-             alert("yes");
+             var plan_id = $(this).parents(".confirMitem").attr("cp_encrypt_id");
+             var geturl = path.api + "/api/confirmCoursePlan";
+             var day = $(this).parents(".confirMitem").attr("day");
+             console.log(geturl);
+             $.get(geturl,{plan_id:plan_id,day:day},function(res){
+                if(res.type == "success") {
+                   layer.msg("操作成功",{time:600});
+                   studyTime (school_id,weekData);
+                   formHeadtime(school_id,weekData);
+                }
+             })
              return false;
            })
         }
         if($(".confirMitem .no").length > 0){
            $(".confirMitem .no").click(function(){
-             alert("no");
+             var plan_id = $(this).parents(".confirMitem").attr("cp_encrypt_id");
+             alert(plan_id);
              return false;
            })
         }

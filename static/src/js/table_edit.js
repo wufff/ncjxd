@@ -49,8 +49,6 @@ $("body").on("click",".sub",function(){
       weekData = tools.prevWeek(weekData);
       formHeadtime(school_id,weekData);
       studyTime (school_id,weekData);
-      
-    
 })
 
 
@@ -841,14 +839,14 @@ $("#roomTag").on("click",".del",function(){
 
 //渲染上午下午管关联渲染课程
 function renderClassTd(school_id,weekData){
-   var WeeKurl =  path.api+"/api/getSchoolCourseTimeNode";
+   var WeeKurl =  path.api+"/api/getSchoolCourseTimeNode"
     var getData = {
       school_id:school_id,
       date:weekData,
       v:new Date().getTime()
      }
   $.get(WeeKurl,getData,function(res){
-       // console.log(res);
+       console.log(res);
        if(res.type == "success") {
          $("#tbody").html("");
          var data = res.data.data;
@@ -857,9 +855,7 @@ function renderClassTd(school_id,weekData){
          var up = data.noon_count.up;
          var uphtml;
          var downHtml;
-         // console.log(up);
-         // console.log(down);
-         // console.log(times);
+      
          if(times.length == 0){
           $("#tbody").html('<tr><td colspan="9" class="noneTd">此学校暂无课表信息~！</td></td>');
           $("#table_header").hide();

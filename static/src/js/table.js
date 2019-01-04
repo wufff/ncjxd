@@ -22,7 +22,11 @@ require(["jquery","layui","path","num","tools"],function($,layui,path,num,tools)
    var type = 0;
    var holidays = [];
    var laydate = layui.laydate;
-   
+   //是否可以修改时间
+   var st_is_modify;  
+
+
+
 form.on('select(city)', function(data){
      // console.log(data.value)
      $("select[name=school]").html('<option value="">请先选区县</option>');
@@ -59,7 +63,7 @@ form.on('select(area)', function(data){
      var getData = {
         area_id:data.value
      }
-     var url = "/api/getSchoolListByAreaId"
+     var url = path.api+"/api/getSchoolListByAreaId"
      if(data.value){
       $.get(url,getData,function(res){
         // console.log(res);
@@ -134,6 +138,7 @@ $(".classRoom").on("click","span",function(){
          return;
        }
      room_id = $(this).attr("data-id");
+     room_name = $(this).text();
      $(this).siblings("span").removeClass('active');
      $(this).addClass('active');
      renderClassTd(school_id,weekData);
@@ -165,17 +170,73 @@ $("#goToConfirm").click(function(){
 })
 
 //======================编辑上课时间弹窗===================
-$(".configClassTimeBt").click(function(){
-   var WeeKurl =  path.api+"/api/getSchoolCourseTimeNode";
-   var getData = {
-      school_id:school_id,
-      date:weekData
+
+// 未设置时候给出默认框
+ $(".uptimeInput").each(function(index, el) {
+     if(index == 0){
+        var value = "8:00 - 8:45"
      }
-   $.get(WeeKurl,getData,function(res){
+     if(index == 1){
+        var value = "9:00 - 9:45"
+     }
+     if(index == 2){
+        var value = "10:00 - 10:45"
+     }
+     if(index == 3){
+       var value = "11:00 - 11:45"
+     }
+
+     laydate.render({
+        elem: "#"+$(el).attr("id")
+        ,type: 'time'
+        ,format: 'HH:mm'
+        ,btns: ['confirm']
+        ,ready: formatminutesUp
+        ,range: '-'
+        ,value:value
+    });
+
+ });
+$(".downtimeInput").each(function(index, el) {
+     if(index == 0){
+        var value = "14:00 - 14:45"
+     }
+     if(index == 1){
+        var value = "15:00 - 15:45"
+     }
+     if(index == 2){
+        var value = "16:00 - 16:45"
+     }
+    
+     laydate.render({
+        elem: "#"+$(el).attr("id")
+        ,type: 'time'
+        ,format: 'HH:mm'
+        ,btns: ['confirm']
+        ,ready: formatminutesDown
+        ,range: '-'
+        ,value:value
+    });
+
+ });
+
+
+
+$(".configClassTimeBt").click(function(){
+   var url =  path.api+"/api/getLastTermSchoolCourseTime";
+   $.get(url,function(res){
+          console.log(res);
           if(res.type == "success"){
-             var list = res.data.data.course_time_node;
+             var list = res.data.data.time_info;
+              if(list.length == 0){
+                  return;
+              }
+
              var up = res.data.data.noon_count.up;
              var down = res.data.data.noon_count.down;
+             st_is_modify = res.data.data.st_is_modify;
+            
+            
              var  tat = up + down;
              //渲染上午
              $(".up").html("");
@@ -222,13 +283,27 @@ $(".configClassTimeBt").click(function(){
                       elem: '#'+id
                       ,type: 'time'
                       ,format: 'HH:mm'
-                        ,btns: ['clear', 'confirm']
+                        ,btns: ['confirm']
                       ,ready: formatminutesDown
                       ,range: '-'
                       ,value:value
                   }); 
                     
              }
+              if(st_is_modify == 0){
+
+                $(".timeInput").attr("disabled",true);
+                $("#titlePont").show();
+                 $("#upAddbt").hide();
+                    $("#downAddbt").hide();
+             }else{
+                $(".timeInput").attr("disabled",false);
+                $("#titlePont").hide();
+                 $("#upAddbt").show();
+                    $("#downAddbt").show();
+             }
+          }else{
+            layer.msg("未设置学期,请先设置学期",{icon:5}) 
           }
    })
    layer.open({
@@ -238,7 +313,26 @@ $(".configClassTimeBt").click(function(){
             area:["500px","600px"],
             btn:["确认","取消"],
             yes: function(index, layero){
-               
+
+             if(st_is_modify == 0){
+                 //不能设置直接return;
+                 layer.close(index);
+                 return;
+              }
+               var array = [];
+               $(".timeInput").each(function(index,el) {
+                    var value = $(el).val();
+                    var str = value.replace(/\s*/g,"");
+                    array.push(str);
+               });      
+               var url = path.api + "/api/setTermSchoolCourseTime";
+               $.get(url,{term_id:term_id,times:array.join(",")},function(res){
+                  console.log(res);
+                  if(res.type == "success"){
+                     layer.msg("设置成功",{time:600});
+                     layer.close(index);
+                  }
+               })
             }
    });
 })
@@ -266,10 +360,10 @@ $("#upAddbt").click(function(){
         elem: '#'+id
         ,type: 'time'
         ,format: 'HH:mm'
-          ,btns: ['clear', 'confirm']
+          ,btns: ['confirm']
         ,ready: formatminutesUp
         ,range: '-'
-        ,value:'11:00 - 11:00'
+        ,value:'12:00 - 12:45'
     });
 })
 
@@ -295,12 +389,14 @@ $("#downAddbt").click(function(){
         elem: '#'+id
         ,type: 'time'
         ,format: 'HH:mm'
-          ,btns: ['clear', 'confirm']
+          ,btns: ['confirm']
         ,ready: formatminutesDown
         ,range: '-'
-        ,value:'16:00 - 16:00'
+        ,value:'16:00 - 16:45'
     });
 })
+
+
 
 
 $("#controlstudyTime").on("click",".del",function(){
@@ -404,7 +500,7 @@ function redenerHoildForm(){
   $.get(url,function(res){
       if(res.type == "success") {
         var list  = res.data.data.list;
-        console.log(list);
+        // console.log(list);
         for(var i =0;i<list.length;i++){
             var html = "<tr>";
             html += "<td>"+ list[i].sh_name +"</td>";
@@ -452,9 +548,9 @@ function renderClassRoom (school_id,weekData){
           school_id:school_id,
           date:weekData
         }
-       var url = "/api/getRoomListBySchoolId";
+       var url = path.api + "/api/getRoomListBySchoolId";
       $.get(url,getData,function(res){
-         // console.log(res);
+         console.log(res);
         if(res.type == "success") {
             var list = res.data.data.list;
             // console.log(list);
@@ -524,7 +620,7 @@ function renderClassRoom (school_id,weekData){
           date:weekData
      }  
     $.get(WeeKurl,getData,function(res){
-       console.log(res);
+       // console.log(res);
        if(res.type == "success") {
          var data = res.data.data;
          term_id = data.term_id;
@@ -551,7 +647,7 @@ function renderClassTd(school_id,weekData){
       date:weekData
      }
   $.get(WeeKurl,getData,function(res){
-       console.log(res);
+       // console.log(res);
        if(res.type == "success") {
          $("#tbody").html("");
          var data = res.data.data;
@@ -665,7 +761,7 @@ function renderClassTd(school_id,weekData){
                              html +=     '<p>'+ tr[k].cn_receive_school+'</p>'
                              html +=     '<p>'+ tr[k].cn_receive_teacher+'</p>'
                              html +=     '<p>'+ tr[k].cn_receive_room+'</p>'
-                             html +=      '<h5>'+ num.makeClassStatus(tr[k].cn_status)+'</h5>' 
+                             html +=      '<h5 style="padding-bottom:15px;">'+ num.makeClassStatus(tr[k].cn_status)+'</h5>' 
                              // html +=      '<p>'+ tr[k].cn_status+'</p>' 
                              html +=     '<i class="i"></i>'
                              html +=     '</div>'
