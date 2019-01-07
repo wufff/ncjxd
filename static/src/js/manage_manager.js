@@ -9,6 +9,8 @@ require(["layui", "path","page","api"], function(layui, path,pages,api) {
      
    $("body").on("click",".change",function(){
          var tr = $(this).parents("tr");
+         var uid = tr.attr("data-uid");
+         $("#uid").val(uid)
          var obj = {
             uid:tr.attr("data-uid"),
             user_name:tr.find(".user_name").text(),
@@ -20,7 +22,7 @@ require(["layui", "path","page","api"], function(layui, path,pages,api) {
             user_type:tr.find(".user_operate").attr("user_type")
          };
         
-         console.log(obj);
+         // console.log(obj);
          initContorl(obj);
          type = 1; 
           dialog = layer.open({
@@ -122,9 +124,9 @@ $("body").on("click",".del",function(){
        }
        if(type == 1){
            var url = '/userManage/ajaxEditUser';
+            getData.uid = $("#uid").val();
             console.log(getData);
             api.ajaxPost(url,getData,function(res){
-
                 console.log(res);
                 if(res.type == "success"){
                    layer.msg(res.message,{time:800})
@@ -226,6 +228,9 @@ $("body").on("click",".del",function(){
     if(list.type == "error") {
         var mun = goPage - 1;
         pages.gotopage.call(page,mun,false);
+    }
+    if(list.type == "login") {
+       window.location.href = res.msg;
     }
   }
  }

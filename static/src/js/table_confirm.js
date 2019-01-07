@@ -550,36 +550,36 @@ $("#roomTag").on("click",".del",function(){
             // console.log(sdate);
             // console.log(nextDate);
 
+            weekValue = week;
 
+            // if(Weekradio == "all"){
+            //     var weekArry = [];
+            //     for(var i = 0;i<totWeek;i++){
+            //        weekArry.push(i+1);
+            //     }
+            //   weekValue=weekArry.join("|");
+            // }
+            // if( Weekradio == "week"){
+                 
+            // }
+            // if(Weekradio == "cum" ){
+            //   var weekArry = [];
+            //    //拦截自定义未选择周
+            //   var tags3 = $("#weekTagbox").find(".del");
+            //   if(tags3.length == 0){
+            //      layer.msg("自定义周未配置",{icon:5});
+            //      on_off = false;
+            //   }else {
+            //       on_off = true;
 
-            if(Weekradio == "all"){
-                var weekArry = [];
-                for(var i = 0;i<totWeek;i++){
-                   weekArry.push(i+1);
-                }
-              weekValue=weekArry.join("|");
-            }
-            if( Weekradio == "week"){
-                  weekValue = week;
-            }
-            if(Weekradio == "cum" ){
-              var weekArry = [];
-               //拦截自定义未选择周
-              var tags3 = $("#weekTagbox").find(".del");
-              if(tags3.length == 0){
-                 layer.msg("自定义周未配置",{icon:5});
-                 on_off = false;
-              }else {
-                  on_off = true;
-
-              }
+            //   }
           
-             tags3.each(function(index, el) {
-                 var id = $(el).attr("data-id");
-                   weekArry.push(id);
-                });
-                 weekValue=weekArry.join("|");
-            }
+            //  tags3.each(function(index, el) {
+            //      var id = $(el).attr("data-id");
+            //        weekArry.push(id);
+            //     });
+            //      weekValue=weekArry.join("|");
+            // }
 
 
             if(!on_off) {
