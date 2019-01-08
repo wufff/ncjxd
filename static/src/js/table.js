@@ -425,12 +425,10 @@ $(".configStudeyTimeBt").click(function(){
 })
 
 function initstudyTimelang() {
-  laydate.render({
-    elem: '#studyStart_time'
-  });
-  laydate.render({
-    elem: '#studyEnd_time'
-  });
+  // laydate.render({
+  //   elem: '#studyStart_time'
+  // });
+ 
   laydate.render({
     elem: '#holidayStart_time'
     ,calendar: true
@@ -439,6 +437,29 @@ function initstudyTimelang() {
     elem: '#holidayEnd_time'
     ,calendar: true
   });
+
+   var url = path.api + "/api/getSchoolTermWeek";
+   $.get(url,{school_id:school_id},function(res){
+         console.log(res);
+         if(res.type == "success") {
+              var list = res.data.data;
+              $("#studyTime_title").html(list.title); 
+              console.log(list);
+              var start_time = list.term_time.start_time.slice(0, 10);
+              var end_time = list.term_time.end_time.slice(0, 10);
+               laydate.render({
+                  elem: '#studyStart_time',
+                  value:start_time
+                });
+
+                laydate.render({
+                  elem: '#studyEnd_time',
+                  value:end_time
+                });
+              
+         }
+   })
+
 
 }
 
@@ -457,7 +478,7 @@ $("#addtimedaysbt").click(function(){
        $.get(url,getData,function(res){
            console.log(res);
            if(res.type == 'success'){
-              layer.msg("设置成功")
+              layer.msg("设置成功",{time:800})
            }else{ 
                layer.msg(res.message,{icon:5})
             }
@@ -513,6 +534,10 @@ function redenerHoildForm(){
   })
 }
 
+
+
+
+
 //删除假期 
  $("#holidayTbody").on("click",".del",function(){
     var url = path.api + "/api/delSchoolHolidayData";
@@ -533,12 +558,33 @@ function redenerHoildForm(){
 
 
 
-
-
 ////======================编辑学期结束===================
 
+//======================编辑计划确认时间===================
 
 
+// controlTimeComfirm
+
+$(".configConfirmTimeBt").click(function(){
+   
+
+
+    layer.open({
+            type: 1,
+            title:"设置计划确认时间",
+            content: $('#controlTimeComfirm'),
+            area:["750px","600px"],
+            btn:["确认","取消"],
+            yes: function(index, layero){
+               layer.close(index);
+            }
+   });
+})
+
+
+
+
+////======================编辑计划确认时间结束===================
 
 //======================渲染课表===================
 

@@ -55,6 +55,8 @@ define(function () {
         makeClassStatus:function(data){
            if(data == 1) {
               return "实际已开";
+           }else if(data == 4){
+             return "实际未开";
            }else{
              return "";
            }

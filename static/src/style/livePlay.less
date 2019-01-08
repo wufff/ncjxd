@@ -44,21 +44,25 @@
 #more {
     .item {margin-bottom: 40px;}  
     .media {
-        a { width: 210px; height: 110px; overflow: hidden;margin-right:5px;}
+        a { width: 210px; height: 130px; overflow: hidden;margin-right:5px;background-color: #555;}
         img { height: 100%;margin: 0 auto; }
         .media-heading { 
             color: @font_zhu_color;font-size: @font_zhu;margin-bottom: 15px;
             width: 370px;
+            padding-left: 15px;
             .singleText()
         }
         .title_min{
             color: @font_fu_color;font-size: @font_fu;margin-bottom: 10px;
             height:40px;
             width: 370px;
+             padding-left: 15px;
             overflow: hidden;
         }
         .title_beizhu{
             color: @font_beizhu_color;font-size: @font_beizhu;
+             padding-left: 15px;
         }
     }
 }
+.media-left, .media>.pull-left { padding: 0; }

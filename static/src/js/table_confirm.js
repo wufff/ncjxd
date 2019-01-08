@@ -969,7 +969,15 @@ function renderClassTd(school_id,weekData){
         if($(".confirMitem .no").length > 0){
            $(".confirMitem .no").click(function(){
              var plan_id = $(this).parents(".confirMitem").attr("cp_encrypt_id");
-             alert(plan_id);
+             var day = $(this).parents(".confirMitem").attr("day");
+             var geturl = path.api + "/api/cancelCoursePlan";
+             $.get(geturl,{plan_id:plan_id,day:day},function(res){
+                if(res.type == "success") {
+                   layer.msg("操作成功",{time:600});
+                   studyTime (school_id,weekData);
+                   formHeadtime(school_id,weekData);
+                }
+             })
              return false;
            })
         }
