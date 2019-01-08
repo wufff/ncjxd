@@ -6,7 +6,7 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
     var editeId;
     var Upvalue = [];
     var upLoad = upLoad.imgMost('upbtn');
-    // initPage (1);
+    initPage (1);
     
     
 
@@ -26,7 +26,7 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
         yes: function(index, layero){
           var value = $("#img_file_path").val();
           var arry = value.split(',');
-          console.log(arry.length);
+          // console.log(arry.length);
           if(arry.length > 8){
             var getData = [];
             for(var i = 0;i<8;i++){
@@ -38,18 +38,21 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
             console.log(getData);
           }
           if(arry.length == 1){
-               alert("没传东西");
+               layer.msg("没有任何图片",{icon:5})
           } 
           if( arry.length < 9){
           var getData = [];
             for(var i = 0;i<arry.length-1;i++){
-              var temp = {
-                  r_cover_img:arry[i]
-              }
-              getData.push(temp);
+              getData.push(arry[i]);
             }
-           console.log(getData);
+           
           }
+          var obj = {cover_img:getData.join(","),title:"",type:2}
+          console.log(obj)
+          var url = path.api + "/api/addManageRecommend";
+          $.get(url,obj,function(res){
+                      console.log(res);
+          })
         }
       });
     })
@@ -116,7 +119,7 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
 
 
 
- initPage (1);
+
 
 
  function initPage (goPage){

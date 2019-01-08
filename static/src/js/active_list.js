@@ -35,6 +35,15 @@ require(["layui", "path","page"], function(layui, path,pages) {
       });
    })
 
+
+  $("body").on("click",".change",function(){
+     var tr = $(this).parents("tr");
+     var id =  tr.data("id");
+     window.location.href ="/manage/addactivity?id="+id;
+   })
+
+
+
     
   function refrechData() {
     var current = $("#pageNum").find(".current").text();

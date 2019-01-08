@@ -34,7 +34,7 @@
     toolbars: [
       [
         "fullscreen",
-        "fontfamily",
+        // "fontfamily",
         "fontsize",
         "bold",
         "italic",

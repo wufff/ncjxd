@@ -163,7 +163,7 @@ require(["layui", "path","page"], function(layui, path,pages) {
         html += '<tr data-id="' + data[i].encrypt_id + '">'
         html += '<td class="sn">' + data[i].sn + '</td>'
         html += '<td class="title">' + data[i].title + '</td>'
-        html += '<td class="type">' + data[i].type + '</td>'
+        html += '<td class="type">' + data[i].type.slice(9); + '</td>'
         html += '<td>' + data[i].time + '</td>'
         html += '<td><a class="del">删除</a></td>'
         html += ' </tr>'

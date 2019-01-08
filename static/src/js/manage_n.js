@@ -40,9 +40,11 @@ require(["layui", "path","tools","page"], function(layui, path,tools,pages) {
 		        var notice_id = $(_this).parents("tr").data("id");
 		        var url = path.api + '/api/delManageNoticeData';
                 var current = $("#pageNum_"+type).find(".current").text();
-                // console.log(current);
+                console.log(current);
 		        $.get(url,{notice_id:notice_id},function(res){
+		        	 console.log(res);
 		        	if(res.data.code == 1000){
+		        		layer.msg("删除成功~！",{time:500})
 		        		initPage (type,current);
 		        	}
 		        })
@@ -51,6 +53,13 @@ require(["layui", "path","tools","page"], function(layui, path,tools,pages) {
 
 		  })
   
+
+     $("body").on("click",".change",function(){
+		   	    var _this = this;
+		   	    var notice_id = $(_this).parents("tr").data("id");
+		        window.location.href ="/manage/addNotice?id="+notice_id;
+		  })
+
 
        $("#add").click(function(){
             dialog =   layer.open({
@@ -73,22 +82,22 @@ require(["layui", "path","tools","page"], function(layui, path,tools,pages) {
 
  function initPage (tpye,goPage){
       var url = path.api + '/api/getManageNoticeList';
-      var getData = "type="+tpye+"&page=1&page_count=3";
+      var getData = "type="+tpye+"&page=1&page_count=12";
       pages.getAjax(url,getData,function(data){
       	 if( data.data.code == 1000){
            	 var total = data.data.data.total;
            	 switch(tpye)
 				{
 				case 1:
-				  page_1 =  new pages.jsPage(total, "pageNum_"+tpye,"3",url,getData,buildTable,goPage,null);
+				  page_1 =  new pages.jsPage(total, "pageNum_"+tpye,"12",url,getData,buildTable,goPage,null);
                    pages.pageMethod.call(page_1); 
 				  break;
 				case 2:
-				  page_2 =  new pages.jsPage(total, "pageNum_"+tpye,"3",url,getData,buildTable,goPage,null);
+				  page_2 =  new pages.jsPage(total, "pageNum_"+tpye,"12",url,getData,buildTable,goPage,null);
                    pages.pageMethod.call(page_2); 
 				  break;
 				 case 3:
-				  page_3 =  new pages.jsPage(total, "pageNum_"+tpye,"3",url,getData,buildTable,goPage,null);
+				  page_3 =  new pages.jsPage(total, "pageNum_"+tpye,"12",url,getData,buildTable,goPage,null);
                    pages.pageMethod.call(page_3); 
 				  break;
 				default:

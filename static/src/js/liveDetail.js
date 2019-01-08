@@ -123,7 +123,6 @@ require(["jquery","ckplayer","expression","api","path"],function($,ckplayer,face
 
        function renderPublishComment (data){
              console.log(data);
-
        }
     
 })

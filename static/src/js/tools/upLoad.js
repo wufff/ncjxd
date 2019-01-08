@@ -1,4 +1,4 @@
-define(["path"],function(path){
+define(["jquery","path"],function($,path){
      return {
          img:function(button,Image){
 			var uploader = new plupload.Uploader({

@@ -25,7 +25,7 @@ require(["layui", "path","page","api"], function(layui, path,pages,api) {
          // console.log(obj);
          initContorl(obj);
          type = 1; 
-          dialog = layer.open({
+        dialog = layer.open({
               type: 1,
               title:"修改管理员信息",
               content: $('#controlManageEdit'),
@@ -176,9 +176,9 @@ $("body").on("click",".del",function(){
   function initPage (goPage){
       var url = "/UserManage/ajaxManageList/";
       var getData = "page=1&page_count=15&search_type="+ search_type + "&search_name="+ $("#search_name").val() + "&v="+ new Date().getTime() ;
-      console.log(getData);
+     /* console.log(getData);*/
       pages.getAjax(url,getData,function(data){
-        console.log(data);
+        // console.log(data);
          if( data.type == "success"){
              if(data.data.data.length == 0){
                   $("#tbody").html('<tr><td colspan="7">暂无数据~！</td></td>');
@@ -209,7 +209,7 @@ $("body").on("click",".del",function(){
           position:item.user_position
         }
       })
-      console.log(data);
+      // console.log(data);
       var html = '';
       for (var i = 0; i < data.length; i++) {
         html += '<tr data-uid="' + data[i].uid + '" user_mobile="' + data[i].mobile + '"  user_position="' + data[i].position + '">'
