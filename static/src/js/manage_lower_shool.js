@@ -8,7 +8,8 @@ require(["layui","path","page","api"], function(layui,path,pages,api) {
 
 
 
-  $("body").on("click",".edit",function(){
+
+ $("body").on("click",".edit",function(){
       var tr = $(this).parents("tr");
       uid = tr.attr("data-id");
       var data = {
@@ -34,25 +35,21 @@ require(["layui","path","page","api"], function(layui,path,pages,api) {
 
 
 
-
-function initContorl (data){
+ function initContorl (data){
     form.val("control",data);
     $("#user_name").attr("disabled",true)
+    $("#school_name").attr("disabled",true)
     var status = data.user_status;
     $('input[value='+ status +']').prop("checked",true);
 }
 
 
 
-
-
-
- 
   form.on('submit(control)', function(data){
             var getData = data.field;
             getData.uid = uid;
             console.log(getData)
-            var url = '/UserManage/ajaxEditManageUser';
+            var url = '/UserManage/ajaxEditSchoolUser';
             api.ajaxPost(url,getData,function(res){
                 if(res.type == "success"){
                    layer.msg("修改成功",{time:800})
@@ -68,21 +65,10 @@ function initContorl (data){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
    function initPage (goPage){
       var url = $("#seciton").attr("url");
-      var getData = "page=1&v="+ new Date().getTime() ;
+      var county_id = $(".table_b").attr("county_id");
+      var getData = "county_id="+ county_id +"&page=1&v="+ new Date().getTime() ;
       pages.getAjax(url,getData,function(res){
           console.log(res);
          if( res.type == "success"){
@@ -90,8 +76,9 @@ function initContorl (data){
              page =  new pages.jsPage(total, "pageNum","12",url,getData,buildTable,goPage,null);
              pages.pageMethod.call(page); 
            }else{
-             $("#tbody").html('<tr><td colspan="7"  class="noneDataTd" >暂无数据~！</td></td>');
+             $("#tbody").html('<tr><td colspan="8" class="noneDataTd">暂无数据~！</td></td>');
              $(".tableLoading").html('');
+             console.log(res.type + res.message);
              return;
          }
       })
@@ -101,7 +88,7 @@ function initContorl (data){
       var data = res.data.data;
       console.log(data);
       if(res.data.count == 0){
-          ("#tbody").html('<tr><td colspan="7"  class="noneDataTd" >暂无数据~！</td></td>');
+          $("#tbody").html('<tr><td colspan="8"  class="noneDataTd">暂无数据~！</td></td>');
           $(".tableLoading").html('');
           return;
       }
@@ -109,33 +96,25 @@ function initContorl (data){
       for (var i = 0; i < data.length; i++) {
         html += '<tr data-id="'+ data[i].uid +'" data-mobile="'+ data[i].user_mobile +'" data-email="'+data[i].user_email +'">'
         html += '<td class="sn">' + (i+1) + '</td>'
-        if(data[i].city_url){
-             html += '<td class="city_name"><a href="'+ data[i].city_url +'">' +data[i].city_name + '</a></td>'
-        }else {
-             html += '<td class="city_name">' +data[i].city_name + '</td>'
-        }
-        html += '<td class="school_count">' + data[i].school_count + '</td>'
+        html += '<td class="school_name">' +data[i].school_name + '</td>'
         html += '<td class="teacher_count">' + data[i].teacher_count + '</td>'
-        html += '<td class="user_name" user_type="'+ data[i].user_type+'">' + data[i].user_name + '</td>'
+        html += '<td class="user_name">' + data[i].user_name + '</td>'
         html += '<td class="user_realname">' + data[i].user_realname + '</td>'
-        html += '<td class="user_status user_status_'+ data[i].user_status+ '" user_status="'+data[i].user_status +'">' + data[i].user_status_descript + '</td>'
-        html += '<td><a class="edit" >编辑</a></td>'
+         html += '<td class="user_status user_status_'+ data[i].user_status+ '" user_status="'+data[i].user_status +'">' + data[i].user_status_descript + '</td>'
+        html += '<td><a class="edit">编辑</a></td>'
         html += ' </tr>'
       }
       $(".tableLoading").html(' ');
       $("#tbody").html(html);
+
     }
     
   }
  }
 
 
-
-
-
-
-
 })
+
 
 
 

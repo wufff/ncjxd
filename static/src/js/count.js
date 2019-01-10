@@ -14,16 +14,88 @@ require(["jquery","layui","path","tools","page"],function($,layui,path,tools,pag
    ui();
    form.render('select');
    initPage (currentTpye);
+   //权限
+   var city_id;
+   var town_id;
+   var city_id_authority = $("#city_id").val();
+   var town_id_authority = $("#town_id").val();
+   var authority = 0;
+   if(town_id_authority && town_id_authority != 0){
+
+       authority = 2;
+    }else if(city_id_authority && city_id_authority != 0){
+
+       authority = 1;
+    }
+ 
+  console.log(authority);
+ 
+    switch(authority)
+        {
+        case 1:
+              city_id = city_id_authority;
+              var url = "/api/getAreaList";
+              var  getData = {
+                   area_id:city_id_authority,
+                   type:3,
+
+              }
+              $.get(url, getData,function(res){
+                   console.log(res);
+                  if(res.type == "success") {
+                    var list = res.data.data.list;
+                    var html = '<option value="">请选择</option>';
+                    for(var i=0;i<list.length;i++){
+                       html += '<option value="'+ list[i].node_encrypt_id +'">'+ list[i].node_name+'</option>'
+                    }
+                   $("select[name=area]").html(html);
+                   $("select[name=area]").val("");
+                    form.render('select');
+                 }
+               }) 
+          break;
+        case 2:
+              town_id = town_id_authority;
+              city_id = city_id_authority;
+              var url = "/api/getAreaList";
+              var  getData = {
+                   area_id:city_id_authority,
+                   type:3,
+                   node_id:town_id_authority
+              }
+              $.get(url, getData,function(res){
+                   console.log(res);
+                  if(res.type == "success") {
+                    var list = res.data.data.list;
+                    var html = '';
+                    for(var i=0;i<list.length;i++){
+                       html += '<option value="'+ list[i].node_encrypt_id +'">'+ list[i].node_name+'</option>'
+                    }
+                   $("select[name=area]").html(html);
+                    form.render('select');
+                 }
+               }) 
+           
+          break;
+        default:
+          break;
+   } 
+
+
 
 
 
 
 form.on('select(city)', function(data){
+      if(city_id == data.value){
+         return;
+      }
      console.log(data.value)
      var getData = {
       area_id:data.value,
       type:3
      }
+     city_id = data.value
      var url = "/api/getAreaList";
      if(data.value){
       $.get(url,getData,function(res){
@@ -49,6 +121,10 @@ form.on('select(city)', function(data){
 });  
 
 form.on('select(area)', function(data){
+    if(town_id == data.value){
+         return;
+      }
+    town_id = data.value  
     initPage (currentTpye);
 });
 

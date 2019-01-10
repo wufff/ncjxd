@@ -26,12 +26,173 @@ require(["jquery","layui","path","num","tools"],function($,layui,path,num,tools)
    //是否可以修改时间
    var st_is_modify; 
    var loading; 
+   var  city_id;
+   var  town_id;
+   var  school_id;
+   //权限控制 0省 1市 2县 3学校
+   var city_id_authority = $("#city_id").val();
+   var town_id_authority = $("#town_id").val();
+   var school_id_authority = $("#school_id").val();
+   var is_center_school = $("#is_center_school").val();
+   var authority = 0;
+  //权限控制 显示开课
+   var c20c30 = $("#c20c30").val();
+//设置权限 ==============================================
+  
+
+   if(school_id_authority && school_id_authority != 0){
+
+       authority = 3;
+    }else if(town_id_authority && town_id_authority != 0){
+
+       authority = 2;
+    }else if(city_id_authority && city_id_authority != 0){
+
+       authority = 1;
+    }
+
+   console.log("权限"+authority)
+
+    switch(authority)
+        {
+        case 1:
+              city_id = city_id_authority;
+              var url = "/api/getAreaList";
+              var  getData = {
+                   area_id:city_id_authority,
+                   type:3,
+
+              }
+              $.get(url, getData,function(res){
+                   console.log(res);
+                  if(res.type == "success") {
+                    var list = res.data.data.list;
+                    var html = '<option value="">请选择</option>';
+                    for(var i=0;i<list.length;i++){
+                       html += '<option value="'+ list[i].node_encrypt_id +'">'+ list[i].node_name+'</option>'
+                    }
+                   $("select[name=area]").html(html);
+                   $("select[name=area]").val("");
+                    form.render('select');
+                 }
+               }) 
+          break;
+        case 2:
+              town_id = town_id_authority;
+              city_id = city_id_authority;
+              var url = "/api/getAreaList";
+              var  getData = {
+                   area_id:city_id_authority,
+                   type:3,
+                   node_id:town_id_authority
+              }
+              $.get(url, getData,function(res){
+                   console.log(res);
+                  if(res.type == "success") {
+                    var list = res.data.data.list;
+                    var html = '';
+                    for(var i=0;i<list.length;i++){
+                       html += '<option value="'+ list[i].node_encrypt_id +'">'+ list[i].node_name+'</option>'
+                    }
+                   $("select[name=area]").html(html);
+                    form.render('select');
+                 }
+               }) 
+
+                 var getData2 = {
+                      area_id:town_id_authority,
+                      is_all:is_center_school  
+                   }
+              
+               var url2 = path.api+"/api/getSchoolListByAreaId";
+            $.get(url2,getData2,function(res){
+                // console.log(res);
+                if(res.type == "success") {
+                  var list = res.data.data.list;
+                  var html = '<option value="">请选择</option>';
+                  for(var i=0;i<list.length;i++){
+                     html += '<option value="'+ list[i].school_encrypt_id +'">'+ list[i].school_name+'</option>'
+                  }
+                 $("select[name=school]").html(html);
+                 $("select[name=school]").val("");
+                  form.render('select');
+               }else{
+                 $("select[name=school]").html('<option value="">此地区无数据</option>');
+                  form.render('select');
+               }
+             })
+          break;
+         case 3:
+             school_id = school_id_authority;
+             city_id = city_id_authority;
+             town_id = town_id_authority;
+
+             var url = "/api/getAreaList";
+              var  getData = {
+                   area_id:city_id_authority,
+                   type:3,
+                   node_id:town_id_authority
+              }
+              $.get(url, getData,function(res){
+                   console.log(res);
+                  if(res.type == "success") {
+                    var list = res.data.data.list;
+                    var html = '';
+                    for(var i=0;i<list.length;i++){
+                       html += '<option value="'+ list[i].node_encrypt_id +'">'+ list[i].node_name+'</option>'
+                    }
+                   $("select[name=area]").html(html);
+                    form.render('select');
+                 }
+               }) 
+
+                 var getData2 = {
+                      area_id:town_id_authority,
+                      school_id:school_id,
+                      is_all:is_center_school  
+                   }
+              
+               var url2 = path.api+"/api/getSchoolListByAreaId";
+            $.get(url2,getData2,function(res){
+                // console.log(res);
+                if(res.type == "success") {
+                  var list = res.data.data.list;
+                  var html = '<option value="">请选择</option>';
+                  for(var i=0;i<list.length;i++){
+                     html += '<option value="'+ list[i].school_encrypt_id +'">'+ list[i].school_name+'</option>'
+                  }
+                 $("select[name=school]").html(html);
+                 $("select[name=school]").val("");
+                  form.render('select');
+               }else{
+                 $("select[name=school]").html('<option value="">此地区无数据</option>');
+                  form.render('select');
+               }
+             })
+             
+          break;
+        default:
+          break;
+   } 
+
+
+   if (c20c30 == 0){
+       $(".editeFormWrap").css("visibility","hidden");
+    }
+
+//设置权限 结束==============================================
+  
+
+
 
 
 
 
 form.on('select(city)', function(data){
-     // console.log(data.value)
+     if(data.value == city_id){
+         return;
+       }
+     console.log(data.value)
      $("select[name=school]").html('<option value="">请先选区县</option>');
      $("select[name=school]").val("");
      intInfo();
@@ -41,6 +202,7 @@ form.on('select(city)', function(data){
      }
      var url = "/api/getAreaList";
      if(data.value){
+        city_id = data.value;
      	$.get(url,getData,function(res){
          // console.log(res);
      	  if(res.type == "success") {
@@ -61,13 +223,18 @@ form.on('select(city)', function(data){
 });  
 
 form.on('select(area)', function(data){
+     if(data.value == town_id){
+         return;
+       }
     intInfo();
      $("select[name=school]").val("");
      var getData = {
-        area_id:data.value
+        area_id:data.value,
+        is_all:is_center_school  
      }
      var url = path.api+"/api/getSchoolListByAreaId"
      if(data.value){
+        town_id = data.value;
       $.get(url,getData,function(res){
         // console.log(res);
         if(res.type == "success") {
@@ -111,10 +278,6 @@ form.on('select(school)', function(data){
       
       // renderClassTd(school_id,weekData);
 });  
-
-
-
-
 
 
    //切换周
@@ -170,9 +333,11 @@ $(".classType").on("click","span",function(){
      loading = layer.load(3);
      tpye = $(this).attr("data-tpye");
      if(tpye == 1){
+         // $(".editeFormWrap").css("visibility","hidden");
          $(".editeFormWrap").hide();
      }else {
-          $(".editeFormWrap").show();
+          // $(".editeFormWrap").css("visibility","visible");
+           $(".editeFormWrap").show();
      }
      $(this).siblings("span").removeClass('active');
      $(this).addClass('active');

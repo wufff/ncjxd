@@ -1,10 +1,3 @@
-/**
- * 
- * @authors Your Name (you@example.org)
- * @date    2018-11-14 15:55:46
- * @version $Id$
- */
- 
 require(["layui","path","tools","num"],function(layui,path,tools,num){
       var layer = layui.layer;
       var form = layui.form;
@@ -19,10 +12,11 @@ require(["layui","path","tools","num"],function(layui,path,tools,num){
       var school_name = tools.request("school_name");
       var type = 0;
       var holidays = [];
+      var isTodayStr;
       var totWeek;
       var on_off = true;
       var is_on = false;
-
+      var loading;
       //is_over为0 可以设置
       //is_over为1 不可以设置
       var is_over = "";
@@ -35,15 +29,14 @@ require(["layui","path","tools","num"],function(layui,path,tools,num){
 
     //切换周
 $("body").on("click",".Add",function(){
+
       var currtWeek = $("#week").text();
       if(currtWeek == totWeek){
          return;
       }
+      loading = layer.load(3);
       weekData = tools.nextWeek(weekData);
       studyTime (school_id,weekData);
-      formHeadtime(school_id,weekData);
-    
-   
 })
   
 $("body").on("click",".sub",function(){
@@ -51,11 +44,9 @@ $("body").on("click",".sub",function(){
       if(currtWeek == 1){
          return;
       }
+      loading = layer.load(3);
       weekData = tools.prevWeek(weekData);
-      formHeadtime(school_id,weekData);
       studyTime (school_id,weekData);
-      
-    
 })
 
 $("#goToEdite").click(function(){
@@ -460,36 +451,10 @@ $("#roomTag").on("click",".del",function(){
    verify();
 })
 
-
-
-
-// ==========================自定义周===========================
-
-//周选择自定义
-  form.on('radio(week)', function(data){
-      if(data.value == "cum"){
-         $(".controlWeek").show();
-         $("#weekTagbox").show();
-      }else{
-         $(".controlWeek").hide();
-         $("#weekTagbox").hide();
-         $("#weekTagbox").html("");
-         //弹窗内的
-         $("#tagWeekWrap .tag").removeClass('active');
-      }
-    });  
-
-
-
-
-
-
-
 //清空
  $("#clearConfigBt").click(function(){
      clearTag1();
      clearTag2();
-     clearTag3();
  })
 
 
@@ -545,42 +510,8 @@ $("#roomTag").on("click",".del",function(){
             }else{
                
             }
-            // var sdate = new Date(Date.parse(today.replace(/-/g, "/")));
-            // var nextDate = new Date(sdate.getTime());
-            // console.log(sdate);
-            // console.log(nextDate);
-
-            weekValue = week;
-
-            // if(Weekradio == "all"){
-            //     var weekArry = [];
-            //     for(var i = 0;i<totWeek;i++){
-            //        weekArry.push(i+1);
-            //     }
-            //   weekValue=weekArry.join("|");
-            // }
-            // if( Weekradio == "week"){
-                 
-            // }
-            // if(Weekradio == "cum" ){
-            //   var weekArry = [];
-            //    //拦截自定义未选择周
-            //   var tags3 = $("#weekTagbox").find(".del");
-            //   if(tags3.length == 0){
-            //      layer.msg("自定义周未配置",{icon:5});
-            //      on_off = false;
-            //   }else {
-            //       on_off = true;
-
-            //   }
           
-            //  tags3.each(function(index, el) {
-            //      var id = $(el).attr("data-id");
-            //        weekArry.push(id);
-            //     });
-            //      weekValue=weekArry.join("|");
-            // }
-
+            weekValue = week;
 
             if(!on_off) {
                 return;
@@ -685,13 +616,6 @@ $("#roomTag").on("click",".del",function(){
 
 
 
-
-
-
-
-
-
-
 //表头日期
  function formHeadtime(school_id,weekData){
     var titlesUrl = path.api+"/api/getWeekHoliday";
@@ -706,6 +630,7 @@ $("#roomTag").on("click",".del",function(){
          var data = res.data.data;
          // console.log(data);
          holidays = [];
+         isTodayStr = "";
          if(data.length > 0) {
             var html = "<th>午别</th><th>节次</th>";
              for(var i = 0;i<data.length;i++){
@@ -727,38 +652,6 @@ $("#roomTag").on("click",".del",function(){
 
 
 
-//渲染教室
-   function renderClassRoom (school_id,weekData){
-      var getData = {
-          school_id:school_id,
-          date:weekData,
-          v:new Date().getTime()
-        }
-       var url = "/api/getRoomListBySchoolId";
-      $.get(url,getData,function(res){
-        if(res.type == "success") {
-            var list = res.data.data.list;
-            // console.log(list);
-            var html = "";
-            for(var i =0;i<list.length;i++){
-              if(i == 0){
-                 html += '<span class="active" data-id="'+list[i].sr_encrypt_id+'">'+list[i].sr_name+'</span>'
-                 room_id = list[i].sr_encrypt_id;
-              }else {
-                 html += '<span  data-id="'+ list[i].sr_encrypt_id +'">'+list[i].sr_name+'</span>'
-              }
-            }
-             $(".classRoom").html(html);
-             $(".classType").html('<span class="active" data-tpye="0">发起</span><span data-tpye="1">接收</span>')
-             type = 0;
-       }else{
-           var html = '<label style="font-weight: normal"></label>';  
-           $("#tbody").html('<tr><td colspan="9" class="noneTd">暂无课表信息~！</td></td>'); 
-           $(".classRoom").html(html);
-           $(".classType").html(html);
-       }
-     })
-   }
 
 
 //渲染学期和周
@@ -793,6 +686,7 @@ $("#roomTag").on("click",".del",function(){
          $("#week_time").html(data.week_time);
          $("#totalweek").html(data.total_week);
          $("#week").text(data.term_week);
+         formHeadtime(school_id,weekData);
          renderClassTd(school_id,weekData);
        }
      })
@@ -898,6 +792,7 @@ function renderClassTd(school_id,weekData){
               // console.log(res);
               if(res.type == "success"){
                 if ( res.data.length == 0 ){
+                   layer.close(loading);
                    return;
                 }
                  var list =  res.data.data.list;
@@ -941,6 +836,7 @@ function renderClassTd(school_id,weekData){
                  }
                  hoverUi();
                  confirmBtcongfig();
+                 layer.close(loading);
               }
              
          })
@@ -988,12 +884,16 @@ function renderClassTd(school_id,weekData){
 
 
 //节假日样式
- function ui_holiday(){
+function ui_holiday(){
+    console.log(holidays);
     if(holidays.length>0){
      for(var i = 0;i<holidays.length;i++){
         $("td[positon$=',"+holidays[i]+"']").removeClass().addClass("holidayTd");
      }
     }
+     if(isTodayStr){
+        $("td[positon$=',"+isTodayStr+"']").removeClass().addClass("todayTd");
+     }
  }
 
 //详情悬浮样式

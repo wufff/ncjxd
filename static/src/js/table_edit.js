@@ -1061,8 +1061,6 @@ function renderClassTd(school_id,weekData){
         $("td[positon$=',"+holidays[i]+"']").removeClass().addClass("holidayTd");
      }
     }
-
-
      if(isTodayStr){
         $("td[positon$=',"+isTodayStr+"']").removeClass().addClass("todayTd");
      }
