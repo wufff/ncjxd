@@ -1,6 +1,6 @@
 define(["jquery"], function($) {
 	return {
-		ajaxJSONP: function(url, data, callback) {
+		ajaxJSONP:function(url, data, callback) {
 			$.ajax({
 				type: "get",
 				async: false,
@@ -22,7 +22,7 @@ define(["jquery"], function($) {
 			});
 		},
 
-		ajaxPost(requestUrl, requestData, SuccessCallback, successPar) {
+		ajaxPost:function(requestUrl,requestData,SuccessCallback,successPar){
 			$.ajax({
 				type: "POST",
 				url: requestUrl,

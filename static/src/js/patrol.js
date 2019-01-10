@@ -143,7 +143,11 @@ $(".tagItem").click(function(){
         html += '<td >' + data[i].teacher + '</td>'
         html += '<td>' + data[i].cn_num + '</td>'
         html += '<td class="'+data[i].statusClass+'">' + data[i].status + '</td>'
-        html += '<td><a href="/Patrol/details?node_id='+ data[i].id +'" class="open">进入课堂</a><a href="" class="go">发起互动</a></td>'
+        if(data[i].status == "进行中"){
+           html += '<td><a href="/Patrol/details?node_id='+ data[i].id +'" class="open">进入课堂</a><a href="" class="go">发起互动</a></td>'
+        }else{
+           html += '<td></td>'
+        }
         html += ' </tr>'
       }
       $(".tableLoading").html(' ');

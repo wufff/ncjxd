@@ -907,8 +907,8 @@ function renderClassTd(school_id,weekData){
                       for(var k = 0;k< tr.length;k++){
                          if(JSON.stringify(tr[k]) != "{}"){
                          var grade = num.Hanzi(tr[k].cn_grade)
-                         var html = tr[k].cn_subject_chs + '</br>'
-                             html += '( '+ tr[k].cn_sponsor_teacher_name +' )'+ '</br>'
+                         var html =  '<div class="content">'+tr[k].cn_subject_chs + '</br>'
+                             html += '( '+ tr[k].cn_sponsor_teacher_name +' )'+ '</br></div>'
                              html += '<span class="makeClassStatus_'+tr[k].cn_status +'">'+ num.makeClassStatus(tr[k].cn_status) +'</span>'
                              html +='<div class="info topInfo" data-id="'+ tr[k].cp_encrypt_id+'">'
                              html += '<div class="title">'
@@ -999,8 +999,10 @@ function renderClassTd(school_id,weekData){
 //详情悬浮样式
    function hoverUi(){
       $("td").hover(function() {
+
          var info = $(this).find(".info");
          var positon = $(this).attr("positon");
+         var _this = this
          if(positon && info.length == 1){
             var wz = positon.split(",");
             if(wz[0] > 5){
@@ -1010,14 +1012,17 @@ function renderClassTd(school_id,weekData){
                info.addClass('topInfo');
                info.removeClass('bottomInfo');
             }
-            $(this).css("background","#fff4e6");
+            $(this).find(".content").css("color","#000");
             info.show();
          }
       }, function() {
         var info = $(this).find(".info");
+        var _this = this;
          if(info.length == 1) {
-            $(this).css("background","#fff")
-            info.hide();
+             setTimeout(function(){
+                $(_this).find(".content").css("color","#666");
+                info.hide();
+             },150)
          }
       });
    }

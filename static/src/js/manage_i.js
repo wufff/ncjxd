@@ -51,7 +51,10 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
           console.log(obj)
           var url = path.api + "/api/addManageRecommend";
           $.get(url,obj,function(res){
-                      console.log(res);
+                if(res.type == "success"){
+                    layer.msg("添加成功",{time:800});
+                    layer.close(index);
+                }
           })
         }
       });

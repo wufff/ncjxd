@@ -84,7 +84,7 @@ define(['jquery','path'],function($,path){
                last:lastDay
              }
         },
-        calcDtScopeByWeek(index){
+        calcDtScopeByWeek:function(index){
             serachIndex = index;
             var today = new Date();
             var day = today.getDate() == 0 ? 7 :today.getDay();
