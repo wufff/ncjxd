@@ -26,16 +26,12 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
         yes: function(index, layero){
           var value = $("#img_file_path").val();
           var arry = value.split(',');
-          // console.log(arry.length);
+          console.log(arry);
           if(arry.length > 8){
             var getData = [];
             for(var i = 0;i<8;i++){
-              var temp = {
-                  r_cover_img:arry[i]
-              }
-              getData.push(temp);
+              getData.push(arry[i]);
             }
-            console.log(getData);
           }
           if(arry.length == 1){
                layer.msg("没有任何图片",{icon:5})
@@ -47,15 +43,17 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
             }
            
           }
+
+          console.log(getData);
           var obj = {cover_img:getData.join(","),title:"",type:2}
-          console.log(obj)
+          console.log(getData.join(","));
           var url = path.api + "/api/addManageRecommend";
-          $.get(url,obj,function(res){
-                if(res.type == "success"){
-                    layer.msg("添加成功",{time:800});
-                    layer.close(index);
-                }
-          })
+          // $.get(url,obj,function(res){
+          //       if(res.type == "success"){
+          //           layer.msg("添加成功",{time:800});
+          //           layer.close(index);
+          //       }
+          // })
         }
       });
     })

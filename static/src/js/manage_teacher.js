@@ -40,8 +40,6 @@ form.on('select(grade)', function(data){
      $("select[name=subject]").html('<option value="">选择学科</option>');
      form.render('select','subject');
    }
-  
- 
 });      
 
 

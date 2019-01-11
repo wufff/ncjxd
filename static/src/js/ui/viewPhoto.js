@@ -11,7 +11,8 @@
  			$.fn.viewPhoto = function() {
  				$(this).click(function(e) {
  					var c = $(e.target);
- 					c.is("img") && c.parent().is("a") && (a(c.parent()), e.preventDefault())
+ 					// c.is("img") && c.parent().is("a") && (a(c.parent()), e.preventDefault())
+ 					c.parent().is("a") && (a(c.parent()), e.preventDefault());
  				})
  			};
  			$(dom).viewPhoto();

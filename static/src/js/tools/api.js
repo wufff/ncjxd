@@ -60,6 +60,32 @@ define(["jquery"], function($) {
 					XHR = null
 				}
 			});
-		}
+		},
+       ajaxGet:function(url,data,SuccessCallback,successPar){
+       	    $.ajax({
+            type: "get",
+            url: url,
+            data: data,
+            cache: false,
+            async: false,
+            dataType: "json",
+            success: function (res)
+            {
+                if (res.type == "login"){
+                    alert("需要登录")
+                }else{
+                    if(successPar){
+                    	SuccessCallback(res,successPar);
+                    }else{
+                    	SuccessCallback(res);
+                    }
+                } 
+            },
+            error: function (res) {
+                alert(res);
+            }
+        });
+       }
+
 	}
 })

@@ -40,6 +40,7 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
         obj.goto_url = tr.find(".goto_url").text();
         obj.img = tr.find(".img").attr("src");
         obj.cover_img = "";
+        console.log(obj);
         $("#previewImage").attr("src",obj.img);
         initContorl (obj);
         dialog = layer.open({
@@ -106,11 +107,16 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
           getData.id = editeId;
           console.log(getData);
            $.get(url,getData,function(res){
+              console.log(res);
               if(res.data.code == 1000) {
                 layer.msg("修改成功！",{time:1200});
                 refrechData();
                 layer.close(loading);
                 layer.close(dialog);
+              }else{
+                 layer.msg(res.message,{time:1200});
+                 layer.close(loading);
+                 layer.close(dialog);
               } 
           });
        }
@@ -189,7 +195,7 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
         html += '<td class="sn">' + data[i].sn + '</td>'
         html += '<td class="title">' + data[i].title + '</td>'
         html += '<td class="sort">' + data[i].sort + '</td>'
-        html += '<td ><a href="'+ data[i].img +'" class="inner_img"><img  src="' + data[i].img + '"></a></td>'
+        html += '<td ><a href="'+ data[i].img +'" class="inner_img"><img class="img" src="' + data[i].img + '"></a></td>'
         html += '<td class="goto_url">' + data[i].url + '</td>'
         html += '<td>' + data[i].time + '</td>'
         html += '<td><a class="change">修改</a><a class="del">删除</a></td>'
