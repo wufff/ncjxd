@@ -133,6 +133,9 @@ $("#controluntySchool").on("click",".UntyBtn",function (){
 
 $("body").on("click",".related",function (){
       var tr = $(this).parents("tr");
+      var centerID = tr.attr("data-id");
+      $("#keyWords").val("");
+      $("#center_school_id_gl").val(centerID);
        county_id = tr.attr("county_id");
        var url = "/SchoolManage/ajaxJxdSchoolList";
         api.ajaxPost(url,{county_id:county_id},function(res){
@@ -162,7 +165,33 @@ $("body").on("click",".related",function (){
             area:["700px","700px"],
             btn: ['确定', '取消'],
             yes: function(index, layero){
-              layer.close(index); 
+              //添加关联教学点:/SchoolManage/ajaxAddRelationSchool  post  center_school_id  jxd_school_id(多个用逗号隔开)
+              if ($("#addShooltbody").find('active'))
+              var actives = $("#addShooltbody").find('.acitve');
+               console.log(actives.length);
+              if (actives.length > 0) {
+                 var postData = {
+                    jxd_school_id:[],
+                    center_school_id:$("#center_school_id_gl").val()
+                 }
+                  actives.each(function(index, el) {
+                        postData.jxd_school_id.push($(el).attr("school_id"));
+                    }); 
+                   postData.jxd_school_id = postData.jxd_school_id.join(",");
+                   var url = "/SchoolManage/ajaxAddRelationSchool";
+
+                   api.ajaxPost(url,postData,function(res){
+                      if(res.type== "success"){
+                         layer.msg("关联成功",{time:500})
+                         layer.close(index); 
+                      }
+                   })
+
+              }else{
+                  layer.close(index); 
+              }
+
+             
             }
         });
        // loading = layer.load(3);
@@ -207,6 +236,20 @@ $("#SoolchsearchBt").click(function(res){
 
 
   $("body").on("click",".edit",function (){
+     var tr = $(this).parents("tr");
+     var id = tr.attr("data-id"); 
+     // loading = layer.load(3);
+     //接口名称：根据学校id获取教室列表信息
+     //接口url地址：http://wangyong.ncjxd.dev.dodoedu.com/api/getRoomListBySchoolId?school_id=2790183
+      var url = path.api + "/api/getRoomListBySchoolId";
+      $.get(url,{school_id:id},function(res){
+          console.log(res)
+          if(res.type == ""){
+            
+          }
+      })
+
+
       layer.open({
             type: 1,
             title:"编辑教室",
@@ -238,6 +281,7 @@ $("#SoolchsearchBt").click(function(res){
 
 
 
+
 $("body").on("click","#addClassbtn",function (){
       layer.open({
             type: 1,
@@ -250,6 +294,8 @@ $("body").on("click","#addClassbtn",function (){
             }
           });
   })
+
+
 
 
 
