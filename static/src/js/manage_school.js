@@ -303,7 +303,7 @@ $("#SoolchsearchBt").click(function(res){
             btn: ['确定', '取消'],
             yes: function(index, layero){
               $("#submitControlBt_room").click();
-              layer.close(mindialog); 
+               
             }
           });
   })
@@ -325,7 +325,7 @@ $("body").on("click","#addClassbtn",function (){
             btn: ['确定', '取消'],
             yes: function(index, layero){
                $("#submitControlBt_room").click();
-              layer.close(mindialog); 
+             
             }
           });
   })
@@ -372,10 +372,10 @@ function initContorlRoom (data){
             }
          
             $.get(url,getData,function(res){
-               console.log(res);
+               // console.log(res);
                if(res.type == "success"){
                    layer.msg(msg,{time:800})
-                   layer.close(dialog);
+                   layer.close(mindialog);
                    renderSchoolList (currctScoolId);
                 }else{
                    layer.msg(res.message,{time:800})
@@ -407,7 +407,7 @@ function initContorlRoom (data){
                         }
                         html += '<td class="sr_seat">' + data[i].sr_seat + '</td>'
                        
-                      if(data[i].relation_school == 0){
+                      if(data[i].sr_status == 0){
                         html += '<td class="sr_status"  sr_status = "'+ data[i].sr_status +'" style="color:red;">禁用</td>'  
                       }else{
                          html += '<td class="sr_status"  sr_status = "'+ data[i].sr_status +'">正常</td>'  
@@ -434,7 +434,6 @@ function initContorlRoom (data){
       var getData = "city_id="+city_id +"&county_id="+ county_id;
           getData += "&school_classify="+ school_classify +"&school_name="+ school_name;
           getData += "&page=1&page_count=15&v="+ new Date().getTime();
-          ;
           // console.log(getData);
       pages.getAjax(url,getData,function(data){
           console.log(data);
@@ -475,7 +474,7 @@ function initContorlRoom (data){
         if(data[i].school_classify == 2){
          html += '<td> <a class="edit" encrypt_school_id ="'+ data[i].encrypt_school_id+ '">编辑教室</a></td>'  
        }else{
-          html += '<td> <a class="edit">编辑教室</a>  <a class="related">关联学校</a> </td>'
+          html += '<td> <a class="edit" encrypt_school_id ="'+ data[i].encrypt_school_id+ '" >编辑教室</a>  <a class="related">关联学校</a> </td>'
        }
        
       }

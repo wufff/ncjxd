@@ -17,7 +17,8 @@ require(["layui","path","page","api"], function(layui,path,pages,api) {
           user_realname:tr.find('.user_realname').text(),
           user_email:tr.attr("data-email"),
           user_mobile:tr.attr("data-mobile"),
-          user_status:tr.find('.user_status').attr("user_status")
+          user_status:tr.find('.user_status').attr("user_status"),
+          school_name:tr.find('.school_name').text()
       }
      initContorl (data);
      console.log(data);
@@ -73,7 +74,8 @@ require(["layui","path","page","api"], function(layui,path,pages,api) {
           console.log(res);
          if( res.type == "success"){
              var total = res.data.count;
-             page =  new pages.jsPage(total, "pageNum","12",url,getData,buildTable,goPage,null);
+             var length = res.data.data.length;
+             page =  new pages.jsPage(total, "pageNum",length,url,getData,buildTable,goPage,null);
              pages.pageMethod.call(page); 
            }else{
              $("#tbody").html('<tr><td colspan="8" class="noneDataTd">暂无数据~！</td></td>');
@@ -95,13 +97,17 @@ require(["layui","path","page","api"], function(layui,path,pages,api) {
       var html = '';
       for (var i = 0; i < data.length; i++) {
         html += '<tr data-id="'+ data[i].uid +'" data-mobile="'+ data[i].user_mobile +'" data-email="'+data[i].user_email +'">'
-        html += '<td class="sn">' + (i+1) + '</td>'
+        html += '<td class="sn">' + data[i].sel + '</td>'
         html += '<td class="school_name">' +data[i].school_name + '</td>'
         html += '<td class="teacher_count">' + data[i].teacher_count + '</td>'
         html += '<td class="user_name">' + data[i].user_name + '</td>'
         html += '<td class="user_realname">' + data[i].user_realname + '</td>'
-         html += '<td class="user_status user_status_'+ data[i].user_status+ '" user_status="'+data[i].user_status +'">' + data[i].user_status_descript + '</td>'
-        html += '<td><a class="edit">编辑</a></td>'
+        html += '<td class="user_status user_status_'+ data[i].user_status+ '" user_status="'+data[i].user_status +'">' + data[i].user_status_descript + '</td>'
+        if( data[i].uid == 0){
+          html += '<td>-</td>'
+        }else{
+          html += '<td><a class="edit">编辑</a></td>'
+        }
         html += ' </tr>'
       }
       $(".tableLoading").html(' ');
