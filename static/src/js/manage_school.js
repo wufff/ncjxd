@@ -3,13 +3,16 @@ require(["layui", "path","api","page"], function(layui,path,api,pages) {
     var upload = layui.upload;
     var $ = jQuery = layui.jquery; //用他的jquey否则弹窗会有问题
     var user_type = $("#user_type").attr("user_type");
+    var form = layui.form;
     var page;
     var loading;
     var dialog;
+    var mindialog;
     var form = layui.form;
     var county_id;
+    var currctScoolId;
     initPage (1);
-
+  
 
   form.on('select(city)', function(data){
      var postData = {
@@ -199,6 +202,11 @@ $("body").on("click",".related",function (){
   })
 
   
+
+
+
+
+
 $("#SoolchsearchBt").click(function(res){
       var school_name = $("#keyWords").val();
       if(school_name == ""){
@@ -236,23 +244,28 @@ $("#SoolchsearchBt").click(function(res){
 
 
   $("body").on("click",".edit",function (){
+     var id  = $(this).attr("encrypt_school_id");
+     currctScoolId = id;
      var tr = $(this).parents("tr");
-     var id = tr.attr("data-id"); 
-     // loading = layer.load(3);
-     //接口名称：根据学校id获取教室列表信息
-     //接口url地址：http://wangyong.ncjxd.dev.dodoedu.com/api/getRoomListBySchoolId?school_id=2790183
-      var url = path.api + "/api/getRoomListBySchoolId";
-      $.get(url,{school_id:id},function(res){
-          console.log(res)
-          if(res.type == ""){
-            
-          }
-      })
-
-
-      layer.open({
+     var school_classify = tr.find(".school_classify").attr("school_classify");
+      console.log(school_classify);
+     if (school_classify == 1) //中心校
+      {
+           $("select[name=is_receive]").html('<option value="0" >主讲教室</option><option value="1">接收教室</option>')
+            form.render("select");
+      }
+     if (school_classify ==2) //教学点
+      
+      {   
+        $("select[name=is_receive]").html('<option value="1">接收教室</option>')
+        form.render("select");
+      }
+     //
+    
+     renderSchoolList (currctScoolId)
+     layer.open({
             type: 1,
-            title:"编辑教室",
+            title:"教室管理",
             content: $('#conrolEditClass'),
             area:["700px","700px"],
             btn: ['确定', '取消'],
@@ -267,14 +280,30 @@ $("#SoolchsearchBt").click(function(res){
 
 
   $("body").on("click",".editClass",function (){
-      layer.open({
+     console.log(currctScoolId);
+    $("input[name=roomType]").val(1);
+     var tr = $(this).parents("tr");
+     $("#room_id").val($(this).attr("sr_encrypt_id"));
+     $(".kd_only_code").hide();
+     $("input[name=is_receive]").val(tr.find(".sr_is_receive").attr("sr_is_receive"));
+     form.render("select");
+     var obj = {
+         "is_receive": tr.find(".sr_is_receive").attr("sr_is_receive"), 
+          "room_name":tr.find(".sr_name").text(),
+          "seat":tr.find(".sr_seat").text(),
+          "status":tr.find(".sr_status").attr("sr_status"),
+          "kd_only_code":""
+     }
+    initContorlRoom (obj)
+    mindialog = layer.open({
             type: 1,
             title:"编辑教室",
             content: $('#conrolEditClassAdd'),
             area:["500px","500px"],
             btn: ['确定', '取消'],
             yes: function(index, layero){
-              layer.close(index); 
+              $("#submitControlBt_room").click();
+              layer.close(mindialog); 
             }
           });
   })
@@ -282,26 +311,115 @@ $("#SoolchsearchBt").click(function(res){
 
 
 
+
+
 $("body").on("click","#addClassbtn",function (){
-      layer.open({
+      $("input[name=roomType]").val(0);
+       $(".kd_only_code").show();
+      initContorlRoom();
+      mindialog = layer.open({
             type: 1,
             title:"添加教室",
             content: $('#conrolEditClassAdd'),
             area:["500px","500px"],
             btn: ['确定', '取消'],
             yes: function(index, layero){
-              layer.close(index); 
+               $("#submitControlBt_room").click();
+              layer.close(mindialog); 
             }
           });
   })
 
 
 
+function initContorlRoom (data){
+    if(data){
+    form.val("conrolEditClass",data);
+    form.render("select");
+    }else {
+      form.val("conrolEditClass", 
+      {
+        "is_receive":1,
+        "room_name":"",
+         "seat":"",
+         "status":1,
+         "kd_only_code":""
+      })
+       
+    }
+  }
 
 
 
 
 
+
+  form.on('submit(conrolEditClass)', function(data){
+            var getData = data.field;
+            var roomType = $("#roomType").val();
+            getData.school_id = currctScoolId;
+            if(roomType == 0){
+                var url = path.api +'/api/addSchoolRoom';
+                var msg = "添加成功"
+                if(getData.kd_only_code == ""){
+                  console.log(1);
+                   layer.msg("请填写阔地编码",{icon:5});
+                    return false;   
+                }
+            }else{
+                var url = path.api +"/api/modifySchoolRoom";
+                var msg = "修改成功"
+            }
+         
+            $.get(url,getData,function(res){
+               console.log(res);
+               if(res.type == "success"){
+                   layer.msg(msg,{time:800})
+                   layer.close(dialog);
+                   renderSchoolList (currctScoolId);
+                }else{
+                   layer.msg(res.message,{time:800})
+                }
+            })
+          return false;   
+  });
+
+
+
+
+ function renderSchoolList (id){
+            //接口名称：根据学校id获取教室列表信息
+            //接口url地址：http://wangyong.ncjxd.dev.dodoedu.com/api/getRoomListBySchoolId?school_id=2790183
+           var url = path.api + "/api/getRoomListBySchoolId";
+            $.get(url,{school_id:id,is_all:1,v: new Date().getTime()},function(res){
+                if(res.type == "success"){
+                      var data = res.data.data.list;
+                      var html = '';
+                      console.log(data);
+                      for (var i = 0; i < data.length; i++) {
+                        html += '<tr>'
+                        html += '<td class="sn">' + (i+1) + '</td>'
+                        html += '<td class="sr_name">' + data[i].sr_name + '</td>'
+                        if( data[i].sr_is_receive == 0){ //主讲
+                        html += '<td class="sr_is_receive" sr_is_receive="'+ data[i].sr_is_receive+'">主讲教室</td>'  
+                        }else{
+                         html += '<td class="sr_is_receive" sr_is_receive="'+ data[i].sr_is_receive+'">接受教室</td>'    
+                        }
+                        html += '<td class="sr_seat">' + data[i].sr_seat + '</td>'
+                       
+                      if(data[i].relation_school == 0){
+                        html += '<td class="sr_status"  sr_status = "'+ data[i].sr_status +'" style="color:red;">禁用</td>'  
+                      }else{
+                         html += '<td class="sr_status"  sr_status = "'+ data[i].sr_status +'">正常</td>'  
+                      }
+                      html += '<td> <a class="editClass" sr_encrypt_id = "'+data[i].sr_encrypt_id+'">编辑</a></td>'
+                      $("#tbody_room").html(html);
+                    }
+                }else{
+                     $("#tbody_room").html('<tr ><td colspan="6" class="noneDataTd">无教室信息~!</td></tr>');
+                }
+            })
+     }
 
 
 
@@ -355,7 +473,7 @@ $("body").on("click","#addClassbtn",function (){
         html += '<td class="teacher_count">' + data[i].teacher_count + '</td>'
         html += '<td class="user_user">' + data[i].user_user + '</td>'
         if(data[i].school_classify == 2){
-         html += '<td> <a class="edit">编辑教室</a></td>'  
+         html += '<td> <a class="edit" encrypt_school_id ="'+ data[i].encrypt_school_id+ '">编辑教室</a></td>'  
        }else{
           html += '<td> <a class="edit">编辑教室</a>  <a class="related">关联学校</a> </td>'
        }

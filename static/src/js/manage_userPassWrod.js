@@ -22,6 +22,7 @@ require(["layui", "api","path"], function(layui,api,path) {
            new_user_pwd:new_user_pwd,
            comfirm_user_pwd:comfirm_user_pwd
         }
+       
         api.ajaxPost(url,postData,function(res){
             if(res.type == "error"){
                layer.msg(res.message,{time:800})
