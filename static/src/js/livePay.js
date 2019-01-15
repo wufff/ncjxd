@@ -30,4 +30,9 @@ require(["jquery"],function($){
         default:
           alert("资源未知")
      }   
+
+     //添加直播
+     $("#addlive").click(function(){
+        window.location.href = "/live/add";
+     })
 })
