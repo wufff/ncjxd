@@ -276,7 +276,6 @@ form.on('select(school)', function(data){
 
    //切换周
 $("body").on("click",".Add",function(){
-     
       var currtWeek = $("#week").text();
       if(currtWeek == totWeek){
          return;
@@ -290,8 +289,9 @@ $("body").on("click",".Add",function(){
      
 })
   
-$("body").on("click",".sub",function(){
 
+  
+$("body").on("click",".sub",function(){
       var currtWeek = $("#week").text();
       if(currtWeek == 1){
          return;

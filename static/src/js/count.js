@@ -1,12 +1,10 @@
-
 /**
  * 
  * @authors Your Name (you@example.org)
  * @date    2018-12-31 15:36:02
  * @version $Id$
  */
- 
-require(["jquery","layui","path","tools","page"],function($,layui,path,tools,pages){
+require(["jquery","layui","path","tools","page","api"],function($,layui,path,tools,pages,api){
    var form = layui.form;
    var currentWeek = 0;
    var currentMouth = 0;
@@ -21,10 +19,8 @@ require(["jquery","layui","path","tools","page"],function($,layui,path,tools,pag
    var town_id_authority = $("#town_id").val();
    var authority = 0;
    if(town_id_authority && town_id_authority != 0){
-
        authority = 2;
     }else if(city_id_authority && city_id_authority != 0){
-
        authority = 1;
     }
  
@@ -195,9 +191,7 @@ form.on('select(studyTime)', function(data){
 
 
 // 点击选择学科
-  $(".study").click(function(){
 
-  })
 
 
  $("#searchBt").click(function(){
@@ -290,7 +284,7 @@ form.on('select(studyTime)', function(data){
        }
  
       console.log(getData);
-      $.get(url,getData,function(res){
+      api.ajaxGet(url,getData,function(res){
           render(res,boolean)
       })
  }

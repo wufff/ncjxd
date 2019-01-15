@@ -32,7 +32,7 @@ require(["layui","path","tools","num"],function(layui,path,tools,num){
           //   type: 1, 
           //   content: is_kd_html //这里content是一个普通的String
           // });
-          layer.alert(is_kd_html,{icon: 7,title:"提示"});
+          layer.alert(is_kd_html,{icon: 7,title:"提示",anim:-1});
       }
 
       // console.log(school_name);
@@ -62,12 +62,7 @@ $("body").on("click",".sub",function(){
       loading = layer.load(3);
       weekData = tools.prevWeek(weekData);
       studyTime (school_id,weekData);
-      
 })
-
-
-
-
 
 
 $("#goToConfirm").click(function() {
@@ -545,7 +540,6 @@ $("#roomTag").on("click",".del",function(){
 
 
 //用户添加课程
-
   $("body").on("click","td",function(){
         //拦截假期
        if($(this).hasClass('holidayTd')){

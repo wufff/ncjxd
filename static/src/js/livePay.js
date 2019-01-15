@@ -12,11 +12,24 @@ require(["jquery"],function($){
      // var res = "http://img.ksbbs.com/asset/Mon_1703/d0897b4e9ddd9a5.mp4";
      switch(RecType)
      {
-        case 1:                 //视频
-          var html = '<img src="'+res +'" alt = "活动图片">';
-          $(".mediaBox").html(html);
+        case 1:     //直播    
+          if( $(".mediaBox").data("data-is-start") == 0){
+              var html = '<img src="'+res +'" alt = "活动图片">';
+              $(".mediaBox").html(html);
+          }else {
+             var html = '<div id="video" style="width:865px;height:500px;"></div>';
+             $(".mediaBox").html(html);
+              var videoObject = {
+                container: '#video',//“#”代表容器的ID，“.”或“”代表容器的class
+                variable: 'player',
+                // flashplayer:false,
+                live:true,
+                video:"http://pili-live-hls.dodoedu.com/dodoedu/ncjxd-98ui76yhbgtfdser175m.m3u8?sign=30d77a90155281684918ee45be9287a0&t=5c3dabd5"//视频地址
+              };
+              var player = new ckplayer(videoObject);
+          }
           break;
-        case 0:
+        case 0:  
           var html = '<div id="video" style="width:865px;height:500px;"></div>';
           $(".mediaBox").html(html);
            var videoObject = {
@@ -28,7 +41,6 @@ require(["jquery"],function($){
           var player = new ckplayer(videoObject);
           break;
         default:
-          alert("资源未知")
      }   
 
      //添加直播

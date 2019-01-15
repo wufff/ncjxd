@@ -429,8 +429,10 @@ function initContorlRoom (data){
       var url = "/SchoolManage/ajaxSchoolList";
       var city_id = $("select[name=city]").val();
       var county_id = $("select[name=area]").val();
-      var school_classify = $("select[name=searchType]").val();
-      var school_name = $("#searchText").val();
+      var classify = $("select[name=searchType]").val();
+      var schoolname = $("#searchText").val();
+      var school_classify = classify ? classify : "";
+      var school_name = schoolname ? schoolname : "";
       var getData = "city_id="+city_id +"&county_id="+ county_id;
           getData += "&school_classify="+ school_classify +"&school_name="+ school_name;
           getData += "&page=1&page_count=15&v="+ new Date().getTime();

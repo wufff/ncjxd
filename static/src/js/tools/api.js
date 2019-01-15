@@ -1,4 +1,5 @@
-define(["jquery"], function($) {
+define(["jquery","layui"], function($,layui) {
+	var layer = layui.layer;
 	return {
 		ajaxJSONP:function(url, data, callback) {
 			$.ajax({
@@ -73,13 +74,14 @@ define(["jquery"], function($) {
             {
                 if (res.type == "login"){
                     alert("需要登录")
-                }else{
-                    if(successPar){
+                }else if( res.type == "access" ){ 
+                      alert('无权限')
+                }else if(successPar){
                     	SuccessCallback(res,successPar);
                     }else{
                     	SuccessCallback(res);
-                    }
-                } 
+                 }
+                
             },
             error: function (res) {
                 alert(res);
