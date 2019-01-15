@@ -52,7 +52,6 @@ require(["jquery","layui","path","num","tools"],function($,layui,path,num,tools)
     }
 
    console.log("权限"+authority)
-
     switch(authority)
         {
         case 1:
@@ -182,11 +181,6 @@ require(["jquery","layui","path","num","tools"],function($,layui,path,num,tools)
 
 //设置权限 结束==============================================
   
-
-
-
-
-
 
 form.on('select(city)', function(data){
      if(data.value == city_id){
@@ -508,7 +502,7 @@ $(".configClassTimeBt").click(function(){
                     array.push(str);
                });      
                var url = path.api + "/api/setTermSchoolCourseTime";
-               $.get(url,{term_id:term_id,times:array.join(",")},function(res){
+               $.get(url,{term_id:term_id,times:array.join(","),school_id:school_id},function(res){
                   console.log(res);
                   if(res.type == "success"){
                      layer.msg("设置成功",{time:600});
@@ -610,7 +604,7 @@ function initstudyTimelang() {
   // laydate.render({
   //   elem: '#studyStart_time'
   // });
- 
+
   laydate.render({
     elem: '#holidayStart_time'
     ,calendar: true
@@ -619,14 +613,14 @@ function initstudyTimelang() {
     elem: '#holidayEnd_time'
     ,calendar: true
   });
-
+   // 初始化学期弹窗
    var url = path.api + "/api/getSchoolTermWeek";
    $.get(url,{school_id:school_id},function(res){
          console.log(res);
          if(res.type == "success") {
               var list = res.data.data;
               $("#studyTime_title").html(list.title); 
-              console.log(list);
+             
               var start_time = list.term_time.start_time.slice(0, 10);
               var end_time = list.term_time.end_time.slice(0, 10);
                laydate.render({
@@ -638,11 +632,10 @@ function initstudyTimelang() {
                   elem: '#studyEnd_time',
                   value:end_time
                 });
-              
+         }else {
+            layer.mag(res.message);
          }
    })
-
-
 }
 
 
@@ -657,7 +650,8 @@ $("#addtimedaysbt").click(function(){
        var url = "/api/setSchoolTerm";
        var getData = {
           start_time:Start_time,
-          end_time:End_time
+          end_time:End_time,
+          school_id:school_id
        }
        $.get(url,getData,function(res){
            console.log(res);

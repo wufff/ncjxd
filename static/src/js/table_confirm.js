@@ -55,12 +55,12 @@ $("#goToEdite").click(function(){
 $("#timeforopen").click(function(){
     if($(".filter").hasClass('hidde')){
          $(".filter").removeClass('hidde');
-         $("#timeforopen").text("临时开课 on")
+         $("#timeforopen").text("收起 临时开课")
          is_on = true;
          $(".addTitle").show();
     }else{
         $(".filter").addClass('hidde');
-        $("#timeforopen").text("临时开课 off")
+        $("#timeforopen").text("添加 临时开课")
         is_on = false;   
         $(".addTitle").hide();
     }

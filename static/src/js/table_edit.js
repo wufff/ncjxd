@@ -24,11 +24,23 @@ require(["layui","path","tools","num"],function(layui,path,tools,num){
       var loading;
       var verify_on = false;
       var on_off = true;
+      var is_kd_school = $("#is_kd_school").val();                 //判断是否登录
+      var is_kd_html = "请前往 <a href='http://user.needu.cn/bench/index.html' style='color:orange'>http://user.needu.cn/bench/index.html</a> 编辑“互动课堂”课程表，课表将同步至本平台"
+     
+      if(is_kd_school == 1){
+          // layer.open({
+          //   type: 1, 
+          //   content: is_kd_html //这里content是一个普通的String
+          // });
+          layer.alert(is_kd_html,{icon: 7,title:"提示"});
+      }
+
       // console.log(school_name);
       $(".schoolName").html(school_name);
       $(".roomName").html(room_name);
       studyTime(school_id,weekData);
 
+   
     //切换周
 $("body").on("click",".Add",function(){
       var currtWeek = $("#week").text();
