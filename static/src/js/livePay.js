@@ -17,12 +17,14 @@ require(["jquery"],function($){
               var html = '<img src="'+res +'" alt = "活动图片">';
               $(".mediaBox").html(html);
           }else {
-             // var html = '<div id="video" style="width:865px;height:500px;"></div>';
-             // $(".mediaBox").html(html);
-                var file_key = "http://pili-live-hls.dodoedu.com/dodoedu/ncjxd-98ui76yhbgtfdser175m.m3u8?sign=30d77a90155281684918ee45be9287a0&t=5c3dabd5";
-                var html =  '<video id="videjs"  class="video-js vjs-big-play-centered vjs-4-3" controls preload="auto" poster=""><source src="'+ file_key +'"></video>'
+                // var html = '<div id="video" style="width:865px;height:500px;"></div>';
+                // $(".mediaBox").html(html);
+                var file_key = $(".mediaBox").attr("data-res");
+                // var file_key = "http://pili-live-hls.dodoedu.com/dodoedu/ncjxd-98ui76yhbgtfdser175m.m3u8?sign=ff0d06746b589e2995d8df906e71720f&t=5c3eaa73";
+                var html =  '<video id="videjs"  class="video-js vjs-big-play-centered vjs-fluid" controls preload="auto" poster=""><source src="'+ file_key +'" type="application/x-mpegURL"></video>'
                 $(".mediaBox").html(html);
                 var player = videojs('videjs');
+                player.play();
           }
           break;
         case 0:  

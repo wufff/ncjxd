@@ -12,7 +12,6 @@ require(["jquery","ckplayer","expression","api","path","page","layui"],function(
     initPage (1);
     face.showFace("#showFace",".commentText");
     var layer = layui.layer;
-
     var activity_id = $("input[name=activity_id]").val(); 
    
 
@@ -30,6 +29,8 @@ require(["jquery","ckplayer","expression","api","path","page","layui"],function(
 
   /*切换视频*/ 
    $("#aboutVidoe a").click(function(){
+       $("#aboutVidoe a").removeClass('active');
+       $(this).addClass('active');
        var videSrc = $(this).attr("download")
        changeVideo(videSrc,player);
     })
@@ -38,7 +39,6 @@ require(["jquery","ckplayer","expression","api","path","page","layui"],function(
 
 
    function comment () {
-       
        var requestData = "activity_id="+ activity_id +"&page_num=10&page=1";
        api.ajaxPost(path.api+"/api/getActivityCommentList",requestData,renderComment); //渲染评论
                                              //渲染表情  
