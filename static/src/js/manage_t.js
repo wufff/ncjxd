@@ -169,8 +169,8 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
              page =  new pages.jsPage(total, "pageNum","5",url,getData,buildTable,goPage,null);
              pages.pageMethod.call(page); 
            }else{
-             $("#tbody").html('<tr><td colspan="7">暂无数据~！</td></td>');
-            $(".tableLoading").html('');
+             $("#tbody").html('<tr><td colspan="7" class="noneDataTd">暂无数据~！</td></td>');
+             $(".tableLoading").html('');
              return;
          }
       })
@@ -205,7 +205,7 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
       $("#tbody").html(html);
 
     }
-    if(list.type == "error") {
+    if(list.type == "error" && goPage != 1) {
         var mun = goPage - 1;
         pages.gotopage.call(page,mun,false);
     }

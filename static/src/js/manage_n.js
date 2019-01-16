@@ -110,6 +110,7 @@ require(["layui", "path","tools","page"], function(layui, path,tools,pages) {
      
     function buildTable(list) {
 		if (list.data.code == 1000) {
+			$(".tableLoading").html('');
 			var data = list.data.data.list.map(function(item) {
 				return {
 					title: item.n_title,

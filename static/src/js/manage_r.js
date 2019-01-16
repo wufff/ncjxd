@@ -138,7 +138,7 @@ require(["layui", "path","page"], function(layui, path,pages) {
              page =  new pages.jsPage(total, "pageNum","10",url,getData,buildTable,goPage,null);
              pages.pageMethod.call(page); 
            }else{
-             $("#tbody").html('<tr><td colspan="5">暂无数据~！</td></td>');
+             $("#tbody").html('<tr><td colspan="5" class="noneDataTd">暂无数据~！</td></td>');
              $(".tableLoading").html('');
              return;
          }

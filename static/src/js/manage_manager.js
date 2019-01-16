@@ -88,7 +88,6 @@ $("body").on("click",".del",function(){
                 if(res.type == "success"){
                    layer.close(index);
                    layer.msg(res.message,{time:800})
-                   
                    $("#search_name").val("");
                    initPage (1);
                 }else{
@@ -127,7 +126,7 @@ $("body").on("click",".del",function(){
             getData.uid = $("#uid").val();
             console.log(getData);
             api.ajaxPost(url,getData,function(res){
-                console.log(res);
+                // console.log(res);
                 if(res.type == "success"){
                    layer.msg(res.message,{time:800})
                    layer.close(dialog);
@@ -181,7 +180,7 @@ $("body").on("click",".del",function(){
         // console.log(data);
          if( data.type == "success"){
              if(data.data.data.length == 0){
-                  $("#tbody").html('<tr><td colspan="7">暂无数据~！</td></td>');
+                  $("#tbody").html('<tr><td colspan="7" class="noneDataTd">暂无数据~！</td></td>');
                   $(".tableLoading").html('');
                    return;
              }
@@ -193,7 +192,6 @@ $("body").on("click",".del",function(){
      
     function buildTable(list) {
     if (list.type == "success") {
-
       var data = list.data.data.map(function(item) {
         return {
           uid:item.uid,
@@ -224,12 +222,7 @@ $("body").on("click",".del",function(){
       }
       $(".tableLoading").html(' ');
       $("#tbody").html(html);
-    }
-    if(list.type == "error") {
-        var mun = goPage - 1;
-        pages.gotopage.call(page,mun,false);
-    }
-    if(list.type == "login") {
+    }else  if(list.type == "login") {
        window.location.href = res.msg;
     }
   }

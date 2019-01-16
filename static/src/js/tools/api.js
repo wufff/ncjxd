@@ -44,6 +44,10 @@ define(["jquery","layui"], function($,layui) {
 					// }
 					if (obj.type == "login") {
 						alert("请先登录");
+						layer.msg("请登录");
+						setTimeout(function(){
+							window.loaction.href ="/";
+						},800)
 						// loginDialog(); //调用登陆弹框
 					} 
 			
