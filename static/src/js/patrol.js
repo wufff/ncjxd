@@ -1,4 +1,4 @@
-require(["jquery","layui","path","page","num","api"],function($,layui,path,pages,num,api){
+require(["jquery","layui","path","page","num","api","boot-dropdown"],function($,layui,path,pages,num,api){
   var layer = layui.layer;
   var form = layui.form;
   var room_num = "";

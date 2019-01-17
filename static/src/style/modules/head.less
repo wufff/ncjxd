@@ -1706,7 +1706,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav > li > a {
   position: relative;
   display: block;
-  padding: 10px 15px;
+  padding: 10px 12px;
 }
 .nav > li > a:hover,
 .nav > li > a:focus {
@@ -3771,7 +3771,7 @@ button.list-group-item-danger.active:focus {
          }
      }
    .nav .open>a  {background: transparent;color: #1b6bb1  }
-   .nav >  li { margin-left: 10px; }
+   .nav >  li a { }
    .nav >  li.active > a { color: #1b6bb1 }
    .nav>li>a:focus { background: #fff; color: #777;}
    .nav>li>a:active, .nav>li>a:focus, .nav>li>a:visited,  {
@@ -3782,5 +3782,9 @@ button.list-group-item-danger.active:focus {
      background:  transparent;
      color: #1b6bb1 
    } 
-
+   .dropdown-menu {
+      width: 80px !important;
+      min-width: 0px !important;
+      left: 56px;
+   }
  }

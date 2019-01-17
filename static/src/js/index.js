@@ -1,5 +1,8 @@
-require(["Swiper","jquery","viewPhoto","api","boot-dropdown",],function(Swiper,$,view,api){
+require(["Swiper","jquery","viewPhoto","api","layui","boot-dropdown",],function(Swiper,$,view,api,layui){
   //登录切换
+  var layer = layui.layer;
+  var layui_$ = jQuery = layui.jquery; 
+  var dialog;
   $(".white_black .h4").click(function() {
         $(this).addClass('active');
         $(this).siblings().removeClass('active');
@@ -34,6 +37,8 @@ require(["Swiper","jquery","viewPhoto","api","boot-dropdown",],function(Swiper,$
   });
 
 
+
+
   new Swiper('#spotRound', {
 	     loop : true,
        slidesPerView : 'auto',
@@ -66,6 +71,16 @@ require(["Swiper","jquery","viewPhoto","api","boot-dropdown",],function(Swiper,$
   $(".banner-bar").mouseover(function(){
                   $(".banner-bar").show();
               })
+
+
+ $("#header_loginBt").click(function(){
+      dialog = layer.open({
+            type: 1,
+            title:"<span style='color:#ffa500c9;'>欢迎登录</span>",
+            content: layui_$('#login_dialog'),
+            area:["365px","416px"]
+      });
+ })
 
 
 //登录样式  
