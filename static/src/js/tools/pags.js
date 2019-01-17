@@ -1,4 +1,5 @@
-define(['jquery','path'], function($,path) {
+define(['jquery','path','layui'], function($,path,layui) {
+	var layer = layui.layer;
 	var _newobj = "",
 		_self   = {
 		//ajax调用公共方法
@@ -6,7 +7,15 @@ define(['jquery','path'], function($,path) {
 			if($("body").attr("requestData") == requestData){
 				SuccessCallback(_newobj, null);
 			}else{
+				requestData += "&jump=1";
 				$.get(requestUrl,requestData,function(data){
+					if(data.type == "login"){
+						 layer.msg("请先登录！",{anim:-1});
+						 setTimeout(function(){
+						 	window.location.href ="/";
+						 },300)
+						 return;
+					}
 					_newobj = data;					
 					$("body").attr({"httpType":"getAjax","requestData":requestData});
 					if(SuccessCallback != undefined){
@@ -16,10 +25,18 @@ define(['jquery','path'], function($,path) {
 			}
 		},
 		postAjax: function(requestUrl,requestData,SuccessCallback){
-			if($("body").attr("requestData") == requestData){				
+			if($("body").attr("requestData") == requestData){			
 				SuccessCallback(_newobj, null);
 			}else{
+				requestData += "&jump=1";
 				$.post(requestUrl,requestData,function(data){
+					if(data.type == "login"){
+						 layer.msg("请先登录！",{anim:-1});
+						 setTimeout(function(){
+						 	window.location.href ="/";
+						 },300)
+						 return;
+					}
 					_newobj = data;	
 					console.log(_newobj);				
 					$("body").attr({"httpType":"postAjax","requestData":requestData});	

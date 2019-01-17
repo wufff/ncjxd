@@ -37,7 +37,7 @@ require(["jquery", "layui", "path", "upLoad", "tools"], function($, layui, path,
       }
       var url = path.api + "/api/addManageActivity";
       console.log(url)
-      $.get(url,getData,function(res){
+      api.ajaxGet(url,getData,function(res){
          if(res.type == "success"){
             layer.msg("操作成功",{time:500});
             setTimeout(function(){

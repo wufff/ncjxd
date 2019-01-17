@@ -371,7 +371,7 @@ function initContorlRoom (data){
                 var msg = "修改成功"
             }
          
-            $.get(url,getData,function(res){
+            api.ajaxGet(url,getData,function(res){
                // console.log(res);
                if(res.type == "success"){
                    layer.msg(msg,{time:800})
@@ -391,7 +391,7 @@ function initContorlRoom (data){
             //接口名称：根据学校id获取教室列表信息
             //接口url地址：http://wangyong.ncjxd.dev.dodoedu.com/api/getRoomListBySchoolId?school_id=2790183
            var url = path.api + "/api/getRoomListBySchoolId";
-            $.get(url,{school_id:id,is_all:1,v: new Date().getTime()},function(res){
+            api.ajaxGet(url,{school_id:id,is_all:1,v: new Date().getTime()},function(res){
                 if(res.type == "success"){
                       var data = res.data.data.list;
                       var html = '';

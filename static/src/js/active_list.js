@@ -22,7 +22,7 @@ require(["layui", "path","page"], function(layui, path,pages) {
          var url = path.api+'/api/delManageActivityData';
          var obj = {};
          obj.id = tr.data("id");
-         $.get(url,obj,function(res){
+         api.ajaxGet(url,obj,function(res){
              if(res.type == "success") {
                  layer.msg("删除成功！",{time:1200});
                  layer.close(index);
@@ -42,9 +42,6 @@ require(["layui", "path","page"], function(layui, path,pages) {
      window.location.href ="/manage/addactivity?id="+id;
    })
 
-
-
-    
   function refrechData() {
     var current = $("#pageNum").find(".current").text();
     if (current) {
@@ -55,10 +52,6 @@ require(["layui", "path","page"], function(layui, path,pages) {
   }
 
  
-
-
-
-
  function initPage (goPage){
       var url = path.api+"/api/getManageActivityList";
       var keyWord = $("input[name=keyWords]").val();
@@ -69,7 +62,7 @@ require(["layui", "path","page"], function(layui, path,pages) {
              page =  new pages.jsPage(total, "pageNum","5",url,getData,buildTable,goPage,null);
              pages.pageMethod.call(page); 
            }else{
-             $("#tbody").html('<tr><td colspan="7">暂无数据~！</td></td>');
+             $("#tbody").html('<tr><td colspan="7" class="noneDataTd">暂无数据~！</td></td>');
             $(".tableLoading").html('');
              return;
          }
@@ -103,7 +96,6 @@ require(["layui", "path","page"], function(layui, path,pages) {
       }
       $(".tableLoading").html(' ');
       $("#tbody").html(html);
-
     }
     if(list.type == "error") {
         var mun = goPage - 1;

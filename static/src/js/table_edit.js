@@ -5,7 +5,7 @@
  * @version $Id$
  */
  
-require(["layui","path","tools","num"],function(layui,path,tools,num){
+require(["layui","path","tools","num","api"],function(layui,path,tools,num,api){
       var layer = layui.layer;
       var form = layui.form;
       var element = layui.element;
@@ -48,10 +48,8 @@ $("body").on("click",".Add",function(){
          return;
       }
       loading = layer.load(3);
-
       weekData = tools.nextWeek(weekData);
       studyTime (school_id,weekData);
-     
 })
   
 $("body").on("click",".sub",function(){
@@ -132,7 +130,7 @@ $("#teachersTag").on("click",".del",function(){
         var oder = $(this).parent().data("oder");
         if( oder == 0 ){
               var id = $(this).attr("data-id");
-              $.get("/api/getSubjectCodeList", {
+              api.ajaxGet("/api/getSubjectCodeList", {
                 grade_id: id
               }, function(res) {
                 if (res.type == "success") {
@@ -163,7 +161,7 @@ $("#teachersTag").on("click",".del",function(){
            var subject = $(this).attr("data-subject");
            var zh = $(this).text();
            var url = path.api + "/api/getSchoolTeacherList";
-           $.get(url,{school_id:school_id,grade:grade,subject:subject},function(res){
+           api.ajaxGet(url,{school_id:school_id,grade:grade,subject:subject},function(res){
                  // console.log(res);
                 if(res.type == "success"){
                     $(".tagTabContentWrap").each(function(index, item) {
@@ -245,7 +243,7 @@ $("#roomTagBt").click(function() {
         if( oder == 0 ){
               var id = $(this).attr("data-id");
               // console.log(id);
-              $.get("/api/getAreaList", {
+              api.ajaxGet("/api/getAreaList", {
                 area_id:id,
                 type:3
               }, function(res) {
@@ -280,7 +278,7 @@ $("#roomTagBt").click(function() {
            var area2 = $(this).attr("data-area2");
            // var area = $(this).attr("data-grade");
            var url = "/api/getSchoolListByAreaId";
-           $.get(url,{area_id:area2,school_id:school_id},function(res){
+           api.ajaxGet(url,{area_id:area2,school_id:school_id},function(res){
                  // console.log(res);
                 if(res.type == "success"){
                     $(_this).siblings().removeClass('active');
@@ -318,7 +316,7 @@ $("#roomTagBt").click(function() {
            var school_id = $(this).attr("data-school");
            var school_name = $(this).text();
            var url = "/api/getRoomListBySchoolId";
-          $.get(url,{school_id:school_id,date:weekData},function(res){
+          api.ajaxGet(url,{school_id:school_id,date:weekData},function(res){
                  // console.log(res);
                 if(res.type == "success"){
                     $(_this).siblings().removeClass('active');
@@ -354,7 +352,7 @@ $("#roomTagBt").click(function() {
          var class_name = $(this).text();
 
           var url = "/api/getSchoolTeacherList";
-          $.get(url,{school_id:school_id},function(res){
+          api.ajaxGet(url,{school_id:school_id},function(res){
                  // console.log(res);
                 if(res.type == "success"){
                     $(_this).siblings().removeClass('active');
@@ -678,7 +676,7 @@ $("#roomTag").on("click",".del",function(){
             getData.type = type;
             var url = path.api + "/api/setSchoolRoomCourcePlan";
             console.log(getData);
-            $.get(url,getData,function(res){
+            api.ajaxGet(url,getData,function(res){
                    console.log(res);
                    if (res.type == "success"){
                       layer.msg("操作成功！");
@@ -804,7 +802,7 @@ $("#roomTag").on("click",".del",function(){
           date:weekData,
           v:new Date().getTime()
         }
-    $.get(titlesUrl,getData,function(res){
+    api.ajaxGet(titlesUrl,getData,function(res){
        // console.log(res);
        if(res.type == "success") {
          var data = res.data.data;
@@ -848,7 +846,7 @@ $("#roomTag").on("click",".del",function(){
           date:weekData,
           v:new Date().getTime()
      }  
-    $.get(WeeKurl,getData,function(res){
+    api.ajaxGet(WeeKurl,getData,function(res){
 
        if(res.type == "success") {
          var data = res.data.data;
@@ -889,7 +887,7 @@ function renderClassTd(school_id,weekData){
       date:weekData,
       v:new Date().getTime()
      }
-  $.get(WeeKurl,getData,function(res){
+  api.ajaxGet(WeeKurl,getData,function(res){
        console.log(res);
        if(res.type == "success") {
          $("#tbody").html("");
@@ -971,7 +969,7 @@ function renderClassTd(school_id,weekData){
              type:type,
              v:new Date().getTime()
           }
-         $.get(classUrl,getClassDate,function(res){
+         api.ajaxGet(classUrl,getClassDate,function(res){
               // console.log(res);
               if(res.type == "success"){
                 if ( res.data.length == 0 ){
@@ -1033,7 +1031,7 @@ function renderClassTd(school_id,weekData){
                  plan_id:id,
                  day:day
              }
-             $.get(url,getData,function(res){
+             api.ajaxGet(url,getData,function(res){
                        console.log(res);
                     if(res.type == "success"){
                          studyTime (school_id,weekData);

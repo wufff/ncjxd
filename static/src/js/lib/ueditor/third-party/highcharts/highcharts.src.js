@@ -1254,7 +1254,7 @@ pathAnim = {
 		 * @param {String} scriptLocation
 		 * @param {Function} callback
 		 */
-		getScript: $.getScript,
+		getScript: api.ajaxGetScript,
 		
 		/**
 		 * Return the index of an item in an array, or -1 if not found

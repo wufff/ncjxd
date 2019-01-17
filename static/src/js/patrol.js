@@ -1,4 +1,4 @@
-require(["jquery","layui","path","page","num"],function($,layui,path,pages,num){
+require(["jquery","layui","path","page","num","api"],function($,layui,path,pages,num,api){
   var layer = layui.layer;
   var form = layui.form;
   var room_num = "";
@@ -13,7 +13,7 @@ require(["jquery","layui","path","page","num"],function($,layui,path,pages,num){
      }
      var url = "/api/getAreaList";
      if(data.value){
-      $.get(url,getData,function(res){
+      api.ajaxGet(url,getData,function(res){
         if(res.type == "success") {
           var list = res.data.data.list;
           var html = '<option value="">选择区县</option>';
@@ -39,7 +39,7 @@ form.on('select(grade)', function(data){
    var getData = {};
    getData.grade_id = data.value;
    if(data.value){
-       $.get(url,getData,function(data){
+       api.ajaxGet(url,getData,function(data){
         // console.log(data);
        if(data.type == "success") {
           var list = data.data.data.list;
@@ -100,7 +100,7 @@ $(".tagItem").click(function(){
   
        var url = path.api+"/api/getTodayCentreSchoolPiliList";
        var getData = "&page=1&page_count=12&city_id="+data.city_id+"&area_id="+data.area_id+"&stage_id="+data.stage_id+"&subject_id="+data.subject_id+"&room_num="+data.room_num+"&v="+ new Date().getTime();
-      console.log(getData);
+      // console.log(getData);
       pages.getAjax(url,getData,function(data){
           // console.log(data);
          if( data.type == "success"){
@@ -115,7 +115,7 @@ $(".tagItem").click(function(){
       })
      
     function buildTable(list) {
-      console.log(list);
+      // console.log(list);
     if (list.type == "success") {
       var data = list.data.data.list.map(function(item) {
         return {

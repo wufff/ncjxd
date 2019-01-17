@@ -21,10 +21,8 @@ require(["layui", "path","tools","page"], function(layui, path,tools,pages) {
          
 
        element.on('tab(docDemoTabBrief)', function(data){
-		
 		  current = data.index + 1;
 		  console.log(current);
-		
 		});
 
 
@@ -41,7 +39,7 @@ require(["layui", "path","tools","page"], function(layui, path,tools,pages) {
 		        var url = path.api + '/api/delManageNoticeData';
                 var current = $("#pageNum_"+type).find(".current").text();
                 console.log(current);
-		        $.get(url,{notice_id:notice_id},function(res){
+		        api.ajaxGet(url,{notice_id:notice_id},function(res){
 		        	 console.log(res);
 		        	if(res.data.code == 1000){
 		        		layer.msg("删除成功~！",{time:500})
@@ -84,7 +82,8 @@ require(["layui", "path","tools","page"], function(layui, path,tools,pages) {
       var url = path.api + '/api/getManageNoticeList';
       var getData = "type="+tpye+"&page=1&page_count=12";
       pages.getAjax(url,getData,function(data){
-      	 if( data.data.code == 1000){
+      	console.log(data);
+      	 if(true){
            	 var total = data.data.data.total;
            	 switch(tpye)
 				{
@@ -109,7 +108,8 @@ require(["layui", "path","tools","page"], function(layui, path,tools,pages) {
       })
      
     function buildTable(list) {
-		if (list.data.code == 1000) {
+    	 console.log(list);
+		if (true) {
 			$(".tableLoading").html('');
 			var data = list.data.data.list.map(function(item) {
 				return {

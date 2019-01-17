@@ -21,7 +21,7 @@ require(["jquery","layui","path","ZeroClipboard","upLoad","tools","api"], functi
         $("#publishBt").html("确认修改");
         tpye = 1;
          var url = path.api + "/api/getManageNoticeInfoById"
-        $.get(url,{notice_id:notice_id},function(res){
+        api.ajaxGet(url,{notice_id:notice_id},function(res){
         	if (res.type == "success") {
                 var list = res.data.data;
                 console.log(list);
@@ -113,7 +113,7 @@ require(["jquery","layui","path","ZeroClipboard","upLoad","tools","api"], functi
            var str ="修改成功";
            getData.del_ids = del_ids.join(",");
         }
-        $.get(url,getData,function(res){
+        api.ajaxGet(url,getData,function(res){
         	console.log(res);
           if(res.type == "success") {
              layer.msg(str)

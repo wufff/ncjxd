@@ -1,10 +1,11 @@
 define(["jquery","layui"], function($,layui) {
 	var layer = layui.layer;
+	var $ = jquery = layui.jquery;
 	return {
 		ajaxJSONP:function(url, data, callback) {
 			$.ajax({
 				type: "get",
-				async: false,
+				// async: false,
 				url: url,
 				data: data,
 				dataType: "jsonp",
@@ -24,6 +25,7 @@ define(["jquery","layui"], function($,layui) {
 		},
 
 		ajaxPost:function(requestUrl,requestData,SuccessCallback,successPar){
+			requestData.jump = 1;
 			$.ajax({
 				type: "POST",
 				url: requestUrl,
@@ -42,16 +44,13 @@ define(["jquery","layui"], function($,layui) {
 					// if (obj == null) {
 					// 	return;
 					// }
-					if (obj.type == "login") {
-						alert("请先登录");
-						layer.msg("请登录");
-						setTimeout(function(){
-							window.loaction.href ="/";
-						},800)
-						// loginDialog(); //调用登陆弹框
-					} 
-			
-					if( successPar && successPar != 0){
+					if(data.type == "login"){
+						 layer.msg("请先登录！",{anim:-1});
+						 setTimeout(function(){
+						 	// window.location.href ="/";
+						 },300)
+						 return;
+						}else if( successPar && successPar != 0){
 						SuccessCallback(obj, successPar);
 					}else {
 						SuccessCallback(obj);
@@ -67,19 +66,28 @@ define(["jquery","layui"], function($,layui) {
 			});
 		},
        ajaxGet:function(url,data,SuccessCallback,successPar){
+       	    data.jump = 1;
        	    $.ajax({
             type: "get",
             url: url,
             data: data,
             cache: false,
-            async: false,
+            // async: false,
             dataType: "json",
             success: function (res)
             {
                 if (res.type == "login"){
-                    alert("需要登录")
+						 layer.msg("请先登录！",{anim:-1});
+						 $("#layui-layer1").css("width","130px");
+						 $("#layui-layer1").css("margin-left","100px");
+						 setTimeout(function(){
+						 	window.location.href ="/";
+						 },300)
+						 return;
                 }else if( res.type == "access" ){ 
-                      alert('无权限')
+                      layer.msg("无权限！",{anim:-1});
+                      $("#layui-layer1").css("width","130px");
+					  $("#layui-layer1").css("margin-left","100px");
                 }else if(successPar){
                     	SuccessCallback(res,successPar);
                     }else{

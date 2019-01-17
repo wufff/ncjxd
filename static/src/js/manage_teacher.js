@@ -23,7 +23,7 @@ form.on('select(grade)', function(data){
    var getData = {};
    getData.grade_id = data.value;
    if(data.value){
-       $.get(url,getData,function(data){
+       api.ajaxGet(url,getData,function(data){
         // console.log(data);
        if(data.type == "success") {
           var list = data.data.data.list;
@@ -157,7 +157,7 @@ form.on('select(grade)', function(data){
        if(controlTpye == 0) {
            var url = path.api+"/api/addSchoolTeacher";
            var loading = layer.load(3);
-           $.get(url,getData,function(res){
+           api.ajaxGet(url,getData,function(res){
               console.log(res);
               if(res.type == "success") {
                 layer.msg("添加成功！",{time:1200});
@@ -175,7 +175,7 @@ form.on('select(grade)', function(data){
        if(controlTpye == 1){
            var url = path.api+"/api/addSchoolTeacher";
            var loading = layer.load(3);
-           $.get(url,getData,function(res){
+           api.ajaxGet(url,getData,function(res){
               console.log(res);
               if(res.type == "success") {
                 layer.msg("修改成功！",{time:1200});
@@ -211,7 +211,6 @@ function refrechData() {
   function initContorl (data){
     if(data){
     form.val("control",data)
-     
      $("input:checkbox[value=GS001]").attr("checked",true);
     }else {
       $(".controlText").text("系统自动获取教师姓名");
@@ -229,7 +228,7 @@ function refrechData() {
 // 弹窗里面东西
   function getUserListBySchoolId (){
     var url = path.api+'/api/getUserListBySchoolId';
-    $.get(url,function(data){
+    api.ajaxGet(url,function(data){
        // console.log(data);
       if(data.type == 'success'){
           var list = data.data.data;
@@ -248,7 +247,7 @@ function refrechData() {
           var url = path.api+'/api/getSubjectCodeList';
           var getData = {};
           getData.grade_id = 1;
-          $.get(url,getData,function(data){
+          api.ajaxGet(url,getData,function(data){
              // console.log(data);
              if(data.type == "success"){
                 var list = data.data.data.list;
@@ -283,7 +282,7 @@ function refrechData() {
              page =  new pages.jsPage(total, "pageNum","5",url,getData,buildTable,goPage,null);
              pages.pageMethod.call(page); 
            }else{
-             $("#tbody").html('<tr><td colspan="7">暂无数据~！</td></td>');
+             $("#tbody").html('<tr><td colspan="8" class="noneDataTd">暂无数据~！</td></td>');
             $(".tableLoading").html('');
              return;
          }

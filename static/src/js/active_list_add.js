@@ -14,7 +14,7 @@ require(["jquery","layui","path","upLoad","tools"], function($,layui, path,upLoa
          type = 1; 
          $("#publishBt").html("确认修改");
          var url = path.api + "/api/getManageActivityInfo"
-         $.get(url,{activity_id:activity_id},function(res){
+         api.ajaxGet(url,{activity_id:activity_id},function(res){
               if(res.type == "success"){
                  var list = res.data.data;
                  var timeValue = list.ai_start_time.slice(0,10);
@@ -144,7 +144,7 @@ require(["jquery","layui","path","upLoad","tools"], function($,layui, path,upLoa
         getData.mp4_names = mp4_names.join(",");
         if(off == true){
           layer.load(3);
-        $.get("/api/addManageActivity",getData,function(res){
+        api.ajaxGet("/api/addManageActivity",getData,function(res){
           if(res.type == "success") {
              window.history.go(-1);
           }else{
@@ -209,7 +209,7 @@ require(["jquery","layui","path","upLoad","tools"], function($,layui, path,upLoa
         if(off == true){
           var loading = layer.load(3);
           var url = path.api + "/api/modifyManageActivityData";
-        $.get(url,getData,function(res){
+        api.ajaxGet(url,getData,function(res){
           console.log(res);
           if(res.type == "success") {
               layer.close(loading);

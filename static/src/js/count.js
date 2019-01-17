@@ -36,7 +36,7 @@ require(["jquery","layui","path","tools","page","api"],function($,layui,path,too
                    type:3,
 
               }
-              $.get(url, getData,function(res){
+              api.ajaxGet(url, getData,function(res){
                    console.log(res);
                   if(res.type == "success") {
                     var list = res.data.data.list;
@@ -59,7 +59,7 @@ require(["jquery","layui","path","tools","page","api"],function($,layui,path,too
                    type:3,
                    node_id:town_id_authority
               }
-              $.get(url, getData,function(res){
+              api.ajaxGet(url, getData,function(res){
                    console.log(res);
                   if(res.type == "success") {
                     var list = res.data.data.list;
@@ -94,7 +94,7 @@ form.on('select(city)', function(data){
      city_id = data.value
      var url = "/api/getAreaList";
      if(data.value){
-      $.get(url,getData,function(res){
+      api.ajaxGet(url,getData,function(res){
          // console.log(res);
         if(res.type == "success") {
           var list = res.data.data.list;
@@ -200,7 +200,7 @@ form.on('select(studyTime)', function(data){
      return false;
    }else{
      var url = path.api + "/api/getCityAreaInfoByKeyWord";
-     $.get(url,{keyword:words},function(res){
+     api.ajaxGet(url,{keyword:words},function(res){
           if(res.type == "success"){
             var list = res.data.data;
             var town_id = list.town_id
@@ -208,7 +208,7 @@ form.on('select(studyTime)', function(data){
              form.render('select');
               var getData = {area_id:list.city_id,type:3}
               var url = "/api/getAreaList";
-              $.get(url,getData,function(res2){
+              api.ajaxGet(url,getData,function(res2){
                    // console.log(res);
                   if(res2.type == "success") {
                     var list2 = res2.data.data.list;

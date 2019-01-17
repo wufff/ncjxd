@@ -6,7 +6,7 @@ define(["jquery","num","path"],function($,num,path) {
 	          school_id:school_id,
 	          date:weekData
 	        }
-	    $.get(titlesUrl,getData,function(res){
+	    api.ajaxGet(titlesUrl,getData,function(res){
 	       // console.log(res);
 	       if(res.type == "success") {
 	         var data = res.data.data;
@@ -37,7 +37,7 @@ define(["jquery","num","path"],function($,num,path) {
 	          school_id:school_id,
 	          date:weekData
 	     }  
-	    $.get(WeeKurl,getData,function(res){
+	    api.ajaxGet(WeeKurl,getData,function(res){
 	       console.log(res);
 	       if(res.type == "success") {
 	         var data = res.data.data;
@@ -62,7 +62,7 @@ define(["jquery","num","path"],function($,num,path) {
       school_id:school_id,
       date:weekData
      }
-  $.get(WeeKurl,getData,function(res){
+  api.ajaxGet(WeeKurl,getData,function(res){
        console.log(res);
        if(res.type == "success") {
          $("#tbody").html("");
@@ -146,7 +146,7 @@ define(["jquery","num","path"],function($,num,path) {
              week:week,
              type:type
           }
-         $.get(classUrl,getClassDate,function(res){
+         api.ajaxGet(classUrl,getClassDate,function(res){
               // console.log(res);
               if(res.type == "success"){
                 if ( res.data.length == 0 ){

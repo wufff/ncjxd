@@ -1,7 +1,5 @@
 require(["Swiper","jquery","viewPhoto","api","boot-dropdown",],function(Swiper,$,view,api){
-
   //登录切换
-
   $(".white_black .h4").click(function() {
         $(this).addClass('active');
         $(this).siblings().removeClass('active');

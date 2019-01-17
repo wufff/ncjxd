@@ -6,7 +6,7 @@
  * @version $Id$
  */
  
-require(["jquery","layui","path","num","tools"],function($,layui,path,num,tools){
+require(["jquery","layui","path","num","tools","api"],function($,layui,path,num,tools,api){
    var layer = layui.layer;
    var form =  layui.form;
    var $ = jQuery = layui.jquery; 
@@ -62,7 +62,7 @@ require(["jquery","layui","path","num","tools"],function($,layui,path,num,tools)
                    type:3,
 
               }
-              $.get(url, getData,function(res){
+              api.ajaxGet(url, getData,function(res){
                    console.log(res);
                   if(res.type == "success") {
                     var list = res.data.data.list;
@@ -85,7 +85,7 @@ require(["jquery","layui","path","num","tools"],function($,layui,path,num,tools)
                    type:3,
                    node_id:town_id_authority
               }
-              $.get(url, getData,function(res){
+              api.ajaxGet(url, getData,function(res){
                    console.log(res);
                   if(res.type == "success") {
                     var list = res.data.data.list;
@@ -104,7 +104,7 @@ require(["jquery","layui","path","num","tools"],function($,layui,path,num,tools)
                    }
               
                var url2 = path.api+"/api/getSchoolListByAreaId";
-            $.get(url2,getData2,function(res){
+            api.ajaxGet(url2,getData2,function(res){
                 // console.log(res);
                 if(res.type == "success") {
                   var list = res.data.data.list;
@@ -132,7 +132,7 @@ require(["jquery","layui","path","num","tools"],function($,layui,path,num,tools)
                    type:3,
                    node_id:town_id_authority
               }
-              $.get(url, getData,function(res){
+              api.ajaxGet(url, getData,function(res){
                    console.log(res);
                   if(res.type == "success") {
                     var list = res.data.data.list;
@@ -152,7 +152,7 @@ require(["jquery","layui","path","num","tools"],function($,layui,path,num,tools)
                    }
               
                var url2 = path.api+"/api/getSchoolListByAreaId";
-            $.get(url2,getData2,function(res){
+            api.ajaxGet(url2,getData2,function(res){
                 // console.log(res);
                 if(res.type == "success") {
                   var list = res.data.data.list;
@@ -186,7 +186,7 @@ form.on('select(city)', function(data){
      if(data.value == city_id){
          return;
        }
-     console.log(data.value)
+     // console.log(data.value)
      $("select[name=school]").html('<option value="">请先选区县</option>');
      $("select[name=school]").val("");
      intInfo();
@@ -197,7 +197,7 @@ form.on('select(city)', function(data){
      var url = "/api/getAreaList";
      if(data.value){
         city_id = data.value;
-     	$.get(url,getData,function(res){
+     	api.ajaxGet(url,getData,function(res){
          // console.log(res);
      	  if(res.type == "success") {
           var list = res.data.data.list;
@@ -217,9 +217,6 @@ form.on('select(city)', function(data){
 });  
 
 form.on('select(area)', function(data){
-     if(data.value == town_id){
-         return;
-       }
     intInfo();
      $("select[name=school]").val("");
      var getData = {
@@ -229,7 +226,7 @@ form.on('select(area)', function(data){
      var url = path.api+"/api/getSchoolListByAreaId"
      if(data.value){
         town_id = data.value;
-      $.get(url,getData,function(res){
+      api.ajaxGet(url,getData,function(res){
         // console.log(res);
         if(res.type == "success") {
           var list = res.data.data.list;
@@ -256,9 +253,6 @@ form.on('select(school)', function(data){
        if(data.value == school_id){
          return;
        }
-       //  if(!data.value){
-       //   return;
-       // }
       weekData = now;
       var ele = data.elem
       var text = $(ele).find("option:selected").text();
@@ -268,9 +262,6 @@ form.on('select(school)', function(data){
       renderClassRoom (school_id,weekData,function(){
            studyTime (school_id,weekData);
       });
-      
-      
-      // renderClassTd(school_id,weekData);
 });  
 
 
@@ -402,14 +393,13 @@ $(".downtimeInput").each(function(index, el) {
 
 $(".configClassTimeBt").click(function(){
    var url =  path.api+"/api/getLastTermSchoolCourseTime";
-   $.get(url,function(res){
+   api.ajaxGet(url,{school_id:school_id},function(res){
           console.log(res);
           if(res.type == "success"){
              var list = res.data.data.time_info;
               if(list.length == 0){
                   return;
               }
-
              var up = res.data.data.noon_count.up;
              var down = res.data.data.noon_count.down;
              st_is_modify = res.data.data.st_is_modify;
@@ -502,7 +492,7 @@ $(".configClassTimeBt").click(function(){
                     array.push(str);
                });      
                var url = path.api + "/api/setTermSchoolCourseTime";
-               $.get(url,{term_id:term_id,times:array.join(","),school_id:school_id},function(res){
+               api.ajaxGet(url,{term_id:term_id,times:array.join(","),school_id:school_id},function(res){
                   console.log(res);
                   if(res.type == "success"){
                      layer.msg("设置成功",{time:600});
@@ -580,8 +570,6 @@ $("#controlstudyTime").on("click",".del",function(){
 })
 
 
-//======================编辑上课时间弹窗结束===================
-
 
 
 //======================编辑学期弹窗===================
@@ -601,10 +589,6 @@ $(".configStudeyTimeBt").click(function(){
 })
 
 function initstudyTimelang() {
-  // laydate.render({
-  //   elem: '#studyStart_time'
-  // });
-
   laydate.render({
     elem: '#holidayStart_time'
     ,calendar: true
@@ -615,7 +599,7 @@ function initstudyTimelang() {
   });
    // 初始化学期弹窗
    var url = path.api + "/api/getSchoolTermWeek";
-   $.get(url,{school_id:school_id},function(res){
+   api.ajaxGet(url,{school_id:school_id},function(res){
          console.log(res);
          if(res.type == "success") {
               var list = res.data.data;
@@ -653,7 +637,7 @@ $("#addtimedaysbt").click(function(){
           end_time:End_time,
           school_id:school_id
        }
-       $.get(url,getData,function(res){
+       api.ajaxGet(url,getData,function(res){
            console.log(res);
            if(res.type == 'success'){
               layer.msg("设置成功",{time:800})
@@ -678,7 +662,7 @@ $("#addHolidaysbt").click(function() {
         holiday:holiday
       }
       var url = '/api/setSchoolHoliday'
-      $.get(url,getData,function(res){
+      api.ajaxGet(url,getData,function(res){
          if(res.type == "success"){
             layer.msg("设置成功",{time:800});
             redenerHoildForm();
@@ -696,7 +680,7 @@ redenerHoildForm();
 function redenerHoildForm(){
   $("#holidayTbody").html("");
   var url = path.api + "/api/getSchoolHolidayList?v="+new Date().getTime();
-  $.get(url,function(res){
+  api.ajaxGet(url,{school_id:school_id},function(res){
       if(res.type == "success") {
         var list  = res.data.data.list;
         // console.log(list);
@@ -721,9 +705,10 @@ function redenerHoildForm(){
     var url = path.api + "/api/delSchoolHolidayData";
     var id = $(this).attr("id");
     var getData = {
-       holiday_id:id
+       holiday_id:id,
+       school_id:school_id
     }
-    $.get(url,getData,function(res){
+    api.ajaxGet(url,getData,function(res){
           if(res.type == "success") {
               layer.msg("删除成功",{time:500});
               redenerHoildForm();
@@ -731,7 +716,6 @@ function redenerHoildForm(){
               layer.msg(res.message,{icon:5})
           }
     })
-     
  });
 
 
@@ -744,6 +728,15 @@ function redenerHoildForm(){
 // controlTimeComfirm
 
 $(".configConfirmTimeBt").click(function(){
+    laydate.render({
+         elem: '#ChirformStart_time'
+         ,type: 'datetime'
+
+    });
+     laydate.render({
+         elem: '#ChirformEnd_time'
+         ,type: 'datetime'
+    });
     layer.open({
             type: 1,
             title:"设置计划确认时间",
@@ -755,6 +748,10 @@ $(".configConfirmTimeBt").click(function(){
             }
    });
 })
+
+
+
+
 
 
 
@@ -771,13 +768,13 @@ function renderClassRoom (school_id,weekData,callbcak){
           v:new Date().getTime()
         }
        var url = path.api + "/api/getRoomListBySchoolId";
-      $.get(url,getData,function(res){
+      api.ajaxGet(url,getData,function(res){
           var obj = {
              text:"渲染教室",
              res:res
           }
           
-        console.log(obj);
+        // console.log(obj);
         if(res.type == "success") {
             var list = res.data.data.list;
             // console.log(list);
@@ -816,7 +813,7 @@ function renderClassRoom (school_id,weekData,callbcak){
           date:weekData,
           v:new Date().getTime()
         }
-    $.get(titlesUrl,getData,function(res){
+    api.ajaxGet(titlesUrl,getData,function(res){
        var obj = {
          text:"表头日期",
          res:res
@@ -861,7 +858,7 @@ function renderClassRoom (school_id,weekData,callbcak){
           date:weekData,
           v:new Date().getTime()
      }  
-    $.get(WeeKurl,getData,function(res){
+    api.ajaxGet(WeeKurl,getData,function(res){
        var obj = {
            text:"学期和周",
            content:res
@@ -897,7 +894,7 @@ function renderClassTd(school_id,weekData){
       date:weekData,
       v:new Date().getTime()
      }
-  $.get(WeeKurl,getData,function(res){
+  api.ajaxGet(WeeKurl,getData,function(res){
        var obj = {
            text:"渲染上下午关联课程",
            res:res
@@ -989,7 +986,7 @@ function renderClassTd(school_id,weekData){
              week:week,
              type:type
           }
-         $.get(classUrl,getClassDate,function(res){
+         api.ajaxGet(classUrl,getClassDate,function(res){
               // console.log(res);
               var obj = {
                   text:"渲染课程",
@@ -1048,7 +1045,8 @@ function renderClassTd(school_id,weekData){
 	 	 $("#schoolTerm").html(" ");
      $("#week_time").html(" ");
      $("#week").text(" ");
-     $("#tbody").html('<tr><td colspan="9" class="noneTd">请选择学校查询对应课表~！</td></td>'); 
+     $("#tbody").html('<tr><td colspan="9" class="noneTd">请选择学校查询对应课表~！</td></td>');
+     $("#table_header").hide(); 
 	 }
 
 //节假日样式

@@ -64,7 +64,7 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
          var obj = {};
          obj.id = tr.data("id");
          obj.type = 1;
-         $.get(url,obj,function(res){
+         api.ajaxGet(url,obj,function(res){
              if(res.type == "success") {
                  layer.msg("删除成功！",{time:1200});
                  layer.close(index);
@@ -91,7 +91,7 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
           }
            var url = path.api+"/api/addManageRecommend";
            var loading = layer.load(3);
-           $.get(url,getData,function(res){
+           api.ajaxGet(url,getData,function(res){
               if(res.type == "success") {
                 layer.msg("添加成功！",{time:1200});
                 refrechData();
@@ -106,7 +106,7 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
           var loading = layer.load(3);
           getData.id = editeId;
           console.log(getData);
-           $.get(url,getData,function(res){
+           api.ajaxGet(url,getData,function(res){
               console.log(res);
               if(res.data.code == 1000) {
                 layer.msg("修改成功！",{time:1200});

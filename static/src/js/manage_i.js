@@ -48,7 +48,7 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
           var obj = {cover_img:getData.join(","),title:"",type:2}
           console.log(getData.join(","));
           var url = path.api + "/api/addManageRecommend";
-          // $.get(url,obj,function(res){
+          // api.ajaxGet(url,obj,function(res){
           //       if(res.type == "success"){
           //           layer.msg("添加成功",{time:800});
           //           layer.close(index);
@@ -69,7 +69,7 @@ require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
          var obj = {};
          obj.id = id;
          obj.type = 2;
-         $.get(url,obj,function(res){
+         api.ajaxGet(url,obj,function(res){
              if(res.type == "success") {
                  layer.msg("删除成功！",{time:1200});
                  layer.close(index);
