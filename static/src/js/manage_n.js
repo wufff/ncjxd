@@ -1,4 +1,4 @@
-require(["layui", "path","tools","page"], function(layui, path,tools,pages) {
+require(["layui", "path","tools","page","api"], function(layui, path,tools,pages,api) {
 		    var layer = layui.layer;
 		    var element = layui.element;
 		    var $ = jQuery = layui.jquery; 

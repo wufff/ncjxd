@@ -47,7 +47,7 @@ define(["jquery","layui"], function($,layui) {
 					if(data.type == "login"){
 						 layer.msg("请先登录！",{anim:-1});
 						 setTimeout(function(){
-						 	// window.location.href ="/";
+						 	window.location.href ="/";
 						 },300)
 						 return;
 						}else if( successPar && successPar != 0){

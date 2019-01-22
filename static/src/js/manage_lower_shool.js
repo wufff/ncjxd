@@ -71,24 +71,22 @@ require(["layui","path","page","api"], function(layui,path,pages,api) {
       var county_id = $(".table_b").attr("county_id");
       var getData = "county_id="+ county_id +"&page=1&v="+ new Date().getTime() ;
       pages.getAjax(url,getData,function(res){
-          console.log(res);
-         if( res.type == "success"){
-             var total = res.data.count;
+          // console.log(res);
+         if(res.data.data.length == 0){
+                  $("#tbody").html('<tr><td colspan="7" class="noneDataTd">暂无数据~！</td></td>');
+                  $(".tableLoading").html('');
+                   return;
+             }
              var length = res.data.data.length;
+             var total = res.data.count;
              page =  new pages.jsPage(total, "pageNum",length,url,getData,buildTable,goPage,null);
              pages.pageMethod.call(page); 
-           }else{
-             $("#tbody").html('<tr><td colspan="8" class="noneDataTd">暂无数据~！</td></td>');
-             $(".tableLoading").html('');
-             console.log(res.type + res.message);
-             return;
-         }
       })
-     
+
     function buildTable(res) {
     if (res.type == "success") {
       var data = res.data.data;
-      console.log(data);
+      // console.log(data);
       if(res.data.count == 0){
           $("#tbody").html('<tr><td colspan="8"  class="noneDataTd">暂无数据~！</td></td>');
           $(".tableLoading").html('');

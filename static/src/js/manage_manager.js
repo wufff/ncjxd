@@ -6,7 +6,6 @@ require(["layui", "path","page","api"], function(layui, path,pages,api) {
     var dialog;
     var search_type = 1;
     initPage (1)
-     
    $("body").on("click",".change",function(){
          var tr = $(this).parents("tr");
          var uid = tr.attr("data-uid");
@@ -177,15 +176,16 @@ $("body").on("click",".del",function(){
       var getData = "page=1&page_count=15&search_type="+ search_type + "&search_name="+ $("#search_name").val() + "&v="+ new Date().getTime() ;
      /* console.log(getData);*/
       pages.getAjax(url,getData,function(data){
-        // console.log(data);
+        console.log(data);
          if( data.type == "success"){
              if(data.data.data.length == 0){
                   $("#tbody").html('<tr><td colspan="7" class="noneDataTd">暂无数据~！</td></td>');
                   $(".tableLoading").html('');
                    return;
              }
+             var length = data.data.data.length;
              var total = data.data.count;
-             page =  new pages.jsPage(total, "pageNum","15",url,getData,buildTable,goPage,null);
+             page =  new pages.jsPage(total, "pageNum",length,url,getData,buildTable,goPage,null);
              pages.pageMethod.call(page); 
            }
       })
@@ -227,11 +227,4 @@ $("body").on("click",".del",function(){
     }
   }
  }
-
-
-
-
-
-
-
 })

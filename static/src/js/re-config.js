@@ -19,7 +19,8 @@ require.config({
 			"plupload":"./lib/plupload/plupload.dev",
 			"moxie":"./lib/plupload/moxie",
 			"upLoad":"./tools/upLoad",
-			"num":"./tools/num"
+			"num":"./tools/num",
+			"star":"./lib/star"
 	},
 	shim: {
 

@@ -6,15 +6,14 @@
  * @version $Id$
  */
  
-require(["jquery","ckplayer","expression","api","path","page","layui"],function($,ckplayer,face,api,path,pages,layui){
+require(["jquery","ckplayer","api","path","layui","star"],function($,ckplayer,api,path,layui){
     vidoe();
     // comment();
-    initPage (1);
-    face.showFace("#showFace",".commentText");
-    var layer = layui.layer;
-    var activity_id = $("input[name=activity_id]").val(); 
    
-
+   
+ var layer = layui.layer;
+ var activity_id = $("input[name=activity_id]").val(); 
+   
  function  vidoe () {
    /*初始化*/ 
     var mp4_rec = $("#aboutVidoe a").eq(0).attr("download");
@@ -37,23 +36,6 @@ require(["jquery","ckplayer","expression","api","path","page","layui"],function(
 
 }
 
-
-   function comment () {
-       var requestData = "activity_id="+ activity_id +"&page_num=10&page=1";
-       api.ajaxPost(path.api+"/api/getActivityCommentList",requestData,renderComment); //渲染评论
-                                             //渲染表情  
-       $("#commtentBt").click(function(){                                              //发表评论
-          var content = $(".commentText").val();
-          if(content && content !=0){
-            var postdata = "activity_id="+ activity_id +"&comment="+content;
-            api.ajaxPost(path.api+"/api/setUserComment",postdata,renderPublishComment);
-          }
-       })   
-   }
-
-
-  
-    
       function changeVideo(videoUrl,player) {
         if(!player & player !=0) {
           return;
@@ -91,6 +73,112 @@ require(["jquery","ckplayer","expression","api","path","page","layui"],function(
       }
      
 
+
+    
+
+      
+       // console.log(star)
+       // star.raty(_star,{
+       //      precision: true,
+       //      targetKeep: true,
+       //      // readOnly: true,
+       //      hints: false,
+       //      size: 22,
+       //      width: 130,
+       //      path:path.img,
+       //      targetType: 'hint',
+       //      number: 5,
+       //      target:'#star-hint',
+       //      precision: true,
+       //      // round: { down: .25, full: .6, up: .76 }, 
+       //      hints:['一星','二星','三星','四星','五星'],
+       //      targetForma: '{score}',
+       //      score: function(){
+       //        return _star.attr('data-score');
+       //      },
+       //      mouseover:function(){
+       //        var num = $("#star-hint").text() *2;
+       //        console.log(num)
+       //        $("#fen").html("<span class='code'>"+ num.toFixed(0) +"</span> 分")
+       //      }
+       // })
+       setTimeout(function(){
+            star();
+       },100)
+       function star(){
+            var _star = $("#star-score");
+           if(_star.attr("data-status") == "0"){
+          _star.raty({ 
+            precision: true,
+            targetKeep: true,
+            hints: false,
+            size: 20,
+            width: 130,
+            path :path.img,
+            target: '#star-hint',
+            targetFormat: '{score}分',
+            click: function(){
+              var _number = Number($("[name='score']").val()).toFixed(1);     
+              console.log(_number);      
+              $.post("/CallAjaxCommon/addScore",{"course_id":_aid,"number":_number},function(msg){
+                if(msg.type == "success"){
+                    _star.raty('readOnly', true);
+                  $("[name='digg'] b").html(parseInt($("[name='digg'] b").html())+1);
+                  $("[name='digg'] em").html(msg.data.score_average);
+                  
+           
+                  }else{
+                    promptMessageDialog({icon:"warning", content:msg.message, time:2000});
+                  }
+              },"json");              
+            }
+        });
+        }else{
+          _star.raty({
+            precision: true,
+            targetKeep: true,
+            // readOnly: true,
+            hints: false,
+            size: 22,
+            width: 130,
+            path:path.img,
+            targetType: 'hint',
+            number: 5,
+            target:'#star-hint',
+            precision: true,
+            // round: { down: .25, full: .6, up: .76 }, 
+            hints:['一星','二星','三星','四星','五星'],
+            targetForma: '{score}',
+            score: function(){
+              return _star.attr('data-score');
+            },
+            mouseover:function(){
+              var num = $("#star-hint").text() *2;
+              console.log(num)
+              $("#fen").html("<span class='code'>"+ num.toFixed(0) +"</span> 分")
+            }
+        });     
+        }
+       }
+})
+
+
+
+
+       
+   // function comment () {
+   //     var requestData = "activity_id="+ activity_id +"&page_num=10&page=1";
+   //     api.ajaxPost(path.api+"/api/getActivityCommentList",requestData,renderComment); //渲染评论
+   //                                           //渲染表情  
+   //     $("#commtentBt").click(function(){                                              //发表评论
+   //        var content = $(".commentText").val();
+   //        if(content && content !=0){
+   //          var postdata = "activity_id="+ activity_id +"&comment="+content;
+   //          api.ajaxPost(path.api+"/api/setUserComment",postdata,renderPublishComment);
+   //        }
+   //     })    initPage (1);
+   // }
+       //face.showFace("#showFace",".commentText");
        // function renderComment (data){
        //     // uc_avatar: ""
        //      // uc_comment: "我在评论"
@@ -125,77 +213,66 @@ require(["jquery","ckplayer","expression","api","path","page","layui"],function(
        //     }
        // }
 
+      //评论
+// $("#commtentBt").click(function(){
+//    var comment = $(".commentText").val();
+//    if(!comment){
+//      return;
+//    }
+//    var url = "/api/setUserComment";
+//    api.ajaxPost(url,{activity_id:activity_id,comment:comment},function(res){
+//      if(res.type == "success"){
+//         layer.msg("评论成功！",{time:800});
+//         $(".commentText").val("");
+//         initPage (1);
+//      }
+//    })
+// })
+//   function initPage (goPage){
+//        var activity_id = $("input[name=activity_id]").val();
+//        var requestData = "activity_id="+ activity_id +"&page_count=6&page=1&v="+ new Date().getTime();
+//        var url = path.api+"/api/getActivityCommentList";
+//       pages.getAjax(url,requestData,function(data){
+//          if( data.type == "success"){
+//              var total = data.data.data.total;
+//              page =  new pages.jsPage(total, "pageNum","6",url,requestData,buildTable,goPage,null);
+//              pages.pageMethod.call(page); 
+//            }else{
+//              // $("#tbody").html('<tr><td colspan="5">暂无数据~！</td></td>');
+//              // $(".tableLoading").html('');
+//               $("#commentContent").html("");
+//               $("#totComment").html("0");
+//              return;
+//          }
+//       })
+//     function buildTable(res) {
+//     if (res.type == "success") {
+//         var list = res.data.data.list;
+//         console.log(res);
+//         var html = "";
+//         var mrAutor = path.img + "/user_mr.gif";
+//         for(var i = 0; i < list.length; i++){
+//         var headimg = list[i].uc_avatar ? list[i].uc_avatar : mrAutor;
+//         html  += '<div class="item">'
+//         html  +=        '<div class="media">'
+//         html  +=        '<a class="pull-left">'
+//         html  +=           '<img class="media-object author" src="'+ headimg +'">'
+//         html  +=      '</a>'
+//         html  +=     '<div class="media-body">'
+//         html  +=        '<h5 class="media-heading"><span class="name">'+list[i].uc_uname +'</span>'+list[i].uc_createtime +'</h5>'
+//         html  +=       '<div class="content">'+ face.replaceSmile(list[i].uc_comment) +'</div>'
+//         html  +=    '</div>'
+//         html  +=    '</div>'
+//         html  +=  '</div>'
+//         }
+//        $("#commentContent").html(html);
+//         var total = res.data.data.total;
+//        $("#totComment").html(total);
 
-//评论
-
-$("#commtentBt").click(function(){
-   var comment = $(".commentText").val();
-   if(!comment){
-     return;
-   }
-   var url = "/api/setUserComment";
-   api.ajaxPost(url,{activity_id:activity_id,comment:comment},function(res){
-     if(res.type == "success"){
-        layer.msg("评论成功！",{time:800});
-        $(".commentText").val("");
-        initPage (1);
-     }
-   })
-})
-     
-
-
-
-    
-  function initPage (goPage){
-       var activity_id = $("input[name=activity_id]").val();
-       var requestData = "activity_id="+ activity_id +"&page_count=6&page=1&v="+ new Date().getTime();
-       var url = path.api+"/api/getActivityCommentList";
-      pages.getAjax(url,requestData,function(data){
-         if( data.type == "success"){
-             var total = data.data.data.total;
-             page =  new pages.jsPage(total, "pageNum","6",url,requestData,buildTable,goPage,null);
-             pages.pageMethod.call(page); 
-           }else{
-             // $("#tbody").html('<tr><td colspan="5">暂无数据~！</td></td>');
-             // $(".tableLoading").html('');
-              $("#commentContent").html("");
-              $("#totComment").html("0");
-             return;
-         }
-      })
-    function buildTable(res) {
-    if (res.type == "success") {
-        var list = res.data.data.list;
-        console.log(res);
-        var html = "";
-        var mrAutor = path.img + "/user_mr.gif";
-        for(var i = 0; i < list.length; i++){
-        var headimg = list[i].uc_avatar ? list[i].uc_avatar : mrAutor;
-        html  += '<div class="item">'
-        html  +=        '<div class="media">'
-        html  +=        '<a class="pull-left">'
-        html  +=           '<img class="media-object author" src="'+ headimg +'">'
-        html  +=      '</a>'
-        html  +=     '<div class="media-body">'
-        html  +=        '<h5 class="media-heading"><span class="name">'+list[i].uc_uname +'</span>'+list[i].uc_createtime +'</h5>'
-        html  +=       '<div class="content">'+ face.replaceSmile(list[i].uc_comment) +'</div>'
-        html  +=    '</div>'
-        html  +=    '</div>'
-        html  +=  '</div>'
-        }
-       $("#commentContent").html(html);
-        var total = res.data.data.total;
-       $("#totComment").html(total);
-
-    }
-    if(res.type == "error") {
-        var mun = goPage - 1;
-        pages.gotopage.call(page,mun,false);
-    }
-  }
- }
-
-    
-})
-
+//     }
+//     if(res.type == "error") {
+//         var mun = goPage - 1;
+//         pages.gotopage.call(page,mun,false);
+//     }
+//   }
+//  }

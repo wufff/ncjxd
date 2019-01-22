@@ -1,5 +1,5 @@
 
-require(["layui", "path","page","upLoad"], function(layui, path,pages,upLoad) {
+require(["layui", "path","page","upLoad","api"], function(layui, path,pages,upLoad,api) {
     var layer = layui.layer;
     var form = layui.form;
     var $ = jQuery = layui.jquery; 
