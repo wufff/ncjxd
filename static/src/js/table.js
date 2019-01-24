@@ -197,6 +197,7 @@ form.on('select(city)', function(data){
          renderArea(data.value);
          city_id = data.value; 
          $("#inputText").val("");
+         $("#rebox").hide();
      }
       
 });  
@@ -211,6 +212,7 @@ form.on('select(area)', function(data){
           form.render('select');
           town_id = data.value;
           $("#inputText").val("");
+          $("#rebox").hide();
      }else {
         town_id = data.value;
         renderShool(data.value);
@@ -256,7 +258,7 @@ $("#searchBt").click(function(){
                   var list = res.data.data;
                   console.log(list);
                   var length = list.length;
-                  var html = '<option value="">'+length+'条 搜索结果</option>';
+                  var html = '<option value="" disabled>'+length+'条 搜索结果</option>';
                   for(var i=0;i<list.length;i++){
                      html += '<option value="'+ list[i].city_id +'|'+ list[i].county_id +'|'+list[i].school_encrypt_id+'">'+ list[i].school_name+'</option>'
                   }
@@ -273,6 +275,18 @@ $("#searchBt").click(function(){
     }
     return false;
   })
+
+
+$("#inputText").focus(function(event) {
+      $("#rebox").hide();
+    });
+$("#inputText").change(function(){
+    $("#rebox").hide();
+})
+// $("body").click(function(){
+//       $("#rebox").hide();
+//       return false;
+// })
 
 
 

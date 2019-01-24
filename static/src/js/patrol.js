@@ -226,8 +226,14 @@ $(".tagItem2").click(function(){
    $("#inputText").focus(function(event) {
       $("#rebox").hide();
     });
+   $("#inputText").change(function(){
+    $("#rebox").hide();
+    })
   }
 
+
+
+ 
   // function init() {
   //     $("select[name=city]").val("");
   //     $("select[name=area]").html('<option value="">全部</option>');

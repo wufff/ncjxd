@@ -1,4 +1,4 @@
-require(["layui", "path","page","tools","boot-dropdown"], function(layui, path,pages,tools) {
+require(["layui", "path","page","tools","api","boot-dropdown"], function(layui, path,pages,tools,api) {
     var layer = layui.layer;
     var upload = layui.upload;
     var $ = jQuery = layui.jquery; //用他的jquey否则弹窗会有问题
@@ -228,7 +228,7 @@ function refrechData() {
 // 弹窗里面东西
   function getUserListBySchoolId (){
     var url = path.api+'/api/getUserListBySchoolId';
-    api.ajaxGet(url,function(data){
+    api.ajaxGet(url,{},function(data){
        // console.log(data);
       if(data.type == 'success'){
           var list = data.data.data;
