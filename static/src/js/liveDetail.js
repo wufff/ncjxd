@@ -6,14 +6,14 @@
  * @version $Id$
  */
  
-require(["jquery","ckplayer","api","path","layui","star"],function($,ckplayer,api,path,layui){
+require(["jquery","ckplayer","api","path","layui","star","boot-dropdown"],function($,ckplayer,api,path,layui){
     vidoe();
     // comment();
    
    
  var layer = layui.layer;
  var activity_id = $("input[name=activity_id]").val(); 
-   
+ var user_score = $("#user_score").val();  
  function  vidoe () {
    /*初始化*/ 
     var mp4_rec = $("#aboutVidoe a").eq(0).attr("download");
@@ -105,43 +105,19 @@ require(["jquery","ckplayer","api","path","layui","star"],function($,ckplayer,ap
        setTimeout(function(){
             star();
        },100)
+
+      
+  
        function star(){
-            var _star = $("#star-score");
-           if(_star.attr("data-status") == "0"){
-          _star.raty({ 
-            precision: true,
-            targetKeep: true,
-            hints: false,
-            size: 20,
-            width: 130,
-            path :path.img,
-            target: '#star-hint',
-            targetFormat: '{score}分',
-            click: function(){
-              var _number = Number($("[name='score']").val()).toFixed(1);     
-              console.log(_number);      
-              $.post("/CallAjaxCommon/addScore",{"course_id":_aid,"number":_number},function(msg){
-                if(msg.type == "success"){
-                    _star.raty('readOnly', true);
-                  $("[name='digg'] b").html(parseInt($("[name='digg'] b").html())+1);
-                  $("[name='digg'] em").html(msg.data.score_average);
-                  
-           
-                  }else{
-                    promptMessageDialog({icon:"warning", content:msg.message, time:2000});
-                  }
-              },"json");              
-            }
-        });
-        }else{
+        var _star = $("#star-score");
+        if( user_score == "0"){
           _star.raty({
             precision: true,
             targetKeep: true,
-            // readOnly: true,
-            hints: false,
+            readOnly: false,
             size: 22,
             width: 130,
-            path:path.img,
+            path: path.img,
             targetType: 'hint',
             number: 5,
             target:'#star-hint',
@@ -150,19 +126,77 @@ require(["jquery","ckplayer","api","path","layui","star"],function($,ckplayer,ap
             hints:['一星','二星','三星','四星','五星'],
             targetForma: '{score}',
             score: function(){
-              return _star.attr('data-score');
+              return user_score;
             },
             mouseover:function(){
               var num = $("#star-hint").text() *2;
-              console.log(num)
+               $("#fen").css("visibility","visible");
               $("#fen").html("<span class='code'>"+ num.toFixed(0) +"</span> 分")
-            }
-        });     
+            },
+             mouseout:function(){
+              $("#fen").css("visibility","hidden");
+            },
+            click:function(){
+                    var num = $("#star-hint").text() *2;
+                    var myConde = num.toFixed(0);
+                    var url = path.api + '/api/setActivityScore';
+                    var getData = {
+                        activity_id:activity_id,
+                        score:myConde
+                    }
+                    api.ajaxGet(url,getData,function(res){
+                        if(res.type == "success") {
+                            layer.msg("评分成功");
+                            layer.close(index);
+                            user_score = myConde;
+                            var average_score = res.data.average_score;
+                            $("#total_code").text(average_score);
+                            starReadOnly();  
+                        }else{
+                            layer.msg(res.message,{icon:5});
+                        }
+                    })
+               
+             }
+          });
+        }else{
+           starReadOnly();    
         }
        }
+
+
+
+
+
+
+    function starReadOnly(){
+        var _star = $("#star-score");
+        _star.raty({
+            precision: true,
+            targetKeep: false,
+            readOnly:true,
+            size: 22,
+            width: 130,
+            path:path.img,
+            number: 5,
+            precision: false,
+            // round: { down: .25, full: .6, up: .76 },
+            score: function(){
+              $("#fen").html("<span class='code'>"+ user_score +"</span> 分");
+              $("#fen").css("visibility","visible");
+              $("#star-score").find('img').attr("title","");
+              return user_score; 
+            },
+        });
+          setTimeout(function(){
+           $("#star-score").find('img').attr("title","");
+         },150)
+      }
 })
 
+        
 
+    
 
 
        

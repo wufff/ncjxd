@@ -2,35 +2,30 @@ require(["jquery","layui","path","page","num","api","boot-dropdown"],function($,
   var layer = layui.layer;
   var form = layui.form;
   var room_num = "";
+  var school_classify = 1;
+  var school_id = "";
+  var is_ss = true;
+  var loading;
+
   ui();
   initPage(1);
 
-  form.on('select(city)', function(data){
-     // console.log(data.value)
-     var getData = {
-      area_id:data.value,
-      type:3
-     }
-     var url = "/api/getAreaList";
-     if(data.value){
-      api.ajaxGet(url,getData,function(res){
-        if(res.type == "success") {
-          var list = res.data.data.list;
-          var html = '<option value="">选择区县</option>';
-          for(var i=0;i<list.length;i++){
-             html += '<option value="'+ list[i].node_encrypt_id +'">'+ list[i].node_name+'</option>'
-          }
-           
-         $("select[name=area]").html(html);
-         $("select[name=area]").val("");
-          form.render('select');
-       }
-     })
-     }else{
-       $("select[name=area]").html('<option value="">全部</option>');
-          form.render('select');
-     }
+form.on('select(city)', function(data){
+     renderArea(data.value)
+    $("#inputText").val("");
+    $("#rebox").hide();
+    school_id = "";
 }); 
+
+
+ form.on('select(area)', function(data){
+     // console.log(data.value)
+      $("#inputText").val("");
+      $("#rebox").hide();
+      school_id = "";
+}); 
+
+
 
 
 form.on('select(grade)', function(data){
@@ -57,23 +52,67 @@ form.on('select(grade)', function(data){
      $("select[name=subject]").html('<option value="">全部</option>');
      form.render('select');
    }
-  
- 
+
 });   
       
-   //搜索
-  $("#searchBt").click(function(){
-      initPage(1);
+   //搜索school_classify1:中心校,2:教学点
+$("#searchBt").click(function(){
+    var keyword = $("#inputText").val();
+    if(keyword){
+        var  url = path.api+"/api/getSchoolAreaData";
+        api.ajaxGet(url,{keyword:keyword},function(res){
+                console.log(res);
+               if(res.type == "success") {
+                  var list = res.data.data;
+                  console.log(list);
+                  var length = list.length;
+                  var html = '<option value="">'+length+'条 搜索结果</option>';
+                  for(var i=0;i<list.length;i++){
+                     html += '<option value="'+ list[i].city_id +'|'+ list[i].county_id +'|'+list[i].school_encrypt_id+'">'+ list[i].school_name+'</option>'
+                  }
+                   
+                 $("select[name=ssrez]").html(html);
+                 $("select[name=ssrez]").val("");
+                  form.render('select');
+               }else{
+                  $("select[name=ssrez]").html('<option value="">0 条搜索结果</option>');
+                  form.render('select');
+               }
+              
+              $("#rebox").show();
+        })
+    }
+   
   })
 
 
 
-// $(".tag").on("click","span",function(){
-//       if($(this).hasClass('active')){
-//         return;
-//       }
-//       alert(123);
-//    })
+
+$("#searchBtBig").click(function(){
+    initPage(1);
+})
+
+
+form.on('select(ssrez)', function(data){
+  console.log(data.value)
+   if(data.value){
+      var text = $("select[name=ssrez]").find("option:selected").text();
+      $("#inputText").val(text);
+      var arry = data.value.split('|');
+      var cityId = arry[0];
+      var area = arry[1];
+      school_id = arry[2]
+      $("select[name=city]").val(cityId);
+      renderArea(cityId,area);
+      form.render('select');
+   }else{
+      $("#inputText").val("");
+   }
+   $("#rebox").hide();
+});   
+
+
+
 $(".tagItem").click(function(){
    if($(this).hasClass('active')){
       return;
@@ -82,24 +121,35 @@ $(".tagItem").click(function(){
 
 })
 
+$(".tagItem2").click(function(){
+   if($(this).hasClass('active')){
+      return;
+   }
+   school_classify = $(this).attr("school_classify");
+})
 
 
 
-
-  function initPage (goPage){
+  function initPage (goPage,cumdata){
+      loading = layer.load(5);
       var data = {
-       city_id:$("select[name=city]").val(),
-       area_id:$("select[name=area]").val(),
-       stage_id:$("select[name=grade]").val(),
-       subject_id:$("select[name=subject]").val(),
-       page:1,
-       page_count:10,
-       room_num:room_num,
-       v:new Date().getTime()
-   };
-  
-       var url = path.api+"/api/getTodayCentreSchoolPiliList";
-       var getData = "&page=1&page_count=12&city_id="+data.city_id+"&area_id="+data.area_id+"&stage_id="+data.stage_id+"&subject_id="+data.subject_id+"&room_num="+data.room_num+"&v="+ new Date().getTime();
+         city_id:$("select[name=city]").val(),
+         area_id:$("select[name=area]").val(),
+         stage_id:$("select[name=grade]").val(),
+         subject_id:$("select[name=subject]").val(),
+         page:1,
+         page_count:10,
+         room_num:room_num,
+         school_id:school_id,
+         v:new Date().getTime()
+         }
+
+    if(school_classify == 1) {
+          var url = path.api + "/api/getTodayCentreSchoolPiliList";
+     }else{
+          var url = path.api + "/api/getTodaySchoolPiliList";
+     }
+      var getData = "&page=1&page_count=12&city_id="+data.city_id+"&area_id="+data.area_id+"&school_id="+school_id+"&stage_id="+data.stage_id+"&subject_id="+data.subject_id+"&room_num="+data.room_num+"&v="+ new Date().getTime();
       // console.log(getData);
       pages.getAjax(url,getData,function(data){
           // console.log(data);
@@ -107,9 +157,11 @@ $(".tagItem").click(function(){
              var total = data.data.data.total;
              page =  new pages.jsPage(total,"pageNum","12",url,getData,buildTable,goPage,null);
              pages.pageMethod.call(page); 
+             layer.close(loading);
            }else{
              $("#tbody").html('<tr><td colspan="9" style="height:120px;">暂无数据~！</td></td>');
              $(".tableLoading").html('');
+              layer.close(loading);
              return;
          }
       })
@@ -171,9 +223,49 @@ $(".tagItem").click(function(){
       $(this).siblings().removeClass('active');
       $(this).addClass('active');
    })
+   $("#inputText").focus(function(event) {
+      $("#rebox").hide();
+    });
   }
 
+  // function init() {
+  //     $("select[name=city]").val("");
+  //     $("select[name=area]").html('<option value="">全部</option>');
+  //     form.render('select');
+  // }
 
 
+  function renderArea(cityId,value){
+      var url = "/api/getAreaList";
+    if(cityId != ""){
+     var getData = {
+        area_id:cityId,
+        type:3
+     }
+      api.ajaxGet(url,getData,function(res){
+        if(res.type == "success") {
+          var list = res.data.data.list;
+          var html = '<option value="">选择区县</option>';
+          for(var i=0;i<list.length;i++){
+             html += '<option value="'+ list[i].node_encrypt_id +'">'+ list[i].node_name+'</option>'
+          }
+           
+         $("select[name=area]").html(html);
+         if(value){
+           $("select[name=area]").val(value);
+         }else {
+             $("select[name=area]").val("");
+         }
+          form.render('select');
+       }
+     })
+     }else{
+       $("select[name=area]").html('<option value="">全部</option>');
+          form.render('select');
+     }
 
+  }
 })
+
+
+

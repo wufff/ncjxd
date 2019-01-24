@@ -6,7 +6,7 @@
  * @version $Id$
  */
 
-require(["jquery"],function($){
+require(["jquery","boot-dropdown"],function($){
      var RecType = $(".mediaBox").data("type");
      var res = $(".mediaBox").data("res");
      // var res = "http://img.ksbbs.com/asset/Mon_1703/d0897b4e9ddd9a5.mp4";

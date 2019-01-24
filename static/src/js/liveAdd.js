@@ -1,4 +1,4 @@
-require(["jquery", "layui", "path", "upLoad", "tools"], function($, layui, path, upLoad, tools) {
+require(["jquery", "layui", "path", "upLoad", "tools","boot-dropdown"], function($, layui, path, upLoad, tools) {
   var layer = layui.layer;
   var upload = layui.upload;
   var form = layui.form;

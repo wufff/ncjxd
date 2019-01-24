@@ -4,7 +4,7 @@
  * @date    2018-12-31 15:36:02
  * @version $Id$
  */
-require(["jquery","layui","path","tools","page","api"],function($,layui,path,tools,pages,api){
+require(["jquery","layui","path","tools","page","api","boot-dropdown"],function($,layui,path,tools,pages,api){
    var form = layui.form;
    var currentWeek = 0;
    var currentMouth = 0;

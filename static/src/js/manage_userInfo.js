@@ -1,4 +1,4 @@
-require(["layui", "path","api"], function(layui, path,api) {
+require(["layui", "path","api","boot-dropdown"], function(layui, path,api) {
     var layer = layui.layer;
     var upload = layui.upload;
     var form = layui.form;

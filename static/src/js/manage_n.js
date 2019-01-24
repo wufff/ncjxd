@@ -1,4 +1,4 @@
-require(["layui", "path","tools","page","api"], function(layui, path,tools,pages,api) {
+require(["layui", "path","tools","page","api","boot-dropdown"], function(layui, path,tools,pages,api) {
 		    var layer = layui.layer;
 		    var element = layui.element;
 		    var $ = jQuery = layui.jquery; 
@@ -7,7 +7,6 @@ require(["layui", "path","tools","page","api"], function(layui, path,tools,pages
             var page_3;
             var dialog;
             var current = 1;
-        
         initPage (1,1);
         setTimeout(function(){
         	initPage (2,1);
@@ -16,20 +15,10 @@ require(["layui", "path","tools","page","api"], function(layui, path,tools,pages
         	initPage (3,1);
         },400) 
 
-
-
-         
-
        element.on('tab(docDemoTabBrief)', function(data){
 		  current = data.index + 1;
 		  console.log(current);
 		});
-
-
-
-
-
-
 
 		$("body").on("click",".del",function(){
 		   	    var _this = this;
@@ -51,13 +40,11 @@ require(["layui", "path","tools","page","api"], function(layui, path,tools,pages
 
 		  })
   
-
      $("body").on("click",".change",function(){
 		   	    var _this = this;
 		   	    var notice_id = $(_this).parents("tr").data("id");
 		        window.location.href ="/manage/addNotice?id="+notice_id;
 		  })
-
 
        $("#add").click(function(){
             dialog =   layer.open({
@@ -71,12 +58,6 @@ require(["layui", "path","tools","page","api"], function(layui, path,tools,pages
 		        }
             });
         })
-
-
-
-
-
-
 
  function initPage (tpye,goPage){
       var url = path.api + '/api/getManageNoticeList';

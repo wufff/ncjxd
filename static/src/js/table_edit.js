@@ -5,7 +5,7 @@
  * @version $Id$
  */
  
-require(["layui","path","tools","num","api"],function(layui,path,tools,num,api){
+require(["layui","path","tools","num","api","boot-dropdown"],function(layui,path,tools,num,api){
       var layer = layui.layer;
       var form = layui.form;
       var element = layui.element;

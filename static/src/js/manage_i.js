@@ -1,4 +1,4 @@
-require(["layui","path","page","upLoad","api"], function(layui, path,pages,upLoad,api) {
+require(["layui","path","page","upLoad","api","viewPhoto","boot-dropdown"], function(layui, path,pages,upLoad,api,view) {
     var layer = layui.layer;
     var form = layui.form;
     var $ = jQuery = layui.jquery; 
@@ -7,6 +7,7 @@ require(["layui","path","page","upLoad","api"], function(layui, path,pages,upLoa
     var Upvalue = [];
     var upLoad = upLoad.imgMost('upbtn');
     initPage (1);
+    view.viewimg("#body");
     
     
 
@@ -150,12 +151,12 @@ require(["layui","path","page","upLoad","api"], function(layui, path,pages,upLoa
         }
       })
      
-
+  
       var html = '';
       for (var i = 0; i < data.length; i++) {
         html +=  '<div class="layui-col-md3">'
         html +=  '<div class="inner">'
-        html +=  '<img src="'+ data[i].img +'">'
+        html +=  '<a href="'+ data[i].img +'"><img src="'+ data[i].img +'"></a>'
         html +=     '</div>'
         html +=   '<p class="title_main">上传时间：'+data[i].time  
         html +=   '</p>'

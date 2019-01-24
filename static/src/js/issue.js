@@ -5,7 +5,7 @@
  * @date    2018-11-13 15:26:43
  * @version $Id$
  */
-require(["jquery","layui","path","ZeroClipboard","upLoad","tools","api"], function($,layui, path,ZeroClipboard,upLoad,tools,api) {
+require(["jquery","layui","path","ZeroClipboard","upLoad","tools","api","boot-dropdown"], function($,layui, path,ZeroClipboard,upLoad,tools,api) {
     window['ZeroClipboard'] = ZeroClipboard;
     var layer = layui.layer;
     var form = layui.form;

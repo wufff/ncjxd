@@ -1,10 +1,12 @@
-require(["layui","path","page","api"], function(layui,path,pages,api) {
+require(["layui","path","page","api","boot-dropdown"], function(layui,path,pages,api) {
     var layer = layui.layer;
     var $ = jQuery = layui.jquery; 
     var form = layui.form;
     var uid;
     var dialog;
     initPage (1);
+
+
 
 
 
@@ -45,9 +47,6 @@ function initContorl (data){
 
 
 
-
-
- 
   form.on('submit(control)', function(data){
             var getData = data.field;
             getData.uid = uid;
@@ -67,33 +66,20 @@ function initContorl (data){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
    function initPage (goPage){
       var url = $("#seciton").attr("url");
       var getData = "page=1&v="+ new Date().getTime() ;
       pages.getAjax(url,getData,function(res){
           console.log(res);
-         if( res.type == "success"){
+         if(res.data.data.length == 0){
+                  $("#tbody").html('<tr><td colspan="7" class="noneDataTd">暂无数据~！</td></td>');
+                  $(".tableLoading").html('');
+                   return;
+             }
+             var length = res.data.data.length;
              var total = res.data.count;
-             page =  new pages.jsPage(total, "pageNum","12",url,getData,buildTable,goPage,null);
+             page =  new pages.jsPage(total, "pageNum",length,url,getData,buildTable,goPage,null);
              pages.pageMethod.call(page); 
-           }else{
-             $("#tbody").html('<tr><td colspan="7"  class="noneDataTd" >暂无数据~！</td></td>');
-             $(".tableLoading").html('');
-             return;
-         }
       })
      
     function buildTable(res) {

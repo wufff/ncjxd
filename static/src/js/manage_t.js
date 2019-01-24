@@ -1,5 +1,5 @@
 
-require(["layui", "path","page","upLoad","api"], function(layui, path,pages,upLoad,api) {
+require(["layui","path","page","upLoad","api","viewPhoto","boot-dropdown"], function(layui, path,pages,upLoad,api,view) {
     var layer = layui.layer;
     var form = layui.form;
     var $ = jQuery = layui.jquery; 
@@ -8,6 +8,7 @@ require(["layui", "path","page","upLoad","api"], function(layui, path,pages,upLo
     var dialog;
     var editeId;
     initPage (1);
+    view.viewimg("#tbody");
     upLoad.img('upImg','previewImage');
     
 

@@ -6,7 +6,7 @@
  * @version $Id$
  */
  
-require(["jquery","layui","path","ckplayer"],function($,layui,path,ckplayer){
+require(["jquery","layui","path","ckplayer","boot-dropdown"],function($,layui,path,ckplayer){
   var layer = layui.layer;
   var form = layui.form;
   var obj = [];

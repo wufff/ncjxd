@@ -1,4 +1,4 @@
-require(["layui", "path","page","api"], function(layui, path,pages,api) {
+require(["layui", "path","page","api","boot-dropdown"], function(layui, path,pages,api) {
     var layer = layui.layer;
     var $ = jQuery = layui.jquery; //用他的jquey否则弹窗会有问题
     var form = layui.form;
@@ -69,8 +69,6 @@ $("#searchBt").click(function(){
    initPage (1);
 })
 
-
- 
 
 
 $("body").on("click",".del",function(){

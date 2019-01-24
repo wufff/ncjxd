@@ -1,4 +1,4 @@
-require(["layui", "path","page","tools"], function(layui, path,pages,tools) {
+require(["layui", "path","page","tools","boot-dropdown"], function(layui, path,pages,tools) {
     var layer = layui.layer;
     var upload = layui.upload;
     var $ = jQuery = layui.jquery; //用他的jquey否则弹窗会有问题

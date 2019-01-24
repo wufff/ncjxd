@@ -6,7 +6,7 @@
  * @version $Id$
  */
  
-require(["jquery","layui","path","num","tools","api"],function($,layui,path,num,tools,api){
+require(["jquery","layui","path","num","tools","api","boot-dropdown"],function($,layui,path,num,tools,api){
    var layer = layui.layer;
    var form =  layui.form;
    var $ = jQuery = layui.jquery; 
@@ -183,49 +183,164 @@ require(["jquery","layui","path","num","tools","api"],function($,layui,path,num,
   
 
 form.on('select(city)', function(data){
-     if(data.value == city_id){
-         return;
-       }
-     // console.log(data.value)
-     $("select[name=school]").html('<option value="">请先选区县</option>');
-     $("select[name=school]").val("");
-     intInfo();
-     var getData = {
-     	area_id:data.value,
-     	type:3
+    if(data.value == city_id && data.value != "") {
+           return;
      }
-     var url = "/api/getAreaList";
-     if(data.value){
-        city_id = data.value;
-     	api.ajaxGet(url,getData,function(res){
-         // console.log(res);
-     	  if(res.type == "success") {
+     else if (data.value == "" ) {
+          intInfo();
+       $("select[name=area]").html('<option value="">请先选择市</option>');
+          form.render('select');
+          city_id = data.value; 
+          $("#inputText").val("");
+     }else {
+         intInfo();
+         renderArea(data.value);
+         city_id = data.value; 
+         $("#inputText").val("");
+     }
+      
+});  
+
+form.on('select(area)', function(data){
+     if(data.value == town_id && data.value != "") {
+          return;
+     }
+     else if (data.value == "" ) {
+          intInfo();
+       $("select[name=school]").html('<option value="">请先选择地区</option>');
+          form.render('select');
+          town_id = data.value;
+          $("#inputText").val("");
+     }else {
+        town_id = data.value;
+        renderShool(data.value);
+     }
+    $("#inputText").val("");
+});  
+
+
+form.on('select(school)', function(data){
+       if(data.value == school_id){
+        
+       }
+      weekData = now;
+      var ele = data.elem;
+      $("#inputText").val("");
+      var text = $(ele).find("option:selected").text();
+       school_name = text;
+       school_id = data.value;
+       if(data.value != ""){
+           $(".schoolName").text(school_name);
+       }else{
+           $(".schoolName").text("");
+       }
+
+
+       //现有教室才有教室id;
+      renderClassRoom (school_id,weekData,function(){
+           studyTime (school_id,weekData);
+      });
+});  
+
+
+
+
+//快速搜索
+$("#searchBt").click(function(){
+    var keyword = $("#inputText").val();
+    if(keyword){
+        var  url = path.api+"/api/getSchoolAreaData";
+        api.ajaxGet(url,{keyword:keyword},function(res){
+                console.log(res);
+               if(res.type == "success") {
+                  var list = res.data.data;
+                  console.log(list);
+                  var length = list.length;
+                  var html = '<option value="">'+length+'条 搜索结果</option>';
+                  for(var i=0;i<list.length;i++){
+                     html += '<option value="'+ list[i].city_id +'|'+ list[i].county_id +'|'+list[i].school_encrypt_id+'">'+ list[i].school_name+'</option>'
+                  }
+                   
+                 $("select[name=ssrez]").html(html);
+                 $("select[name=ssrez]").val("");
+                  form.render('select');
+               }else{
+                  $("select[name=ssrez]").html('<option value="">0 条搜索结果</option>');
+                  form.render('select');
+               }
+              $("#rebox").show();
+        })
+    }
+    return false;
+  })
+
+
+
+
+form.on('select(ssrez)', function(data){
+  console.log(data.value)
+   if(data.value){
+      var text = $("select[name=ssrez]").find("option:selected").text();
+       school_name = text;
+       $(".schoolName").text(school_name);
+      $("#inputText").val(text);
+      var arry = data.value.split('|');
+      var cityId = arry[0];
+      var area = arry[1];
+      school_id = arry[2];
+      $("select[name=city]").val(cityId);
+      renderArea(cityId,area);
+      renderShool(area,school_id);
+      form.render('select');
+      renderClassRoom (school_id,weekData,function(){
+           studyTime (school_id,weekData);
+      });
+   }else{
+      $("#inputText").val("");
+   }
+   $("#rebox").hide();
+});   
+
+
+function renderArea(cityId,value){
+    var url = "/api/getAreaList";
+    if(cityId != ""){
+     var getData = {
+        area_id:cityId,
+        type:3
+     }
+      api.ajaxGet(url,getData,function(res){
+        if(res.type == "success") {
           var list = res.data.data.list;
-          var html = '<option value="">请选择</option>';
+          var html = '<option value="">选择区县</option>';
           for(var i=0;i<list.length;i++){
              html += '<option value="'+ list[i].node_encrypt_id +'">'+ list[i].node_name+'</option>'
           }
+           
          $("select[name=area]").html(html);
-         $("select[name=area]").val("");
+         if(value){
+           $("select[name=area]").val(value);
+         }else {
+             $("select[name=area]").val("");
+         }
           form.render('select');
        }
      })
      }else{
-     	 $("select[name=area]").html('<option value="">请选择</option>');
+       $("select[name=area]").html('<option value="">此地区无数据</option>');
           form.render('select');
      }
-});  
 
-form.on('select(area)', function(data){
-    intInfo();
-     $("select[name=school]").val("");
+  }
+
+
+function renderShool(areId,value){
+    var url = path.api+"/api/getSchoolListByAreaId"
+    if(areId != ""){
      var getData = {
-        area_id:data.value,
-        is_all:is_center_school  
+        area_id:areId,
+        type:3
      }
-     var url = path.api+"/api/getSchoolListByAreaId"
-     if(data.value){
-        town_id = data.value;
       api.ajaxGet(url,getData,function(res){
         // console.log(res);
         if(res.type == "success") {
@@ -235,34 +350,25 @@ form.on('select(area)', function(data){
              html += '<option value="'+ list[i].school_encrypt_id +'">'+ list[i].school_name+'</option>'
           }
          $("select[name=school]").html(html);
-         $("select[name=school]").val("");
+        if(value){
+              $("select[name=school]").val(value);
+         }else {
+             $("select[name=school]").val("");
+         }
           form.render('select');
        }else{
          $("select[name=school]").html('<option value="">此地区无数据</option>');
           form.render('select');
        }
      })
-     }else{
-       $("select[name=school]").html('<option value="">请先选择地区</option>');
-          form.render('select');
      }
-});  
+}
+   
+       
+  
 
 
-form.on('select(school)', function(data){
-       if(data.value == school_id){
-         return;
-       }
-      weekData = now;
-      var ele = data.elem
-      var text = $(ele).find("option:selected").text();
-       school_name = text;
-       school_id = data.value;
-       //现有教室才有教室id;
-      renderClassRoom (school_id,weekData,function(){
-           studyTime (school_id,weekData);
-      });
-});  
+
 
 
    //切换周
@@ -280,6 +386,15 @@ $("body").on("click",".Add",function(){
      
 })
   
+
+
+
+
+
+
+
+
+
 
   
 $("body").on("click",".sub",function(){
@@ -741,7 +856,7 @@ $(".configConfirmTimeBt").click(function(){
             type: 1,
             title:"设置计划确认时间",
             content: $('#controlTimeComfirm'),
-            area:["750px","600px"],
+            area:["800px","500px"],
             btn:["确认","取消"],
             yes: function(index, layero){
                layer.close(index);
@@ -1047,6 +1162,7 @@ function renderClassTd(school_id,weekData){
      $("#week").text(" ");
      $("#tbody").html('<tr><td colspan="9" class="noneTd">请选择学校查询对应课表~！</td></td>');
      $("#table_header").hide(); 
+     $(".schoolName").text("");
 	 }
 
 //节假日样式

@@ -1,4 +1,4 @@
-require(["jquery","layui","path","upLoad","tools"], function($,layui, path,upLoad,tools) {
+require(["jquery","layui","path","upLoad","tools","api","boot-dropdown"], function($,layui,path,upLoad,tools,api) {
     var layer = layui.layer;
     var upload = layui.upload;
     var form = layui.form;
@@ -7,7 +7,7 @@ require(["jquery","layui","path","upLoad","tools"], function($,layui, path,upLoa
     var off = true;
     var type = 0;
     var del_ids = [];
-
+   
     var activity_id = tools.request("id");
 
     if (activity_id){
@@ -22,7 +22,7 @@ require(["jquery","layui","path","upLoad","tools"], function($,layui, path,upLoa
                  var dos =  list.list[0]
                  var medias =  list.list[1]
 
-                 console.log(dos);
+                 // console.log(dos);
                  // console.log(list.list);
                  var medias_html = "";
                  var dos_html = ""
@@ -50,7 +50,7 @@ require(["jquery","layui","path","upLoad","tools"], function($,layui, path,upLoa
                    dos_html +=       '</div>'
                   
                  }
-                 console.log(dos);
+                 // console.log(dos);
                 $("#mp4list").html(medias_html);
                 $("#doclist").html(dos_html);
               }
