@@ -4,6 +4,7 @@ define(['jquery','path','layui'], function($,path,layui) {
 		_self   = {
 		//ajax调用公共方法
 		getAjax: function(requestUrl,requestData,SuccessCallback){	
+			// var pageNum_now = queryString (requestData,"page");
 			if($("body").attr("requestData") == requestData){
 				SuccessCallback(_newobj, null);
 			}else{
@@ -16,7 +17,8 @@ define(['jquery','path','layui'], function($,path,layui) {
 						 },300)
 						 return;
 					}
-					_newobj = data;					
+					_newobj = data;	
+					// var pageNum = queryString (requestData,"page");
 					$("body").attr({"httpType":"getAjax","requestData":requestData});
 					if(SuccessCallback != undefined){
 						SuccessCallback(data, null);
@@ -52,6 +54,7 @@ define(['jquery','path','layui'], function($,path,layui) {
 			this.page();
 			this.reloadpageAjax(target, isBack);
 		},
+
 		//添加页码点击事件
 		ready2go: function(isBack) {
 			var obj = this;
@@ -234,4 +237,16 @@ define(['jquery','path','layui'], function($,path,layui) {
 		}
 	};
 	return _self;
+
+
+
+	function queryString (str1,paramName){
+            //获取url中"?"符后的字串
+            var theRequest = new Object();
+            var  strs = str1.split("&");
+            for(var i = 0; i < strs.length; i ++) {
+            theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+            return theRequest[paramName];
+   }
 });

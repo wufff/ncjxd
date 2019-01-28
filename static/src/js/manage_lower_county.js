@@ -4,7 +4,13 @@ require(["layui","path","page","api","boot-dropdown"], function(layui,path,pages
     var form = layui.form;
     var uid;
     var dialog;
-    initPage (1);
+    var page;
+    var city_id = $(".table_b").attr("city_id");
+    var loading;
+    initPage (1,city_id);
+
+
+
 
  $("body").on("click",".edit",function(){
       var tr = $(this).parents("tr");
@@ -29,6 +35,49 @@ require(["layui","path","page","api","boot-dropdown"], function(layui,path,pages
         }
       });
   })
+
+
+  form.on('select(city)', function(data){
+     var postData = {
+      city_id:data.value
+     }
+     var url = "/SchoolManage/ajaxCountyListByCityId";
+     if(data.value != 0){
+      api.ajaxPost(url,postData,function(res){
+        if(res.type == "success") {
+          var list = res.message;
+          var html = '<option value="">全部</option>';
+          for(var i=0;i<list.length;i++){
+             html += '<option value="'+ list[i].town_id +'">'+ list[i].town_name+'</option>'
+          }
+           
+         $("select[name=area]").html(html);
+         $("select[name=area]").val("");
+          form.render('select');
+       }
+     })
+     }else{
+       $("select[name=area]").html('<option value="">请先选择州县</option>');
+          form.render('select');
+     }
+});
+
+
+
+// 查询
+$("#searchBt").click(function(){
+   var cityId = $("#city").val();
+   var county_id = $("#area").val();
+   if (cityId){
+       // console.log(cityId);
+      loading = layer.load(5);
+       initPage (1,city_id,county_id);
+   }
+  
+})
+
+
+
 
 
 
@@ -58,10 +107,12 @@ require(["layui","path","page","api","boot-dropdown"], function(layui,path,pages
   });
 
 
-   function initPage (goPage){
+   function initPage (goPage,city_id,county_id){
       var url = $("#seciton").attr("url");
-      var city_id = $(".table_b").attr("city_id");
       var getData = "city_id="+ city_id +"&page=1&v="+ new Date().getTime() ;
+      if(county_id && county_id != 0){
+        getData += "&county_id="+county_id;
+      }
       pages.getAjax(url,getData,function(res){
           // console.log(res);
           if(res.data.data.length == 0){
@@ -73,14 +124,12 @@ require(["layui","path","page","api","boot-dropdown"], function(layui,path,pages
              var total = res.data.count;
              page =  new pages.jsPage(total, "pageNum",length,url,getData,buildTable,goPage,null);
              pages.pageMethod.call(page); 
-
-             
       })
      
     function buildTable(res) {
     if (res.type == "success") {
       var data = res.data.data;
-      console.log(data);
+      // console.log(data);
       if(res.data.count == 0){
           ("#tbody").html('<tr><td colspan="8"  class="noneDataTd">暂无数据~！</td></td>');
           $(".tableLoading").html('');
@@ -105,9 +154,9 @@ require(["layui","path","page","api","boot-dropdown"], function(layui,path,pages
       }
       $(".tableLoading").html(' ');
       $("#tbody").html(html);
-
+      
     }
-    
+    layer.close(loading);
   }
  }
 

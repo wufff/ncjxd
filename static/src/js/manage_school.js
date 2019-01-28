@@ -231,7 +231,6 @@ $("#SoolchsearchBt").click(function(res){
               }else if(data[i].is_relation == 1){
                 html += '<td><span class="UntyActive" school_id ="'+ data[i].id +'">已关联</span></td></tr>'
               }
-              
             }
             $("#addShooltbody").html(html);
 

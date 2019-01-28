@@ -4,7 +4,9 @@ require(["layui","path","page","api","boot-dropdown"], function(layui,path,pages
     var form = layui.form;
     var uid;
     var dialog;
-    initPage (1);
+    var loading;
+    var county_id = $(".table_b").attr("county_id");
+    initPage (1,county_id);
 
 
 
@@ -33,6 +35,48 @@ require(["layui","path","page","api","boot-dropdown"], function(layui,path,pages
         }
       });
   })
+
+
+
+  form.on('select(city)', function(data){
+     var postData = {
+      city_id:data.value
+     }
+     var url = "/SchoolManage/ajaxCountyListByCityId";
+     if(data.value != 0){
+      api.ajaxPost(url,postData,function(res){
+        if(res.type == "success") {
+          var list = res.message;
+          var html = '<option value="">全部</option>';
+          for(var i=0;i<list.length;i++){
+             html += '<option value="'+ list[i].town_id +'">'+ list[i].town_name+'</option>'
+          }
+           
+         $("select[name=area]").html(html);
+         $("select[name=area]").val("");
+          form.render('select');
+       }
+     })
+     }else{
+       $("select[name=area]").html('<option value="">请先选择州县</option>');
+          form.render('select');
+     }
+});
+
+
+
+
+$("#searchBt").click(function(){
+   var cityId = $("#city").val();
+   var county_id = $("#area").val();
+   if (cityId){
+      loading = layer.load(5);
+       // console.log(cityId);
+       initPage (1,county_id,cityId);
+   }
+})
+
+
 
 
 
@@ -66,15 +110,19 @@ require(["layui","path","page","api","boot-dropdown"], function(layui,path,pages
 
 
 
-   function initPage (goPage){
+   function initPage (goPage,county_id,city_id){
       var url = $("#seciton").attr("url");
-      var county_id = $(".table_b").attr("county_id");
+   
       var getData = "county_id="+ county_id +"&page=1&v="+ new Date().getTime() ;
+      if (city_id){
+          getData += "&city_id="+city_id
+      }
       pages.getAjax(url,getData,function(res){
           // console.log(res);
          if(res.data.data.length == 0){
                   $("#tbody").html('<tr><td colspan="7" class="noneDataTd">暂无数据~！</td></td>');
                   $(".tableLoading").html('');
+                  layer.close(loading);
                    return;
              }
              var length = res.data.data.length;
@@ -90,6 +138,7 @@ require(["layui","path","page","api","boot-dropdown"], function(layui,path,pages
       if(res.data.count == 0){
           $("#tbody").html('<tr><td colspan="8"  class="noneDataTd">暂无数据~！</td></td>');
           $(".tableLoading").html('');
+         
           return;
       }
       var html = '';
@@ -110,9 +159,9 @@ require(["layui","path","page","api","boot-dropdown"], function(layui,path,pages
       }
       $(".tableLoading").html(' ');
       $("#tbody").html(html);
-
+      layer.close(loading);
     }
-    
+     
   }
  }
 
