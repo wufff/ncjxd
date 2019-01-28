@@ -121,6 +121,7 @@ $("#searchBt").click(function(){
           if(res.data.data.length == 0){
                   $("#tbody").html('<tr><td colspan="7" class="noneDataTd">暂无数据~！</td></td>');
                   $(".tableLoading").html('');
+                   layer.close(loading);
                    return;
              }
              var length = res.data.data.length;
