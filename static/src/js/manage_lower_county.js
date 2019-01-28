@@ -41,6 +41,9 @@ require(["layui","path","page","api","boot-dropdown"], function(layui,path,pages
      var postData = {
       city_id:data.value
      }
+    if($("#city").find("option").length == 1) {
+       return;
+     }
      var url = "/SchoolManage/ajaxCountyListByCityId";
      if(data.value != 0){
       api.ajaxPost(url,postData,function(res){
