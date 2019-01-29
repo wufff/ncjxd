@@ -44,13 +44,13 @@ require(["layui", "path","api","page","boot-dropdown"], function(layui,path,api,
 
 
 $("#searchBt").click(function(){
+    loading = layer.load(5);
     initPage (1);
 })
 
 
 
 $("body").on("click",".Untying",function(){
-    loading = layer.load(3);
     var tr = $(this).parents("tr");
     var id = tr.attr("data-id");
     var classfily = tr.find(".school_classify").attr("school_classify");
@@ -453,7 +453,9 @@ function initContorlRoom (data){
        if(total == 0){
                  $("#tbody").html('<tr><td colspan="10" class="noneDataTd">暂无数据~！</td></td>');
                  $(".tableLoading").html('');
+                  layer.close(loading);
                  return;
+                
              } 
       var html = '';
       for (var i = 0; i < data.length; i++) {
@@ -481,8 +483,10 @@ function initContorlRoom (data){
       }
       $(".tableLoading").html(' ');
       $("#tbody").html(html);
+      layer.close(loading);
     }
   }
+
  }
 
 })

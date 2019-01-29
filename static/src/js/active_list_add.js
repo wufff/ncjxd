@@ -4,6 +4,7 @@ require(["jquery","layui","path","upLoad","tools","api","boot-dropdown"], functi
     var form = layui.form;
     var laydate = layui.laydate;
     var layer = layui.layer;
+    var loading;
     var off = true;
     var type = 0;
     var del_ids = [];
@@ -68,7 +69,7 @@ require(["jquery","layui","path","upLoad","tools","api","boot-dropdown"], functi
         elem: '#dataInput' //或 elem: document.getElementById('test')、elem: lay('#test') 等
       });
      upLoad.img('upImg','previewImage');
-     upLoad.videos('upVideos',4);
+     var uploader_mp4 =  upLoad.videos('upVideos',4);
      var uploader_doc = upLoad.doc('upfiles',4);
    //返回上页面
     $("#goback").click(function(){
@@ -130,29 +131,29 @@ require(["jquery","layui","path","upLoad","tools","api","boot-dropdown"], functi
         if($(".doc_item").length != 0)  {
              $(".fileName").each(function(index, el) {
              doc_names.push($(el).text());
-
-
-             $(".docPath").each(function(index, el) {
+           });
+            $(".docPath").each(function(index, el) {
                   doc_paths.push($(el).val())
              });
              getData.doc_paths = doc_paths.join(",");
              getData.doc_names = doc_names.join(",");
-        });
-  
         } 
         getData.mp4_paths = mp4_paths.join(",");
         getData.mp4_names = mp4_names.join(",");
         if(off == true){
-          layer.load(3);
-        api.ajaxGet("/api/addManageActivity",getData,function(res){
-          if(res.type == "success") {
-             window.history.go(-1);
-          }else{
-             alert("err");
-          }
-        }) 
-        }
-      } 
+          // console.log(getData);
+          loading = layer.load(3);
+          api.ajaxGet("/api/addManageActivity",getData,function(res){
+            if(res.type == "success") {
+              layer.close(loading);
+              layer.msg("发布成功");
+              setTimeout(function(){
+                 window.history.go(-1);
+              },500) 
+            }
+          }) 
+         }
+      };
 
       if(type == 1) {
          var getData = data.field;  
@@ -191,23 +192,22 @@ require(["jquery","layui","path","upLoad","tools","api","boot-dropdown"], functi
      
 
 
-        if($(".docPath").length != 0)  {
+        if($(".doc_item").length != 0)  {
              $(".fileName").each(function(index, el) {
              doc_names.push($(el).text());
-
-             $(".docPath").each(function(index, el) {
+           });
+            $(".docPath").each(function(index, el) {
                   doc_paths.push($(el).val())
              });
              getData.doc_paths = doc_paths.join(",");
              getData.doc_names = doc_names.join(",");
-        });
         } 
 
        
         getData.del_ids = del_ids.join(",");
         console.log(getData);
         if(off == true){
-          var loading = layer.load(3);
+          loading = layer.load(3);
           var url = path.api + "/api/modifyManageActivityData";
         api.ajaxGet(url,getData,function(res){
           console.log(res);
@@ -234,7 +234,10 @@ require(["jquery","layui","path","upLoad","tools","api","boot-dropdown"], functi
    
 
   $("#mp4list").on("click",".del",function(){
-     $(this).parent().remove();
+     var id = $(this).parent(".vidoe_item").attr("id");
+      var file  =  uploader_mp4.getFile(id);
+      uploader_mp4.removeFile(file)
+      $(this).parent().remove();
   })
 
   $("#doclist").on("click",".del",function(){

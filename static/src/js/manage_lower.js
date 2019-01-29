@@ -94,7 +94,7 @@ function initContorl (data){
       var html = '';
       for (var i = 0; i < data.length; i++) {
         html += '<tr data-id="'+ data[i].uid +'" data-mobile="'+ data[i].user_mobile +'" data-email="'+data[i].user_email +'">'
-        html += '<td class="sn">' + (i+1) + '</td>'
+        html += '<td class="sn">' + data[i].sel + '</td>'
         if(data[i].city_url){
              html += '<td class="city_name"><a href="'+ data[i].city_url +'">' +data[i].city_name + '</a></td>'
         }else {

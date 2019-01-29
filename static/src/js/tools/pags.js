@@ -1,12 +1,15 @@
 define(['jquery','path','layui'], function($,path,layui) {
 	var layer = layui.layer;
+	var getStatu = 0;
 	var _newobj = "",
 		_self   = {
 		//ajax调用公共方法
 		getAjax: function(requestUrl,requestData,SuccessCallback){	
-			// var pageNum_now = queryString (requestData,"page");
-			if($("body").attr("requestData") == requestData){
+			var pageNum_now = queryString (requestData,"page");
+			var pageStore =  $("body").attr("page");
+			if($("body").attr("requestData") == 1 && pageNum_now ==  pageStore){
 				SuccessCallback(_newobj, null);
+				$("body").attr({"requestData":0});
 			}else{
 				requestData += "&jump=1";
 				$.get(requestUrl,requestData,function(data){
@@ -18,8 +21,9 @@ define(['jquery','path','layui'], function($,path,layui) {
 						 return;
 					}
 					_newobj = data;	
-					// var pageNum = queryString (requestData,"page");
-					$("body").attr({"httpType":"getAjax","requestData":requestData});
+                   	getStatu = 1;
+					var pageNum = queryString (requestData,"page");
+					$("body").attr({"httpType":"getAjax","requestData":1,"page":pageNum});
 					if(SuccessCallback != undefined){
 						SuccessCallback(data, null);
 					}

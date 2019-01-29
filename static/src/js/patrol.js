@@ -59,6 +59,7 @@ form.on('select(grade)', function(data){
 $("#searchBt").click(function(){
     var keyword = $("#inputText").val();
     if(keyword){
+        // $("#inputText").css("background","#fffbe9");
         var  url = path.api+"/api/getSchoolAreaData";
         api.ajaxGet(url,{keyword:keyword},function(res){
                 console.log(res);
@@ -89,6 +90,7 @@ $("#searchBt").click(function(){
 
 
 $("#searchBtBig").click(function(){
+    loading = layer.load(5);
     initPage(1);
 })
 
@@ -98,6 +100,7 @@ form.on('select(ssrez)', function(data){
    if(data.value){
       var text = $("select[name=ssrez]").find("option:selected").text();
       $("#inputText").val(text);
+
       var arry = data.value.split('|');
       var cityId = arry[0];
       var area = arry[1];
@@ -105,10 +108,12 @@ form.on('select(ssrez)', function(data){
       $("select[name=city]").val(cityId);
       renderArea(cityId,area);
       form.render('select');
+
    }else{
       $("#inputText").val("");
    }
-   $("#rebox").hide();
+     // $("#inputText").css("background","#fff");
+     $("#rebox").hide();
 });   
 
 
@@ -131,7 +136,6 @@ $(".tagItem2").click(function(){
 
 
   function initPage (goPage,cumdata){
-      loading = layer.load(5);
       var data = {
          city_id:$("select[name=city]").val(),
          area_id:$("select[name=area]").val(),

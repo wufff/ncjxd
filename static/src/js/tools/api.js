@@ -24,6 +24,7 @@ define(["jquery","layui"], function($,layui) {
 			});
 		},
 
+
 		ajaxPost:function(requestUrl,requestData,SuccessCallback,successPar){
 			requestData.jump = 1;
 			$.ajax({
@@ -96,7 +97,15 @@ define(["jquery","layui"], function($,layui) {
                 
             },
             error: function (res) {
-                alert(res);
+            	var obj = { 
+                    type:"ajax返回错误",
+                    data:res
+            	 }
+                console.log(res);
+                layer.msg("数据较大，服务器正在处理，请稍后查询结果！",{time:1500});
+                 setTimeout(function(){
+						window.location.href ="/";
+			    },1500)
             }
         });
        }

@@ -22,8 +22,8 @@ require(["layui","path","page","api","boot-dropdown"], function(layui,path,pages
           user_status:tr.find('.user_status').attr("user_status"),
           school_name:tr.find('.school_name').text()
       }
-     initContorl (data);
-     console.log(data);
+
+    initContorl (data);
     dialog = layer.open({
         type: 1,
         title:"编辑",
@@ -96,13 +96,15 @@ $("#searchBt").click(function(){
   form.on('submit(control)', function(data){
             var getData = data.field;
             getData.uid = uid;
-            console.log(getData)
+            // console.log(getData)
             var url = '/UserManage/ajaxEditSchoolUser';
             api.ajaxPost(url,getData,function(res){
                 if(res.type == "success"){
                    layer.msg("修改成功",{time:800})
                    layer.close(dialog);
-                   initPage (1);
+                   var cityId = $("#city").val();
+                   var county_id = $("#area").val() ? $("#area").val() : $(".table_b").attr("county_id");
+                   initPage (1,county_id,cityId);
                 }else{
                    layer.msg(res.message,{time:800})
                 }
@@ -115,7 +117,6 @@ $("#searchBt").click(function(){
 
    function initPage (goPage,county_id,city_id){
       var url = $("#seciton").attr("url");
-   
       var getData = "county_id="+ county_id +"&page=1&v="+ new Date().getTime() ;
       if (city_id){
           getData += "&city_id="+city_id
@@ -141,7 +142,6 @@ $("#searchBt").click(function(){
       if(res.data.count == 0){
           $("#tbody").html('<tr><td colspan="8"  class="noneDataTd">暂无数据~！</td></td>');
           $(".tableLoading").html('');
-         
           return;
       }
       var html = '';

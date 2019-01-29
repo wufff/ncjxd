@@ -239,8 +239,9 @@ define(["jquery","path"],function($,path){
 			                    	    }
 			                    	    
 			                            // document.getElementById('mp4_file_size').value = file.size;
+			                           uploader_mp4.start();
 			                    });
-			                    uploader_mp4.start();
+			                  
 			            },
 
 			            UploadProgress: function(up, file) {
@@ -250,12 +251,12 @@ define(["jquery","path"],function($,path){
 			                
 			            },
 
-			            Error: function(up, err) {
-			                document.getElementById('mp4_console').appendChild(document.createTextNode("\nError #" + err.code + ": " + err.message));
-			            },
+			            // Error: function(up, err) {
+			            //     document.getElementById('mp4_console').appendChild(document.createTextNode("\nError #" + err.code + ": " + err.message));
+			            // },
 			            
 			            OptionChanged: function(up, option_name, new_value, old_value) {
-			                
+			                  
 			            }
 			    }
 			});
@@ -263,7 +264,6 @@ define(["jquery","path"],function($,path){
 			uploader_mp4.bind('FileUploaded',function(uploader,file,responseObject){
 			    var msg = JSON.parse(responseObject.response);
 			    if (msg.code == 1000) {
-			    
 			       $("#"+file.id).find(".vidoePath").val(msg.data.file_path);
 			    }
 			});

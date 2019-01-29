@@ -125,9 +125,8 @@ $("body").on("click",".del",function(){
             api.ajaxPost(url,getData,function(res){
                 // console.log(res);
                 if(res.type == "success"){
-                   layer.msg(res.message,{time:800})
+                   layer.msg("编辑成功",{time:800})
                    layer.close(dialog);
-                   $("#search_name").val("");
                    initPage (1);
                 }else{
                    layer.msg(res.message,{time:800})
@@ -202,20 +201,21 @@ $("body").on("click",".del",function(){
           status_descript:item.user_status_descript,
           time: item.addtime,
           mobile:item.user_mobile,
-          position:item.user_position
+          position:item.user_position,
+          sn:item.sel
         }
       })
       // console.log(data);
       var html = '';
       for (var i = 0; i < data.length; i++) {
         html += '<tr data-uid="' + data[i].uid + '" user_mobile="' + data[i].mobile + '"  user_position="' + data[i].position + '">'
-        html += '<td class="sn">' + (i+1) + '</td>'
+        html += '<td class="sn">' + data[i].sn + '</td>'
         html += '<td class="user_name">' + data[i].username + '</td>'
         html += '<td class="user_realname">' + data[i].realname + '</td>'
         html += '<td class="user_operate" user_type="'+ data[i].type+'">' + data[i].operate + '</td>'
-        html += '<td class="user_status" user_status="'+ data[i].status+'">' + data[i].status_descript + '</td>'
+        html += '<td class="user_status user_status_'+ data[i].status +'" user_status="'+ data[i].status+'">' + data[i].status_descript + '</td>'
         html += '<td>' + data[i].time + '</td>'
-        html += '<td><a class="change">修改</a><a class="del">删除</a></td>'
+        html += '<td><a class="change">编辑</a><a class="del">删除</a></td>'
         html += ' </tr>'
       }
       $(".tableLoading").html(' ');

@@ -9,9 +9,6 @@ require(["layui","path","page","api","boot-dropdown"], function(layui,path,pages
     var loading;
     initPage (1,city_id);
 
-
-
-
  $("body").on("click",".edit",function(){
       var tr = $(this).parents("tr");
       uid = tr.attr("data-id");
@@ -74,14 +71,10 @@ $("#searchBt").click(function(){
    if (cityId){
        // console.log(cityId);
       loading = layer.load(5);
-       initPage (1,city_id,county_id);
+      initPage (1,city_id,county_id);
    }
   
 })
-
-
-
-
 
 
  function initContorl (data){
@@ -101,7 +94,9 @@ $("#searchBt").click(function(){
                 if(res.type == "success"){
                    layer.msg("修改成功",{time:800})
                    layer.close(dialog);
-                   initPage (1);
+                   var cityId = $("#city").val();
+                   var county_id = $("#area").val();
+                   initPage (1,city_id,county_id);
                 }else{
                    layer.msg(res.message,{time:800})
                 }
@@ -142,7 +137,7 @@ $("#searchBt").click(function(){
       var html = '';
       for (var i = 0; i < data.length; i++) {
          html += '<tr data-id="'+ data[i].uid +'" data-mobile="'+ data[i].user_mobile +'" data-email="'+data[i].user_email +'">'
-        html += '<td class="sn">' + (i+1) + '</td>'
+        html += '<td class="sn">' + data[i].sel + '</td>'
         if(data[i].county_url){
              html += '<td class="city_name"><a href="'+ data[i].county_url +'">' +data[i].county_name + '</a></td>'
         }else {
