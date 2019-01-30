@@ -23,6 +23,9 @@ require(["jquery","layui","path","num","tools","api","boot-dropdown"],function($
    var holidays = [];
    var isTodayStr = "";
    var laydate = layui.laydate;
+   //设置时间
+  var range = "2018.8.1-2019.1.31";
+  var rangeforTime = "2018.8.1 00:00:00-2019.1.31 00:00:00";
    //是否可以修改时间
    var st_is_modify; 
    var loading; 
@@ -526,12 +529,12 @@ $(".configClassTimeBt").click(function(){
           console.log(res);
           if(res.type == "success"){
              var list = res.data.data.time_info;
-              if(list.length == 0){
-                  return;
-              }
+              st_is_modify = res.data.data.st_is_modify ? res.data.data.st_is_modify : 2;
+             if(list && list.length > 0){
              var up = res.data.data.noon_count.up;
              var down = res.data.data.noon_count.down;
-             st_is_modify = res.data.data.st_is_modify;
+            
+             console.log(st_is_modify);
              var  tat = up + down;
              //渲染上午
              $(".up").html("");
@@ -585,20 +588,29 @@ $(".configClassTimeBt").click(function(){
                   }); 
                     
              }
-              if(st_is_modify == 0){
 
-                $(".timeInput").attr("disabled",true);
-                $("#titlePont").show();
+         }
+             //st_is_modify 0 计划中  1 可以 2学期不存在
+              if(st_is_modify == 0 ){
+                 $(".timeInput").attr("disabled",true);
+                 $("#titlePont").text("课程在计划中,暂时不能修改时间");
+                 $("#titlePont").show();
                  $("#upAddbt").hide();
-                    $("#downAddbt").hide();
-             }else{
+                  $("#downAddbt").hide();
+             }else if (st_is_modify == 2){
+                 $(".timeInput").attr("disabled",true);
+                 $("#titlePont").text("不能设置上课时间，因为没有设置学期，请先设置学期");
+                 $("#titlePont").show();
+                 $("#upAddbt").hide();
+                  $("#downAddbt").hide();
+             }else {
                 $(".timeInput").attr("disabled",false);
                 $("#titlePont").hide();
                  $("#upAddbt").show();
-                    $("#downAddbt").show();
+                  $("#downAddbt").show();
              }
-          }else{
-            layer.msg("未设置学期,请先设置学期",{icon:5}) 
+            
+            console.log(st_is_modify)
           }
    })
    layer.open({
@@ -609,7 +621,7 @@ $(".configClassTimeBt").click(function(){
             btn:["确认","取消"],
             yes: function(index, layero){
 
-             if(st_is_modify == 0){
+             if(st_is_modify == 0 || st_is_modify == 2){
                  //不能设置直接return;
                  layer.close(index);
                  return;
@@ -658,7 +670,7 @@ $("#upAddbt").click(function(){
           ,btns: ['confirm']
         ,ready: formatminutesUp
         ,range: '-'
-        ,value:'12:00 - 12:45'
+        ,value:'11:00 - 11:45'
     });
 })
 
@@ -668,6 +680,8 @@ $("#downAddbt").click(function(){
      layer.msg("已达上线",{icon:5});
      return;
   }
+
+ 
   var id = 'downtimebox_'+(length+1);
   var html = '<div class="item">'
       html += '<span>节次：</span>'
@@ -732,18 +746,21 @@ function initstudyTimelang() {
          console.log(res);
          if(res.type == "success") {
               var list = res.data.data;
-              $("#studyTime_title").html(list.title); 
-             
+              $(".studyTime_title").html(list.title); 
               var start_time = list.term_time.start_time.slice(0, 10);
               var end_time = list.term_time.end_time.slice(0, 10);
                laydate.render({
                   elem: '#studyStart_time',
-                  value:start_time
+                  value:start_time,
+                  min: '2018-8-1',
+                  max: '2019-1-31'
                 });
 
                 laydate.render({
                   elem: '#studyEnd_time',
-                  value:end_time
+                  value:end_time,
+                  min: '2018-8-1',
+                  max: '2019-1-31'
                 });
          }else {
             layer.mag(res.message);
@@ -857,15 +874,38 @@ function redenerHoildForm(){
 // controlTimeComfirm
 
 $(".configConfirmTimeBt").click(function(){
-    laydate.render({
-         elem: '#ChirformStart_time'
-         ,type: 'datetime'
+  //初始化弹窗
+  var url = path.api + "/api/getSchoolTermWeek";
+  var commitTitle = "";
+  var studytype = "";
+   api.ajaxGet(url,{school_id:school_id},function(res){
+         console.log(res);
+         if(res.type == "success") {
+              var list = res.data.data;
+              studytype = list.term;
+              commitTitle = list.title;
+              $(".studyTime_title").html(list.title); 
+              var start_time = list.term_time.start_time.slice(0, 10);
+              var end_time = list.term_time.end_time.slice(0, 10);
+               laydate.render({
+                  elem: '#ChirformStart_time'
+                  ,type: 'datetime'
+                   ,value:start_time+" 00:00:00"
+                    ,min: '2018-8-1 00:00:00'
+                    ,max: '2019-1-31 00:00:00'
+                });
 
-    });
-     laydate.render({
-         elem: '#ChirformEnd_time'
-         ,type: 'datetime'
-    });
+                laydate.render({
+                  elem: '#ChirformEnd_time'
+                  ,type: 'datetime'
+                  ,value:end_time+" 00:00:00"
+                  ,min: '2018-8-1 00:00:00'
+                  ,max: '2019-1-31 23:59:00'
+                });
+         }else {
+            layer.mag(res.message);
+         }
+    })
     layer.open({
             type: 1,
             title:"设置计划确认时间",
@@ -873,14 +913,28 @@ $(".configConfirmTimeBt").click(function(){
             area:["800px","500px"],
             btn:["确认","取消"],
             yes: function(index, layero){
-               layer.close(index);
+                layer.close(index)
             }
    });
+   
+  $("#addconfirmtimedaysbt").click(function(){
+    var  url = path.api + "/api/setSchoolCourseInfo";
+    var start_time = $("#ChirformStart_time").val();
+    var end_time = $("#ChirformEnd_time").val();
+    if (start_time && end_time){
+       api.ajaxGet(url,{start_time:start_time,end_time:end_time,year:commitTitle,type:studytype},function(res){
+            if(res.type == "success"){
+               layer.msg("设置成功",{time:800})
+            }
+       })
+    }
+ })
 })
 
 
 
 
+  
 
 
 
@@ -1250,7 +1304,7 @@ function renderClassTd(school_id,weekData){
                 var am = $(ele).find("ol").eq(0).find('li');
                 for (var i = 0; i < am.length; i++) {
                 var am00 = am[i].innerText;
-                if (am00 != "08" && am00 != "09"  && am00 != "10" && am00 != "11" ) {
+                if (am00 != "08" && am00 != "09"  && am00 != "10" && am00 != "11" && am00 != "12") {
                     am[i].remove()
                   } 
                 }  

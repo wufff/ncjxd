@@ -102,10 +102,7 @@ define(["jquery","layui"], function($,layui) {
                     data:res
             	 }
                 console.log(res);
-                layer.msg("数据较大，服务器正在处理，请稍后查询结果！",{time:1500});
-                 setTimeout(function(){
-						window.location.href ="/";
-			    },1500)
+                layer.msg("网络错误，请联系管理员",{time:800});
             }
         });
        }
