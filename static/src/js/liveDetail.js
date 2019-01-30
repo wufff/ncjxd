@@ -17,17 +17,31 @@ require(["jquery","ckplayer","api","path","layui","star","boot-dropdown"],functi
  function  vidoe () {
    /*初始化*/ 
     var mp4_rec = $("#aboutVidoe a").eq(0).attr("download");
-    var videoObject = {
-		container: '#video',//“#”代表容器的ID，“.”或“”代表容器的class
-		variable: 'player',//该属性必需设置，值等于下面的new chplayer()的对象
-		flashplayer:false,//如果强制使用flashplayer则设置成true
-		video:mp4_rec,//视频地址
-    logo:null
-		};
-		var player = new ckplayer(videoObject);
-
-  /*切换视频*/ 
+    var as = $("#aboutVidoe a");
+    as.each(function(index, el) {
+       if($(el).attr("data-status") == 1){
+              $(el).addClass('active');
+              var mp4_rec =$(el).attr("download");
+              var videoObject = {
+              container: '#video',//“#”代表容器的ID，“.”或“”代表容器的class
+              variable: 'player',//该属性必需设置，值等于下面的new chplayer()的对象
+              flashplayer:false,//如果强制使用flashplayer则设置成true
+              video:mp4_rec,//视频地址
+              logo:null
+              };
+              var player = new ckplayer(videoObject);
+              return;
+       }else {
+             var text = $(el).text();
+             var str = text.slice(0,5) + "... " + "视频转换中..稍后刷新可观看";
+             $(el).text(str);
+       }
+    });
+   
    $("#aboutVidoe a").click(function(){
+       if($(this).attr("data-status") == 0) {
+          return;
+       }
        $("#aboutVidoe a").removeClass('active');
        $(this).addClass('active');
        var videSrc = $(this).attr("download")

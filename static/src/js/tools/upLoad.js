@@ -58,7 +58,7 @@ define(["jquery","path"],function($,path){
 				var msg = JSON.parse(responseObject.response);
 				if (msg.code == 1000) {
 					// console.log(msg.data);
-					document.getElementById('img_file_path').value = msg.data.file_path;
+					// document.getElementById('img_file_path').value = msg.data.file_path;
 					// doument.getElementById('img_str').value = document.getElementById('img_str').value + msg.data.file_path + ",";
 
 				}
@@ -92,7 +92,7 @@ define(["jquery","path"],function($,path){
 		},
 
          //注意预览包裹层为
-		 imgMost:function(button,Image){
+		 imgMost:function(button,num){
 			var uploader = new plupload.Uploader({
 				runtimes: 'html5,flash,silverlight,html4',
 				browse_button: button,
@@ -122,34 +122,35 @@ define(["jquery","path"],function($,path){
 				        //     uploader.splice(8,999);
 				        // }
 				        // console.log(uploader.files.length);
-                        var arry = [];
-                        var html ="";
-						plupload.each(files, function(file) {
-							    var  obj = {};
-							    obj.id = file.id;
-								obj.name = file.name;
-								obj.size = plupload.formatSize(file.size);
-                                arry.push(obj);
-						}); 
+      //                   var arry = [];
+      //                   var html ="";
+						// plupload.each(files, function(file) {
+						// 	    var  obj = {};
+						// 	    obj.id = file.id;
+						// 		obj.name = file.name;
+						// 		obj.size = plupload.formatSize(file.size);
+      //                           arry.push(obj);
+						// }); 
 
-						    for(var i=0; i<arry.length;i++){
-						    	  html +=  '<div class="item" id="' + arry[i].id + '">'
-					              html +=  '<div class="info"  style="height:40px;">' + arry[i].name + '('+arry[i].size+')<b></b></div>'
-					              html +=  '<div class="inner"><img src=""></div>'
-					              html +=  '</div>'
-					              html +=  ' </div>'
-						    }
-						    $("#imglist").append(html);
-						   
+                        plupload.each(files, function(file) {
+			                    	    if(!$(".img_item") || $(".img_item").length < num) {
+                                         var html = '<div id="' + file.id + '" class="item img_item">'
+									         html +=   '<div class="info" style="height:40px;">' + file.name + '('+plupload.formatSize(file.size)+')<b></b></div>'
+									         html +=        '<div class="inner">'
+									         html +=            '<img src="">'
+									         html +=        '</div>'
+									         html +=         '<a href="javascript:void(0)" class="del_upImg">删除</a>'
+									         html += '</div>' 
+			                              $("#imglist").append(html);
+			                                uploader.start();
+			                    	    }
+			            });
                         plupload.each(files, function(file) {
 							    previewImage(file, function(url) {
 							    $("#"+file.id).find("img").attr("src", url);
 							});
 						}); 
-                        
-						
-					    uploader.start();
-						
+                       	
 					},
 
 					UploadProgress: function(up, file) {
@@ -171,14 +172,11 @@ define(["jquery","path"],function($,path){
 
 
 			uploader.bind('FileUploaded', function(uploader, file, responseObject) {
-				var msg = JSON.parse(responseObject.response);
-				if (msg.code == 1000) {
-					// console.log(msg.data);
-				    // upVlue.push(msg.data.file_path);
-					document.getElementById('img_file_path').value +=  msg.data.file_path+",";
-					// // doument.getElementById('img_str').value = document.getElementById('img_str').value + msg.data.file_path + ",";
-					// console.log(document.getElementById('img_file_path').value);
-				}
+				 var msg = JSON.parse(responseObject.response);
+			     if (msg.code == 1000) {
+			     	var html = '<input type="hidden" class="img_path" value="'+msg.data.file_path +'">'
+			       $("#"+file.id).append(html);
+			    }
 			});
 			uploader.init();
 
@@ -250,7 +248,6 @@ define(["jquery","path"],function($,path){
 			            	}
 			                
 			            },
-
 			            // Error: function(up, err) {
 			            //     document.getElementById('mp4_console').appendChild(document.createTextNode("\nError #" + err.code + ": " + err.message));
 			            // },

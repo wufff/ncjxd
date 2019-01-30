@@ -19,12 +19,9 @@ require(["jquery","layui","path","upLoad","tools","api","boot-dropdown"], functi
               if(res.type == "success"){
                  var list = res.data.data;
                  var timeValue = list.ai_start_time.slice(0,10);
-
+                  console.log(res);
                  var dos =  list.list[0]
                  var medias =  list.list[1]
-
-                 // console.log(dos);
-                 // console.log(list.list);
                  var medias_html = "";
                  var dos_html = ""
                  $("input[name=title]").val(list.ai_title);

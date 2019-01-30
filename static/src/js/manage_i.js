@@ -5,8 +5,9 @@ require(["layui","path","page","upLoad","api","viewPhoto","boot-dropdown"], func
     var page;
     var editeId;
     var Upvalue = [];
-    var upLoad = upLoad.imgMost('upbtn');
+    var loading;
     initPage (1);
+    var upLoad = upLoad.imgMost('upbtn',8);
     view.viewimg("#body");
     
     
@@ -22,39 +23,29 @@ require(["layui","path","page","upLoad","api","viewPhoto","boot-dropdown"], func
         type: 1,
         title:"上传新图片",
         content: $('#controlImg'),
-        area:["650px","500px"],
+        area:["650px","550px"],
         btn:["确认","取消"],
         yes: function(index, layero){
-          var value = $("#img_file_path").val();
-          var arry = value.split(',');
-          console.log(arry);
-          if(arry.length > 8){
-            var getData = [];
-            for(var i = 0;i<8;i++){
-              getData.push(arry[i]);
-            }
+          if( $(".img_path").length < 1) {
+              layer.close(index);
+              return;
           }
-          if(arry.length == 1){
-               layer.msg("没有任何图片",{icon:5})
-          } 
-          if( arry.length < 9){
-          var getData = [];
-            for(var i = 0;i<arry.length-1;i++){
-              getData.push(arry[i]);
-            }
-           
-          }
-
-          console.log(getData);
-          var obj = {cover_img:getData.join(","),title:"",type:2}
-          console.log(getData.join(","));
+           loading = layer.load(5);
+           var valueArry = [];
+           $(".img_path").each(function(index, el) {
+                valueArry.push($(el).val());
+           });
+          
+          var obj = {cover_img:valueArry.join(","),title:"",type:2}
           var url = path.api + "/api/addManageRecommend";
-          // api.ajaxGet(url,obj,function(res){
-          //       if(res.type == "success"){
-          //           layer.msg("添加成功",{time:800});
-          //           layer.close(index);
-          //       }
-          // })
+          api.ajaxGet(url,obj,function(res){
+                if(res.type == "success"){
+                    layer.msg("添加成功",{time:800});
+                    layer.close(index);
+                    layer.close(loading);
+                    initPage (1);
+                }
+          })
         }
       });
     })
@@ -62,9 +53,24 @@ require(["layui","path","page","upLoad","api","viewPhoto","boot-dropdown"], func
 
 
 
+ $("#imglist").on("click",".del_upImg",function(){
+      var id = $(this).parents(".img_item").attr("id");
+      var file  =  upLoad.getFile(id);
+      upLoad.removeFile(file)
+     $(this).parents(".img_item").remove();
+ })
+
+
+
+
+
+
+
+
+
   $("body").on("click",".del",function(){
      var id = $(this).attr("id");
-     layer.confirm('确定删除此条推荐吗?', {icon: 3, title:'提示'}, 
+     layer.confirm('确定删除此图片吗?', {icon: 3, title:'提示'}, 
         function(index){
          var url = path.api+'/api/delManageRecommendData';
          var obj = {};
@@ -86,6 +92,9 @@ require(["layui","path","page","upLoad","api","viewPhoto","boot-dropdown"], func
 
 
 
+
+
+
   
 
 
@@ -97,7 +106,6 @@ require(["layui","path","page","upLoad","api","viewPhoto","boot-dropdown"], func
     }else {
       upLoad.splice(0,99);
       $("#imglist").html(" ");
-      document.getElementById('img_file_path').value = "";
       form.val("control", 
       {
         "title": "" 
@@ -111,7 +119,7 @@ require(["layui","path","page","upLoad","api","viewPhoto","boot-dropdown"], func
 
   function refrechData() {
     var current = $("#pageNum").find(".current").text();
-    if (current) {
+    if (current && current > 1) {
       initPage(current);
     } else {
       initPage(1);
@@ -167,19 +175,12 @@ require(["layui","path","page","upLoad","api","viewPhoto","boot-dropdown"], func
       $(".layui-row").html(html);
  
     }
-    if(list.type == "error") {
+    if(list.type == "error" ) {
         var mun = goPage - 1;
         pages.gotopage.call(page,mun,false);
     }
   }
  }
-
-    
-
-
-
-
-
 })
 
 
