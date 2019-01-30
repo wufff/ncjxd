@@ -1,4 +1,4 @@
-define(["jquery","layui"], function($,layui) {
+define(["jquery","layui","path"], function($,layui,path) {
 	var layer = layui.layer;
 	var $ = jquery = layui.jquery;
 	return {
@@ -26,7 +26,9 @@ define(["jquery","layui"], function($,layui) {
 
 
 		ajaxPost:function(requestUrl,requestData,SuccessCallback,successPar){
-			requestData.jump = 1;
+			if(path.is_local) {
+				requestData.jump = 1;
+			}
 			$.ajax({
 				type: "POST",
 				url: requestUrl,
@@ -67,7 +69,9 @@ define(["jquery","layui"], function($,layui) {
 			});
 		},
        ajaxGet:function(url,data,SuccessCallback,successPar){
-       	    data.jump = 1;
+       	   if(path.is_local) {
+				requestData.jump = 1;
+			}
        	    $.ajax({
             type: "get",
             url: url,

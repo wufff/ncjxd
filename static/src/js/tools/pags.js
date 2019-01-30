@@ -11,7 +11,9 @@ define(['jquery','path','layui'], function($,path,layui) {
 				SuccessCallback(_newobj, null);
 				$("body").attr({"requestData":0});
 			}else{
+			  if(path.is_local) {
 				requestData += "&jump=1";
+			   }
 				$.get(requestUrl,requestData,function(data){
 					if(data.type == "login"){
 						 layer.msg("请先登录！",{anim:-1});
@@ -34,7 +36,9 @@ define(['jquery','path','layui'], function($,path,layui) {
 			if($("body").attr("requestData") == requestData){			
 				SuccessCallback(_newobj, null);
 			}else{
+			 if(path.is_local) {
 				requestData += "&jump=1";
+			   }
 				$.post(requestUrl,requestData,function(data){
 					if(data.type == "login"){
 						 layer.msg("请先登录！",{anim:-1});
