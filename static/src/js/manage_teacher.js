@@ -4,6 +4,7 @@ require(["layui", "path","page","tools","api","boot-dropdown"], function(layui, 
     var $ = jQuery = layui.jquery; //用他的jquey否则弹窗会有问题
     var form = layui.form;
     var page;
+    var loading;
     var dialog;
     
   
@@ -70,6 +71,7 @@ form.on('select(grade)', function(data){
 
 
  $("#searchBt").click(function(){
+     loading = layer.load(5);
      initPage (1);
  })
 
@@ -281,9 +283,11 @@ function refrechData() {
              var total = data.data.data.total;
              page =  new pages.jsPage(total, "pageNum","5",url,getData,buildTable,goPage,null);
              pages.pageMethod.call(page); 
+             layer.close(loading);
            }else{
              $("#tbody").html('<tr><td colspan="8" class="noneDataTd">暂无数据~！</td></td>');
             $(".tableLoading").html('');
+              layer.close(loading);
              return;
          }
       })
@@ -322,7 +326,7 @@ function refrechData() {
       }
       $(".tableLoading").html(' ');
       $("#tbody").html(html);
-
+     
     }
     if(list.type == "error") {
         var mun = goPage - 1;

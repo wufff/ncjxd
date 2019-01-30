@@ -70,7 +70,7 @@ define(["jquery","layui","path"], function($,layui,path) {
 		},
        ajaxGet:function(url,data,SuccessCallback,successPar){
        	   if(path.is_local) {
-				requestData.jump = 1;
+				data.jump = 1;
 			}
        	    $.ajax({
             type: "get",
