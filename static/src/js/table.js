@@ -179,7 +179,7 @@ require(["jquery","layui","path","num","tools","api","boot-dropdown"],function($
 
 
    if (c20c30 == 0){
-       $(".editeFormWrap").css("visibility","hidden");
+       $(".configConfirmTimeBt").css("display","none");
     }
 
 //设置权限 结束==============================================
