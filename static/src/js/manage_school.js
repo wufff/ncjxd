@@ -34,9 +34,6 @@ require(["layui", "path","api","page","boot-dropdown"], function(layui,path,api,
           form.render('select');
        }
      })
-     }else{
-       $("select[name=area]").html('<option value="">该地区无数据</option>');
-          form.render('select');
      }
 });
 
