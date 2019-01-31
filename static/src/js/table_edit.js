@@ -59,6 +59,7 @@ $("body").on("click",".sub",function(){
       }
       loading = layer.load(3);
       weekData = tools.prevWeek(weekData);
+      console.log(weekData)
       studyTime (school_id,weekData);
 })
 
@@ -580,12 +581,12 @@ $("#roomTag").on("click",".del",function(){
             var time1 = new Date(thisTime);
             time2 = time1.getTime();
             var nowTime =Date.parse(new Date());
-            if ( time2 < nowTime) {
-               layer.msg("只能添加今天以后的课程",{icon:5});
-               return;
-            }else{
+            // if ( time2 < nowTime) {
+            //    layer.msg("只能添加今天以后的课程",{icon:5});
+            //    return;
+            // }else{
                
-            }
+            // }
             // var sdate = new Date(Date.parse(today.replace(/-/g, "/")));
             // var nextDate = new Date(sdate.getTime());
             // console.log(sdate);
@@ -796,6 +797,9 @@ $("#roomTag").on("click",".del",function(){
 
 //表头日期
  function formHeadtime(school_id,weekData){
+    if (!loading) {
+       loading = layer.load(5);
+    }
     var titlesUrl = path.api+"/api/getWeekHoliday";
     var getData = {
           school_id:school_id,

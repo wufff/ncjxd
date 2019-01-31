@@ -128,7 +128,6 @@ require(["jquery","layui","path","num","tools","api","boot-dropdown"],function($
              school_id = school_id_authority;
              city_id = city_id_authority;
              town_id = town_id_authority;
-
              var url = "/api/getAreaList";
               var  getData = {
                    area_id:city_id_authority,
@@ -179,14 +178,14 @@ require(["jquery","layui","path","num","tools","api","boot-dropdown"],function($
 
 
    if (c20c30 == 0){
-       $(".configConfirmTimeBt").css("display","none");
+       $(".configConfirmTimeBt").parents("li").css("display","none");
     }
 
 //设置权限 结束==============================================
   
 
 form.on('select(city)', function(data){
-    if(data.value == city_id && data.value != "") {
+    if($("#city").find("option").length < 3) {
            return;
      }
      else if (data.value == "" ) {
@@ -394,7 +393,7 @@ $("body").on("click",".Add",function(){
       if(currtWeek == totWeek){
          return;
       }
-       loading = layer.load(3);
+      loading = layer.load(3);
       weekData = tools.nextWeek(weekData);
       // studyTime (school_id,weekData);
       // formHeadtime(school_id,weekData);
@@ -945,6 +944,7 @@ $(".configConfirmTimeBt").click(function(){
 
 // 渲染教室
 function renderClassRoom (school_id,weekData,callbcak){
+      loading = layer.load(5);
       var getData = {
           school_id:school_id,
           date:weekData,
@@ -980,6 +980,7 @@ function renderClassRoom (school_id,weekData,callbcak){
              }
        }else{
            var html = '<label style="font-weight: normal"></label>';  
+            layer.close(loading);
            $(".classRoom").html(html);
            $(".classType").html(html);
            haveClass(false);
