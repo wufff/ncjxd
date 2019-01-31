@@ -19,7 +19,7 @@ require(["jquery","layui","path","num","tools","api","boot-dropdown"],function($
    var weekData = now.replace(/\//g,'-');
    var totWeek;
    var school_name;
-   var type = 0;
+   var tpye_class = 0;
    var holidays = [];
    var isTodayStr = "";
    var laydate = layui.laydate;
@@ -249,18 +249,15 @@ form.on('select(school)', function(data){
 });  
 
 
-
-
 //快速搜索
 $("#searchBt").click(function(){
     var keyword = $("#inputText").val();
     if(keyword){
         var  url = path.api+"/api/getSchoolAreaData";
         api.ajaxGet(url,{keyword:keyword},function(res){
-                console.log(res);
                if(res.type == "success") {
                   var list = res.data.data;
-                  console.log(list);
+                  // console.log(list);
                   var length = list.length;
                   var html = '<option value="" disabled>'+length+'条 搜索结果</option>';
                   for(var i=0;i<list.length;i++){
@@ -280,23 +277,15 @@ $("#searchBt").click(function(){
     return false;
   })
 
-
 $("#inputText").focus(function(event) {
       $("#rebox").hide();
     });
 $("#inputText").change(function(){
     $("#rebox").hide();
 })
-// $("body").click(function(){
-//       $("#rebox").hide();
-//       return false;
-// })
-
-
-
 
 form.on('select(ssrez)', function(data){
-  console.log(data.value)
+  // console.log(data.value)
    if(data.value){
       var text = $("select[name=ssrez]").find("option:selected").text();
        school_name = text;
@@ -449,8 +438,8 @@ $(".classType").on("click","span",function(){
        return;
      }
      loading = layer.load(3);
-     tpye = $(this).attr("data-tpye");
-     if(tpye == 1){
+     tpye_class = $(this).attr("data-tpye");
+     if(tpye_class == 1){
          // $(".editeFormWrap").css("visibility","hidden");
          $(".editeFormWrap").hide();
 
@@ -469,13 +458,13 @@ $(".classType").on("click","span",function(){
 
 //去编辑课表
 $("#goToEdite").click(function(){
-    var url = "/course/edit?school_id="+school_id+"&room_id="+room_id+"&weekData="+weekData+"&term_id="+term_id+"&week="+week+"&room_name="+room_name+"&school_name="+school_name+"&type="+type
+    var url = "/course/edit?school_id="+school_id+"&room_id="+room_id+"&weekData="+weekData+"&term_id="+term_id+"&week="+week+"&room_name="+room_name+"&school_name="+school_name+"&type="+tpye_class
         url += "&city_id="+$("#selectCity").val();
         url += "&area_id="+$("#area").val();
     window.location.href= url;
 })
 $("#goToConfirm").click(function(){
-    window.location.href="/course/confirm?school_id="+school_id+"&room_id="+room_id+"&weekData="+weekData+"&term_id="+term_id+"&week="+week+"&room_name="+room_name+"&school_name="+school_name+"&type="+type;
+    window.location.href="/course/confirm?school_id="+school_id+"&room_id="+room_id+"&weekData="+weekData+"&term_id="+term_id+"&week="+week+"&room_name="+room_name+"&school_name="+school_name+"&type="+tpye_class;
 })
 
 //======================编辑上课时间弹窗===================
@@ -916,7 +905,7 @@ $(".configConfirmTimeBt").click(function(){
     })
     layer.open({
             type: 1,
-            title:"设置计划确认时间",
+            title:"设置填报时间",
             content: $('#controlTimeComfirm'),
             area:["800px","500px"],
             btn:["确认","取消"],
@@ -1155,7 +1144,7 @@ function renderClassTd(school_id,weekData){
             ui_holiday();
         },150)
         //添加课程
-         renderClass(school_id,room_id,term_id,type,week);
+         renderClass(school_id,room_id,term_id,tpye_class,week);
        }
 
      })
@@ -1245,7 +1234,7 @@ function renderClassTd(school_id,weekData){
 
 //节假日样式
  function ui_holiday(){
-    console.log(holidays);
+    // console.log(holidays);
     if(holidays.length>0){
      for(var i = 0;i<holidays.length;i++){
         $("td[positon$=',"+holidays[i]+"']").removeClass().addClass("holidayTd");

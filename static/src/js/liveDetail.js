@@ -159,6 +159,7 @@ require(["jquery","ckplayer","api","path","layui","star","boot-dropdown"],functi
                         score:myConde
                     }
                     api.ajaxGet(url,getData,function(res){
+                          console.log(res);
                         if(res.type == "success") {
                             layer.msg("评分成功");
                             layer.close(index);
