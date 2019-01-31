@@ -171,7 +171,7 @@ $(".tagItem2").click(function(){
       })
      
     function buildTable(list) {
-      // console.log(list);
+      console.log(list);
     if (list.type == "success") {
       var data = list.data.data.list.map(function(item) {
         return {

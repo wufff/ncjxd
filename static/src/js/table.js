@@ -20,6 +20,7 @@ require(["jquery","layui","path","num","tools","api","boot-dropdown"],function($
    var totWeek;
    var school_name;
    var tpye_class = 0;
+   var class_isCenter;
    var holidays = [];
    var isTodayStr = "";
    var laydate = layui.laydate;
@@ -183,9 +184,9 @@ require(["jquery","layui","path","num","tools","api","boot-dropdown"],function($
    if (is_center_school == 0){
        $(".editeFormWrap").hide();
     }
-//设置权限 结束==============================================
+   
   
-
+//设置权限 结束==============================================
 form.on('select(city)', function(data){
     if($("#selectCity").find("option").length < 3) {
            return;
@@ -202,8 +203,7 @@ form.on('select(city)', function(data){
          city_id = data.value; 
          $("#inputText").val("");
          $("#rebox").hide();
-     }
-      
+     }  
 });  
 
 form.on('select(area)', function(data){
@@ -226,28 +226,29 @@ form.on('select(area)', function(data){
 
 
 form.on('select(school)', function(data){
-       if(data.value == school_id){
-        
-       }
       weekData = now;
       var ele = data.elem;
       $("#inputText").val("");
       var text = $(ele).find("option:selected").text();
        school_name = text;
-       school_id = data.value;
+       school_id = data.value.split("|")[0];
+       class_isCenter = data.value.split("|")[1];
        if(data.value != ""){
            $(".schoolName").text(school_name);
        }else{
            $(".schoolName").text("");
        }
-
-
+      
+       if (class_isCenter == 1 && is_center_school != 0 ) {
+           $(".editeFormWrap").show();
+       }else{
+           $(".editeFormWrap").hide();
+       }
        //现有教室才有教室id;
       renderClassRoom (school_id,weekData,function(){
            studyTime (school_id,weekData);
       });
 });  
-
 
 //快速搜索
 $("#searchBt").click(function(){
@@ -349,12 +350,12 @@ function renderShool(areId,value){
         type:3
      }
       api.ajaxGet(url,getData,function(res){
-        // console.log(res);
+        console.log(res);
         if(res.type == "success") {
           var list = res.data.data.list;
           var html = '<option value="">请选择</option>';
           for(var i=0;i<list.length;i++){
-             html += '<option value="'+ list[i].school_encrypt_id +'">'+ list[i].school_name+'</option>'
+             html += '<option value="'+ list[i].school_encrypt_id +'|'+list[i].school_classify+'">'+ list[i].school_name+'</option>'
           }
          $("select[name=school]").html(html);
         if(value){
@@ -371,13 +372,7 @@ function renderShool(areId,value){
      }
 }
    
-       
-  
-
-
-
-
-
+    
    //切换周
 $("body").on("click",".Add",function(){
       var currtWeek = $("#week").text();
@@ -393,17 +388,6 @@ $("body").on("click",".Add",function(){
      
 })
   
-
-
-
-
-
-
-
-
-
-
-  
 $("body").on("click",".sub",function(){
       var currtWeek = $("#week").text();
       if(currtWeek == 1){
@@ -416,8 +400,6 @@ $("body").on("click",".sub",function(){
       // renderClassTd(school_id,weekData);
        studyTime (school_id,weekData);
 })
-
-
 
  //切换教室
 $(".classRoom").on("click","span",function(){
@@ -442,12 +424,12 @@ $(".classType").on("click","span",function(){
      if(tpye_class == 1){
          // $(".editeFormWrap").css("visibility","hidden");
          $(".editeFormWrap").hide();
-
      }else {
           // $(".editeFormWrap").css("visibility","visible");
-           
-           if (is_center_school != 0){
-             $(".editeFormWrap").show();
+          if (class_isCenter == 1 && is_center_school != 0 ) {
+           $(".editeFormWrap").show();
+          }else {
+             $(".editeFormWrap").hide();
           }
      }
      $(this).siblings("span").removeClass('active');
