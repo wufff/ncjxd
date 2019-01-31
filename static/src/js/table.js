@@ -180,12 +180,14 @@ require(["jquery","layui","path","num","tools","api","boot-dropdown"],function($
    if (c20c30 == 0){
        $(".configConfirmTimeBt").parents("li").css("display","none");
     }
-
+   if (is_center_school == 0){
+       $(".editeFormWrap").hide();
+    }
 //设置权限 结束==============================================
   
 
 form.on('select(city)', function(data){
-    if($("#city").find("option").length < 3) {
+    if($("#selectCity").find("option").length < 3) {
            return;
      }
      else if (data.value == "" ) {
@@ -451,9 +453,13 @@ $(".classType").on("click","span",function(){
      if(tpye == 1){
          // $(".editeFormWrap").css("visibility","hidden");
          $(".editeFormWrap").hide();
+
      }else {
           // $(".editeFormWrap").css("visibility","visible");
-           $(".editeFormWrap").show();
+           
+           if (is_center_school != 0){
+             $(".editeFormWrap").show();
+          }
      }
      $(this).siblings("span").removeClass('active');
      $(this).addClass('active');
