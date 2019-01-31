@@ -1,6 +1,5 @@
 require(["jquery","layui","path","upLoad","tools","api","boot-dropdown"], function($,layui,path,upLoad,tools,api) {
     var layer = layui.layer;
-    var upload = layui.upload;
     var form = layui.form;
     var laydate = layui.laydate;
     var layer = layui.layer;

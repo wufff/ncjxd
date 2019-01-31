@@ -200,7 +200,7 @@ require(["jquery","ckplayer","api","path","layui","star","boot-dropdown"],functi
               $("#fen").html("<span class='code'>"+ user_score +"</span> 分");
               $("#fen").css("visibility","visible");
               $("#star-score").find('img').attr("title","");
-              return user_score; 
+              return user_score/2; 
             },
         });
           setTimeout(function(){

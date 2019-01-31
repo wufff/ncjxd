@@ -58,7 +58,7 @@ define(["jquery","path"],function($,path){
 				var msg = JSON.parse(responseObject.response);
 				if (msg.code == 1000) {
 					// console.log(msg.data);
-					// document.getElementById('img_file_path').value = msg.data.file_path;
+					document.getElementById('img_file_path').value = msg.data.file_path;
 					// doument.getElementById('img_str').value = document.getElementById('img_str').value + msg.data.file_path + ",";
 
 				}
