@@ -777,6 +777,7 @@ $("#addtimedaysbt").click(function(){
 
 //学校设置假日
 $("#addHolidaysbt").click(function() {
+   redenerHoildForm();
    var holiday = $("#holiday").val();
    var End_time = $("#holidayEnd_time").val();
    var Start_time =  $("#holidayStart_time").val();
@@ -801,7 +802,7 @@ $("#addHolidaysbt").click(function() {
    }
 });
 
-redenerHoildForm();
+
 function redenerHoildForm(){
   $("#holidayTbody").html("");
   var url = path.api + "/api/getSchoolHolidayList?v="+new Date().getTime();
