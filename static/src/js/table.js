@@ -1065,7 +1065,10 @@ function renderClassTd(school_id,weekData){
            res:res
        }
        console.log(obj);
+
+
        if(res.type == "success") {
+
          $("#tbody").html("");
          var data = res.data.data;
          var times = res.data.data.course_time_node;
@@ -1080,7 +1083,8 @@ function renderClassTd(school_id,weekData){
           $("#tbody").html('<tr><td colspan="9" class="noneTd">此学校暂无课表信息~！</td></td>');
           $("#table_header").hide();
           $("#table_header_none").show();
-           return;
+              layer.close(loading);
+              return;
          }
          $("#schoolTerm").html(data.year);
          $("#week_time").html(data.week_time);
@@ -1126,6 +1130,7 @@ function renderClassTd(school_id,weekData){
         setTimeout(function(){
             ui_holiday();
         },150)
+
         //添加课程
          renderClass(school_id,room_id,term_id,tpye_class,week);
        }
