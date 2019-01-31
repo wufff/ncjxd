@@ -295,7 +295,7 @@ $("#roomTagBt").click(function() {
            // var area = $(this).attr("data-grade");
            var url = path.api+"/api/getSchoolListByAreaId";
            console.log(school_id)
-           api.ajaxGet(url,{area_id:area2,school_id:school_id,is_all:0},function(res){
+           api.ajaxGet(url,{area_id:area2,school_id:school_id,is_all:1},function(res){
                  console.log(res);
                 if(res.type == "success"){
                     $(_this).siblings().removeClass('active');
