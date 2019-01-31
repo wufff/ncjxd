@@ -463,7 +463,10 @@ $(".classType").on("click","span",function(){
 
 //去编辑课表
 $("#goToEdite").click(function(){
-    window.location.href="/course/edit?school_id="+school_id+"&room_id="+room_id+"&weekData="+weekData+"&term_id="+term_id+"&week="+week+"&room_name="+room_name+"&school_name="+school_name+"&type="+type;
+    var url = "/course/edit?school_id="+school_id+"&room_id="+room_id+"&weekData="+weekData+"&term_id="+term_id+"&week="+week+"&room_name="+room_name+"&school_name="+school_name+"&type="+type
+        url += "&city_id="+$("#selectCity").val();
+        url += "&area_id="+$("#area").val();
+    window.location.href= url;
 })
 $("#goToConfirm").click(function(){
     window.location.href="/course/confirm?school_id="+school_id+"&room_id="+room_id+"&weekData="+weekData+"&term_id="+term_id+"&week="+week+"&room_name="+room_name+"&school_name="+school_name+"&type="+type;

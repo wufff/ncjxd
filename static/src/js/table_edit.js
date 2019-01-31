@@ -11,6 +11,7 @@ require(["layui","path","tools","num","api","boot-dropdown"],function(layui,path
       var element = layui.element;
       var $ = jquery = layui.jquery;
       var school_id = tools.queryString("school_id");
+
       var room_id = tools.queryString("room_id");
       var term_id = tools.queryString("term_id");
       var week = tools.queryString("week");
@@ -215,6 +216,16 @@ $("#roomTagBt").click(function() {
           });
           $("#roomsTag").html("");   
           $("#classRoomTagControl .tag").removeClass('active');
+
+          //去掉不能选的城市
+          var city_id = tools.queryString("city_id");
+          $("#classRoomTagControl .tag").each(function(index, el) {
+               if($(el).attr("data-id") == city_id){
+
+               }else {
+                 $(el).hide();
+               }
+          });
        }
 
       layer.open({
@@ -236,7 +247,10 @@ $("#roomTagBt").click(function() {
 //教室关联选择
   $("body").on("click","#classRoomTagControl .tag",
     function(){
+       var school_id = tools.queryString("school_id");
+       var area_id =  tools.queryString("area_id");
        var _this = this;
+       $("#classRoomTagControl .tag")
        if ($(this).hasClass('active')){
          return;
        }
@@ -246,7 +260,8 @@ $("#roomTagBt").click(function() {
               // console.log(id);
               api.ajaxGet("/api/getAreaList", {
                 area_id:id,
-                type:3
+                type:3,
+                node_id:area_id
               }, function(res) {
                // console.log(res);
                 if (res.type == "success") {
@@ -278,9 +293,10 @@ $("#roomTagBt").click(function() {
        if (oder == 1)   {
            var area2 = $(this).attr("data-area2");
            // var area = $(this).attr("data-grade");
-           var url = "/api/getSchoolListByAreaId";
-           api.ajaxGet(url,{area_id:area2,school_id:school_id},function(res){
-                 // console.log(res);
+           var url = path.api+"/api/getSchoolListByAreaId";
+           console.log(school_id)
+           api.ajaxGet(url,{area_id:area2,school_id:school_id,is_all:0},function(res){
+                 console.log(res);
                 if(res.type == "success"){
                     $(_this).siblings().removeClass('active');
                     $(_this).addClass('active');
@@ -295,7 +311,7 @@ $("#roomTagBt").click(function() {
 
                     for (var i = 0; i < list.length; i++) {
                       if(list[i].school_encrypt_id == tools.queryString("school_id")){
-                          console.log("yi")
+                       
                       }else{
                           html += '<span class="tag" data-school="' + list[i].school_encrypt_id + '">' 
                           html += list[i].school_name + '</span>'
