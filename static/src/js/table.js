@@ -417,13 +417,13 @@ $(".classType").on("click","span",function(){
        return;
      }
      loading = layer.load(3);
-     tpye_class = $(this).attr("data-tpye");
-     if(tpye_class == 1){
+     class_isCenter = $(this).attr("data-tpye");
+     if(class_isCenter == 1){
          // $(".editeFormWrap").css("visibility","hidden");
          $(".editeFormWrap").hide();
      }else {
           // $(".editeFormWrap").css("visibility","visible");
-          if (class_isCenter == 1 && is_center_school != 0 ) {
+          if (class_isCenter == 0 && is_center_school != 0 ) {
            $(".editeFormWrap").show();
           }else {
              $(".editeFormWrap").hide();
