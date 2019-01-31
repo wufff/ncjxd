@@ -24,9 +24,6 @@ require(["jquery","layui","path","num","tools","api","boot-dropdown"],function($
    var holidays = [];
    var isTodayStr = "";
    var laydate = layui.laydate;
-   //设置时间
-  var range = "2018.8.1-2019.1.31";
-  var rangeforTime = "2018.8.1 00:00:00-2019.1.31 00:00:00";
    //是否可以修改时间
    var st_is_modify; 
    var loading; 
@@ -588,8 +585,7 @@ $(".configClassTimeBt").click(function(){
                  $("#upAddbt").show();
                   $("#downAddbt").show();
              }
-            
-            console.log(st_is_modify)
+             
           }
    })
    layer.open({
@@ -617,6 +613,7 @@ $(".configClassTimeBt").click(function(){
                   if(res.type == "success"){
                      layer.msg("设置成功",{time:600});
                      layer.close(index);
+                    studyTime (school_id,weekData);
                   }
                })
             }
