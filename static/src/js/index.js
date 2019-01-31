@@ -3,6 +3,7 @@ require(["Swiper","jquery","viewPhoto","api","layui","boot-dropdown"],function(S
   var layer = layui.layer;
   var layui_$ = jQuery = layui.jquery; 
   var dialog;
+  view.viewimg("#spot");
   $(".white_black .h4").click(function() {
         $(this).addClass('active');
         $(this).siblings().removeClass('active');
@@ -73,14 +74,20 @@ require(["Swiper","jquery","viewPhoto","api","layui","boot-dropdown"],function(S
               })
 
 
- $("#header_loginBt").click(function(){
-      dialog = layer.open({
-            type: 1,
-            title:"<span style='color:#1b6bb1;'>欢迎登录</span>",
-            content: layui_$('#login_dialog'),
-            area:["365px","416px"]
-      });
- })
+
+
+
+
+$(".nav a").click(function(){
+   var length = $(".nav li").length; 
+   if (length == 8) {
+      login();
+      return false;
+   }
+})
+ 
+
+
 
 
 //登录样式  
@@ -92,9 +99,16 @@ require(["Swiper","jquery","viewPhoto","api","layui","boot-dropdown"],function(S
   })
   
 
-   view.viewimg("#spot");
+   
     
-
+  function login(){
+       dialog = layer.open({
+            type: 1,
+            title:"<span style='color:#1b6bb1;'>欢迎登录</span>",
+            content: layui_$('#login_dialog'),
+            area:["365px","416px"]
+      });
+  }
 
 
 
