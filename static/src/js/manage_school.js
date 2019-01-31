@@ -15,11 +15,12 @@ require(["layui", "path","api","page","boot-dropdown"], function(layui,path,api,
   
 
   form.on('select(city)', function(data){
+
      var postData = {
       city_id:data.value
      }
      var url = "/SchoolManage/ajaxCountyListByCityId";
-     if(data.value != 0){
+     if(data.value != 0 && $("#city").find("option").length > 2){
       api.ajaxPost(url,postData,function(res){
         if(res.type == "success") {
           var list = res.message;
@@ -34,7 +35,7 @@ require(["layui", "path","api","page","boot-dropdown"], function(layui,path,api,
        }
      })
      }else{
-       $("select[name=area]").html('<option value="">全部</option>');
+       $("select[name=area]").html('<option value="">该地区无数据</option>');
           form.render('select');
      }
 });
@@ -360,11 +361,6 @@ function initContorlRoom (data){
             if(roomType == 0){
                 var url = path.api +'/api/addSchoolRoom';
                 var msg = "添加成功"
-                if(getData.kd_only_code == ""){
-                  console.log(1);
-                   layer.msg("请填写阔地编码",{icon:5});
-                    return false;   
-                }
             }else{
                 var url = path.api +"/api/modifySchoolRoom";
                 var msg = "修改成功"
