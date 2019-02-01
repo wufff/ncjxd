@@ -135,6 +135,11 @@ $(".tagItem2").click(function(){
 
 
 
+
+
+
+
+
   function initPage (goPage,cumdata){
       var data = {
          city_id:$("select[name=city]").val(),
@@ -189,6 +194,7 @@ $(".tagItem2").click(function(){
       })
      
       var html = '';
+      //cn_status 2 :   1
       for (var i = 0; i < data.length; i++) {
         html += '<tr>'
         html += '<td class="sn">' + data[i].school_name + '</td>'

@@ -120,6 +120,20 @@ form.on('select(grade)', function(data){
 
 
 
+ $("#pbbt").click(function(){
+     var works = $("#pbtext").val();
+     if (works && works != 0){
+        var url = path.api+"/api/getUserInfoByDodoId"
+        api.ajaxGet(url,{use_name:works},function(res){
+           if(res.type == "success"){
+             console.log(res);
+           }
+        })
+     }
+     return false;
+ })
+
+
 
 
 //此页面添加和修改是同一个接口

@@ -66,9 +66,9 @@ define(function () {
            if(data == 1) {
               return "进行中";
            }else if( data == 2) {
-              return "未开始";
+              return "已结束";
            }else if( data == 0) {
-               return "已结束";
+               return "未开始";
            }
 
         }

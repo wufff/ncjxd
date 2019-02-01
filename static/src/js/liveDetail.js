@@ -158,24 +158,25 @@ require(["jquery","ckplayer","api","path","layui","star","boot-dropdown"],functi
                         activity_id:activity_id,
                         score:myConde
                     }
-                    api.ajaxGet(url,getData,function(res){
-                          console.log(res);
-                        if(res.type == "success") {
-                            layer.msg("评分成功");
-                            layer.close(index);
-                            user_score = myConde;
-                            var average_score = res.data.average_score;
-                            $("#total_code").text(average_score);
-                            starReadOnly();  
-                        }else{
-                            layer.msg(res.message,{icon:5});
-                        }
-                    })
+                    starReadOnly(2);
+                    // api.ajaxGet(url,getData,function(res){
+                    //       console.log(res);
+                    //     if(res.type == "success") {
+                    //         layer.msg("评分成功");
+                    //         layer.close(index);
+                    //         user_score = myConde;
+                    //         var average_score = res.data.average_score;
+                    //         $("#total_code").text(average_score);
+                    //         starReadOnly(num);  
+                    //     }else{
+                    //         layer.msg(res.message,{icon:5});
+                    //     }
+                    // })
                
              }
           });
         }else{
-           starReadOnly();    
+           starReadOnly(user_score/2);    
         }
        }
 
@@ -184,7 +185,7 @@ require(["jquery","ckplayer","api","path","layui","star","boot-dropdown"],functi
 
 
 
-    function starReadOnly(){
+    function starReadOnly(num){
         var _star = $("#star-score");
         _star.raty({
             precision: true,
@@ -197,10 +198,10 @@ require(["jquery","ckplayer","api","path","layui","star","boot-dropdown"],functi
             precision: false,
             // round: { down: .25, full: .6, up: .76 },
             score: function(){
-              $("#fen").html("<span class='code'>"+ user_score +"</span> 分");
+              $("#fen").html("<span class='code'>"+ num*2 +"</span> 分");
               $("#fen").css("visibility","visible");
               $("#star-score").find('img').attr("title","");
-              return user_score/2; 
+              return num; 
             },
         });
           setTimeout(function(){
