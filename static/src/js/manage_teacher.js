@@ -129,7 +129,7 @@ form.on('select(grade)', function(data){
              $(".text").text("匹配成功");
              $("#teacher_id").val(res.data.user_encrypt_id)
            }else {
-             $(".text").text("匹配失败请重新匹配");
+             $(".text").text("匹配失败,请重新输入");
              $("#teacher_id").val("");
            }
         })
@@ -149,6 +149,13 @@ form.on('select(grade)', function(data){
        getData.subject = fieldData.subject;
        getData.grade = fieldData.grade
        
+
+        if(!getData.teacher_id){
+          layer.msg("未匹配成功,请先匹配",{icon:5})
+          return false;
+        }
+
+
        var gradeArr = new Array();
         $("input:checkbox[name^='grade']:checked").each(function(i){
               gradeArr[i] = $(this).val();
