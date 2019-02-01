@@ -21,7 +21,7 @@ require(["jquery","layui","path","ckplayer","boot-dropdown"],function($,layui,pa
                //  arry[index].play();
   $(".video-js").each(function(index,el){
   	  var id = $(this).attr("id");
-      obj[id] = videojs(id);
+      obj[id] = videojs(id,{autoplay: true});
       obj[id].play();
       console.log(obj);
   })
