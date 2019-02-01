@@ -22,6 +22,7 @@ require(["jquery","layui","path","ckplayer","boot-dropdown"],function($,layui,pa
   $(".video-js").each(function(index,el){
   	  var id = $(this).attr("id");
       obj[id] = videojs(id);
+      obj[id].play();
       console.log(obj);
   })
 
