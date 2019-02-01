@@ -88,11 +88,13 @@ form.on('select(grade)', function(data){
         var useId = tr.attr("data-user");
         var gardeArr = tr.attr("data-grade");
         var subject = tr.attr("data-subject");
+        var pbtext = tr.find(".name").text();
         var subjectBbj = JSON.parse(subject);
         var gardeBbj = JSON.parse(gardeArr);
         var intdata = {
             teacher_id:useId,
-            mobile:moblie
+            mobile:moblie,
+            pbtext:pbtext
         }
         
        //多选赋值年级
@@ -240,6 +242,7 @@ function refrechData() {
     if(data){
     form.val("control",data)
      $("input:checkbox[value=GS001]").attr("checked",true);
+      $(".controlText").text("匹配成功");
     }else {
       $(".controlText").text("点击匹配,匹配已有教师");
       $("input:checkbox").attr("checked",false);
@@ -247,7 +250,7 @@ function refrechData() {
       {
         "teacher_id": ""
         ,"mobile": ""
-
+        ,"pbtext":""
       })
     }
   }
