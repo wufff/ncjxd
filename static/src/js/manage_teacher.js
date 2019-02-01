@@ -144,6 +144,7 @@ form.on('select(grade)', function(data){
   form.on('submit(control)', function(data){
        var controlTpye = $("#controlTpye").val();
        var fieldData = data.field;
+       console.log(fieldData);
        var getData = {};
        getData.teacher_id = fieldData.teacher_id;
        getData.subject = fieldData.subject;
