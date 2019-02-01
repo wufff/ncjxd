@@ -124,7 +124,7 @@ form.on('select(grade)', function(data){
      var works = $("#pbtext").val();
      if (works && works != 0){
         var url = path.api+"/api/getUserInfoByDodoId"
-        api.ajaxGet(url,{use_name:works},function(res){
+        api.ajaxGet(url,{user_name:works},function(res){
            if(res.type == "success"){
              console.log(res);
            }
@@ -229,7 +229,7 @@ function refrechData() {
     form.val("control",data)
      $("input:checkbox[value=GS001]").attr("checked",true);
     }else {
-      $(".controlText").text("系统自动获取教师姓名");
+      $(".controlText").text("点击匹配,匹配已有教师");
       $("input:checkbox").attr("checked",false);
       form.val("control", 
       {
