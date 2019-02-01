@@ -91,8 +91,8 @@ define(["jquery","layui","path"], function($,layui,path) {
 						 return;
                 }else if( res.type == "access" ){ 
                       layer.msg("无权限！",{anim:-1});
-                      $("#layui-layer1").css("width","130px");
-					  $("#layui-layer1").css("margin-left","100px");
+       //                $("#layui-layer1").css("width","130px");
+					  // $("#layui-layer1").css("margin-left","100px");
                 }else if(successPar){
                     	SuccessCallback(res,successPar);
                     }else{
