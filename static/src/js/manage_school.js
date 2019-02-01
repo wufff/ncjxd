@@ -15,7 +15,6 @@ require(["layui", "path","api","page","boot-dropdown"], function(layui,path,api,
   
 
   form.on('select(city)', function(data){
-
      var postData = {
       city_id:data.value
      }
@@ -121,16 +120,10 @@ $("#addSchoolControl").on("click",".UntyBtn",function (){
      $(this).text("已关联");
   })
 
-
-
 $("#controluntySchool").on("click",".UntyBtn",function (){
      $(this).removeClass("UntyBtn").addClass('UntyActive');
      $(this).text("已解绑");
   })
-
-
-
-
 
 $("body").on("click",".related",function (){
       var tr = $(this).parents("tr");
@@ -169,7 +162,7 @@ $("body").on("click",".related",function (){
               //添加关联教学点:/SchoolManage/ajaxAddRelationSchool  post  center_school_id  jxd_school_id(多个用逗号隔开)
               if ($("#addShooltbody").find('active'))
               var actives = $("#addShooltbody").find('.acitve');
-               console.log(actives.length);
+               // console.log(actives.length);
               if (actives.length > 0) {
                  var postData = {
                     jxd_school_id:[],
@@ -183,7 +176,11 @@ $("body").on("click",".related",function (){
 
                    api.ajaxPost(url,postData,function(res){
                       if(res.type== "success"){
-                         layer.msg("关联成功",{time:500})
+                         layer.msg("关联成功",{time:500});
+                         var url = path.api+"/api/syncSchoolTermData";
+                         api.ajaxGet(url,{school_id:centerID},function(res){
+                               // console.log(res);
+                         })
                          layer.close(index); 
                       }
                    })
@@ -212,7 +209,7 @@ $("#SoolchsearchBt").click(function(res){
       }
        var url = "/SchoolManage/ajaxSearchJxdSchool";
        api.ajaxPost(url,{county_id:county_id,school_name:school_name},function(res){
-            console.log(res);
+            // console.log(res);
            if(res.type == "success") {
                if(res.message.length == 0){
                   layer.msg("此关键字无搜索结果",{icon:5});
@@ -245,7 +242,7 @@ $("#SoolchsearchBt").click(function(res){
      currctScoolId = id;
      var tr = $(this).parents("tr");
      var school_classify = tr.find(".school_classify").attr("school_classify");
-      console.log(school_classify);
+      // console.log(school_classify);
      if (school_classify == 1) //中心校
       {
            $("select[name=is_receive]").html('<option value="0" >主讲教室</option><option value="1">接收教室</option>')
@@ -273,11 +270,8 @@ $("#SoolchsearchBt").click(function(res){
   })
 
 
-
-
-
   $("body").on("click",".editClass",function (){
-     console.log(currctScoolId);
+     // console.log(currctScoolId);
     $("input[name=roomType]").val(1);
      var tr = $(this).parents("tr");
      $("#room_id").val($(this).attr("sr_encrypt_id"));
@@ -306,10 +300,6 @@ $("#SoolchsearchBt").click(function(res){
   })
 
 
-
-
-
-
 $("body").on("click","#addClassbtn",function (){
       $("input[name=roomType]").val(0);
        $(".kd_only_code").show();
@@ -328,7 +318,6 @@ $("body").on("click","#addClassbtn",function (){
   })
 
 
-
 function initContorlRoom (data){
     if(data){
     form.val("conrolEditClass",data);
@@ -345,10 +334,6 @@ function initContorlRoom (data){
        
     }
   }
-
-
-
-
 
 
   form.on('submit(conrolEditClass)', function(data){
@@ -377,8 +362,6 @@ function initContorlRoom (data){
   });
 
 
-
-
  function renderSchoolList (id){
             //接口名称：根据学校id获取教室列表信息
             //接口url地址：http://wangyong.ncjxd.dev.dodoedu.com/api/getRoomListBySchoolId?school_id=2790183
@@ -387,7 +370,7 @@ function initContorlRoom (data){
                 if(res.type == "success"){
                       var data = res.data.data.list;
                       var html = '';
-                      console.log(data);
+                      // console.log(data);
                       for (var i = 0; i < data.length; i++) {
                         html += '<tr>'
                         html += '<td class="sn">' + (i+1) + '</td>'
@@ -430,7 +413,7 @@ function initContorlRoom (data){
           getData += "&page=1&page_count=15&v="+ new Date().getTime();
           // console.log(getData);
       pages.getAjax(url,getData,function(data){
-          console.log(data);
+          // console.log(data);
          if( data.type == "success"){
              var total = data.message.count;
              page =  new pages.jsPage(total, "pageNum","15",url,getData,buildTable,goPage,null);

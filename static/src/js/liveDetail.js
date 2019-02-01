@@ -158,20 +158,19 @@ require(["jquery","ckplayer","api","path","layui","star","boot-dropdown"],functi
                         activity_id:activity_id,
                         score:myConde
                     }
-                    starReadOnly(2);
-                    // api.ajaxGet(url,getData,function(res){
-                    //       console.log(res);
-                    //     if(res.type == "success") {
-                    //         layer.msg("评分成功");
-                    //         layer.close(index);
-                    //         user_score = myConde;
-                    //         var average_score = res.data.average_score;
-                    //         $("#total_code").text(average_score);
-                    //         starReadOnly(num);  
-                    //     }else{
-                    //         layer.msg(res.message,{icon:5});
-                    //     }
-                    // })
+                    api.ajaxGet(url,getData,function(res){
+                          console.log(res);
+                        if(res.type == "success") {
+                            layer.msg("评分成功");
+                            layer.close(index);
+                            user_score = myConde;
+                            var average_score = res.data.average_score;
+                            $("#total_code").text(average_score);
+                            starReadOnly(user_score/2);     
+                        }else{
+                            layer.msg(res.message,{icon:5});
+                        }
+                    })
                
              }
           });

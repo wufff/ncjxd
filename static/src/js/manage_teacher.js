@@ -7,16 +7,9 @@ require(["layui", "path","page","tools","api","boot-dropdown"], function(layui, 
     var loading;
     var dialog;
     
-  
-
-
-
-initPage (1);
-getUserListBySchoolId();
-controlGetSubject();
-
-
-
+    initPage (1);
+    getUserListBySchoolId();
+    controlGetSubject();
 
 form.on('select(grade)', function(data){
    // console.log(data.value);
@@ -43,8 +36,6 @@ form.on('select(grade)', function(data){
    }
 });      
 
-
-
     $("#addTeacherBtn").click(function() {
       $("#controlTpye").val(0);
         initContorl(null)
@@ -60,9 +51,6 @@ form.on('select(grade)', function(data){
       });
     })
 
-
-
-
   $("body").on("click",".del",function(){
         layer.confirm('确定删除此条推荐吗?', {icon: 3, title:'提示'}, function(index){
         layer.close(index);
@@ -74,11 +62,6 @@ form.on('select(grade)', function(data){
      loading = layer.load(5);
      initPage (1);
  })
-
-
-
-
-
 
  $("body").on("click",".change",function(){
         $("#controlTpye").val(1);
@@ -96,7 +79,6 @@ form.on('select(grade)', function(data){
             mobile:moblie,
             pbtext:pbtext
         }
-        
        //多选赋值年级
         $(gardeBbj).each(function(index, el) {
            intdata["grade["+el.st_grade+"]"] = true; 
@@ -151,14 +133,10 @@ form.on('select(grade)', function(data){
        getData.teacher_id = fieldData.teacher_id;
        getData.subject = fieldData.subject;
        getData.grade = fieldData.grade
-       
-
         if(!getData.teacher_id){
           layer.msg("未匹配成功,请先匹配",{icon:5})
           return false;
         }
-
-
        var gradeArr = new Array();
         $("input:checkbox[name^='grade']:checked").each(function(i){
               gradeArr[i] = $(this).val();
@@ -221,11 +199,6 @@ form.on('select(grade)', function(data){
       return false; 
   });
 
-
-
-
-
-
 function refrechData() {
     var current = $("#pageNum").find(".current").text();
     if (current) {
@@ -235,9 +208,6 @@ function refrechData() {
     }
   }
 
-
-
-  
   function initContorl (data){
     if(data){
     form.val("control",data)
@@ -255,7 +225,6 @@ function refrechData() {
     }
   }
 
-
 // 弹窗里面东西
   function getUserListBySchoolId (){
     var url = path.api+'/api/getUserListBySchoolId';
@@ -270,8 +239,7 @@ function refrechData() {
          $("select[name=teacher_id]").append(html);
          form.render('select','control');
       }
-    })
-    
+    }) 
   }
 
     function  controlGetSubject(){
@@ -291,10 +259,6 @@ function refrechData() {
              }
           }) 
     }
-
-
-
-
 
    function initPage (goPage){
       var url = path.api+"/api/getManageTeacherListByParam";
@@ -363,9 +327,6 @@ function refrechData() {
     }
   }
  }
-
-
-
 })
 
 
