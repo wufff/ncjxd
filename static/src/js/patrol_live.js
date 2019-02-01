@@ -9,7 +9,7 @@
 require(["jquery","layui","path","ckplayer","boot-dropdown"],function($,layui,path,ckplayer){
   var layer = layui.layer;
   var form = layui.form;
-  var arry = [];
+  var obj = {};
  $(".video").each(function(index, el) {
                var file_key = $(this).attr("data-hls");
                 // var file_key = "http://pili-live-hls.dodoedu.com/dodoedu/ncjxd-98ui76yhbgtfdser175m.m3u8?sign=ff0d06746b589e2995d8df906e71720f&t=5c3eaa73";
@@ -19,6 +19,9 @@ require(["jquery","layui","path","ckplayer","boot-dropdown"],function($,layui,pa
 
                // arry[index] = videojs('videjs');
                //  arry[index].play();
-  console.log(arry)
-     
+  $(".video-js").each(function(index,el){
+  	  var id = $(this).attr("id");
+      obj[id] = videojs(id);
+      console.log(obj);
+  })
 })
