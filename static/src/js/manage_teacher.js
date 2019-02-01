@@ -119,14 +119,18 @@ form.on('select(grade)', function(data){
   })
 
 
-
+//匹配按钮
  $("#pbbt").click(function(){
      var works = $("#pbtext").val();
      if (works && works != 0){
         var url = path.api+"/api/getUserInfoByDodoId"
         api.ajaxGet(url,{user_name:works},function(res){
            if(res.type == "success"){
-             console.log(res);
+             $(".text").text("匹配成功");
+             $("#teacher_id").val(res.data.user_encrypt_id)
+           }else {
+             $(".text").text("匹配失败请重新匹配");
+             $("#teacher_id").val("");
            }
         })
      }
