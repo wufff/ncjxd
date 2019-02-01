@@ -13,7 +13,7 @@ require(["jquery","layui","path","ckplayer","boot-dropdown"],function($,layui,pa
  $(".video").each(function(index, el) {
                var file_key = $(this).attr("data-hls");
                 // var file_key = "http://pili-live-hls.dodoedu.com/dodoedu/ncjxd-98ui76yhbgtfdser175m.m3u8?sign=ff0d06746b589e2995d8df906e71720f&t=5c3eaa73";
-                var html =  '<video id="id_'+index+'"  class="video-js vjs-big-play-centered vjs-3-4" controls preload="auto" poster=""><source src="'+ file_key +'" type="application/x-mpegURL"></video>'
+                var html =  '<video id="id_'+index+'"  class="video-js vjs-big-play-centered vjs-fluid" controls preload="auto" poster=""><source src="'+ file_key +'" type="application/x-mpegURL"></video>'
                 $(this).html(html);          
    });
 
