@@ -1,5 +1,6 @@
 require(["Swiper","jquery","viewPhoto","api","layui","boot-dropdown"],function(Swiper,$,view,api,layui){
   //登录切换
+
   var layer = layui.layer;
   var layui_$ = jQuery = layui.jquery; 
   var dialog;

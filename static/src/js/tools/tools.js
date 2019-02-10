@@ -126,6 +126,65 @@ define(['jquery','path'],function($,path){
         }
         return result;
        },
+      formatminutesUp:function (date) {                                   //格式化时间基于layui上午
+            $(".laydate-time-text").eq(0).html("上课时间");
+            $(".laydate-time-text").eq(1).html("下课时间");
+            $(".laydate-time-list").map(function(index,ele){
+                var am = $(ele).find("ol").eq(0).find('li');
+                for (var i = 0; i < am.length; i++) {
+                var am00 = am[i].innerText;
+                if (am00 != "08" && am00 != "09"  && am00 != "10" && am00 != "11" && am00 != "12") {
+                    am[i].remove()
+                  } 
+                }  
+             //    var showtime = $(ele).find("ol").eq(1).find('li');
+             //    for (var i = 0; i < showtime.length; i++) {
+             //    var t00 = showtime[i].innerText;
+             //    if (t00 != "00" && t00 != "15"  && t00 != "25" && t00 != "30"   && t00 != "40" && t00 != "45" ) {
+             //        showtime[i].remove()
+             //    }
+             // }
+              $(ele).find("ol").eq(2).find('li').remove();
+           })
+            // ar showtime = $(".laydate-time-livst li ol").eq(1).find("li");
+            // for (var i = 0; i < showtime.length; i++) {
+            //     var t00 = showtime[i].innerText;
+            //     if (t00 != "00" && t00 != "20"  && t00 != "25" && t00 != "30"  && t00 != "35" && t00 != "40" && t00 != "45" && t00 != "50") {
+            //         showtime[i].remove()
+            //     }
+            // }
+            // $($(".laydate-time-list li ol")[2]).find("li").remove();  //清空秒
+  
+       },
+     formatminutesDown:function(date) {
+             $(".laydate-time-text").eq(0).html("上课时间");
+             $(".laydate-time-text").eq(1).html("下课时间");
+            $(".laydate-time-list").map(function(index,ele){
+                var am = $(ele).find("ol").eq(0).find('li');
+                for (var i = 0; i < am.length; i++) {
+                var am00 = am[i].innerText;
+                if (am00 != "14" && am00 != "15"  && am00 != "16" && am00 != "18" && am00 != "19" && am00 != "20" ) {
+                    am[i].remove()
+                  } 
+                }  
+             //    var showtime = $(ele).find("ol").eq(1).find('li');
+             //    for (var i = 0; i < showtime.length; i++) {
+             //    var t00 = showtime[i].innerText;
+             //    if (t00 != "00" && t00 != "15"  && t00 != "25" && t00 != "30"   && t00 != "40" && t00 != "45" ) {
+             //        showtime[i].remove()
+             //    }
+             // }
+              $(ele).find("ol").eq(2).find('li').remove();
+           })
+            // ar showtime = $(".laydate-time-livst li ol").eq(1).find("li");
+            // for (var i = 0; i < showtime.length; i++) {
+            //     var t00 = showtime[i].innerText;
+            //     if (t00 != "00" && t00 != "20"  && t00 != "25" && t00 != "30"  && t00 != "35" && t00 != "40" && t00 != "45" && t00 != "50") {
+            //         showtime[i].remove()
+            //     }
+            // }
+            // $($(".laydate-time-list li ol")[2]).find("li").remove();  //清空秒
+        }
     }  
 })
 

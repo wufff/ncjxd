@@ -1,56 +1,46 @@
-/**
- * 
- * @authors Your Name (you@example.org)
- * @date    2018-11-14 15:55:46
- * @version $Id$
- */
- 
-require(["layui","path","tools","num","api","boot-dropdown"],function(layui,path,tools,num,api){
+require(["layui","path","tools","num","api","cTable","boot-dropdown"],function(layui,path,tools,num,api,cTable){
       var layer = layui.layer;
       var form = layui.form;
       var element = layui.element;
       var $ = jquery = layui.jquery;
-      var school_id = tools.queryString("school_id");
-
-      var room_id = tools.queryString("room_id");
-      var term_id = tools.queryString("term_id");
-      var week = tools.queryString("week");
-      var weekData = tools.queryString("weekData");
-      var room_name = tools.request("room_name");
-      var school_name = tools.request("school_name");
-      var type = tools.request("type");
-      var holidays = [];
-      var isTodayStr = "";
-      var totWeek;
       var loading;
+      // 课表渲染
+      cTable.school_id = tools.queryString("school_id");
+      cTable.room_id = tools.queryString("room_id");
+      cTable.term_id = tools.queryString("term_id");
+      cTable.week = tools.queryString("week");
+      cTable.weekData = tools.queryString("weekData");
+      cTable.room_name = tools.request("room_name");
+      cTable.school_name = tools.request("school_name");
+      cTable.tpye_class = tools.request("type");
+      cTable.usrsfor = 1
       var verify_on = false;
       var on_off = true;
+ 
+      var city_id = tools.queryString("city_id");
+      var area_id = tools.queryString("area_id");
+
       var is_kd_school = $("#is_kd_school").val();                 //判断是否登录
       var is_kd_html = "请前往 <a href='http://user.needu.cn/bench/index.html' style='color:orange'>http://user.needu.cn/bench/index.html</a> 编辑“互动课堂”课程表，课表将同步至本平台"
      
       if(is_kd_school == 1){
-          // layer.open({
-          //   type: 1, 
-          //   content: is_kd_html //这里content是一个普通的String
-          // });
           layer.alert(is_kd_html,{icon: 7,title:"提示",anim:-1});
       }
 
       // console.log(school_name);
-      $(".schoolName").html(school_name);
-      $(".roomName").html(room_name);
-      studyTime(school_id,weekData);
+      $(".schoolName").html(cTable.school_name);
+      $(".roomName").html(cTable.room_name);
+      cTable.studyTime(cTable.school_id,cTable.weekData);
 
    
     //切换周
 $("body").on("click",".Add",function(){
       var currtWeek = $("#week").text();
-      if(currtWeek == totWeek){
+      if(currtWeek == cTable.totWeek){
          return;
       }
-      loading = layer.load(3);
-      weekData = tools.nextWeek(weekData);
-      studyTime (school_id,weekData);
+      cTable.weekData = tools.nextWeek(cTable.weekData);
+      cTable.studyTime (cTable.school_id,cTable.weekData);
 })
   
 $("body").on("click",".sub",function(){
@@ -58,16 +48,20 @@ $("body").on("click",".sub",function(){
       if(currtWeek == 1){
          return;
       }
-      loading = layer.load(3);
-      weekData = tools.prevWeek(weekData);
-      console.log(weekData)
-      studyTime (school_id,weekData);
+      cTable.weekData = tools.prevWeek(cTable.weekData);
+      cTable.studyTime (cTable.school_id,cTable.weekData);
 })
 
 
 $("#goToConfirm").click(function() {
-    window.location.href="/course/confirm?school_id="+school_id+"&room_id="+room_id+"&weekData="+weekData+"&term_id="+term_id+"&week="+week+"&room_name="+room_name+"&school_name="+school_name;
-});
+    var url = "/course/confirm?school_id=" + cTable.school_id + "&room_id=" + cTable.room_id + "&weekData=" + cTable.weekData + "&term_id=" + cTable.term_id + "&week=" + cTable.week + "&room_name=" + cTable.room_name + "&school_name=" + cTable.school_name + "&type=" + cTable.tpye_class
+    url += "&city_id=" + city_id;
+    url += "&area_id=" + area_id;
+    window.location.href = url;
+  })
+
+
+
 
 
 $("#classTagBt").click(function() {
@@ -163,7 +157,7 @@ $("#teachersTag").on("click",".del",function(){
            var subject = $(this).attr("data-subject");
            var zh = $(this).text();
            var url = path.api + "/api/getSchoolTeacherList";
-           api.ajaxGet(url,{school_id:school_id,grade:grade,subject:subject},function(res){
+           api.ajaxGet(url,{school_id:cTable.school_id,grade:grade,subject:subject},function(res){
                  // console.log(res);
                 if(res.type == "success"){
                     $(".tagTabContentWrap").each(function(index, item) {
@@ -286,7 +280,6 @@ $("#roomTagBt").click(function() {
                   element.tabChange('classRoomTagTab', 1);
                 } else {
                   layer.msg("此地区下无数据",{icon:5});
-
                 }
               })
            }
@@ -333,7 +326,7 @@ $("#roomTagBt").click(function() {
            var school_id = $(this).attr("data-school");
            var school_name = $(this).text();
            var url = "/api/getRoomListBySchoolId";
-          api.ajaxGet(url,{school_id:school_id,date:weekData},function(res){
+          api.ajaxGet(url,{school_id:school_id,date:cTable.weekData},function(res){
                  // console.log(res);
                 if(res.type == "success"){
                     $(_this).siblings().removeClass('active');
@@ -560,29 +553,34 @@ $("#roomTag").on("click",".del",function(){
        if($(this).hasClass('holidayTd')){
          return;
        }
-
-      if($(this).hasClass('holidayTd')){
-         return;
-       }
-
-
-
       if($(this).attr("positon")){
-        var _this = this;
+         var _this = this;
          var  v = verify();
          var str = '确定添加课程吗?';
          if($(_this).find(".info").length > 0){
                var str = "确定替换课程吗？"
            }
+
          if(v){
+             //在今天以前的时间拦截
+            var positon = $(_this).attr("positon").split(",");
+            var currtTd = $('th[position="0,'+ positon[1]+'"]').find('.date_time').text();
+            var thisTime = currtTd.replace(/-/g, '/');
+            var time1 = new Date(thisTime);
+            var currtTime = time1.getTime();
+            var nowTime =Date.parse(new Date());
+            if ( currtTime < nowTime) {
+               layer.msg("只能添加今天以后的课程",{icon:5});
+               return;
+            } 
+           
+
            layer.confirm(str, {icon: 3, title:'提示'}, function(index){
             // var loading = layer.load(3);
             var getData = {};
-            var  tags1 = $("#classTag").find(".tag-selected");
+            var tags1 = $("#classTag").find(".tag-selected");
             var tags2 = $("#roomTag").find(".tag-selected");
             var positon = $(_this).attr("positon").split(",");
-            var time_solt = $(_this).parent("tr");
-            var today = $('th[position="0,'+ positon[1]+'"]').find('.date_time').text();
             var time_solt = $(_this).parent("tr").find(".start_time").text();
             //周选择
             var Weekradio = $('input[name="week"]:checked').val();
@@ -590,56 +588,34 @@ $("#roomTag").on("click",".del",function(){
             var teacher_ids = [];
             var school_ids = [];
             var class_ids = [];
-
-            
-            //在今天以前的时间拦截
-            thisTime = today.replace(/-/g, '/');
-            var time1 = new Date(thisTime);
-            time2 = time1.getTime();
-            var nowTime =Date.parse(new Date());
-            // if ( time2 < nowTime) {
-            //    layer.msg("只能添加今天以后的课程",{icon:5});
-            //    return;
-            // }else{
-               
-            // }
-            // var sdate = new Date(Date.parse(today.replace(/-/g, "/")));
-            // var nextDate = new Date(sdate.getTime());
+            var sdate = new Date(Date.parse(currtTd.replace(/-/g, "/")));
+            var nextDate = currtTime;
+            var Weekradio = $('input[name="week"]:checked').val();
             // console.log(sdate);
             // console.log(nextDate);
-
-
 
             if(Weekradio == "all"){
                 var weekArry = [];
                 for(var i = 0;i<totWeek;i++){
                    weekArry.push(i+1);
                 }
-              weekValue=weekArry.join("|");
+               weekValue=weekArry.join("|");
             }
             if( Weekradio == "week"){
-                  weekValue = week;
+                  weekValue = cTable.week;
             }
-            if(Weekradio == "cum" ){
+            if(Weekradio == "cum"){
               var weekArry = [];
                //拦截自定义未选择周
-              var tags3 = $("#weekTagbox").find(".del");
-              if(tags3.length == 0){
-                 layer.msg("自定义周未配置",{icon:5});
-                 on_off = false;
-              }else {
-                  on_off = true;
-              }
           
              tags3.each(function(index, el) {
                    var id = $(el).attr("data-id");
                    weekArry.push(id);
-
                    //配合后台修改自定义周对teday的赋值
                    if(index == 0){
-                       var lang = id - week;
+                       var lang = id - cTable.week;
                        if(lang != 0){
-                         weekData = tools.nextWeekPei(weekData,lang)
+                          weekData = tools.nextWeekPei(weekData,lang)
                        }
                    }
 
@@ -647,19 +623,11 @@ $("#roomTag").on("click",".del",function(){
                 weekValue=weekArry.join("|");
             }
 
-
-            if(!on_off) {
-                return;
-             }
-               
-
-
-            // 学校id
+            // 接受学校集合
              tags2.find(".del").each(function(index, el) {
                  var teacherid = $(el).attr("data-teacher");
                  var schoolid = $(el).attr("data-school");
                  var classId = $(el).attr("data-class");
-
                   class_ids.push(classId);
                   school_ids.push(schoolid);
                   teacher_ids.push(teacherid);
@@ -688,8 +656,7 @@ $("#roomTag").on("click",".del",function(){
             getData.receive_school_id = school_ids.join("|");  //学校id
             getData.receive_room_id = class_ids.join("|");
             getData.receive_teacher_id = teacher_ids.join("|");;
-            getData.today=today;  //课程计划时间戳；
-            getData.node_id = "";
+            getData.today=currtTd;  //课程计划时间戳；
             getData.type = type;
             var url = path.api + "/api/setSchoolRoomCourcePlan";
             console.log(getData);
@@ -697,14 +664,14 @@ $("#roomTag").on("click",".del",function(){
                    console.log(res);
                    if (res.type == "success"){
                       layer.msg("操作成功！");
-                      studyTime (school_id,weekData);
+                      cTable.studyTime (cTable.school_id,cTable.weekData);
                    }else{
                       layer.msg(res.message,{icon:5});
                    }
             })
           })
          }else{
-           layer.msg("未配置完善，请配置完善",{icon:5})
+           layer.msg("完善配置框，即可添加课程",{icon:5})
          }
       }
   }) 
@@ -713,48 +680,28 @@ $("#roomTag").on("click",".del",function(){
 
 //验证是否可以添加课程
   function verify () {
-    var  tags1 = $("#classTag").find(".tag-selected").length;
+    var tags1 = $("#classTag").find(".tag-selected").length;
     var tags2 = $("#roomTag").find(".tag-selected").length;
-    // console.log(tags1);
-    // console.log(tags2);
-    // var tags3 = $("#weekTagbox").find(".tag-selected").length;
-   
     if(tags1 && tags2) {
        var Weekradio = $('input[name="week"]:checked').val();
        if (Weekradio == "week" ||  Weekradio == "all"){
-           verify_on  = true;
-           $(".steptitle").addClass('isReady');
-            $("td").each(function(index, el) {
-                      if($(el).attr("positon")){
-                        if(!$(el).hasClass('holidayTd')){
-                          $(el).addClass('curhover')
-                        }
-                      }
-             });
+           cTable.verify_on  = true;
+           cTable.readyAddui(true);
        }else if ( Weekradio == "cum"){
            var tags3 = $("#weekTagbox").find(".del");
               if(tags3.length == 0){
-                 verify_on = false;
-                  $(".steptitle").removeClass('isReady');
-                  $("td").removeClass('curhover')
+                 cTable.verify_on = false;
+                 cTable.readyAddui(false); 
               }else {
-                  verify_on  = true;
-                  $(".steptitle").addClass('isReady');
-                  $("td").each(function(index, el) {
-                      if($(el).attr("positon")){
-                        if(!$(el).hasClass('holidayTd')){
-                          $(el).addClass('curhover')
-                        }
-                      }
-                  });
+                  cTable.verify_on  = true;
+                  cTable.readyAddui(true); 
              }
        }
     }else{
-      verify_on = false;
-       $("td").removeClass('curhover')
-        $(".steptitle").removeClass('isReady');
+          cTable.verify_on = false;
+          cTable.readyAddui(false); 
     }
-    return verify_on;
+    return  cTable.verify_on;
   }
 
 // if(Weekradio == "cum" ){
@@ -1018,9 +965,9 @@ function renderClassTd(school_id,weekData){
                              html +=     '<p>'+ tr[k].cn_receive_school+'</p>'
                              html +=     '<p>'+ tr[k].cn_receive_teacher+'</p>'
                              html +=     '<p>'+ tr[k].cn_receive_room+'</p>'
-                             html +=      '<h5 style="color:green">'+ num.makeClassStatus(tr[k].cn_status)+'</h5>' 
+                             html +=     '<h5 style="color:green">'+ num.makeClassStatus(tr[k].cn_status)+'</h5>' 
                              // html +=      '<p>'+ tr[k].cn_status+'</p>' 
-                              html +=      '<div class="delitem" cp_encrypt_id ="'+tr[k].cp_encrypt_id +'" day ="'+ (k+1) +'">删除</div>' 
+                             html +=      '<div class="delitem" cp_encrypt_id ="'+tr[k].cp_encrypt_id +'" day ="'+ (k+1) +'">删除</div>' 
                              html +=     '<i class="i"></i>'
                              html +=     '</div>'
                              $("td[positon='"+(i+1)+","+(k+1)+"']").html(html);
@@ -1040,28 +987,6 @@ function renderClassTd(school_id,weekData){
     }
 
 
-//删除按钮
-  function  delcongfig(){
-        if($(".delitem").length > 0){
-           $(".delitem").click(function(){
-             var id = $(this).attr("cp_encrypt_id");
-             var day = $(this).attr("day");
-             var url = path.api + "/api/delCoursePlan";
-             var getData = {
-                 plan_id:id,
-                 day:day
-             }
-             api.ajaxGet(url,getData,function(res){
-                       console.log(res);
-                    if(res.type == "success"){
-                         studyTime (school_id,weekData);
-                         formHeadtime(school_id,weekData);
-                    }
-             })
-             return false;
-           })
-        }
-      };
 
 
 
