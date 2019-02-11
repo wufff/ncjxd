@@ -22,7 +22,8 @@ require.config({
 			"num":"./tools/num",
 			"star":"./lib/star",
 			"cTable":"./app/renderTable",
-			"downList":"./app/downList"
+			"downList":"./app/downList",
+			"checkTab":"./app/checkTab"
 	},
 	shim: {
 
