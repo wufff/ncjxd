@@ -1,4 +1,4 @@
-require(["layui","path","tools","num","api","cTable","boot-dropdown"],function(layui,path,tools,num,api,cTable){
+require(["layui","path","tools","num","api","cTable","checkTab","boot-dropdown"],function(layui,path,tools,num,api,cTable,checkTab){
        var layer = layui.layer;
       var form = layui.form;
       var element = layui.element;
@@ -19,7 +19,7 @@ require(["layui","path","tools","num","api","cTable","boot-dropdown"],function(l
       var city_id = tools.queryString("city_id");
       var area_id = tools.queryString("area_id");
        
-      var is_on = false;
+      var panel_on = false;
   
       //is_over为0 可以设置
       //is_over为1 不可以设置
@@ -64,12 +64,12 @@ $("#timeforopen").click(function(){
     if($(".filter").hasClass('hidde')){
          $(".filter").removeClass('hidde');
          $("#timeforopen").text("收起 临时开课")
-         is_on = true;
+         panel_on = true;
          $(".addTitle").show();
     }else{
         $(".filter").addClass('hidde');
         $("#timeforopen").text("添加 临时开课")
-        is_on = false;   
+        panel_on = false;   
         $(".addTitle").hide();
     }
 })

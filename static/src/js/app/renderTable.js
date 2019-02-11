@@ -14,7 +14,8 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
     holidays: [],
     isTodayStr: "",
     usrsfor:0,   //表格用途0只读， 1编辑，2开课；
-    verify_on:false, //是否可以添加课程
+    verify_on:false, //是否可以添加课程 验证开关
+    panel_on:true,  //是否可以添加课程 面板开关
     renderClassRoom: function(school_id, weekData, callbcak) {
       loading = layer.load(5);
       var getData = {
@@ -77,6 +78,7 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
           my.term_id = data.term_id;
           my.week = data.term_week;
           my.totWeek = data.total_week;
+          $(".schoolName").text(my.school_name);
           if(my.usrsfor == 1) { //如果是编辑 渲染自定义周
               var html = ""
               for(var i =my.week;i<my.totWeek+1;i++){
@@ -412,7 +414,6 @@ $("body").on("click","td",function(){
                return;
             } 
            layer.confirm(str, {icon: 3, title:'提示'}, function(index){
-            // var loading = layer.load(3);
             var getData = {};
             var tags1 = $("#classTag").find(".tag-selected");
             var tags2 = $("#roomTag").find(".tag-selected");
@@ -432,7 +433,7 @@ $("body").on("click","td",function(){
 
             if(Weekradio == "all"){
                 var weekArry = [];
-                for(var i = 0;i<totWeek;i++){
+                for(var i = 0;i<my.totWeek;i++){
                    weekArry.push(i+1);
                 }
                weekValue=weekArry.join("|");
@@ -459,7 +460,7 @@ $("body").on("click","td",function(){
                 weekValue=weekArry.join("|");
             }
 
-            // 接受学校集合
+            // 授课学校集合
              tags2.find(".del").each(function(index, el) {
                  var teacherid = $(el).attr("data-teacher");
                  var schoolid = $(el).attr("data-school");

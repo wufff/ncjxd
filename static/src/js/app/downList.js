@@ -34,7 +34,8 @@ define(['jquery','layui','api','path'],function($,layui,api,path){
 			     }
 			  },
 	renderShool:function(areId,value,nodeId,is_center_school){             //生成学校前提[name=school]
-		    var url = path.api+"/api/getSchoolListByAreaId"
+		    var url = path.api+"/api/getSchoolListByAreaId";
+		    var text;
 		    if(areId != ""){
 		     var getData = {
 		        area_id:areId,
@@ -61,13 +62,17 @@ define(['jquery','layui','api','path'],function($,layui,api,path){
 		         }else {
 		             $("select[name=school]").val("");
 		         }
-		          form.render('select');
+		          form.render('select');       
 		       }else{
 		         $("select[name=school]").html('<option value="">此地区无数据</option>');
 		          form.render('select');
 		       }
 		     })
 		   }
+		 
+		 
+		   // var text = $("select[name=school]").parents("dd").find('input.layui-unselect');
+		
 		}		  
     }
     return obj

@@ -3,6 +3,7 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
   var form = layui.form;
   var $ = jQuery = layui.jquery;
   var laydate = layui.laydate;
+  var loading;
   //下拉框
   var class_isCenter;
   var city_id;
@@ -10,7 +11,9 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
   var school_id;
   //是否可以修改时间
   var st_is_modify;
-  var loading;
+  //设置确认时间
+  var studytype ="";
+  var commitTitle = "";
   //权限控制 0省 1市 2县 3学校
   var city_id_authority = $("#city_id").val();
   var town_id_authority = $("#town_id").val();
@@ -19,7 +22,10 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
   var authority = 0;
   //权限控制 显示开课
   var c20c30 = $("#c20c30").val();
-  //设置权限 ==============================================
+
+  
+
+//设置权限 ==============================================================================================================================
 
   if (school_id_authority && school_id_authority != 0) {
 
@@ -108,10 +114,17 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
       var url = "/api/getAreaList";
       var schoolvalue = cTable.school_id + '|' + is_center_school;
       downList.renderArea(city_id_authority, town_id_authority, town_id_authority);
-      downList.renderShool(town_id_authority, schoolvalue, cTable.school_id, is_center_school);
-      cTable.renderClassRoom(cTable.school_id, cTable.weekData, function() {
-        cTable.studyTime(cTable.school_id, cTable.weekData);
-      });
+      downList.renderShool(town_id_authority,schoolvalue,cTable.school_id,is_center_school);
+      // $("select[name=school]").val(schoolvalue);
+      // console.log(text);
+      setTimeout(function(){
+                 var  text = $("select[name=school]").find("option:selected").text();
+                  cTable.school_name = text;
+                  cTable.renderClassRoom(cTable.school_id, cTable.weekData, function() {
+                  cTable.studyTime(cTable.school_id, cTable.weekData);
+                });
+       },180)
+       
       break;
     default:
       break;
@@ -763,8 +776,6 @@ function initstudyTimelang() {
   $(".configConfirmTimeBt").click(function() {
     //初始化弹窗
     var url = path.api + "/api/getSchoolTermWeek";
-    var commitTitle = "";
-    var studytype = "";
     api.ajaxGet(url, {
       school_id: cTable.school_id
     }, function(res) {
@@ -772,7 +783,7 @@ function initstudyTimelang() {
       if (res.type == "success") {
         var list = res.data.data;
         studytype = list.term;
-        commitTitle = list.title;
+        commitTitle = list.year;
         $(".studyTime_title").html(list.title);
         var start_time = list.term_time.start_time.slice(0, 10);
         var end_time = list.term_time.end_time.slice(0, 10);
@@ -805,8 +816,9 @@ function initstudyTimelang() {
         layer.close(index)
       }
     });
+  })
 
-    $("#addconfirmtimedaysbt").click(function() {
+  $("#addconfirmtimedaysbt").click(function() {
       var url = path.api + "/api/setSchoolCourseInfo";
       var start_time = $("#ChirformStart_time").val();
       var end_time = $("#ChirformEnd_time").val();
@@ -824,8 +836,9 @@ function initstudyTimelang() {
           }
         })
       }
-    })
-  })
 })
+
+})
+
 
   
