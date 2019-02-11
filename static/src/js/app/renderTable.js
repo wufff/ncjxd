@@ -295,8 +295,6 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
     } 
   }
 
-  useAdd();
-  
 
   //删除按钮
   function  delcongfig(){
@@ -382,7 +380,7 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
    }
   
   //用户添加课程
-function useAdd(){
+
 $("body").on("click","td",function(){
         //非编辑状态点击编辑无效
       if(my.usrsfor == 0){
@@ -514,6 +512,6 @@ $("body").on("click","td",function(){
          }
       }
   }) 
-  }
+  
     return my;
 })

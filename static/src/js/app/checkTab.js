@@ -193,7 +193,7 @@ define(["jquery", "layui", "num", "path","api","tools","checkTab","cTable"], fun
                     var html = "";
                     // console.log(list);
                     for (var i = 0; i < list.length; i++) {
-                      html += '<span class="tag" data-class="' + list[i].sr_encrypt_id + '" data-school="' + school_id + '" data-schoolZb="' + school_name + '">' 
+                      html += '<span class="tag" data-class="' + list[i].sr_encrypt_id + '" data-school="' + res_school_id + '" data-schoolZb="' + school_name + '">' 
                       html += list[i].sr_name + '</span>'
                   }
                    element.tabAdd('classRoomTagTab', {
@@ -264,7 +264,6 @@ define(["jquery", "layui", "num", "path","api","tools","checkTab","cTable"], fun
              layer.msg("此教室已有老师，请选择别的教室",{icon:5});
              return;
           }
-         
           $(_this).addClass('active');
           var teacher = $(this).text();
           var school_id = $(this).attr('data-school');
