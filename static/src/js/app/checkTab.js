@@ -7,7 +7,7 @@ define(["jquery", "layui", "num", "path","api","tools","checkTab","cTable"], fun
   var my = {
       school_id:'',
       weekData:"",
-      usefor:0   //0编辑课表用,1开课确认用
+      usefor:0 //0编辑课表用,1开课确认用
   }
 
    
@@ -484,8 +484,9 @@ $("#roomTag").on("click",".del",function(){
  $("#clearConfigBt").click(function(){
      clearTag1();
      clearTag2();
-     clearTag3();
-    
+     if ( my.usefor == 0) { //是编辑清空3个
+       clearTag3();
+     }     
  })
 //=======================================================需要的函数=======================================================
    function clearTag1() {
@@ -528,13 +529,13 @@ $("#roomTag").on("click",".del",function(){
 
 
 
-
 //=======================================================验证=======================================================
 //验证是否可以添加
   function verify () {
     var tags1 = $("#classTag").find(".tag-selected").length;
     var tags2 = $("#roomTag").find(".tag-selected").length;
-    if(tags1 && tags2) {
+    if( $("#radioDl").length == 1) { //编辑的验证规则
+      if(tags1 && tags2) {
        var Weekradio = $('input[name="week"]:checked').val();
        if (Weekradio == "week" ||  Weekradio == "all"){
            cTable.verify_on  = true;
@@ -545,15 +546,24 @@ $("#roomTag").on("click",".del",function(){
                  verify_on = false;
                  cTable.readyAddui(false); 
               }else {
-                  verify_on  = true;
+                  cTable.verify_on  = true;
                   cTable.readyAddui(true); 
              }
        }
-    }else{
-          cTable.verify_on = false;
-          cTable.readyAddui(false); 
+          }else{
+                cTable.verify_on = false;
+                cTable.readyAddui(false); 
+          }
     }
+    else{                            //开课的验证规
+        if(tags1 && tags2 && ) {
+    }
+    
     return  cTable.verify_on;
   }
-return my;
+
+
+
+
+   return my;
 })

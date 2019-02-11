@@ -15,7 +15,8 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
     isTodayStr: "",
     usrsfor:0,   //表格用途0只读， 1编辑，2开课；
     verify_on:false, //是否可以添加课程 验证开关
-    panel_on:true,  //是否可以添加课程 面板开关
+    panel_on:true, //是否可以添加课程 面板开关
+    is_over:0, //是否过了确认期
     renderClassRoom: function(school_id, weekData, callbcak) {
       var getData = {
         school_id: school_id,
@@ -51,7 +52,7 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
           }
         } else {
           var html = '<label style="font-weight: normal"></label>';
-          layer.close(loading);
+          // layer.close(loading);
           $(".classRoom").html(html);
           $(".classType").html(html);
           haveClass(false);
@@ -59,7 +60,7 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
       })
     },
     studyTime: function(school_id, weekData) {
-      loading = layer.load(5);
+      loading = layer.load(3);
       var WeeKurl = path.api + "/api/getSchoolCourseTimeNode";
       var getData = {
         school_id: school_id,
@@ -83,7 +84,7 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
               for(var i =my.week;i<my.totWeek+1;i++){
                    var str = i
                    html += '<span class="tag" data-id="'+ str +'">第'+ num.Hanzi(str) +'周</span>'
-               }
+              }
              $("#tagWeekWrap").html(html);
           }
           $("#schoolTerm").html(data.year);
@@ -139,6 +140,7 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
         }
       })
     },
+    //渲染上下午关联课程
     renderClassTd: function(school_id, weekData) {
       var WeeKurl = path.api + "/api/getSchoolCourseTimeNode";
       var getData = {
@@ -159,6 +161,7 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
           var up = data.noon_count.up;
           var uphtml;
           var downHtml;
+          my.is_over = res.data.data.is_over;
           if (times.length == 0) {
             $("#tbody").html('<tr><td colspan="9" class="noneTd">此学校暂无课表信息~！</td></td>');
             $("#table_header").hide();
@@ -216,6 +219,7 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
         }
       })
     },
+    //渲染课程
     renderClass: function(school_id, room_id, term_id, type, week,userfor) {
       var classUrl = path.api + "/api/getSchoolRoomCourcePlan";
       var getClassDate = {
@@ -259,6 +263,14 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
                     if (my.usrsfor == 1) {
                       html += '<div  class="delitem" cp_encrypt_id ="' + tr[k].cp_encrypt_id + '" day ="' + (k + 1) + '">删除</div>'
                     }
+                    if(my.usrsfor == 2){ //确认开课两种情况
+                       if( my.is_over == 0){
+                              html +=      '<div class="confirMitem" cp_encrypt_id ="'+tr[k].cp_encrypt_id +'" day ="'+ (k+1) +'"><span class="yes">确认已开 <i class="fa fa-check"></i></span><span class="no">确认未开 <i class="fa fa-times"></i></span></div>' 
+                          }
+                       if(my.is_over == 1) {
+                             html +=      '<div class="confirMitem" cp_encrypt_id ="'+tr[k].cp_encrypt_id +'" day ="'+ (k+1) +'">开课确认时间未到</div>' 
+                       }
+                    }
                     html += '<i class="i"></i>'
                     html += '</div>'
                     $("td[positon='" + (i + 1) + "," + (k + 1) + "']").html(html);
@@ -269,13 +281,15 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
             }
           }
           
-          if(my.usrsfor == 1){  //编辑页面必须运行的UI
+          if(my.usrsfor == 1){  //编辑页面绑删除
              delcongfig();
           }
+          if(my.usrsfor == 2){  //确认页面绑开课确认
+            confirmBtcongfig();
+          }
           hoverUi();
-          layer.close(loading);
         }
-
+        layer.close(loading);
       })
     },
     readyAddui:function(boolean){
@@ -294,6 +308,43 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
      } 
     } 
   }
+
+     
+
+  function  confirmBtcongfig(){
+        if($(".yes").length > 0){
+           $(".confirMitem .yes").click(function(){
+             var plan_id = $(this).parents(".confirMitem").attr("cp_encrypt_id");
+             var geturl = path.api + "/api/confirmCoursePlan";
+             var day = $(this).parents(".confirMitem").attr("day");
+             console.log(geturl);
+             api.ajaxGet(geturl,{plan_id:plan_id,day:day},function(res){
+                if(res.type == "success") {
+                   layer.msg("操作成功",{time:600});
+                   studyTime (my.school_id,my.weekData);
+                }
+             })
+             return false;
+           })
+        }
+        if($(".confirMitem .no").length > 0){
+           $(".confirMitem .no").click(function(){
+             var plan_id = $(this).parents(".confirMitem").attr("cp_encrypt_id");
+             var day = $(this).parents(".confirMitem").attr("day");
+             var geturl = path.api + "/api/cancelCoursePlan";
+             api.ajaxGet(geturl,{plan_id:plan_id,day:day},function(res){
+                if(res.type == "success") {
+                   layer.msg("操作成功",{time:600});
+                   studyTime (my.school_id,my.weekData);
+                }
+             })
+             return false;
+           })
+        }
+    };
+
+
+
 
 
   //删除按钮
