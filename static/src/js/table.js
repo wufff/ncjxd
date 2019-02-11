@@ -134,7 +134,7 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
       $("#inputText").val("");
     } else {
       intInfo();
-      renderArea(data.value);
+      downList.renderArea(data.value)
       city_id = data.value;
       $("#inputText").val("");
       $("#rebox").hide();
@@ -153,7 +153,7 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
       $("#rebox").hide();
     } else {
       town_id = data.value;
-      renderShool(data.value);
+      downList.renderShool(data.value);
     }
     $("#inputText").val("");
   });
@@ -183,6 +183,20 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
       cTable.studyTime(cTable.school_id, cTable.weekData);
     });
   });
+
+   function intInfo(){
+     $(".classRoom").html(" ");
+     $(".classType").html(" ");
+     $("#schoolTerm").html(" ");
+     $("#week_time").html(" ");
+     $("#week").text(" ");
+     $("#tbody").html('<tr><td colspan="9" class="noneTd">请选择学校查询对应课表~！</td></td>');
+     $("#table_header").hide(); 
+     $(".schoolName").text("");
+   }
+
+
+
 
   //快速搜索
   $("#searchBt").click(function() {
@@ -806,3 +820,5 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
     })
   })
 })
+
+  
