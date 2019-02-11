@@ -77,7 +77,14 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
           my.term_id = data.term_id;
           my.week = data.term_week;
           my.totWeek = data.total_week;
-          // console.log("studyTime"+week);
+          if(my.usrsfor == 1) { //如果是编辑 渲染自定义周
+              var html = ""
+              for(var i =my.week;i<my.totWeek+1;i++){
+                   var str = i
+                   html += '<span class="tag" data-id="'+ str +'">第'+ num.Hanzi(str) +'周</span>'
+               }
+             $("#tagWeekWrap").html(html);
+          }
           $("#schoolTerm").html(data.year);
           $("#week_time").html(data.week_time);
           $("#totalweek").html(data.total_week);
@@ -164,39 +171,39 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
           $("#table_header").show();
           $("#table_header_none").hide();
 
-          for (var i = 0; i < up; i++) {
-            if (i == 0) {
-              uphtml += '<td rowspan="' + up + '" class="Bold">上午</td>';
-              uphtml += '<td>' + num.Hanzi(i + 1) + '</br>' + times[i].st_start_time + ' - ' + times[i].st_end_time + '</td>';
-              for (var j = 1; j < 8; j++) {
-                uphtml += '<td positon="' + (i + 1) + ',' + j + '"></td>'
-              }
-            } else {
-              uphtml += '<td>' + num.Hanzi(i + 1) + '</br>' + times[i].st_start_time + ' - ' + times[i].st_end_time + '</td>';
-              for (var j = 1; j < 8; j++) {
-                uphtml += '<td positon="' + (i + 1) + ',' + j + '"></td>'
-              }
-            }
-            $("#tbody").append('<tr>' + uphtml + '</tr>');
-            uphtml = "";
-          }
-
-          for (var i = up; i < down + up; i++) {
-            if (i == up) {
-              uphtml += '<td rowspan="' + down + '" class="Bold">下午</td>';
-              uphtml += '<td>' + num.Hanzi(i + 1) + '</br>' + times[i].st_start_time + ' - ' + times[i].st_end_time + '</td>';
-              for (var j = 1; j < 8; j++) {
-                uphtml += '<td positon="' + (i + 1) + ',' + j + '"></td>'
-              }
-            } else {
-              uphtml += '<td>' + num.Hanzi(i + 1) + '</br>' + times[i].st_start_time + ' - ' + times[i].st_end_time + '</td>';
-              for (var j = 1; j < 8; j++) {
-                uphtml += '<td positon="' + (i + 1) + ',' + j + '"></td>'
-              }
-            }
-            $("#tbody").append('<tr>' + uphtml + '</tr>');
-            uphtml = "";
-          }
+           for(var i = 0;i<up;i++){
+             if(i == 0){
+                uphtml += '<td rowspan="'+ up+'" class="Bold">上午</td>';     
+                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ '<span class="start_time">'+times[i].st_start_time +'-'+times[i].st_end_time +'</span>'+'</td>';
+                for(var j =1; j<8 ;j++ ){
+                 uphtml += '<td positon="'+(i+1)+','+j+'"></td>'
+               }
+             }else{
+                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ '<span class="start_time">'+times[i].st_start_time +'-'+times[i].st_end_time  +'</span>'+'</td>';
+                for(var j =1; j<8 ;j++ ){
+                 uphtml += '<td positon="'+(i+1)+','+j+'"></td>'
+               }
+             }
+              $("#tbody").append('<tr>'+ uphtml +'</tr>');
+              uphtml = "";
+         }
+        
+        for(var i = up;i<down+up;i++){
+             if(i == up){
+                uphtml += '<td rowspan="'+ down+'" class="Bold">下午</td>';     
+                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+'<span class="start_time">'+times[i].st_start_time +'-'+times[i].st_end_time +'</span>'+'</td>';
+                for(var j =1; j<8 ;j++ ){
+                 uphtml += '<td positon="'+(i+1)+','+j+'"></td>'
+               }
+             }else{
+                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ '<span class="start_time">'+ times[i].st_start_time +'-'+times[i].st_end_time +'</span>'+'</td>';
+                for(var j =1; j<8 ;j++ ){
+                 uphtml += '<td positon="'+(i+1)+','+j+'"></td>'
+               }
+             }
+              $("#tbody").append('<tr>'+ uphtml +'</tr>');
+              uphtml = "";
+         }
 
           //渲染假期效果
           setTimeout(function() {
@@ -263,7 +270,6 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
           
           if(my.usrsfor == 1){  //编辑页面必须运行的UI
              delcongfig();
-             verifyUi_add();
           }
           hoverUi();
           layer.close(loading);
@@ -287,9 +293,9 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
      } 
     } 
   }
-  return my;
 
-
+  useAdd();
+  
 
   //删除按钮
   function  delcongfig(){
@@ -374,4 +380,136 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
       }
    }
   
+  //用户添加课程
+function useAdd(){
+$("body").on("click","td",function(){
+        //非编辑状态点击编辑无效
+        if(my.usrsfor == 0){
+            return;
+        }
+        //拦截假期
+       if($(this).hasClass('holidayTd')){
+         return;
+       }
+      if($(this).attr("positon")){
+         var _this = this;
+         var  v = my.verify_on;
+         var str = '确定添加课程吗?';
+         if($(_this).find(".info").length > 0){
+               var str = "确定替换课程吗？"
+           }
+
+         if(v){
+             //在今天以前的时间拦截
+            var positon = $(_this).attr("positon").split(",");
+            var currtTd = $('th[position="0,'+ positon[1]+'"]').find('.date_time').text();
+            var thisTime = currtTd.replace(/-/g, '/');
+            var time1 = new Date(thisTime);
+            var currtTime = time1.getTime();
+            var nowTime =Date.parse(new Date());
+            if ( currtTime < nowTime) {
+               layer.msg("只能添加今天以后的课程",{icon:5});
+               return;
+            } 
+           layer.confirm(str, {icon: 3, title:'提示'}, function(index){
+            // var loading = layer.load(3);
+            var getData = {};
+            var tags1 = $("#classTag").find(".tag-selected");
+            var tags2 = $("#roomTag").find(".tag-selected");
+            var positon = $(_this).attr("positon").split(",");
+            var time_solt = $(_this).parent("tr").find(".start_time").text();
+            //周选择
+            var Weekradio = $('input[name="week"]:checked').val();
+            var weekValue = "";
+            var teacher_ids = [];
+            var school_ids = [];
+            var class_ids = [];
+            var sdate = new Date(Date.parse(currtTd.replace(/-/g, "/")));
+            var nextDate = currtTime;
+            var Weekradio = $('input[name="week"]:checked').val();
+            // console.log(sdate);
+            // console.log(nextDate);
+
+            if(Weekradio == "all"){
+                var weekArry = [];
+                for(var i = 0;i<totWeek;i++){
+                   weekArry.push(i+1);
+                }
+               weekValue=weekArry.join("|");
+            }
+            if( Weekradio == "week"){
+                  weekValue = my.week;
+            }
+            if(Weekradio == "cum"){
+              var weekArry = [];
+               //拦截自定义未选择周
+          
+             tags3.each(function(index, el) {
+                   var id = $(el).attr("data-id");
+                   weekArry.push(id);
+                   //配合后台修改自定义周对teday的赋值
+                   if(index == 0){
+                       var lang = id - my.week;
+                       if(lang != 0){
+                          weekData = tools.nextWeekPei(weekData,lang)
+                       }
+                   }
+
+                });
+                weekValue=weekArry.join("|");
+            }
+
+            // 接受学校集合
+             tags2.find(".del").each(function(index, el) {
+                 var teacherid = $(el).attr("data-teacher");
+                 var schoolid = $(el).attr("data-school");
+                 var classId = $(el).attr("data-class");
+                  class_ids.push(classId);
+                  school_ids.push(schoolid);
+                  teacher_ids.push(teacherid);
+             });
+
+            //判断修改还是新增
+           if($(_this).find(".info").length > 0){
+                  getData.node_id = $(_this).find(".del").attr("cp_encrypt_id");
+           }else{
+                  getData.node_id = "";
+           }
+            getData.school_id = my.school_id;
+            getData.school_name = my.school_name;
+            getData.room_id = my.room_id;
+            getData.room_name = my.room_name;
+            getData.subejct=tags1.attr("data-subject");
+            getData.teacher_id=tags1.attr("data-teacher");;
+            getData.teacher_name=tags1.find(".teacher_name").text();
+            getData.grade=tags1.attr("data-grade");
+            getData.term_id = my.term_id;
+            getData.week=weekValue;  //多个|隔开
+            getData.time_solt=time_solt; // 课时:08:00-09:00
+            getData.time_sort =positon[0]; //序号
+            getData.day=positon[1];        //星期几
+            getData.receive_school_id = school_ids.join("|");  //学校id
+            getData.receive_room_id = class_ids.join("|");
+            getData.receive_teacher_id = teacher_ids.join("|");;
+            getData.today=currtTd;  //课程计划时间戳；
+            getData.type = my.tpye_class;
+            var url = path.api + "/api/setSchoolRoomCourcePlan";
+            console.log(getData);
+            api.ajaxGet(url,getData,function(res){
+                   console.log(res);
+                   if (res.type == "success"){
+                      layer.msg("操作成功！");
+                      my.studyTime (my.school_id,my.weekData);
+                   }else{
+                      layer.msg(res.message,{icon:5});
+                   }
+            })
+          })
+         }else{
+           layer.msg("完善顶部配置，即可添加课程",{icon:5})
+         }
+      }
+  }) 
+  }
+    return my;
 })

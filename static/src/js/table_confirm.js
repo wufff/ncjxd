@@ -1,35 +1,38 @@
-require(["layui","path","tools","num","api","boot-dropdown"],function(layui,path,tools,num,api){
-      var layer = layui.layer;
+require(["layui","path","tools","num","api","cTable","boot-dropdown"],function(layui,path,tools,num,api,cTable){
+       var layer = layui.layer;
       var form = layui.form;
       var element = layui.element;
       var $ = jquery = layui.jquery;
-      var school_id = tools.queryString("school_id");
-      var room_id = tools.queryString("room_id");
-      var term_id = tools.queryString("term_id");
-      var week = tools.queryString("week");
-      var weekData = tools.queryString("weekData");
-      var room_name = tools.request("room_name");
-      var school_name = tools.request("school_name");
-      var type = 0;
-      var holidays = [];
-      var isTodayStr;
-      var totWeek;
-      var on_off = true;
-      var is_on = false;
       var loading;
+      // 课表渲染
+      cTable.school_id = tools.queryString("school_id");
+      cTable.room_id = tools.queryString("room_id");
+      cTable.term_id = tools.queryString("term_id");
+      cTable.week = tools.queryString("week");
+      cTable.weekData = tools.queryString("weekData");
+      cTable.room_name = tools.request("room_name");
+      cTable.school_name = tools.request("school_name");
+      cTable.tpye_class = tools.request("type");
+      cTable.usrsfor = 2
+
+      
+      var city_id = tools.queryString("city_id");
+      var area_id = tools.queryString("area_id");
+       
+      var is_on = false;
+  
       //is_over为0 可以设置
       //is_over为1 不可以设置
       var is_over = "";
       // console.log(school_name);
-      $(".schoolName").html(school_name);
-      $(".roomName").html(room_name);
-      studyTime(school_id,weekData);
-      formHeadtime(school_id,weekData);
+      $(".schoolName").html(cTable.school_name);
+      $(".roomName").html(cTable.room_name);
+      cTable.studyTime(cTable.school_id,cTable.weekData);
+     
      
 
     //切换周
 $("body").on("click",".Add",function(){
-
       var currtWeek = $("#week").text();
       if(currtWeek == totWeek){
          return;
@@ -50,8 +53,13 @@ $("body").on("click",".sub",function(){
 })
 
 $("#goToEdite").click(function(){
-    window.location.href="/course/edit?school_id="+school_id+"&room_id="+room_id+"&weekData="+weekData+"&term_id="+term_id+"&week="+week+"&room_name="+room_name+"&school_name="+school_name;
+    var url = "/course/?school_id=" + cTable.school_id + "&room_id=" + cTable.room_id + "&weekData=" + cTable.weekData + "&term_id=" + cTable.term_id + "&week=" + cTable.week + "&room_name=" + cTable.room_name + "&school_name=" + cTable.school_name + "&type=" + cTable.tpye_class
+    url += "&city_id=" + city_id;
+    url += "&area_id=" + area_id;
+    window.location.href = url;
 })
+
+
 $("#timeforopen").click(function(){
     if($(".filter").hasClass('hidde')){
          $(".filter").removeClass('hidde');
@@ -458,138 +466,13 @@ $("#roomTag").on("click",".del",function(){
  })
 
 
-//用户添加课程
-
-  $("body").on("click","td",function(){
-        //拦截假期
-       if($(this).hasClass('holidayTd')){
-         return;
-       }
 
 
-      //拦截非添加状态
-      if(!is_on){
-         return;
-       }
-
-      
-
-      if($(this).attr("positon")){
-        var _this = this;
-         var  v = verify();
-         var str = '确定添加课程吗?';
-         if($(_this).find(".info").length > 0){
-               var str = "确定替换课程吗？"
-           }
-         if(v){
-           layer.confirm(str, {icon: 3, title:'提示'}, function(index){
-            // var loading = layer.load(3);
-            var getData = {};
-            var  tags1 = $("#classTag").find(".tag-selected");
-            var tags2 = $("#roomTag").find(".tag-selected");
-            var positon = $(_this).attr("positon").split(",");
-            var time_solt = $(_this).parent("tr");
-            var today = $('th[position="0,'+ positon[1]+'"]').find('.date_time').text();
-            var time_solt = $(_this).parent("tr").find(".start_time").text();
-            //周选择
-            var Weekradio = $('input[name="week"]:checked').val();
-            var weekValue = "";
-            var teacher_ids = [];
-            var school_ids = [];
-            var class_ids = [];
-
-            
-            //在今天以前的时间拦截
-            thisTime = today.replace(/-/g, '/');
-            var time1 = new Date(thisTime);
-            time2 = time1.getTime();
-            var nowTime =Date.parse(new Date());
-            if ( time2 < nowTime) {
-               layer.msg("只能添加今天以后的课程",{icon:5});
-               return;
-            }else{
-               
-            }
-          
-            weekValue = week;
-
-            if(!on_off) {
-                return;
-             }
-               
-
-
-            // 学校id
-             tags2.find(".del").each(function(index, el) {
-                 var teacherid = $(el).attr("data-teacher");
-                 var schoolid = $(el).attr("data-school");
-                 var classId = $(el).attr("data-class");
-
-                  class_ids.push(classId);
-                  school_ids.push(schoolid);
-                  teacher_ids.push(teacherid);
-             });
-
-            //判断修改还是新增
-           if($(_this).find(".info").length > 0){
-                  getData.node_id = $(_this).find(".del").attr("cp_encrypt_id");
-           }else{
-                  getData.node_id = "";
-           }
-
-            getData.school_id = school_id;
-            getData.school_name = school_name;
-            getData.room_id = room_id;
-            getData.room_name = room_name;
-            getData.subejct=tags1.attr("data-subject");
-            getData.teacher_id=tags1.attr("data-teacher");;
-            getData.teacher_name=tags1.find(".teacher_name").text();
-            getData.grade=tags1.attr("data-grade");
-            getData.term_id = term_id;
-            getData.week=weekValue;  //多个|隔开
-            getData.time_solt=time_solt; // 课时:08:00-09:00
-            getData.time_sort =positon[0]; //序号
-            getData.day=positon[1];        //星期几
-            getData.receive_school_id = school_ids.join("|");  //学校id
-            getData.receive_room_id = class_ids.join("|");
-            getData.receive_teacher_id = teacher_ids.join("|");;
-            getData.today=today;  //课程计划时间戳；
-            getData.node_id = "";
-            var url = path.api + "/api/setSchoolRoomCourcePlan";
-            console.log(getData);
-            api.ajaxGet(url,getData,function(res){
-                   console.log(res);
-                   if (res.type == "success"){
-                      layer.msg("操作成功！");
-                      
-                      studyTime (school_id,weekData);
-                      formHeadtime(school_id,weekData);
-                   }else{
-                      layer.msg(res.message,{icon:5});
-                   }
-            })
-          })
-         }else{
-           layer.msg("未配置完善，请完善加课信息",{icon:5})
-         }
-      }
-  }) 
 
 // ==================================================================================
 
 //验证是否可以添加课程
-  function verify () {
-    var  tags1 = $("#classTag").find(".tag-selected").length;
-    var tags2 = $("#roomTag").find(".tag-selected").length;
-    // console.log(tags1);
-    // console.log(tags2);
-    // var tags3 = $("#weekTagbox").find(".tag-selected").length;
-    if(tags1 && tags2) {
-       return true;
-    }else{
-      return false;
-    }
-  }
+
 
 //清空3个tag
    function clearTag1() {
