@@ -7,7 +7,7 @@ define(["jquery", "layui", "num", "path","api","tools","checkTab","cTable"], fun
   var my = {
       school_id:'',
       weekData:"",
-      usefor:0 //0编辑课表用,1开课确认用
+      usefor:0   //0编辑课表用,1开课确认用
   }
 
    
@@ -534,7 +534,7 @@ $("#roomTag").on("click",".del",function(){
   function verify () {
     var tags1 = $("#classTag").find(".tag-selected").length;
     var tags2 = $("#roomTag").find(".tag-selected").length;
-    if( $("#radioDl").length == 1) { //编辑的验证规则
+    if( $("#radioDl").length == 1) {
       if(tags1 && tags2) {
        var Weekradio = $('input[name="week"]:checked').val();
        if (Weekradio == "week" ||  Weekradio == "all"){
@@ -554,9 +554,9 @@ $("#roomTag").on("click",".del",function(){
                 cTable.verify_on = false;
                 cTable.readyAddui(false); 
           }
-    }
-    else{                            //开课的验证规
-        if(tags1 && tags2 && ) {
+    }else 
+    {  
+
     }
     
     return  cTable.verify_on;
