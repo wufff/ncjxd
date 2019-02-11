@@ -16,13 +16,14 @@ require(["layui","path","tools","num","api","cTable","checkTab","boot-dropdown"]
       cTable.usrsfor = 2
       cTable.panel_on = false;
 
+
+      checkTab.school_id = tools.queryString("school_id");
       checkTab.usefor = 1;
+      checkTab.panel_on = false;
       var city_id = tools.queryString("city_id");
       var area_id = tools.queryString("area_id");
           
  
-
-    
       // console.log(school_name);
       $(".schoolName").html(cTable.school_name);
       $(".roomName").html(cTable.room_name);
@@ -58,20 +59,22 @@ $("#goToEdite").click(function(){
     window.location.href = url;
 })
 
-//面板开启关闭
-$("#timeforopen").click(function(){
-    if($(".filter").hasClass('hidde')){
-         $(".filter").removeClass('hidde');
-         $("#timeforopen").text("收起 临时开课")
-         cTable.panel_on = true;
-         $(".addTitle").show();
-    }else{
-        $(".filter").addClass('hidde');
-        $("#timeforopen").text("添加 临时开课")
-        cTable.panel_on = false;   
-        $(".addTitle").hide();
-    }
-})
+
+
+// //面板开启关闭
+// $("#timeforopen").click(function(){
+//     if($(".filter").hasClass('hidde')){
+//          $(".filter").removeClass('hidde');
+//          $("#timeforopen").text("收起 临时开课")
+//          cTable.panel_on = true;
+//          $(".addTitle").show();
+//     }else{
+//         $(".filter").addClass('hidde');
+//         $("#timeforopen").text("添加 临时开课")
+//         cTable.panel_on = false;   
+//         $(".addTitle").hide();
+//     }
+// })
 
 
 

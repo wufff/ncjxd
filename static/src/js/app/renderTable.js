@@ -237,7 +237,7 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
         }
         console.log(obj);
         if (res.type == "success") {
-          if (res.data.length > 0) {
+          if (res.data.data.list.length > 0) {
             var list = res.data.data.list;
             for (var i = 0; i < list.length; i++) {
               var tr = list[i][0];
@@ -247,6 +247,9 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
                     var grade = num.Hanzi(tr[k].cn_grade)
                     var html = '<div class="content">' + tr[k].cn_subject_chs + '</br>'
                     html += '( ' + tr[k].cn_sponsor_teacher_name + ' )' + '</br></div>'
+                    if ( my.usrsfor == 2) {
+                       html += '<span class="makeClassStatus_'+tr[k].cn_status +'">'+ num.makeClassStatus(tr[k].cn_status) +'</span>'
+                    }
                     html += '<div class="info topInfo" data-id="' + tr[k].cp_encrypt_id + '">'
                     html += '<div class="title">'
                     html += grade + '年级 ' + tr[k].cn_subject_chs
@@ -259,7 +262,7 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
                     html += '<p>' + tr[k].cn_receive_school + '</p>'
                     html += '<p>' + tr[k].cn_receive_teacher + '</p>'
                     html += '<p>' + tr[k].cn_receive_room + '</p>'
-                    html += '<h5 class="cn_status_' + tr[k].cn_status + '">' + num.makeClassStatus(tr[k].cn_status) + '</h5>'
+                    html += '<h5 class="cn_status_' + tr[k].cn_status + '" style="line-height:20px;">' + num.makeClassStatus(tr[k].cn_status) + '</h5>'
                     if (my.usrsfor == 1) {
                       html += '<div  class="delitem" cp_encrypt_id ="' + tr[k].cp_encrypt_id + '" day ="' + (k + 1) + '">删除</div>'
                     }
@@ -321,7 +324,7 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
              api.ajaxGet(geturl,{plan_id:plan_id,day:day},function(res){
                 if(res.type == "success") {
                    layer.msg("操作成功",{time:600});
-                   studyTime (my.school_id,my.weekData);
+                   my.studyTime (my.school_id,my.weekData);
                 }
              })
              return false;
@@ -335,7 +338,7 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
              api.ajaxGet(geturl,{plan_id:plan_id,day:day},function(res){
                 if(res.type == "success") {
                    layer.msg("操作成功",{time:600});
-                   studyTime (my.school_id,my.weekData);
+                   my.studyTime (my.school_id,my.weekData);
                 }
              })
              return false;
@@ -359,10 +362,9 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
                  day:day
              }
              api.ajaxGet(url,getData,function(res){
-                       console.log(res);
+                    layer.msg("删除成功!",{time:800});
                     if(res.type == "success"){
-                         studyTime (school_id,weekData);
-                         formHeadtime(school_id,weekData);
+                         my.studyTime (my.school_id,my.weekData);
                     }
              })
              return false;
@@ -417,7 +419,7 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
              setTimeout(function(){
                 $(_this).find(".content").css("color","#666");
                 info.hide();
-             },150)
+             },300)
          }
       });
    }

@@ -7,10 +7,29 @@ define(["jquery", "layui", "num", "path","api","tools","checkTab","cTable"], fun
   var my = {
       school_id:'',
       weekData:"",
-      usefor:0   //0编辑课表用,1开课确认用
+      usefor:0,
+      panel_on:true //0编辑课表用,1开课确认用
   }
 
-   
+     
+ //面板开启关闭
+$("#timeforopen").click(function(){
+    if($(".filter").hasClass('hidde')){
+         $(".filter").removeClass('hidde');
+         $("#timeforopen").text("收起 临时开课")
+         cTable.panel_on = true;
+         my.panel_on = true;
+         $(".addTitle").show();
+    }else{
+        $(".filter").addClass('hidde');
+        $("#timeforopen").text("添加 临时开课")
+        cTable.panel_on = false;
+        my.panel_on = false;   
+        $(".addTitle").hide();
+    }
+})
+
+
   //关联发起方选择
   $("body").on("click","#classTagControl .tag",
     function(){
@@ -554,11 +573,16 @@ $("#roomTag").on("click",".del",function(){
                 cTable.verify_on = false;
                 cTable.readyAddui(false); 
           }
-    }else 
+    }else   //
     {  
-
+      if(tags1 && tags2) {
+            cTable.verify_on  = true;
+            cTable.readyAddui(false);
+      }else {
+           cTable.verify_on = false;
+           cTable.readyAddui(false); 
+      }
     }
-    
     return  cTable.verify_on;
   }
 
