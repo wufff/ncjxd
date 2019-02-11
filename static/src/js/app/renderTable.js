@@ -386,9 +386,13 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
 function useAdd(){
 $("body").on("click","td",function(){
         //非编辑状态点击编辑无效
-        if(my.usrsfor == 0){
+      if(my.usrsfor == 0){
             return;
-        }
+      }
+       //面板关闭状态点击编辑无效
+      if(!my.panel_on){
+          return;
+      }
         //拦截假期
        if($(this).hasClass('holidayTd')){
          return;

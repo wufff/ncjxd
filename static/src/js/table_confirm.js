@@ -53,7 +53,7 @@ $("body").on("click",".sub",function(){
 })
 
 $("#goToEdite").click(function(){
-    var url = "/course/?school_id=" + cTable.school_id + "&room_id=" + cTable.room_id + "&weekData=" + cTable.weekData + "&term_id=" + cTable.term_id + "&week=" + cTable.week + "&room_name=" + cTable.room_name + "&school_name=" + cTable.school_name + "&type=" + cTable.tpye_class
+    var url = "/course/edit?school_id=" + cTable.school_id + "&room_id=" + cTable.room_id + "&weekData=" + cTable.weekData + "&term_id=" + cTable.term_id + "&week=" + cTable.week + "&room_name=" + cTable.room_name + "&school_name=" + cTable.school_name + "&type=" + cTable.tpye_class
     url += "&city_id=" + city_id;
     url += "&area_id=" + area_id;
     window.location.href = url;
