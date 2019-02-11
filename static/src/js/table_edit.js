@@ -1,4 +1,4 @@
-require(["layui","path","tools","num","api","cTable","checkTab","boot-dropdown"],function(layui,path,tools,num,api,cTable){
+require(["layui","path","tools","num","api","cTable","checkTab","boot-dropdown"],function(layui,path,tools,num,api,cTable,checkTab){
       var layer = layui.layer;
       var form = layui.form;
       var element = layui.element;
@@ -15,6 +15,8 @@ require(["layui","path","tools","num","api","cTable","checkTab","boot-dropdown"]
       cTable.tpye_class = tools.request("type");
       cTable.usrsfor = 1
   
+      checkTab.school_id = tools.queryString("school_id");
+
   
       var city_id = tools.queryString("city_id");
       var area_id = tools.queryString("area_id");

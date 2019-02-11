@@ -74,6 +74,7 @@ require(["layui", "path","page","api","boot-dropdown"], function(layui, path,pag
        }
        var getData = data.field;
        getData.type = 3;
+       getData.title = $("#res_title").text();
        if(controlTpye == 0) {
            var url = path.api+"/api/addManageRecommend";
            var loading = layer.load(3);
