@@ -1,4 +1,4 @@
-require(["layui","path","tools","num","api","cTable","boot-dropdown"],function(layui,path,tools,num,api,cTable){
+require(["layui","path","tools","num","api","cTable","checkTab","boot-dropdown"],function(layui,path,tools,num,api,cTable){
       var layer = layui.layer;
       var form = layui.form;
       var element = layui.element;

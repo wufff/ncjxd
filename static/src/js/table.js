@@ -107,8 +107,11 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
       town_id = town_id_authority;
       var url = "/api/getAreaList";
       var schoolvalue = cTable.school_id + '|' + is_center_school;
-      downList.renderArea(city_id_authority, town_id_authority, town_id_authority)
-      downList.renderShool(town_id_authority, schoolvalue, cTable.school_id, is_center_school)
+      downList.renderArea(city_id_authority, town_id_authority, town_id_authority);
+      downList.renderShool(town_id_authority, schoolvalue, cTable.school_id, is_center_school);
+      cTable.renderClassRoom(cTable.school_id, cTable.weekData, function() {
+        cTable.studyTime(cTable.school_id, cTable.weekData);
+      });
       break;
     default:
       break;
@@ -497,9 +500,9 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
         });
         var url = path.api + "/api/setTermSchoolCourseTime";
         api.ajaxGet(url, {
-          term_id: term_id,
+          term_id: cTable.term_id,
           times: array.join(","),
-          school_id: school_id
+          school_id: cTable.school_id
         }, function(res) {
           console.log(res);
           if (res.type == "success") {
@@ -507,7 +510,7 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
               time: 600
             });
             layer.close(index);
-            studyTime(school_id, weekData);
+            cTable.studyTime(cTable.school_id, cTable.weekData);
           }
         })
       }
@@ -604,7 +607,7 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
     });
   })
 
-  function initstudyTimelang() {
+function initstudyTimelang() {
     laydate.render({
       elem: '#holidayStart_time',
       calendar: true
@@ -613,7 +616,7 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
       elem: '#holidayEnd_time',
       calendar: true
     });
-    // 初始化学期弹窗
+// 初始化学期弹窗
     var url = path.api + "/api/getSchoolTermWeek";
     api.ajaxGet(url, {
       school_id: cTable.school_id
@@ -624,19 +627,22 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
         $(".studyTime_title").html(list.title);
         var start_time = list.term_time.start_time.slice(0, 10);
         var end_time = list.term_time.end_time.slice(0, 10);
+        var range_start = list.term_range_time.start_time;
+        var range_end = list.term_range_time.end_time;
         laydate.render({
           elem: '#studyStart_time',
           value: start_time,
-          min: '2018-8-1',
-          max: '2019-1-31'
+          min:  range_start,
+          max: range_end
         });
 
         laydate.render({
           elem: '#studyEnd_time',
           value: end_time,
-          min: '2018-8-1',
-          max: '2019-1-31'
+          min: range_start,
+          max: range_end
         });
+       
       } else {
         layer.mag(res.message);
       }
@@ -656,6 +662,7 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
         end_time: End_time,
         school_id: cTable.school_id
       }
+
       api.ajaxGet(url, getData, function(res) {
         console.log(res);
         if (res.type == 'success') {
@@ -759,7 +766,7 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
     var commitTitle = "";
     var studytype = "";
     api.ajaxGet(url, {
-      school_id: school_id
+      school_id: cTable.school_id
     }, function(res) {
       console.log(res);
       if (res.type == "success") {
@@ -769,20 +776,20 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
         $(".studyTime_title").html(list.title);
         var start_time = list.term_time.start_time.slice(0, 10);
         var end_time = list.term_time.end_time.slice(0, 10);
+        var range_start = list.term_range_time.start_time;
+        var range_end = list.term_range_time.end_time;
         laydate.render({
           elem: '#ChirformStart_time',
-          type: 'datetime',
-          value: start_time + " 00:00:00",
-          min: '2018-8-1 00:00:00',
-          max: '2019-1-31 00:00:00'
+          value: start_time,
+          min:  range_start,
+          max: range_end
         });
 
         laydate.render({
           elem: '#ChirformEnd_time',
-          type: 'datetime',
-          value: end_time + " 00:00:00",
-          min: '2018-8-1 00:00:00',
-          max: '2019-1-31 23:59:00'
+          value: end_time,
+          min: range_start,
+          max: range_end
         });
       } else {
         layer.mag(res.message);
