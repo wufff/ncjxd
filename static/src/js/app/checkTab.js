@@ -176,10 +176,10 @@ define(["jquery", "layui", "num", "path","api","tools","checkTab","cTable"], fun
            })
        } 
       if (oder == 2)   {
-           var school_id = $(this).attr("data-school");
+           var res_school_id = $(this).attr("data-school");
            var school_name = $(this).text();
            var url = "/api/getRoomListBySchoolId";
-          api.ajaxGet(url,{school_id:my.school_id,date:my.weekData},function(res){
+          api.ajaxGet(url,{school_id:res_school_id,date:my.weekData},function(res){
                  // console.log(res);
                 if(res.type == "success"){
                     $(_this).siblings().removeClass('active');

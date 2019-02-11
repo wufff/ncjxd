@@ -23,7 +23,7 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
   //权限控制 显示开课
   var c20c30 = $("#c20c30").val();
 
-  
+
 
 //设置权限 ==============================================================================================================================
 
@@ -109,6 +109,7 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
       break;
     case 3: //学校管理员
       cTable.school_id = school_id_authority;
+      cTable.school_name = $("#school_name").val();
       city_id = city_id_authority;
       town_id = town_id_authority;
       var url = "/api/getAreaList";
@@ -117,14 +118,9 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
       downList.renderShool(town_id_authority,schoolvalue,cTable.school_id,is_center_school);
       // $("select[name=school]").val(schoolvalue);
       // console.log(text);
-      setTimeout(function(){
-                 var  text = $("select[name=school]").find("option:selected").text();
-                  cTable.school_name = text;
-                  cTable.renderClassRoom(cTable.school_id, cTable.weekData, function() {
-                  cTable.studyTime(cTable.school_id, cTable.weekData);
-                });
-       },180)
-       
+       cTable.renderClassRoom(cTable.school_id, cTable.weekData, function() {
+            cTable.studyTime(cTable.school_id, cTable.weekData);
+      });
       break;
     default:
       break;
