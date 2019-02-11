@@ -20,7 +20,9 @@ require.config({
 			"moxie":"./lib/plupload/moxie",
 			"upLoad":"./tools/upLoad",
 			"num":"./tools/num",
-			"star":"./lib/star"
+			"star":"./lib/star",
+			"cTable":"./app/renderTable",
+			"downList":"./app/downList"
 	},
 	shim: {
 
