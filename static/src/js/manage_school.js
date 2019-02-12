@@ -416,7 +416,13 @@ function initContorlRoom (data){
                getData.school_id = $("#user_school_id").val();
                console.log(getData);
                api.ajaxPost(url,getData,function(res){
-                  console.log(res);
+                  if(res.type == "success"){
+                     layer.msg("操作成功！",{time:800});
+                     initPage (goPage)
+                     layer.close(dialog);
+                  }else{
+                     layer.msg(res.message,{icon:5,time:800})
+                  }
                })
             }else{
                 layer.msg("请确认 学生数=男生数+女生数",{icon:5})
