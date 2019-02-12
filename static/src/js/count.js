@@ -101,15 +101,15 @@ form.on('select(city)', function(data){
          $("select[name=area]").html(html);
          $("select[name=area]").val("");
           form.render('select');
+       }else {
+            $("select[name=area]").html('<option value="">该地区无数据</option>');
+             form.render('select');
        }
      })
      }else{
-       if(data.value == ""){
+
            $("select[name=area]").html('<option value="">全部</option>');
-       }else{
-           $("select[name=area]").html('<option value="">该地区无数据</option>');
-       }
-       form.render('select');
+           form.render('select');
      }
 });  
 
