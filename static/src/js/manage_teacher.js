@@ -8,7 +8,7 @@ require(["layui", "path","page","tools","api","boot-dropdown"], function(layui, 
     var dialog;
     
     initPage (1);
-    getUserListBySchoolId();
+    // getUserListBySchoolId();
     controlGetSubject();
 
 form.on('select(grade)', function(data){
@@ -43,7 +43,7 @@ form.on('select(grade)', function(data){
         type: 1,
         title:"添加教师",
         content: $('#controlAddteacher'),
-        area:["600px","540px"],
+        area:["600px","580px"],
         btn: ['确定', '取消'],
         yes: function(index, layero){
           $("#submitControlBt").click();
@@ -71,7 +71,7 @@ form.on('select(grade)', function(data){
         var useId = tr.attr("data-user");
         var gardeArr = tr.attr("data-grade");
         var subject = tr.attr("data-subject");
-        var pbtext = tr.find(".name").text();
+        var pbtext = tr.find(".username").text();
         var subjectBbj = JSON.parse(subject);
         var gardeBbj = JSON.parse(gardeArr);
         var intdata = {
@@ -110,6 +110,7 @@ form.on('select(grade)', function(data){
         var url = path.api+"/api/getUserInfoByDodoId"
         api.ajaxGet(url,{user_name:works},function(res){
            if(res.type == "success"){
+             // console.log(res);
              $(".text").text("匹配成功");
              $("#teacher_id").val(res.data.user_encrypt_id)
            }else {
@@ -162,7 +163,7 @@ form.on('select(grade)', function(data){
          return false;
        }
    
-       if(controlTpye == 0) {
+       if(controlTpye == 8) {
            var url = path.api+"/api/addSchoolTeacher";
            var loading = layer.load(3);
            api.ajaxGet(url,getData,function(res){
@@ -226,23 +227,24 @@ function refrechData() {
   }
 
 // 弹窗里面东西
-  function getUserListBySchoolId (){
-    var url = path.api+'/api/getUserListBySchoolId';
-    api.ajaxGet(url,{},function(data){
-       // console.log(data);
-      if(data.type == 'success'){
-          var list = data.data.data;
-          var html = "";
-          for(var i=0;i<list.length;i++){
-             html += '<option value="'+ list[i].user_encrypt_id +'">'+ list[i].user_realname+'</option>'
-          }
-         $("select[name=teacher_id]").append(html);
-         form.render('select','control');
-      }
-    }) 
-  }
+  // function getUserListBySchoolId (){
+  //   var url = path.api+'/api/getUserListBySchoolId';
+  //   api.ajaxGet(url,{},function(data){
+  //      // console.log(data);
+  //     if(data.type == 'success'){
+  //         var list = data.data.data;
+  //         var html = "";
+  //         for(var i=0;i<list.length;i++){
+  //            html += '<option value="'+ list[i].user_encrypt_id +'">'+ list[i].user_realname+'</option>'
+  //         }
+  //        $("select[name=teacher_id]").append(html);
+  //        form.render('select','control');
+  //     }
+  //   }) 
+  // }
 
     function  controlGetSubject(){
+          loading = layer.load(5);
           var url = path.api+'/api/getSubjectCodeList';
           var getData = {};
           getData.grade_id = 1;
@@ -255,6 +257,7 @@ function refrechData() {
                    html += '<input type="checkbox" name="subject['+ list[i].ss_id +']" value="'+ list[i].ss_id +'" title="'+ list[i].ss_name +'">'
                 }
                $("#subjectWrap").append(html);
+               layer.close(loading);
                form.render('checkbox','control');
              }
           }) 
@@ -287,6 +290,7 @@ function refrechData() {
      
     function buildTable(list) {
     if (list.type == "success") {
+       // console.log(list);
       var data = list.data.data.list.map(function(item) {
         return {
           id:item.st_id,
@@ -313,6 +317,7 @@ function refrechData() {
         html += '<td class="grade">' + data[i].grade + '</td>'
         html += '<td class="subject">' + data[i].subject + '</td>'
         html += '<td class="moblie">' + tools.fomartNone(data[i].moblie) + '</td>'
+         html += '<td class="within">' + tools.fomartNone(data[i].moblie) + '</td>'
         html += '<td class="timel">' + tools.fomartTime(data[i].time) + '</td>'
         html += '<td><a class="change">修改</a><a class="del">删除</a></td>'
         html += ' </tr>'

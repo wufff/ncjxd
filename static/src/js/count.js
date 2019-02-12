@@ -4,14 +4,9 @@
  * @date    2018-12-31 15:36:02
  * @version $Id$
  */
-require(["jquery","layui","path","tools","page","api","boot-dropdown"],function($,layui,path,tools,pages,api){
+require(["jquery","layui","path","tools","page","api","downList","boot-dropdown"],function($,layui,path,tools,pages,api,downList){
    var form = layui.form;
-   var currentWeek = 0;
-   var currentMouth = 0;
-   var currentTpye = true;
-   ui();
-   form.render('select');
-   initPage (currentTpye);
+   initPage (1);
    //权限
    var city_id;
    var town_id;
@@ -24,7 +19,7 @@ require(["jquery","layui","path","tools","page","api","boot-dropdown"],function(
        authority = 1;
     }
  
-  console.log(authority);
+  console.log("权限"+authority);
  
     switch(authority)
         {
@@ -120,81 +115,18 @@ form.on('select(area)', function(data){
     if(town_id == data.value){
          return;
       }
-    town_id = data.value  
-    initPage (currentTpye);
+     town_id = data.value  
 });
 
 form.on('select(studyTime)', function(data){
-    initPage (currentTpye);
+   
 });
 
 
 
-// 点击选择周
-   $(".week").click(function(event) {
-       if($(this).hasClass('active')){
-        return;
-      }
-      var obj = tools.calcDtScopeByWeek(currentWeek);
-      var str = obj.start+" 至 " + obj.last;
-      $("#timeInput").val(str);
-      currentTimeTpye = "week";
-   });
-
-// 点击选择月
-  $(".mouth").click(function(event) {
-       if($(this).hasClass('active')){
-        return;
-      }
-      var obj = tools.calcDtScopeByMonth(currentWeek);
-      var str = obj.start+" 至 " + obj.last;
-      $("#timeInput").val(str);
-      currentTimeTpye = "mouth";
-    
-   });
-
- $(".fa-chevron-left").click(function(){
-    if(currentTimeTpye == "week"){
-      currentWeek = currentWeek - 1;
-      var obj = tools.calcDtScopeByWeek(currentWeek);
-      var str = obj.start+" 至 " + obj.last;
-      $("#timeInput").val(str);
-      initPage (currentTpye)
-    }
-    if(currentTimeTpye == "mouth"){
-        currentMouth = currentMouth - 1;
-        var obj = tools.calcDtScopeByMonth(currentMouth);
-        var str = obj.start+" 至 " + obj.last;
-        $("#timeInput").val(str);
-        initPage (currentTpye);
-    }
-    
- })
-
- $(".fa-chevron-right").click(function(){
-      if(currentTimeTpye == "week"){
-      currentWeek = currentWeek + 1;
-      var obj = tools.calcDtScopeByWeek(currentWeek);
-      var str = obj.start+" 至 " + obj.last;
-      $("#timeInput").val(str);
-      initPage (currentTpye);
-    }
-    if(currentTimeTpye == "mouth"){
-        currentMouth = currentMouth + 1;
-        var obj = tools.calcDtScopeByMonth(currentMouth);
-        var str = obj.start+" 至 " + obj.last;
-        $("#timeInput").val(str);
-        initPage (currentTpye);
-    }
- })
 
 
-
-// 点击选择学科
-
-
-
- $("#searchBt").click(function(){
+$("#searchBt").click(function(){
    var words = $("#inputText").val();
    if(!words){
      return false;
@@ -227,7 +159,7 @@ form.on('select(studyTime)', function(data){
               $("select[name=city1]").val("");
               $("select[name=area]").val("");
                form.render('select');
-             initPage (currentTpye);
+               initPage (1);
           }
      })
      return false;
@@ -238,147 +170,84 @@ form.on('select(studyTime)', function(data){
 
 
 
-   function initPage (boolean){
-      $(".tableLoading").show();
-      if(boolean){
-        $("#tbody_area").html("")
-        var url = path.api+"/api/getAnalyticsAreaList";
-      }else{
-         $("#tbody_subject").html("")
-         var url = path.api+"/api/getAnalyticsSubjectList";
-      }
 
-     var getData = {}
-
-     var timeType = $(".tag-data").find(".active").attr("data-type");
-      if(timeType == 1){
-          getData.start_time = $("select[name=studyTime]").val().split("|")[0];
-          getData.end_time = $("select[name=studyTime]").val().split("|")[1];
-      }
-      if(timeType == 2){
-          getData.start_time = tools.calcDtScopeByMonth(currentMouth).start;
-          getData.end_time = tools.calcDtScopeByMonth(currentMouth).last;
-      }
-       if(timeType == 3){
-          getData.start_time = tools.calcDtScopeByWeek(currentWeek).start;
-          getData.end_time = tools.calcDtScopeByWeek(currentWeek).last;
-      }
-
-      getData.city_id = $("select[name=city1]").val();
-      getData.area_id = $("select[name=area]").val(); 
-      $("select[name=city1]").find("option:selected").text();
-      $("select[name=area]").find("option:selected").text();
-
-      if($("select[name=city1]").find("option:selected").text() == "全部"){
-            $(".cityText").text("湖北省");
-       }else{
-          $(".cityText").text($("select[name=city1]").find("option:selected").text());
-       }
-
-       
-       if($("select[name=area]").find("option:selected").text() == "全部"){
-            $(".areaText").text("");
-       }else{
-           var str = " > "+$("select[name=area]").find("option:selected").text();
-          $(".areaText").text(str);
-       }
  
-      console.log(getData);
-      api.ajaxGet(url,getData,function(res){
-          render(res,boolean)
+
+
+function initPage (goPage){
+      var url = path.api+"/api/getAreaSchoolAnalyticsList";
+      var start_time = $("select[name=studyTime]").val().split("|")[0];
+      var end_time = $("select[name=studyTime]").val().split("|")[1];
+      var city_id = $("select[name=city1]").val();
+      var area_id = $("select[name=area]").val();
+      var getData = "area_id="+area_id+"&city_id="+city_id+"&end_time="+end_time+"&start_time="+start_time;
+          getData += "&page=1&page_count=18&v="+ new Date().getTime();
+          console.log(getData);
+      pages.getAjax(url,getData,function(data){
+         console.log(res);
+         if( data.type == "success"){
+             var total = data.data.data.total;
+             page =  new pages.jsPage(total, "pageNum","18",url,getData,buildTable,goPage,null);
+             pages.pageMethod.call(page); 
+           }else{
+             $("#tbody").html('<tr><td colspan="16" class="noneDataTd" style="padding:30px 0;">暂无数据~！</td></td>');
+            $(".tableLoading").html('');
+             return;
+         }
       })
+     
+    function buildTable(list) {
+       console.log(list)
+    if (list.type == "success") {
+      var data = list.data.data.list.map(function(item) {
+        return {
+          sn:item.ai_sn,
+          title: item.ai_title,
+          teacher_name: item.ai_teacher_name,
+          img:item.ai_cover_img,
+          is_exist: item.ai_is_exist,
+          time: item.ai_start_time_chs,
+          encrypt_id: item.ai_encrypt_id
+        }
+      })
+     
+      var html = '';
+      for (var i = 0; i < data.length; i++) {
+        html += '<tr data-id="' + data[i].encrypt_id + '">'
+        html += '<td class="sn">' + data[i].sn + '</td>'
+        html += '<td class="title">' + data[i].title + '</td>'
+        html += '<td>' + data[i].time + '</td>'
+        html += '<td>' + data[i].teacher_name + '</td>'
+        html += '<td><a class="inner_img" href="'+ data[i].img +'"><img  class="img" src="' + data[i].img + '"></a></td>'
+        html += '<td>' + data[i].is_exist + '</td>'
+        html += '<td><a class="change">修改</a><a class="del">删除</a></td>'
+        html += ' </tr>'
+      }
+      $(".tableLoading").html(' ');
+      $("#tbody").html(html);
+    }
+    if(list.type == "error") {
+        var mun = goPage - 1;
+        pages.gotopage.call(page,mun,false);
+    }
+  }
  }
 
 
-function  render(res,boolean) {
-      $(".tableLoading").hide();
-      console.log(res);
-     if(res.type == "error"){
-        if(boolean){  
-           $("#tbody_area").html('<tr><td colspan="4" style="padding:30px 0;">暂无数据~!</td></tr>')
-        }else{
-           $("#tbody_subject").html('<tr><td colspan="19" style="padding:30px 0;">暂无数据~!</td></tr>')
-        }
-     }
-    if(res.type == "success"){
-       var list = res.data.data;
-       if(boolean){
-          var html = "";
-           for(v in list){
-            html += '<tr>'
-            html += '<td >' + list[v].area_name + '</td>'
-            html += '<td>' + list[v].plan_count + '</td>'
-            html += '<td>' + list[v].actual_count + '</td>'
-            html += '<td>' + list[v].percent + '</td>'
-            html += ' </tr>'
-           }
-           $("#tbody_area").html(html);
-      }else{
-           var html = "";
-            for(v in list){
-            html += '<tr>'
-            html += '<td >' + v + '</td>'
-            for(x in list[v]){
-               html += '<td>' + list[v][x].plan_count + '</td>'
-               html += '<td>' + list[v][x].actual_count + '</td>'
-               html += '<td>' + list[v][x].percent + '</td>'
-            }
-            html += ' </tr>'
-           }
-           $("#tbody_subject").html(html);
-      }
-    }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  function ui(){
-   $(".areaTab").click(function(){
-      currentTpye = true;
-      initPage (currentTpye);
-      $(this).siblings().removeClass('active');
-      $(this).addClass('active');
-      $(".area").show();
-      $(".brane").hide();
-   })
-    $(".braneTab").click(function(){
-      currentTpye = false;
-      initPage (currentTpye);
-      $(this).siblings().removeClass('active');
-      $(this).addClass('active');
-      $(".area").hide();
-      $(".brane").show();
-   })
-  $(".tag-data").on("click","span",function(){
-      if($(this).hasClass('active')){
-        return;
-      }
-      $(this).siblings().removeClass('active');
-      $(this).addClass('active');
-      if($(this).hasClass('study')){
-         $("#studyDom").show();
-         $(".rangeTimebox").hide();
-      }else{
-        $("#studyDom").hide();
-        $(".rangeTimebox").show();
-      }
-      initPage (currentTpye);
-  })
-  }
 
 
 
