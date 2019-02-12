@@ -272,25 +272,7 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
     $("#rebox").hide();
   });
 
-  //切换周
-  $("body").on("click", ".Add", function() {
-    var currtWeek = $("#week").text();
-    if (currtWeek == cTable.totWeek) {
-      return;
-    }
-    cTable.weekData = tools.nextWeek(cTable.weekData);
-    cTable.studyTime(cTable.school_id, cTable.weekData);
-  })
-
-
-  $("body").on("click", ".sub", function() {
-    var currtWeek = $("#week").text();
-    if (currtWeek == 1) {
-      return;
-    }
-    cTable.weekData = tools.prevWeek(cTable.weekData);
-    cTable.studyTime(cTable.school_id, cTable.weekData);
-  })
+  
 
 
   //切换教室

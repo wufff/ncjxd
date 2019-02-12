@@ -1,4 +1,4 @@
-define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, api) {
+define(["jquery", "layui", "num", "path", "api","tools"], function($, layui, num, path, api,tools) {
   var layer = layui.layer;
   var loading;
   var my = {
@@ -286,9 +286,11 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
           
           if(my.usrsfor == 1){  //编辑页面绑删除
              delcongfig();
+             verifyUi_add ();
           }
           if(my.usrsfor == 2){  //确认页面绑开课确认
             confirmBtcongfig();
+            verifyUi_add ();
           }
           hoverUi();
         }
@@ -312,7 +314,11 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
     } 
   }
 
-     
+ 
+
+
+
+
 
   function  confirmBtcongfig(){
         if($(".yes").length > 0){
@@ -432,6 +438,29 @@ define(["jquery", "layui", "num", "path", "api"], function($, layui, num, path, 
       }
    }
   
+//================================操作==================
+//切换周
+  $("body").on("click", ".Add", function() {
+    var currtWeek = $("#week").text();
+    if (currtWeek == my.totWeek) {
+      return;
+    }
+    my.weekData = tools.nextWeek(my.weekData);
+    my.studyTime(my.school_id, my.weekData);
+  })
+
+
+  $("body").on("click", ".sub", function() {
+    var currtWeek = $("#week").text();
+    if (currtWeek == 1) {
+      return;
+    }
+    my.weekData = tools.prevWeek(my.weekData);
+    my.studyTime(my.school_id, my.weekData);
+  })
+
+
+
   //用户添加课程
 
 $("body").on("click","td",function(){

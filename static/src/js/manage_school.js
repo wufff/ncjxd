@@ -300,6 +300,44 @@ $("#SoolchsearchBt").click(function(res){
   })
 
 
+$("body").on("click",".editUser",function (){
+    var schoolId = $(this).attr("encrypt_school_id");
+    var userName = $(this).attr("user_user");
+    var url = "/schoolManage/ajaxCheckEdit";
+    var getData = {
+        school_id:schoolId
+    }
+    api.ajaxGet(url,getData,function(res){
+       if(res.type == "success"){
+            var data = res.message;
+            $("#within_teacher_count").text(data.within_teacher_count);
+            $("#teacher_count").text(data.teacher_count);
+            $("#student_count").val(data.student_count);
+            $("#leftover_children_count").val(data.leftover_children_count);
+            $("#male_count").val(data.male_count);
+            $("#female_count").val(data.female_count);
+            $("#manage_userName").text(userName);
+            $("#user_school_id").val(schoolId);
+       }else{
+          layer.msg("err");
+       }
+    })
+    dialog = layer.open({
+            type: 1,
+            title:"学校成员详情",
+            content: $('#conrolEditUser'),
+            area:["420px","380px"],
+            btn: ['确定', '取消'],
+            yes: function(index, layero){
+              $("#conrolEditUserBt").click();
+            }
+          });
+  })
+
+
+
+
+
 $("body").on("click","#addClassbtn",function (){
       $("input[name=roomType]").val(0);
        $(".kd_only_code").show();
@@ -362,6 +400,33 @@ function initContorlRoom (data){
   });
 
 
+
+  form.on('submit(conrolEditUser)', function(data){
+          var getData = data.field;
+          var reg=/^([1-9]\d*|[0]{1,1})$/; 
+          var a = reg.test(Number(getData.student_count));
+          var b = reg.test(Number(getData.leftover_children_count));
+          var c=  reg.test(Number(getData.male_count));
+          var d = reg.test(Number(getData.female_count));
+          var e = Number(getData.male_count) + Number(getData.female_count);
+          console.log(e);
+          if(a && b && c && d){
+            if(getData.student_count == e ){
+               var url = " /schoolManage/ajaxAddSchoolMemberCount";
+               getData.school_id = $("#user_school_id").val();
+               console.log(getData);
+               api.ajaxPost(url,getData,function(res){
+                  console.log(res);
+               })
+            }else{
+                layer.msg("请确认 学生数=男生数+女生数",{icon:5})
+            }
+          }else{
+             layer.msg("请输入非负的整数",{icon:5})
+          }
+          return false;   
+  });
+
  function renderSchoolList (id){
             //接口名称：根据学校id获取教室列表信息
             //接口url地址：http://wangyong.ncjxd.dev.dodoedu.com/api/getRoomListBySchoolId?school_id=2790183
@@ -411,9 +476,8 @@ function initContorlRoom (data){
       var getData = "city_id="+city_id +"&county_id="+ county_id;
           getData += "&school_classify="+ school_classify +"&school_name="+ school_name;
           getData += "&page=1&page_count=15&v="+ new Date().getTime();
-          // console.log(getData);
       pages.getAjax(url,getData,function(data){
-          // console.log(data);
+          console.log(data);
          if( data.type == "success"){
              var total = data.message.count;
              page =  new pages.jsPage(total, "pageNum","15",url,getData,buildTable,goPage,null);
@@ -440,7 +504,7 @@ function initContorlRoom (data){
         html += '<td class="school_name" dodo_school_id="'+ data[i].dodo_school_id +'">' + data[i].school_name + '</td>'
         html += '<td class="school_classify" school_classify="'+ data[i].school_classify+'">' + data[i].school_classify_name; + '</td>'   
         html += '<td class="division_descript">' + data[i].division_descript + '</td>'
-       
+        html += '<td class="is_pilot_jxd_descript">' + data[i].is_pilot_jxd_descript + '</td>'
         if(data[i].relation_school != 0){
         html += '<td class="relation_school"><a class="Untying">' + data[i].relation_school; + '</a></td>'  
       }else{
@@ -449,7 +513,7 @@ function initContorlRoom (data){
         html += '<td class="center_class_count">' + data[i].center_class_count + '</td>'
         html += '<td class="recive_class_count">' + data[i].recive_class_count + '</td>'
         html += '<td class="teacher_count">' + data[i].teacher_count + '</td>'
-        html += '<td class="user_user">' + data[i].user_user + '</td>'
+        html += '<td class="user_user"> <a class="editUser" encrypt_school_id ="'+ data[i].encrypt_school_id+ '" user_user="' + data[i].user_user + '">查看与编辑</a></td>'
         if(data[i].school_classify == 2){
          html += '<td> <a class="edit" encrypt_school_id ="'+ data[i].encrypt_school_id+ '">编辑教室</a></td>'  
        }else{

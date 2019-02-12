@@ -31,26 +31,7 @@ require(["layui","path","tools","num","api","cTable","checkTab","boot-dropdown"]
      
      
 
-    //切换周
-$("body").on("click",".Add",function(){
-      var currtWeek = $("#week").text();
-      if(currtWeek == totWeek){
-         return;
-      }
-      loading = layer.load(3);
-      weekData = tools.nextWeek(weekData);
-      studyTime (school_id,weekData);
-})
-  
-$("body").on("click",".sub",function(){
-      var currtWeek = $("#week").text();
-      if(currtWeek == 1){
-         return;
-      }
-      loading = layer.load(3);
-      weekData = tools.prevWeek(weekData);
-      studyTime (school_id,weekData);
-})
+
 
 $("#goToEdite").click(function(){
     var url = "/course/edit?school_id=" + cTable.school_id + "&room_id=" + cTable.room_id + "&weekData=" + cTable.weekData + "&term_id=" + cTable.term_id + "&week=" + cTable.week + "&room_name=" + cTable.room_name + "&school_name=" + cTable.school_name + "&type=" + cTable.tpye_class
