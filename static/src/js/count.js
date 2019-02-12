@@ -104,8 +104,12 @@ form.on('select(city)', function(data){
        }
      })
      }else{
-       $("select[name=area]").html('<option value="">全部</option>');
-          form.render('select');
+       if(data.value == ""){
+           $("select[name=area]").html('<option value="">全部</option>');
+       }else{
+           $("select[name=area]").html('<option value="">该地区无数据</option>');
+       }
+       form.render('select');
      }
 });  
 
@@ -156,7 +160,6 @@ $("#searchBt").click(function(){
                  }
                })
           }else{
-
               $("select[name=city1]").val("");
               $("select[name=area]").val("");
               $("#tbody").html('<tr><td colspan="16" class="noneDataTd" style="padding:30px 0;">搜索区县 '+words+' 无数据~！</td></td>'); 
