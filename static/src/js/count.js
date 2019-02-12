@@ -182,9 +182,8 @@ function initPage (goPage){
       var area_id = $("select[name=area]").val();
       var getData = "area_id="+area_id+"&city_id="+city_id+"&end_time="+end_time+"&start_time="+start_time;
           getData += "&page=1&page_count=18&v="+ new Date().getTime();
-          console.log(getData);
       pages.getAjax(url,getData,function(data){
-         console.log(res);
+         console.log(data);
          if( data.type == "success"){
              var total = data.data.data.total;
              page =  new pages.jsPage(total, "pageNum","18",url,getData,buildTable,goPage,null);
@@ -197,20 +196,19 @@ function initPage (goPage){
       })
      
     function buildTable(list) {
-       console.log(list)
+      
     if (list.type == "success") {
-      var data = list.data.data.list.map(function(item) {
-        return {
-          sn:item.ai_sn,
-          title: item.ai_title,
-          teacher_name: item.ai_teacher_name,
-          img:item.ai_cover_img,
-          is_exist: item.ai_is_exist,
-          time: item.ai_start_time_chs,
-          encrypt_id: item.ai_encrypt_id
-        }
-      })
-     
+      var data = list.data.data.list;
+      var dt = data;
+      var sortColumn = ['city_name', 'town_name'];
+      var  mergeColumns = []; //存放合并行内容的数组
+      for(var i=0; i<sortColumn.length; i++){
+        mergeColumns.push({
+          rspan:1, //合并的行数
+          colStr:'', //合并行的内容
+          colName:sortColumn[i] //行key
+        });
+      }
       var html = '';
       for (var i = 0; i < data.length; i++) {
         html += '<tr data-id="' + data[i].encrypt_id + '">'
@@ -230,6 +228,27 @@ function initPage (goPage){
         var mun = goPage - 1;
         pages.gotopage.call(page,mun,false);
     }
+  }
+
+
+
+
+  function dataMerge(curItem, preItem, curIndex){
+    if (curItem[mergeColumns[curIndex].colName] == preItem[mergeColumns[curIndex].colName]) {//值相同说明该字段这两行数据内容相同，可以合并，所以rspan加1
+      mergeColumns[curIndex].colStr = '';
+            mergeColumns[curIndex].rspan += 1;
+      if(curIndex == (mergeColumns.length-1)){//做一个限制，否则会无线递归下去
+        return;
+      }
+      curIndex += 1;
+      dataMerge(curItem, preItem, curIndex);//递归调用
+        } else { //值不同，则需要进行列td输出。
+      for(var j=curIndex; j<sortColumn.length; j++){//从curIndex进行内容处理，防止遗漏或过多处理
+        mergeColumns[j].colStr = ('<td  rowspan="' + mergeColumns[j].rspan + '">' + curItem[mergeColumns[j].colName] + '</td>');
+        mergeColumns[j].rspan = 1;
+      }
+      curIndex = 0;
+        }
   }
  }
 

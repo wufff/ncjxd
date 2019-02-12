@@ -492,10 +492,10 @@ $("body").on("click","td",function(){
             var time1 = new Date(thisTime);
             var currtTime = time1.getTime();
             var nowTime =Date.parse(new Date());
-            if ( currtTime < nowTime) {
-               layer.msg("只能添加今天以后的课程",{icon:5});
-               return;
-            } 
+            // if ( currtTime < nowTime) {
+            //    layer.msg("只能添加今天以后的课程",{icon:5});
+            //    return;
+            // } 
            layer.confirm(str, {icon: 3, title:'提示'}, function(index){
             var getData = {};
             var tags1 = $("#classTag").find(".tag-selected");
