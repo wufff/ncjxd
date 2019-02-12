@@ -260,6 +260,7 @@ function initPage (goPage){
    + '</td><td>' + firstItem.is_interact + '</td><td>' + firstItem.centre_school_name + '</td></tr>' + ht;
    $(".tableLoading").html(' ');
    $("#tbody").html(ht);
+   $("#tbody2").html(ht);
       layer.close(loading);
     }
     if(list.type == "error" ) {
@@ -278,13 +279,18 @@ function initPage (goPage){
 
 
 
-
-
-
-
-
- 
-
-
+        $(window).scroll(function(){
+            if ($(this).scrollTop()>300){
+                
+                $("#tablebox").show();
+              
+            }
+            else{
+           
+                $("#tablebox").hide();
+                // $("#tbody2").css("visibility","hidden")
+            }
+        });
+   
 
 })
