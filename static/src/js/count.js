@@ -6,6 +6,7 @@
  */
 require(["jquery","layui","path","tools","page","api","downList","boot-dropdown"],function($,layui,path,tools,pages,api,downList){
    var form = layui.form;
+   var loading;
    initPage (1);
    //权限
    var city_id;
@@ -81,10 +82,9 @@ form.on('select(city)', function(data){
       if(city_id == data.value){
          return;
       }
-     console.log(data.value)
      var getData = {
-      area_id:data.value,
-      type:3
+       area_id:data.value,
+       type:3
      }
      city_id = data.value
      var url = "/api/getAreaList";
@@ -106,9 +106,6 @@ form.on('select(city)', function(data){
        $("select[name=area]").html('<option value="">全部</option>');
           form.render('select');
      }
-    setTimeout(function(){
-      initPage (currentTpye);
-    },200)
 });  
 
 form.on('select(area)', function(data){
@@ -118,9 +115,7 @@ form.on('select(area)', function(data){
      town_id = data.value  
 });
 
-form.on('select(studyTime)', function(data){
-   
-});
+
 
 
 
@@ -152,7 +147,7 @@ $("#searchBt").click(function(){
                    console.log(list.town_id);
                    $("select[name=area]").val(town_id);
                     form.render('select');
-                    initPage (currentTpye);
+                    initPage (1);
                  }
                })
           }else{
@@ -169,7 +164,11 @@ $("#searchBt").click(function(){
 
 
 
-
+$("#searchBt_main").click(function(){
+   loading = layer.load(5);
+   initPage (1)
+   return false;
+})
 
  
 
@@ -183,20 +182,20 @@ function initPage (goPage){
       var getData = "area_id="+area_id+"&city_id="+city_id+"&end_time="+end_time+"&start_time="+start_time;
           getData += "&page=1&page_count=18&v="+ new Date().getTime();
       pages.getAjax(url,getData,function(data){
-         console.log(data);
+
          if( data.type == "success"){
              var total = data.data.data.total;
              page =  new pages.jsPage(total, "pageNum","18",url,getData,buildTable,goPage,null);
              pages.pageMethod.call(page); 
            }else{
              $("#tbody").html('<tr><td colspan="16" class="noneDataTd" style="padding:30px 0;">暂无数据~！</td></td>');
-            $(".tableLoading").html('');
+             $(".tableLoading").html('');
+             layer.close(loading);
              return;
          }
       })
      
-    function buildTable(list) {
-      
+  function buildTable(list) {     
     if (list.type == "success") {
       var data = list.data.data.list;
       var dt = data;
@@ -209,31 +208,8 @@ function initPage (goPage){
           colName:sortColumn[i] //行key
         });
       }
-      var html = '';
-      for (var i = 0; i < data.length; i++) {
-        html += '<tr data-id="' + data[i].encrypt_id + '">'
-        html += '<td class="sn">' + data[i].sn + '</td>'
-        html += '<td class="title">' + data[i].title + '</td>'
-        html += '<td>' + data[i].time + '</td>'
-        html += '<td>' + data[i].teacher_name + '</td>'
-        html += '<td><a class="inner_img" href="'+ data[i].img +'"><img  class="img" src="' + data[i].img + '"></a></td>'
-        html += '<td>' + data[i].is_exist + '</td>'
-        html += '<td><a class="change">修改</a><a class="del">删除</a></td>'
-        html += ' </tr>'
-      }
-      $(".tableLoading").html(' ');
-      $("#tbody").html(html);
-    }
-    if(list.type == "error") {
-        var mun = goPage - 1;
-        pages.gotopage.call(page,mun,false);
-    }
-  }
 
-
-
-
-  function dataMerge(curItem, preItem, curIndex){
+    function dataMerge(curItem, preItem, curIndex){
     if (curItem[mergeColumns[curIndex].colName] == preItem[mergeColumns[curIndex].colName]) {//值相同说明该字段这两行数据内容相同，可以合并，所以rspan加1
       mergeColumns[curIndex].colStr = '';
             mergeColumns[curIndex].rspan += 1;
@@ -249,6 +225,36 @@ function initPage (goPage){
       }
       curIndex = 0;
         }
+     }
+
+    var ht = ''; //输出的行内容（数据都是倒叙拼接）
+    for (var i = dt.length - 1; i > 0; i--) {
+        var curItem = dt[i], preItem = dt[i - 1]; //获取当前条和前一条
+        dataMerge(curItem, preItem,0);//合并数据
+        ht = '<tr>' + mergeColumns[0].colStr + mergeColumns[1].colStr + '<td>' + curItem.id + '</td><td>' + curItem.centre_school_name 
+        + '</td><td>' + curItem.course_actual_count + '</td><td>' + curItem.course_plan_count+ '</td><td>' + curItem.course_percent
+        + '</td><td>' + curItem.male_count + '</td><td>' + curItem.female_count+ '</td><td>' + curItem.leftover_children_count
+        + '</td><td>' + curItem.course_plan_count + '</td><td>' + curItem.teacher_total + '</td><td>' + curItem.teacher_within_total 
+        + '</td><td>' + curItem.is_patrol
+        + '</td><td>' + curItem.is_interact + '</td><td>' + curItem.centre_school_name + '</td></tr>' + ht;
+    }
+     
+   let firstItem = dt[0];// 由于循环没有到第一条，所以必须单独补上第一条
+   ht = '<tr><td  rowspan="' + mergeColumns[0].rspan + '">' + firstItem.city_name + '</td><td rowspan="' + mergeColumns[1].rspan + '">' 
+   + firstItem.town_name + '</td><td>' +  curItem.id + '</td><td>' + curItem.centre_school_name + '</td><td>' + curItem.course_actual_count 
+   + '</td><td>' + curItem.course_plan_count+ '</td><td>' + curItem.course_percent
+   + '</td><td>' + curItem.male_count + '</td><td>' + curItem.female_count+ '</td><td>' + curItem.leftover_children_count
+   + '</td><td>' + curItem.course_plan_count + '</td><td>' + curItem.teacher_total + '</td><td>' + curItem.teacher_within_total 
+   + '</td><td>' + curItem.is_patrol
+   + '</td><td>' + curItem.is_interact + '</td><td>' + curItem.centre_school_name + '</td></tr>' + ht;
+   $(".tableLoading").html(' ');
+   $("#tbody").html(ht);
+      layer.close(loading);
+    }
+    if(list.type == "error" ) {
+        // var mun = goPage - 1;
+        // pages.gotopage.call(page,mun,false);
+    }
   }
  }
 
