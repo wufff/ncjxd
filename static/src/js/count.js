@@ -86,11 +86,12 @@ form.on('select(city)', function(data){
        area_id:data.value,
        type:3
      }
+     $("#inputText").val("");
      city_id = data.value
      var url = "/api/getAreaList";
      if(data.value){
       api.ajaxGet(url,getData,function(res){
-         // console.log(res);
+         console.log(res);
         if(res.type == "success") {
           var list = res.data.data.list;
           var html = '<option value="">全部</option>';
@@ -112,6 +113,7 @@ form.on('select(area)', function(data){
     if(town_id == data.value){
          return;
       }
+     $("#inputText").val("");
      town_id = data.value  
 });
 
@@ -122,12 +124,15 @@ form.on('select(area)', function(data){
 
 
 $("#searchBt").click(function(){
+  
    var words = $("#inputText").val();
    if(!words){
      return false;
    }else{
+      loading = layer.load(5);
      var url = path.api + "/api/getCityAreaInfoByKeyWord";
      api.ajaxGet(url,{keyword:words},function(res){
+          console.log(res);
           if(res.type == "success"){
             var list = res.data.data;
             var town_id = list.town_id
@@ -151,15 +156,18 @@ $("#searchBt").click(function(){
                  }
                })
           }else{
+
               $("select[name=city1]").val("");
               $("select[name=area]").val("");
+              $("#tbody").html('<tr><td colspan="16" class="noneDataTd" style="padding:30px 0;">搜索区县 '+words+' 无数据~！</td></td>'); 
+              $("#pageNum").html("");
                form.render('select');
-               initPage (1);
+               layer.close(loading);
+             
           }
      })
      return false;
    }
-   
  })
 
 
@@ -182,7 +190,7 @@ function initPage (goPage){
       var getData = "area_id="+area_id+"&city_id="+city_id+"&end_time="+end_time+"&start_time="+start_time;
           getData += "&page=1&page_count=18&v="+ new Date().getTime();
       pages.getAjax(url,getData,function(data){
-
+          console.log(data)
          if( data.type == "success"){
              var total = data.data.data.total;
              page =  new pages.jsPage(total, "pageNum","18",url,getData,buildTable,goPage,null);
@@ -231,22 +239,22 @@ function initPage (goPage){
     for (var i = dt.length - 1; i > 0; i--) {
         var curItem = dt[i], preItem = dt[i - 1]; //获取当前条和前一条
         dataMerge(curItem, preItem,0);//合并数据
-        ht = '<tr>' + mergeColumns[0].colStr + mergeColumns[1].colStr + '<td>' + curItem.id + '</td><td>' + curItem.centre_school_name 
+        ht = '<tr>' + mergeColumns[0].colStr + mergeColumns[1].colStr + '<td>' + curItem.id + '</td><td>' + curItem.school_name 
         + '</td><td>' + curItem.course_actual_count + '</td><td>' + curItem.course_plan_count+ '</td><td>' + curItem.course_percent
         + '</td><td>' + curItem.male_count + '</td><td>' + curItem.female_count+ '</td><td>' + curItem.leftover_children_count
-        + '</td><td>' + curItem.course_plan_count + '</td><td>' + curItem.teacher_total + '</td><td>' + curItem.teacher_within_total 
+        + '</td><td>' + curItem.room_num + '</td><td>' + curItem.teacher_total + '</td><td>' + curItem.teacher_within_total 
         + '</td><td>' + curItem.is_patrol
         + '</td><td>' + curItem.is_interact + '</td><td>' + curItem.centre_school_name + '</td></tr>' + ht;
     }
      
    let firstItem = dt[0];// 由于循环没有到第一条，所以必须单独补上第一条
    ht = '<tr><td  rowspan="' + mergeColumns[0].rspan + '">' + firstItem.city_name + '</td><td rowspan="' + mergeColumns[1].rspan + '">' 
-   + firstItem.town_name + '</td><td>' +  curItem.id + '</td><td>' + curItem.centre_school_name + '</td><td>' + curItem.course_actual_count 
-   + '</td><td>' + curItem.course_plan_count+ '</td><td>' + curItem.course_percent
-   + '</td><td>' + curItem.male_count + '</td><td>' + curItem.female_count+ '</td><td>' + curItem.leftover_children_count
-   + '</td><td>' + curItem.course_plan_count + '</td><td>' + curItem.teacher_total + '</td><td>' + curItem.teacher_within_total 
-   + '</td><td>' + curItem.is_patrol
-   + '</td><td>' + curItem.is_interact + '</td><td>' + curItem.centre_school_name + '</td></tr>' + ht;
+   + firstItem.town_name + '</td><td>' +  firstItem.id + '</td><td>' + firstItem.school_name + '</td><td>' + firstItem.course_actual_count 
+   + '</td><td>' + firstItem.course_plan_count+ '</td><td>' + firstItem.course_percent
+   + '</td><td>' + firstItem.male_count + '</td><td>' + firstItem.female_count+ '</td><td>' + firstItem.leftover_children_count
+   + '</td><td>' + firstItem.room_num + '</td><td>' + firstItem.teacher_total + '</td><td>' + firstItem.teacher_within_total 
+   + '</td><td>' + firstItem.is_patrol
+   + '</td><td>' + firstItem.is_interact + '</td><td>' + firstItem.centre_school_name + '</td></tr>' + ht;
    $(".tableLoading").html(' ');
    $("#tbody").html(ht);
       layer.close(loading);
