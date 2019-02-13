@@ -1,4 +1,4 @@
-define(["jquery", "layui", "num", "path", "api","tools"], function($, layui, num, path, api,tools) {
+define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,tools) {
   var layer = layui.layer;
   var loading;
   var my = {
@@ -53,7 +53,7 @@ define(["jquery", "layui", "num", "path", "api","tools"], function($, layui, num
           }
         } else {
           var html = '<label style="font-weight: normal"></label>';
-          // layer.close(loading);
+          layer.close(loading);
           $(".classRoom").html(html);
           $(".classType").html(html);
           haveClass(false);
@@ -469,10 +469,8 @@ $("body").on("click","td",function(){
       if(my.usrsfor == 0){
             return;
       }
-       //面板关闭状态点击编辑无效
-      if(!my.panel_on){
-          return;
-      }
+
+
         //拦截假期
        if($(this).hasClass('holidayTd')){
          return;
@@ -528,7 +526,7 @@ $("body").on("click","td",function(){
             if(Weekradio == "cum"){
               var weekArry = [];
                //拦截自定义未选择周
-          
+             
              tags3.each(function(index, el) {
                    var id = $(el).attr("data-id");
                    weekArry.push(id);
@@ -536,7 +534,7 @@ $("body").on("click","td",function(){
                    if(index == 0){
                        var lang = id - my.week;
                        if(lang != 0){
-                          weekData = tools.nextWeekPei(weekData,lang)
+                          my.weekData = tools.nextWeekPei(my.weekData,lang)
                        }
                    }
 
@@ -579,7 +577,7 @@ $("body").on("click","td",function(){
             getData.today=currtTd;  //课程计划时间戳；
             getData.type = my.tpye_class;
             var url = path.api + "/api/setSchoolRoomCourcePlan";
-            console.log(getData);
+            // console.log(getData);
             api.ajaxGet(url,getData,function(res){
                    console.log(res);
                    if (res.type == "success"){

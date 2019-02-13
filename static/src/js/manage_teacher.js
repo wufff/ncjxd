@@ -139,8 +139,8 @@ form.on('select(grade)', function(data){
        getData.subject = fieldData.subject;
        getData.grade = fieldData.grade;
        getData.is_within = fieldData.is_within;
-       getData.school_id = fieldData.school_id;
-        if(!getData.teacher_id){
+       getData.school_id = fieldData.school_id
+;        if(!getData.teacher_id){
           layer.msg("未匹配成功,请先匹配",{icon:5})
           return false;
         }

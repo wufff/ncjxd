@@ -7,8 +7,7 @@ define(["jquery", "layui", "num", "path","api","tools","checkTab","cTable"], fun
   var my = {
       school_id:'',
       weekData:"",
-      usefor:0,
-      panel_on:true //0编辑课表用,1开课确认用
+      usefor:0, //0编辑课表用,1开课确认用  
   }
 
      
@@ -17,14 +16,16 @@ $("#timeforopen").click(function(){
     if($(".filter").hasClass('hidde')){
          $(".filter").removeClass('hidde');
          $("#timeforopen").text("收起 临时开课")
-         cTable.panel_on = true;
-         my.panel_on = true;
+         cTable.verify_on = true;
          $(".addTitle").show();
     }else{
         $(".filter").addClass('hidde');
-        $("#timeforopen").text("添加 临时开课")
-        cTable.panel_on = false;
-        my.panel_on = false;   
+        $("#timeforopen").text("添加 临时开课");
+        cTable.verify_on =false;
+        clearTag1();
+        clearTag2();
+        clearTag3();
+         verify();
         $(".addTitle").hide();
     }
 })
@@ -329,9 +330,16 @@ $("#timeforopen").click(function(){
         btn: ['确定', '取消'],
         yes: function(index, layero){
           var html = $("#teachersTag").html();
-          $("#classTag").html(html);
-          verify();
-          layer.close(index); 
+          if(html == ""){
+               layer.confirm("未选择到授课老师，设置未生效，是否退出？", {icon: 3, title:'提示'},function(i){
+                      layer.close(i); 
+                      layer.close(index); 
+               })
+          }else{
+              $("#classTag").html(html);
+              verify();
+              layer.close(index); 
+          }
         }
       });
   })
@@ -391,9 +399,17 @@ $("#roomTagBt").click(function() {
         btn: ['确定', '取消'],
         yes: function(index, layero){
           var html = $("#roomsTag").html();
-          $("#roomTag").html(html);
-          verify();
-          layer.close(index); 
+          if(html == ""){
+              layer.confirm("未选择到完整接受方信息(请选择到老师)，设置未生效，是否退出？", {icon: 3, title:'提示'},function(i){
+                      layer.close(i); 
+                      layer.close(index); 
+               })
+          }else{
+            $("#roomTag").html(html);
+            verify();
+            layer.close(index);
+          }
+           
           
         }
       });
@@ -503,9 +519,8 @@ $("#roomTag").on("click",".del",function(){
  $("#clearConfigBt").click(function(){
      clearTag1();
      clearTag2();
-     if ( my.usefor == 0) { //是编辑清空3个
-       clearTag3();
-     }     
+     clearTag3();
+       
  })
 //=======================================================需要的函数=======================================================
    function clearTag1() {
@@ -535,7 +550,7 @@ $("#roomTag").on("click",".del",function(){
   function clearTag3() {
          $("#tagWeekWrap .tag").removeClass('active');
          $("#weekTagbox").html("");
-         $("input[value=all]").prop("checked",true);
+         $("input[value=week]").prop("checked",true);
          form.render("radio"); 
          $(".controlWeek").hide();
          verify();
@@ -553,8 +568,7 @@ $("#roomTag").on("click",".del",function(){
   function verify () {
     var tags1 = $("#classTag").find(".tag-selected").length;
     var tags2 = $("#roomTag").find(".tag-selected").length;
-    if( $("#radioDl").length == 1) {
-      if(tags1 && tags2) {
+    if(tags1 && tags2) {
        var Weekradio = $('input[name="week"]:checked').val();
        if (Weekradio == "week" ||  Weekradio == "all"){
            cTable.verify_on  = true;
@@ -569,22 +583,14 @@ $("#roomTag").on("click",".del",function(){
                   cTable.readyAddui(true); 
              }
        }
-          }else{
-                cTable.verify_on = false;
-                cTable.readyAddui(false); 
-          }
-    }else   //
-    {  
-      if(tags1 && tags2) {
-            cTable.verify_on  = true;
-            cTable.readyAddui(false);
-      }else {
-           cTable.verify_on = false;
-           cTable.readyAddui(false); 
+        }else{
+            cTable.verify_on = false;
+            cTable.readyAddui(false); 
       }
+       return  cTable.verify_on;
     }
-    return  cTable.verify_on;
-  }
+   
+  
 
 
 

@@ -1,14 +1,11 @@
-require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable", "boot-dropdown"], function($, layui, path, downList, tools, num, api, cTable) {
+require(["layui", "path", "downList", "tools", "num", "api", "cTable", "boot-dropdown"], function(layui, path, downList, tools, num, api, cTable) {
   var layer = layui.layer;
   var form = layui.form;
   var $ = jQuery = layui.jquery;
   var laydate = layui.laydate;
   var loading;
-  //下拉框
+ 
   var class_isCenter;
-  var city_id;
-  var town_id;
-  var school_id;
   //是否可以修改时间
   var st_is_modify;
   //设置确认时间
@@ -129,6 +126,8 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
   if (c20c30 == 0) {
     $(".configConfirmTimeBt").parents("li").css("display", "none");
   }
+  //判断editeFormWrap,根据两个维度 1.身份是可以is_center_school，2 选择的学校是否是中心校 class_isCenter
+
   if (is_center_school == 0) {
     $(".editeFormWrap").hide();
   }
@@ -295,13 +294,16 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
       return;
     }
      cTable.tpye_class = $(this).attr("data-tpye");
-     
+
     if (cTable.tpye_class == 1) {
       // $(".editeFormWrap").css("visibility","hidden");
       $(".editeFormWrap").hide();
     } else {
       // $(".editeFormWrap").css("visibility","visible");
-      if (class_isCenter == 0 && is_center_school != 0) {
+
+      var value =  $("select[name=school]").val().split('|');
+      class_isCenter = value[1];
+      if (class_isCenter == 1 && is_center_school != 0) {
         $(".editeFormWrap").show();
       } else {
         $(".editeFormWrap").hide();
@@ -689,9 +691,11 @@ function initstudyTimelang() {
             time: 800
           });
           redenerHoildForm();
-          holiday.val("");
-          End_time.val("");
-          Start_time.val("");
+          $("#holiday").val("");
+          $("#holidayEnd_time").val("");
+          $("#holidayStart_time").val("");
+        }else{
+           layer.msg(res.message,{icon:5});
         }
       })
     } else {
@@ -705,9 +709,10 @@ function initstudyTimelang() {
   $("#holidayTbody").on("click", ".del", function() {
     var url = path.api + "/api/delSchoolHolidayData";
     var id = $(this).attr("id");
+    // console.log(cTable.school_id);
     var getData = {
       holiday_id: id,
-      school_id: school_id
+      school_id: cTable.school_id
     }
     api.ajaxGet(url, getData, function(res) {
       if (res.type == "success") {
@@ -723,6 +728,7 @@ function initstudyTimelang() {
     })
   });
 
+//渲染假期列表
   function redenerHoildForm() {
     $("#holidayTbody").html("");
     var url = path.api + "/api/getSchoolHolidayList?v=" + new Date().getTime();
