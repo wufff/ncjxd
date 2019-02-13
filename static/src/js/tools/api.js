@@ -1,4 +1,4 @@
-define(["jquery","layui","path"], function($,layui,path) {
+define(["layui","path"], function(layui,path) {
 	var layer = layui.layer;
 	var $ = jquery = layui.jquery;
 	return {
@@ -83,8 +83,8 @@ define(["jquery","layui","path"], function($,layui,path) {
             {
                 if (res.type == "login"){
 						 layer.msg("请先登录！",{anim:-1});
-						 $("#layui-layer1").css("width","130px");
-						 $("#layui-layer1").css("margin-left","100px");
+						 // $("#layui-layer1").css("width","130px");
+						 // $("#layui-layer1").css("margin-left","100px");
 						 setTimeout(function(){
 						 	window.location.href ="/";
 						 },300)

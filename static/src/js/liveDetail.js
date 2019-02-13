@@ -162,7 +162,6 @@ require(["jquery","ckplayer","api","path","layui","star","boot-dropdown"],functi
                           console.log(res);
                         if(res.type == "success") {
                             layer.msg("评分成功");
-                            layer.close(index);
                             user_score = myConde;
                             var average_score = res.data.average_score;
                             $("#total_code").text(average_score);

@@ -402,11 +402,39 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
     }
   }
  //课程ui
-  function hoverUi(){
-      $("td").hover(function() {
-         var info = $(this).find(".info");
-         var positon = $(this).attr("positon");
-         var _this = this
+  // function hoverUi(){
+  //     $("td").hover(function() {
+  //        var info = $(this).find(".info");
+  //        var positon = $(this).attr("positon");
+  //        var _this = this
+  //        if(positon && info.length == 1){
+  //           var wz = positon.split(",");
+  //           if(wz[0] > 5){
+  //               info.addClass('bottomInfo');
+  //               info.removeClass('topInfo');
+  //           }else{
+  //              info.addClass('topInfo');
+  //              info.removeClass('bottomInfo');
+  //           }
+  //           $(this).find(".content").css("color","#000");
+  //           info.show();
+  //        }
+  //     }, function() {
+  //       var info = $(this).find(".info");
+  //       var _this = this;
+  //        if(info.length == 1) {
+  //            setTimeout(function(){
+  //               $(_this).find(".content").css("color","#666");
+  //               info.hide();
+  //            },400)
+  //        }
+  //     });
+  //  }
+  function hoverUi() {
+      $("td").mouseenter(function(event) {
+          var info = $(this).find(".info");
+          var positon = $(this).attr("positon");
+          var _this = this
          if(positon && info.length == 1){
             var wz = positon.split(",");
             if(wz[0] > 5){
@@ -419,17 +447,18 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
             $(this).find(".content").css("color","#000");
             info.show();
          }
-      }, function() {
+      });
+     $("td").mouseleave(function(event) {
         var info = $(this).find(".info");
         var _this = this;
          if(info.length == 1) {
              setTimeout(function(){
                 $(_this).find(".content").css("color","#666");
                 info.hide();
-             },300)
+             },400)
          }
-      });
-   }
+     }); 
+  }
    //验证UI
    function verifyUi_add (){
       if (my.verify_on){
