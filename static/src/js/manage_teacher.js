@@ -133,11 +133,13 @@ form.on('select(grade)', function(data){
   form.on('submit(control)', function(data){
        var controlTpye = $("#controlTpye").val();
        var fieldData = data.field;
-       console.log(fieldData);
+     
        var getData = {};
        getData.teacher_id = fieldData.teacher_id;
        getData.subject = fieldData.subject;
-       getData.grade = fieldData.grade
+       getData.grade = fieldData.grade;
+       getData.is_within = fieldData.is_within;
+       getData.school_id = fieldData.school_id;
         if(!getData.teacher_id){
           layer.msg("未匹配成功,请先匹配",{icon:5})
           return false;
