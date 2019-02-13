@@ -71,8 +71,13 @@ define(function () {
                return "未开始";
            }
 
+        },
+        teacherStatus:function(data){
+          if(data == 0) {
+              return "无编制";
+           }else if( data == 1) {
+              return "有编制";
+           }
         }
-
-
 	}
 })

@@ -1,4 +1,4 @@
-require(["layui", "path","page","tools","api","boot-dropdown"], function(layui, path,pages,tools,api) {
+require(["layui", "path","page","tools","api","num","boot-dropdown"], function(layui, path,pages,tools,api,num) {
     var layer = layui.layer;
     var upload = layui.upload;
     var $ = jQuery = layui.jquery; //用他的jquey否则弹窗会有问题
@@ -6,7 +6,6 @@ require(["layui", "path","page","tools","api","boot-dropdown"], function(layui, 
     var page;
     var loading;
     var dialog;
-    
     initPage (1);
     // getUserListBySchoolId();
     controlGetSubject();
@@ -74,10 +73,12 @@ form.on('select(grade)', function(data){
         var pbtext = tr.find(".username").text();
         var subjectBbj = JSON.parse(subject);
         var gardeBbj = JSON.parse(gardeArr);
+        var is_within = tr.find(".within").attr("within");
         var intdata = {
             teacher_id:useId,
             mobile:moblie,
-            pbtext:pbtext
+            pbtext:pbtext,
+            is_within:is_within
         }
        //多选赋值年级
         $(gardeBbj).each(function(index, el) {
@@ -304,7 +305,8 @@ function refrechData() {
           subjectValue:item.st_subject_list,
           moblie:item.st_mobile,
           time:item.st_createtime,
-          encrypt_id: item.st_encrypt_id
+          encrypt_id: item.st_encrypt_id,
+          st_is_within:item.st_is_within
         }
       })
      
@@ -317,7 +319,7 @@ function refrechData() {
         html += '<td class="grade">' + data[i].grade + '</td>'
         html += '<td class="subject">' + data[i].subject + '</td>'
         html += '<td class="moblie">' + tools.fomartNone(data[i].moblie) + '</td>'
-         html += '<td class="within">' + tools.fomartNone(data[i].moblie) + '</td>'
+         html += '<td class="within" within="'+data[i].st_is_within+'">' + num.teacherStatus(data[i].st_is_within) + '</td>'
         html += '<td class="timel">' + tools.fomartTime(data[i].time) + '</td>'
         html += '<td><a class="change">修改</a><a class="del">删除</a></td>'
         html += ' </tr>'
