@@ -418,7 +418,7 @@ function initContorlRoom (data){
                api.ajaxPost(url,getData,function(res){
                   if(res.type == "success"){
                      layer.msg("操作成功！",{time:800});
-                     initPage (goPage)
+                     initPage (1);
                      layer.close(dialog);
                   }else{
                      layer.msg(res.message,{icon:5,time:800})

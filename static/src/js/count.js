@@ -201,6 +201,7 @@ function initPage (goPage){
            }else{
              $("#tbody").html('<tr><td colspan="16" class="noneDataTd" style="padding:30px 0;">暂无数据~！</td></td>');
              $(".tableLoading").html('');
+             $("#pageNum").html("");
              layer.close(loading);
              return;
          }
