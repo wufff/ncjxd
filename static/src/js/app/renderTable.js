@@ -18,6 +18,7 @@ define(["jquery", "layui", "num", "path", "api","tools"], function($, layui, num
     panel_on:true, //是否可以添加课程 面板开关
     is_over:0, //是否过了确认期
     renderClassRoom: function(school_id, weekData, callbcak) {
+      loading = layer.load(3);
       var getData = {
         school_id: school_id,
         date: weekData,
