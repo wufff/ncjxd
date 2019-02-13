@@ -10,6 +10,8 @@ require(["layui", "path","page","tools","api","num","boot-dropdown"], function(l
     // getUserListBySchoolId();
     controlGetSubject();
 
+
+//年级出学科
 form.on('select(grade)', function(data){
    // console.log(data.value);
    var url = path.api + "/api/getSubjectCodeList";
@@ -42,7 +44,7 @@ form.on('select(grade)', function(data){
         type: 1,
         title:"添加教师",
         content: $('#controlAddteacher'),
-        area:["600px","580px"],
+        area:["600px","600px"],
         btn: ['确定', '取消'],
         yes: function(index, layero){
           $("#submitControlBt").click();
@@ -61,6 +63,7 @@ form.on('select(grade)', function(data){
      loading = layer.load(5);
      initPage (1);
  })
+
 
  $("body").on("click",".change",function(){
         $("#controlTpye").val(1);
@@ -95,7 +98,7 @@ form.on('select(grade)', function(data){
         type: 1,
         title:"修改教师",
         content: $('#controlAddteacher'),
-        area:["600px","540px"],
+        area:["600px","580px"],
         btn: ['确定', '取消'],
         yes: function(index, layero){
           $("#submitControlBt").click();
@@ -164,7 +167,7 @@ form.on('select(grade)', function(data){
          return false;
        }
    
-       if(controlTpye == 8) {
+       if(controlTpye == 0) {
            var url = path.api+"/api/addSchoolTeacher";
            var loading = layer.load(3);
            api.ajaxGet(url,getData,function(res){

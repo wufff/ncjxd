@@ -36,7 +36,7 @@ require(["jquery","layui","path","tools","page","api","downList","boot-dropdown"
                    console.log(res);
                   if(res.type == "success") {
                     var list = res.data.data.list;
-                    var html = '<option value="">请选择</option>';
+                    var html = '<option value="">全部</option>';
                     for(var i=0;i<list.length;i++){
                        html += '<option value="'+ list[i].node_encrypt_id +'">'+ list[i].node_name+'</option>'
                     }
@@ -117,8 +117,9 @@ form.on('select(area)', function(data){
     if(town_id == data.value){
          return;
       }
+      town_id = data.value  
      $("#inputText").val("");
-     town_id = data.value  
+   
 });
 
 
@@ -128,7 +129,6 @@ form.on('select(area)', function(data){
 
 
 $("#searchBt").click(function(){
-  
    var words = $("#inputText").val();
    if(!words){
      return false;
@@ -145,7 +145,7 @@ $("#searchBt").click(function(){
               var getData = {area_id:list.city_id,type:3}
               var url = "/api/getAreaList";
               api.ajaxGet(url,getData,function(res2){
-                   // console.log(res);
+                   console.log(res);
                   if(res2.type == "success") {
                     var list2 = res2.data.data.list;
                     var html = '<option value="">全部</option>';
