@@ -191,12 +191,12 @@ function initPage (goPage){
       var city_id = $("select[name=city1]").val();
       var area_id = $("select[name=area]").val();
       var getData = "area_id="+area_id+"&city_id="+city_id+"&end_time="+end_time+"&start_time="+start_time;
-          getData += "&page=1&page_count=18&v="+ new Date().getTime();
+          getData += "&page=1&page_count=25&v="+ new Date().getTime();
       pages.getAjax(url,getData,function(data){
           console.log(data)
          if( data.type == "success"){
              var total = data.data.data.total;
-             page =  new pages.jsPage(total, "pageNum","18",url,getData,buildTable,goPage,null);
+             page =  new pages.jsPage(total, "pageNum","25",url,getData,buildTable,goPage,null);
              pages.pageMethod.call(page); 
            }else{
              $("#tbody").html('<tr><td colspan="16" class="noneDataTd" style="padding:30px 0;">暂无数据~！</td></td>');
