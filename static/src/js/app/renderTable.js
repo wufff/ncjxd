@@ -91,8 +91,8 @@ define(["jquery", "layui", "num", "path", "api","tools"], function($, layui, num
           $("#week_time").html(data.week_time);
           $("#totalweek").html(data.total_week);
           $("#week").text(data.term_week);
-          my.renderClassTd(my.school_id, my.weekData);
           my.formHeadtime(my.school_id, my.weekData);
+          my.renderClassTd(my.school_id, my.weekData);
           haveClass(true);
         } else if (res.type == "error") {
           layer.close(loading);
@@ -212,7 +212,7 @@ define(["jquery", "layui", "num", "path", "api","tools"], function($, layui, num
           //渲染假期效果
           setTimeout(function() {
             ui_holiday();
-          }, 150)
+          }, 100)
 
           //添加课程
           my.renderClass(my.school_id, my.room_id, my.term_id, my.tpye_class, my.week,my.usrsfor);
@@ -392,8 +392,8 @@ define(["jquery", "layui", "num", "path", "api","tools"], function($, layui, num
   function ui_holiday() {
     // console.log(holidays);
     if (my.holidays.length > 0) {
-      for (var i = 0; i < holidays.length; i++) {
-        $("td[positon$='," + holidays[i] + "']").removeClass().addClass("holidayTd");
+      for (var i = 0; i < my.holidays.length; i++) {
+        $("td[positon$='," + my.holidays[i] + "']").removeClass().addClass("holidayTd");
       }
     }
     if (my.isTodayStr) {

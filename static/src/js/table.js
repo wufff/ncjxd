@@ -294,9 +294,9 @@ require(["jquery", "layui", "path", "downList", "tools", "num", "api", "cTable",
     if ($(this).hasClass("active")) {
       return;
     }
-    class_isCenter = $(this).attr("data-tpye");
-    cTable.tpye_class = class_isCenter;
-    if (class_isCenter == 1) {
+     cTable.tpye_class = $(this).attr("data-tpye");
+     
+    if (cTable.tpye_class == 1) {
       // $(".editeFormWrap").css("visibility","hidden");
       $(".editeFormWrap").hide();
     } else {
