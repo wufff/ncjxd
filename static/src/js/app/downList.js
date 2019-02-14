@@ -1,5 +1,6 @@
-define(['jquery','layui','api','path'],function($,layui,api,path){
+define(['layui','api','path'],function(layui,api,path){
 	var form = layui.form;
+	var $ = jQuery = layui.jquery;
     var obj = {
     renderArea:function (cityId,value,nodeId){            //生成区县前提[name=area]
 			    var url = "/api/getAreaList";

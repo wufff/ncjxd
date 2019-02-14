@@ -1,4 +1,5 @@
-define(['jquery','path'],function($,path){
+define(['layui','path'],function(layui,path){
+     var $ = jQuery = layui.jquery;
      return {
          set:function(str,value){
             var key = $("#wuf"+key);

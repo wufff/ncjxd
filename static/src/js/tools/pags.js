@@ -1,5 +1,6 @@
-define(['jquery','path','layui'], function($,path,layui) {
+define(['path','layui'], function(path,layui) {
 	var layer = layui.layer;
+	var $ = jQuery = layui.jquery;
 	var getStatu = 0;
 	var _newobj = "",
 		_self   = {

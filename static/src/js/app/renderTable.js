@@ -1,5 +1,6 @@
 define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,tools) {
   var layer = layui.layer;
+  var $ = jQuery = layui.jquery;
   var loading;
   var my = {
     school_id: "",

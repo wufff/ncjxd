@@ -1,4 +1,4 @@
-define(["jquery", "layui", "num", "path","api","tools","checkTab","cTable"], function($,layui,num,path,api,tools,checkTab,cTable) {
+define(["layui", "num", "path","api","tools","checkTab","cTable"], function(layui,num,path,api,tools,checkTab,cTable) {
   var layer = layui.layer;
   var element = layui.element;
    var $ = jquery = layui.jquery;
