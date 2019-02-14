@@ -1,4 +1,4 @@
-require(["layui", "path", "downList", "tools", "num", "api", "cTable"], function(layui, path, downList, tools, num, api, cTable) {
+require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-dropdown"], function(layui, path, downList, tools, num, api, cTable) {
   var layer = layui.layer;
   var form = layui.form;
   var $ = jQuery = layui.jquery;
