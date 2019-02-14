@@ -14,11 +14,6 @@ define(["layui","path"], function(layui,path) {
 					callback(json);
 				},
 				error: function(e) {
-					// promptMessageDialog({
-					//     icon: "warning",
-					//     content: "网络请求错误！",
-					//     time: 1000
-					// });
 					alert("ajaxJSONP error");
 				}
 			});
@@ -44,9 +39,6 @@ define(["layui","path"], function(layui,path) {
 						obj = data;
 					}
 					
-					// if (obj == null) {
-					// 	return;
-					// }
 					if(data.type == "login"){
 						 layer.msg("请先登录！",{anim:-1});
 						 setTimeout(function(){

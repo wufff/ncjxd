@@ -1,7 +1,7 @@
 define(["layui", "num", "path","api","tools","checkTab","cTable"], function(layui,num,path,api,tools,checkTab,cTable) {
   var layer = layui.layer;
   var element = layui.element;
-   var $ = jquery = layui.jquery;
+  var $ = jquery = layui.jquery;
   var loading;
   var form = layui.form;
   var my = {
