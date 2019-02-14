@@ -318,7 +318,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
              console.log(geturl);
              api.ajaxGet(geturl,{plan_id:plan_id,day:day},function(res){
                 if(res.type == "success") {
-                   layer.msg("操作成功",{time:600});
+                   // layer.msg("操作成功",{time:600});
                    my.studyTime (my.school_id,my.weekData);
                 }
              })
@@ -332,7 +332,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
              var geturl = path.api + "/api/cancelCoursePlan";
              api.ajaxGet(geturl,{plan_id:plan_id,day:day},function(res){
                 if(res.type == "success") {
-                   layer.msg("操作成功",{time:600});
+                   // layer.msg("操作成功",{time:600});
                    my.studyTime (my.school_id,my.weekData);
                 }
              })
@@ -357,7 +357,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
                  day:day
              }
              api.ajaxGet(url,getData,function(res){
-                    layer.msg("删除成功!",{time:800});
+                    // layer.msg("删除成功!",{time:800});
                     if(res.type == "success"){
                          my.studyTime (my.school_id,my.weekData);
                     }
@@ -555,7 +555,7 @@ $("body").on("click","td",function(){
             if(Weekradio == "cum"){
               var weekArry = [];
                //拦截自定义未选择周
-             
+             var tags3 = $("#weekTagbox").find(".tag-selected");
              tags3.each(function(index, el) {
                    var id = $(el).attr("data-id");
                    weekArry.push(id);
