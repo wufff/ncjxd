@@ -263,7 +263,7 @@ function refrechData() {
 
 
     function  controlGetSubject(){
-          loading = layer.load(5);
+          loading = layer.load(3);
           var url = path.api+'/api/getSubjectCodeList';
           var getData = {};
           getData.grade_id = 1;

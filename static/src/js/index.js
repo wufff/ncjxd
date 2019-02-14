@@ -79,7 +79,7 @@ require(["Swiper","jquery","viewPhoto","api","layui","boot-dropdown"],function(S
 
 
 
-$(".nav a").click(function(){
+$("a").click(function(){
    var length = $(".nav li").length; 
    if (length == 8) {
       login();

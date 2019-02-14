@@ -2,7 +2,6 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
   var layer = layui.layer;
   var form = layui.form;
   var $ = jQuery = layui.jquery;
-  console.log($);
   var laydate = layui.laydate;
   var loading;
  
@@ -295,13 +294,11 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
       return;
     }
      cTable.tpye_class = $(this).attr("data-tpye");
-
     if (cTable.tpye_class == 1) {
       // $(".editeFormWrap").css("visibility","hidden");
       $(".editeFormWrap").hide();
     } else {
       // $(".editeFormWrap").css("visibility","visible");
-
       var value =  $("select[name=school]").val().split('|');
       class_isCenter = value[1];
       if (class_isCenter == 1 && is_center_school != 0) {
