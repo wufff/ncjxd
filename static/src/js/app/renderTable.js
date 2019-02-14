@@ -440,7 +440,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
           var _this = this
          if(positon && info.length == 1){
             var wz = positon.split(",");
-            var x = my.totClass - 3;
+            var x = my.totClass - 2;
             if(wz[0] > x){
                 info.addClass('bottomInfo');
                 info.removeClass('topInfo');
