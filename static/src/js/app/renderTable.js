@@ -19,6 +19,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
     panel_on:true, //是否可以添加课程 面板开关
     is_over:0, //是否过了确认期
     totClass:0, //总课程
+    renderCumWeek:true,
     renderClassRoom: function(school_id, weekData, callbcak) {
       loading = layer.load(3);
       var getData = {
@@ -83,13 +84,14 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
           my.week = data.term_week;
           my.totWeek = data.total_week;
           $(".schoolName").text(my.school_name);
-          if(my.usrsfor == 1) { //如果是编辑 渲染自定义周
+          if(my.usrsfor == 1 && my.renderCumWeek) { //如果是编辑 渲染自定义周
               var html = ""
               for(var i =my.week;i<my.totWeek+1;i++){
                    var str = i
                    html += '<span class="tag" data-id="'+ str +'">第'+ num.Hanzi(str) +'周</span>'
               }
              $("#tagWeekWrap").html(html);
+             my.renderCumWeek = false;
           }
           $("#schoolTerm").html(data.year);
           $("#week_time").html(data.week_time);
@@ -318,7 +320,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
              console.log(geturl);
              api.ajaxGet(geturl,{plan_id:plan_id,day:day},function(res){
                 if(res.type == "success") {
-                   // layer.msg("操作成功",{time:600});
+                   layer.msg("操作成功",{time:600});
                    my.studyTime (my.school_id,my.weekData);
                 }
              })
@@ -332,7 +334,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
              var geturl = path.api + "/api/cancelCoursePlan";
              api.ajaxGet(geturl,{plan_id:plan_id,day:day},function(res){
                 if(res.type == "success") {
-                   // layer.msg("操作成功",{time:600});
+                   layer.msg("操作成功",{time:600});
                    my.studyTime (my.school_id,my.weekData);
                 }
              })
@@ -556,7 +558,8 @@ $("body").on("click","td",function(){
               var weekArry = [];
                //拦截自定义未选择周
              var tags3 = $("#weekTagbox").find(".tag-selected");
-             tags3.each(function(index, el) {
+             console.log(tags3);
+             tags3.find(".del").each(function(index, el) {
                    var id = $(el).attr("data-id");
                    weekArry.push(id);
                    //配合后台修改自定义周对teday的赋值
@@ -568,6 +571,7 @@ $("body").on("click","td",function(){
                    }
                 });
                 weekValue=weekArry.join("|");
+                console.log(weekValue);
             }
 
             // 授课学校集合

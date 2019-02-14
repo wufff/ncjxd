@@ -60,7 +60,7 @@ form.on('select(grade)', function(data){
 
 
  $("#searchBt").click(function(){
-     loading = layer.load(5);
+     loading = layer.load(3);
      initPage (1);
  })
 
@@ -142,7 +142,6 @@ form.on('select(grade)', function(data){
   form.on('submit(control)', function(data){
        var controlTpye = $("#controlTpye").val();
        var fieldData = data.field;
-     
        var getData = {};
        getData.dodo_user_id = fieldData.dodo_user_id;
        getData.dodo_user_name =fieldData.dodo_user_name;
@@ -193,7 +192,7 @@ form.on('select(grade)', function(data){
                 layer.close(loading);
                 layer.close(dialog);
               }else{
-                 alert(res.type);
+                 alert(res.message);
                  console.log(res);
               }
           });
@@ -283,6 +282,9 @@ function refrechData() {
           }) 
     }
 
+
+
+
    function initPage (goPage){
       var url = path.api+"/api/getManageTeacherListByParam";
       var baseData = "&page=1&page_count=5&v="+ new Date().getTime();
@@ -302,7 +304,7 @@ function refrechData() {
              pages.pageMethod.call(page); 
              layer.close(loading);
            }else{
-             $("#tbody").html('<tr><td colspan="8" class="noneDataTd">暂无数据~！</td></td>');
+             $("#tbody").html('<tr><td colspan="9" class="noneDataTd">暂无数据~！</td></td>');
             $(".tableLoading").html('');
             $("#pageNum").html('');
               layer.close(loading);
