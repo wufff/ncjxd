@@ -2,6 +2,7 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable"], function
   var layer = layui.layer;
   var form = layui.form;
   var $ = jQuery = layui.jquery;
+  console.log($);
   var laydate = layui.laydate;
   var loading;
  
@@ -733,7 +734,7 @@ function initstudyTimelang() {
     $("#holidayTbody").html("");
     var url = path.api + "/api/getSchoolHolidayList?v=" + new Date().getTime();
     api.ajaxGet(url, {
-      school_id: school_id
+      school_id: cTable.school_id
     }, function(res) {
       if (res.type == "success") {
         var list = res.data.data.list;

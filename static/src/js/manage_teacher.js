@@ -73,14 +73,20 @@ form.on('select(grade)', function(data){
         var useId = tr.attr("data-user");
         var gardeArr = tr.attr("data-grade");
         var subject = tr.attr("data-subject");
-        var pbtext = tr.find(".username").text();
+        var username = tr.find(".username").text();
+        var st_dodo_uid = tr.find(".id").attr("st_dodo_uid");
+        var name = tr.find(".name").text();
+        $("#dodo_user_name").val(username);
+        $("#dodo_user_realname").val(name);
+        $("#dodo_user_id").val(st_dodo_uid);
+
         var subjectBbj = JSON.parse(subject);
         var gardeBbj = JSON.parse(gardeArr);
         var is_within = tr.find(".within").attr("within");
         var intdata = {
             teacher_id:useId,
             mobile:moblie,
-            pbtext:pbtext,
+            pbtext:username,
             is_within:is_within
         }
        //多选赋值年级
@@ -114,12 +120,15 @@ form.on('select(grade)', function(data){
         var url = path.api+"/api/getUserInfoByDodoId"
         api.ajaxGet(url,{user_name:works},function(res){
            if(res.type == "success"){
-             // console.log(res);
-             $(".text").text("匹配成功");
-             $("#teacher_id").val(res.data.user_encrypt_id)
+             console.log(res);
+             var data = res.data.data;
+             $(".text").html("匹配成功,教师名为: <span class='red'>"+res.data.data.dodo_user_realname+"</span>");
+             $("#dodo_user_id").val(data.dodo_user_id)
+             $("#dodo_user_name").val(data.dodo_user_name)
+             $("#dodo_user_realname").val(data.dodo_user_realname);
            }else {
-             $(".text").text("匹配失败,请重新输入");
-             $("#teacher_id").val("");
+             $(".text").html("匹配失败,请重新输入");
+             $("#dodo_user_id").val("");
            }
         })
      }
@@ -135,12 +144,16 @@ form.on('select(grade)', function(data){
        var fieldData = data.field;
      
        var getData = {};
-       getData.teacher_id = fieldData.teacher_id;
+       getData.dodo_user_id = fieldData.dodo_user_id;
+       getData.dodo_user_name =fieldData.dodo_user_name;
+       getData.dodo_user_realname =fieldData.dodo_user_realname;
        getData.subject = fieldData.subject;
        getData.grade = fieldData.grade;
        getData.is_within = fieldData.is_within;
-       getData.school_id = fieldData.school_id
-;        if(!getData.teacher_id){
+       // getData.school_id = fieldData.school_id; 
+       getData.mobile = fieldData.mobile;
+
+        if(!getData.dodo_user_id){
           layer.msg("未匹配成功,请先匹配",{icon:5})
           return false;
         }
@@ -168,7 +181,7 @@ form.on('select(grade)', function(data){
          layer.msg("请至少选中一个学科",{icon:5})
          return false;
        }
-   
+      console.log(getData);
        if(controlTpye == 0) {
            var url = path.api+"/api/addSchoolTeacher";
            var loading = layer.load(3);
@@ -249,6 +262,7 @@ function refrechData() {
   //   }) 
   // }
 
+
     function  controlGetSubject(){
           loading = layer.load(5);
           var url = path.api+'/api/getSubjectCodeList';
@@ -271,7 +285,7 @@ function refrechData() {
 
    function initPage (goPage){
       var url = path.api+"/api/getManageTeacherListByParam";
-      var baseData = "&page=1&page_count=8&v="+ new Date().getTime();
+      var baseData = "&page=1&page_count=5&v="+ new Date().getTime();
       var grade = $("select[name=grade]").val();
       var subject = $("select[name=subject]").val();
       var name = $("input[name=name]").val();
@@ -281,6 +295,7 @@ function refrechData() {
       var getData = "grade="+ grade + "&subject=" + subject + "&name="+ name + baseData;
       // console.log(getData);
       pages.getAjax(url,getData,function(data){
+         console.log(data);
          if( data.type == "success"){
              var total = data.data.data.total;
              page =  new pages.jsPage(total, "pageNum","5",url,getData,buildTable,goPage,null);
@@ -289,6 +304,7 @@ function refrechData() {
            }else{
              $("#tbody").html('<tr><td colspan="8" class="noneDataTd">暂无数据~！</td></td>');
             $(".tableLoading").html('');
+            $("#pageNum").html('');
               layer.close(loading);
              return;
          }
@@ -311,20 +327,21 @@ function refrechData() {
           moblie:item.st_mobile,
           time:item.st_createtime,
           encrypt_id: item.st_encrypt_id,
-          st_is_within:item.st_is_within
+          st_is_within:item.st_is_within,
+          st_dodo_uid:item.st_dodo_uid
         }
       })
      
       var html = '';
       for (var i = 0; i < data.length; i++) {
         html += '<tr data-id="' + data[i].encrypt_id + '" data-grade=' + JSON.stringify(data[i].gradeValue) + ' data-subject=' + JSON.stringify(data[i].subjectValue) + ' data-user="' + data[i].user + '">'
-        html += '<td class="id">' + data[i].id + '</td>'
+        html += '<td class="id" st_dodo_uid="'+ data[i].st_dodo_uid+'">' + data[i].id + '</td>'
         html += '<td class="username">' + data[i].username + '</td>'
         html += '<td class="name">' + data[i].name + '</td>'
         html += '<td class="grade">' + data[i].grade + '</td>'
         html += '<td class="subject">' + data[i].subject + '</td>'
         html += '<td class="moblie">' + tools.fomartNone(data[i].moblie) + '</td>'
-         html += '<td class="within" within="'+data[i].st_is_within+'">' + num.teacherStatus(data[i].st_is_within) + '</td>'
+        html += '<td class="within" within="'+data[i].st_is_within+'">' + num.teacherStatus(data[i].st_is_within) + '</td>'
         html += '<td class="timel">' + tools.fomartTime(data[i].time) + '</td>'
         html += '<td><a class="change">修改</a><a class="del">删除</a></td>'
         html += ' </tr>'

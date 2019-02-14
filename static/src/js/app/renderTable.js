@@ -77,6 +77,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
         }
         console.log(obj);
         if (res.type == "success") {
+           my.formHeadtime(my.school_id, my.weekData);
           var data = res.data.data;
           my.term_id = data.term_id;
           my.week = data.term_week;
@@ -94,9 +95,73 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
           $("#week_time").html(data.week_time);
           $("#totalweek").html(data.total_week);
           $("#week").text(data.term_week);
-          my.formHeadtime(my.school_id, my.weekData);
-          my.renderClassTd(my.school_id, my.weekData);
+         
+          // my.renderClassTd(my.school_id, my.weekData);
           haveClass(true);
+
+          // 渲染上下午 ===========================================；
+          var times = data.course_time_node;
+          var down = data.noon_count.down;
+          var up = data.noon_count.up;
+          my.totClass = up + down;
+          var uphtml;
+          var downHtml;
+          my.is_over = data.is_over;
+          if (times.length == 0) {
+            $("#tbody").html('<tr><td colspan="9" class="noneTd">此学校暂无课表信息~！</td></td>');
+            $("#table_header").hide();
+            $("#table_header_none").show();
+            layer.close(loading);
+            return;
+          }
+          $("#schoolTerm").html(data.year);
+          $("#week_time").html(data.week_time);
+          $("#week").text(data.term_week);
+          $("#table_header").show();
+          $("#table_header_none").hide();
+          $("#tbody").html('');
+           for(var i = 0;i<up;i++){
+             if(i == 0){
+                uphtml += '<td rowspan="'+ up+'" class="Bold">上午</td>';     
+                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ '<span class="start_time">'+times[i].st_start_time +'-'+times[i].st_end_time +'</span>'+'</td>';
+                for(var j =1; j<8 ;j++ ){
+                 uphtml += '<td positon="'+(i+1)+','+j+'"><div class="classCell"></div></td>'
+               }
+             }else{
+                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ '<span class="start_time">'+times[i].st_start_time +'-'+times[i].st_end_time  +'</span>'+'</td>';
+                for(var j =1; j<8 ;j++ ){
+                 uphtml += '<td positon="'+(i+1)+','+j+'"><div class="classCell"></div></td>'
+               }
+             }
+              $("#tbody").append('<tr>'+ uphtml +'</tr>');
+              uphtml = "";
+         }
+        
+        for(var i = up;i<down+up;i++){
+             if(i == up){
+                uphtml += '<td rowspan="'+ down+'" class="Bold">下午</td>';     
+                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+'<span class="start_time">'+times[i].st_start_time +'-'+times[i].st_end_time +'</span>'+'</td>';
+                for(var j =1; j<8 ;j++ ){
+                 uphtml += '<td positon="'+(i+1)+','+j+'"><div class="classCell"></div></td>'
+               }
+             }else{
+                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ '<span class="start_time">'+ times[i].st_start_time +'-'+times[i].st_end_time +'</span>'+'</td>';
+                for(var j =1; j<8 ;j++ ){
+                 uphtml += '<td positon="'+(i+1)+','+j+'"><div class="classCell"></div></td>'
+               }
+             }
+
+              $("#tbody").append('<tr>'+ uphtml +'</tr>');
+              uphtml = "";
+         } 
+          //渲染假期效果
+          setTimeout(function() {
+            ui_holiday();
+          }, 100)
+
+          //添加课程
+          my.renderClass(my.school_id, my.room_id, my.term_id, my.tpye_class, my.week,my.usrsfor);  
+         
         } else if (res.type == "error") {
           layer.close(loading);
           haveClass(false);
@@ -140,87 +205,6 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
             }
             $("#theadtr").html(html);
           }
-        }
-      })
-    },
-    //渲染上下午关联课程
-    renderClassTd: function(school_id, weekData) {
-      var WeeKurl = path.api + "/api/getSchoolCourseTimeNode";
-      var getData = {
-        school_id: school_id,
-        date: weekData,
-        v: new Date().getTime()
-      }
-      api.ajaxGet(WeeKurl, getData, function(res) {
-        var obj = {
-          text: "渲染上下午关联课程",
-          res: res
-        }
-        if (res.type == "success") {
-          $("#tbody").html("");
-          var data = res.data.data;
-          var times = res.data.data.course_time_node;
-          var down = data.noon_count.down;
-          var up = data.noon_count.up;
-          my.totClass = up + down;
-          console.log(my.totClass);
-          var uphtml;
-          var downHtml;
-          my.is_over = res.data.data.is_over;
-          if (times.length == 0) {
-            $("#tbody").html('<tr><td colspan="9" class="noneTd">此学校暂无课表信息~！</td></td>');
-            $("#table_header").hide();
-            $("#table_header_none").show();
-            layer.close(loading);
-            return;
-          }
-          $("#schoolTerm").html(data.year);
-          $("#week_time").html(data.week_time);
-          $("#week").text(data.term_week);
-          $("#table_header").show();
-          $("#table_header_none").hide();
-
-           for(var i = 0;i<up;i++){
-             if(i == 0){
-                uphtml += '<td rowspan="'+ up+'" class="Bold">上午</td>';     
-                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ '<span class="start_time">'+times[i].st_start_time +'-'+times[i].st_end_time +'</span>'+'</td>';
-                for(var j =1; j<8 ;j++ ){
-                 uphtml += '<td positon="'+(i+1)+','+j+'"><div class="classCell"></div></td>'
-               }
-             }else{
-                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ '<span class="start_time">'+times[i].st_start_time +'-'+times[i].st_end_time  +'</span>'+'</td>';
-                for(var j =1; j<8 ;j++ ){
-                 uphtml += '<td positon="'+(i+1)+','+j+'"><div class="classCell"></div></td>'
-               }
-             }
-              $("#tbody").append('<tr>'+ uphtml +'</tr>');
-              uphtml = "";
-         }
-        
-        for(var i = up;i<down+up;i++){
-             if(i == up){
-                uphtml += '<td rowspan="'+ down+'" class="Bold">下午</td>';     
-                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+'<span class="start_time">'+times[i].st_start_time +'-'+times[i].st_end_time +'</span>'+'</td>';
-                for(var j =1; j<8 ;j++ ){
-                 uphtml += '<td positon="'+(i+1)+','+j+'"><div class="classCell"></div></td>'
-               }
-             }else{
-                uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ '<span class="start_time">'+ times[i].st_start_time +'-'+times[i].st_end_time +'</span>'+'</td>';
-                for(var j =1; j<8 ;j++ ){
-                 uphtml += '<td positon="'+(i+1)+','+j+'"><div class="classCell"></div></td>'
-               }
-             }
-              $("#tbody").append('<tr>'+ uphtml +'</tr>');
-              uphtml = "";
-         }
-
-          //渲染假期效果
-          setTimeout(function() {
-            ui_holiday();
-          }, 100)
-
-          //添加课程
-          my.renderClass(my.school_id, my.room_id, my.term_id, my.tpye_class, my.week,my.usrsfor);
         }
       })
     },
@@ -468,6 +452,10 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
             info.hide();
          }
      }); 
+
+     $(".info").click(function(){
+        return false;
+     })
   }
    //验证UI
    function verifyUi_add (){
@@ -498,6 +486,9 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
     my.weekData = tools.prevWeek(my.weekData);
     my.studyTime(my.school_id, my.weekData);
   })
+
+
+ 
 
 
 
