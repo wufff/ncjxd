@@ -462,7 +462,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
         var _this = this;
          if(info.length == 1) {
             $(_this).css("background","#fff");
-            info.hide();
+            // info.hide();
          }
      }); 
   }
