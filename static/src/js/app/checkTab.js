@@ -15,8 +15,7 @@ define(["jquery", "layui", "num", "path","api","tools","checkTab","cTable"], fun
 $("#timeforopen").click(function(){
     if($(".filter").hasClass('hidde')){
          $(".filter").removeClass('hidde');
-         $("#timeforopen").text("收起 临时开课")
-         cTable.verify_on = true;
+         $("#timeforopen").text("收起 临时开课");
          $(".addTitle").show();
     }else{
         $(".filter").addClass('hidde');

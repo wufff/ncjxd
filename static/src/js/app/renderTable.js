@@ -17,6 +17,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
     verify_on:false, //是否可以添加课程 验证开关
     panel_on:true, //是否可以添加课程 面板开关
     is_over:0, //是否过了确认期
+    totClass:0, //总课程
     renderClassRoom: function(school_id, weekData, callbcak) {
       loading = layer.load(3);
       var getData = {
@@ -160,6 +161,8 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
           var times = res.data.data.course_time_node;
           var down = data.noon_count.down;
           var up = data.noon_count.up;
+          my.totClass = up + down;
+          console.log(my.totClass);
           var uphtml;
           var downHtml;
           my.is_over = res.data.data.is_over;
@@ -181,12 +184,12 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
                 uphtml += '<td rowspan="'+ up+'" class="Bold">上午</td>';     
                 uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ '<span class="start_time">'+times[i].st_start_time +'-'+times[i].st_end_time +'</span>'+'</td>';
                 for(var j =1; j<8 ;j++ ){
-                 uphtml += '<td positon="'+(i+1)+','+j+'"></td>'
+                 uphtml += '<td positon="'+(i+1)+','+j+'"><div class="classCell"></div></td>'
                }
              }else{
                 uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ '<span class="start_time">'+times[i].st_start_time +'-'+times[i].st_end_time  +'</span>'+'</td>';
                 for(var j =1; j<8 ;j++ ){
-                 uphtml += '<td positon="'+(i+1)+','+j+'"></td>'
+                 uphtml += '<td positon="'+(i+1)+','+j+'"><div class="classCell"></div></td>'
                }
              }
               $("#tbody").append('<tr>'+ uphtml +'</tr>');
@@ -198,12 +201,12 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
                 uphtml += '<td rowspan="'+ down+'" class="Bold">下午</td>';     
                 uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+'<span class="start_time">'+times[i].st_start_time +'-'+times[i].st_end_time +'</span>'+'</td>';
                 for(var j =1; j<8 ;j++ ){
-                 uphtml += '<td positon="'+(i+1)+','+j+'"></td>'
+                 uphtml += '<td positon="'+(i+1)+','+j+'"><div class="classCell"></div></td>'
                }
              }else{
                 uphtml += '<td>'+ num.Hanzi(i+1)+'</br>'+ '<span class="start_time">'+ times[i].st_start_time +'-'+times[i].st_end_time +'</span>'+'</td>';
                 for(var j =1; j<8 ;j++ ){
-                 uphtml += '<td positon="'+(i+1)+','+j+'"></td>'
+                 uphtml += '<td positon="'+(i+1)+','+j+'"><div class="classCell"></div></td>'
                }
              }
               $("#tbody").append('<tr>'+ uphtml +'</tr>');
@@ -236,7 +239,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
           text: "渲染课程",
           res: res
         }
-        console.log(obj);
+        // console.log(obj);
         if (res.type == "success") {
           if (res.data.data.list.length > 0) {
             var list = res.data.data.list;
@@ -277,7 +280,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
                     }
                     html += '<i class="i"></i>'
                     html += '</div>'
-                    $("td[positon='" + (i + 1) + "," + (k + 1) + "']").html(html);
+                    $("td[positon='" + (i + 1) + "," + (k + 1) + "']").find(".classCell").html(html);
                   }
                 }
               }
@@ -437,14 +440,20 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
           var _this = this
          if(positon && info.length == 1){
             var wz = positon.split(",");
-            if(wz[0] > 5){
+            var x = my.totClass - 3;
+            if(wz[0] > x){
                 info.addClass('bottomInfo');
                 info.removeClass('topInfo');
             }else{
                info.addClass('topInfo');
                info.removeClass('bottomInfo');
             }
-            $(this).find(".content").css("color","#000");
+            if(wz[1] < 3){
+                info.addClass('leftInof');
+            }else{
+               info.removeClass('leftInof');
+            }
+            $(this).css("background","#fff0d7");
             info.show();
          }
       });
@@ -452,10 +461,8 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
         var info = $(this).find(".info");
         var _this = this;
          if(info.length == 1) {
-             setTimeout(function(){
-                $(_this).find(".content").css("color","#666");
-                info.hide();
-             },400)
+            $(_this).css("background","#fff");
+            info.hide();
          }
      }); 
   }
@@ -495,10 +502,9 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
 
 $("body").on("click","td",function(){
         //非编辑状态点击编辑无效
-      if(my.usrsfor == 0){
-            return;
-      }
-
+        if(my.usrsfor == 0){
+              return;
+        }
 
         //拦截假期
        if($(this).hasClass('holidayTd')){
@@ -566,7 +572,6 @@ $("body").on("click","td",function(){
                           my.weekData = tools.nextWeekPei(my.weekData,lang)
                        }
                    }
-
                 });
                 weekValue=weekArry.join("|");
             }
@@ -618,7 +623,7 @@ $("body").on("click","td",function(){
             })
           })
          }else{
-           layer.msg("完善顶部配置，即可添加课程",{icon:5})
+           // layer.msg("完善顶部配置，即可添加课程",{icon:5})
          }
       }
   }) 

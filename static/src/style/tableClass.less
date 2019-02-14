@@ -118,10 +118,9 @@ a{ color:#555; }
 }
 
 td { 
-   position: relative;
    .info {
      position: absolute;
-     left: -241px;
+     left: -230px;
      width: 230px;
      border: 1px solid #ddd;
      border-radius: 5px;
@@ -185,29 +184,32 @@ td {
               color:red;
          }
      }
-     i.i {
-        display: block;
-        position: absolute;
+     // i.i {
+     //    display: block;
+     //    position: absolute;
        
-        right: -10px;
-        width: 10px;
-        height: 16px;
-        background:url(../img/cert.png) no-repeat; 
-     }
+     //    right: -10px;
+     //    width: 10px;
+     //    height: 16px;
+     //    background:url(../img/cert.png) no-repeat; 
+     // }
    }
     .topInfo{
-       top: -127px;
+       top: -42px;
        i.i {
           top: 150px;
        }
     }
 
     .bottomInfo {
-       bottom: -10px;
-       i.i{
-         bottom: 45px;
-       }
+       bottom: -4px;
+       // i.i{
+       //   bottom: 45px;
+       // }
    }  
+   .leftInof {
+        right: -230px;
+   }
  }
 
 
@@ -220,11 +222,7 @@ td {
     background:#f2f2f2;
     // background: #e6e6e6
  }
- .todayTd{
-    background:#fafafa;
-    // background: #e6e6e6;
-
- }
+ 
  .steptitle {
    text-align: right;color: #999;
  }
@@ -234,6 +232,16 @@ td {
  .curhover {
    cursor: pointer;
  }
+
+
+
+.todayTd  {
+    background: #fafafa;
+}
+
+
+
+
 // 编辑课表
  .tag-selected {
    border: 1px solid #1E9FFF;
@@ -412,4 +420,3 @@ td {
    .layui-laydate .layui-this {
     background-color: #1E9FFF!important;
   }
-
