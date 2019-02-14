@@ -449,9 +449,11 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
                info.removeClass('bottomInfo');
             }
             if(wz[1] < 3){
-                info.addClass('leftInof');
+                info.addClass('leftInfo');
+                info.removeClass('rightInfo');
             }else{
-               info.removeClass('leftInof');
+               info.addClass('rightInfo');
+               info.removeClass('leftInfo');
             }
             $(this).css("background","#fff0d7");
             info.show();
@@ -462,7 +464,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
         var _this = this;
          if(info.length == 1) {
             $(_this).css("background","#fff");
-            // info.hide();
+            info.hide();
          }
      }); 
   }
