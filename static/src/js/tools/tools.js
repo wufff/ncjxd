@@ -48,7 +48,7 @@ define(['layui','path'],function(layui,path){
         prevWeek:function(dateStr){
                 var sdate = new Date(Date.parse(dateStr.replace(/-/g, "/")))
                 var prevDate = new Date(sdate.getTime() - 7 * 24 *60 *60 *1000);
-                var Reznow = prevDate.toLocaleDateString();
+                var Reznow = prevDate.toLocaleDateString('zh-Hans-CN').replace(/日/g, '').replace(/\/|年|月/g, '-').replace(/[^\d-]/g,'');
                 Rez = Reznow.replace(/\//g,'-')
                 return Rez;
                 
@@ -56,14 +56,14 @@ define(['layui','path'],function(layui,path){
         nextWeek:function(dateStr){
                 var sdate = new Date(Date.parse(dateStr.replace(/-/g, "/")))
                 var nextDate = new Date(sdate.getTime() + 7 * 24 *60 *60 *1000);
-                var Reznow = nextDate.toLocaleDateString();
+                var Reznow = nextDate.toLocaleDateString('zh-Hans-CN').replace(/日/g, '').replace(/\/|年|月/g, '-').replace(/[^\d-]/g,'');
                 Rez = Reznow.replace(/\//g,'-')
                 return Rez;
         },
         nextWeekPei:function(dateStr,num){
                 var sdate = new Date(Date.parse(dateStr.replace(/-/g, "/")))
                 var nextDate = new Date(sdate.getTime() + num * 7 * 24 *60 *60 *1000);
-                var Reznow = nextDate.toLocaleDateString();
+                var Reznow = nextDate.toLocaleDateString('zh-Hans-CN').replace(/日/g, '').replace(/\/|年|月/g, '-').replace(/[^\d-]/g,'');;
                 Rez = Reznow.replace(/\//g,'-')
                 return Rez;
         },
