@@ -242,9 +242,10 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
                        html += '<span class="makeClassStatus_'+tr[k].cn_status +'">'+ num.makeClassStatus(tr[k].cn_status) +'</span>'
                     }
                     html += '<div class="info topInfo"  data-id="' + tr[k].cp_encrypt_id + '">'
-                    html += '<div class="title" style="background:#fbb432eb">'
+                    html += '<div class="title">'
                     html += grade + '年级 ' + tr[k].cn_subject_chs
                     html += '</div>'
+                    // html += '<div  class="delitem2">'+grade + '年级 ' + tr[k].cn_subject_chs +'</div>'
                     html += '<h5>主讲教室</h5>'
                     html += '<p>' + tr[k].cn_sponsor_school_name + '</p>'
                     html += '<p>' + tr[k].cn_sponsor_room_name + '</p>'
@@ -443,6 +444,8 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
                info.removeClass('leftInfo');
             }
             $(this).css("background","#fff0d7");
+            // alert(info.html());
+            // $(".infoTitle").css("color","#fbb432eb");
             info.show();
          }
       });
