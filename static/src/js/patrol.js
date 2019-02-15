@@ -1,25 +1,31 @@
-require(["jquery","layui","path","page","num","api","boot-dropdown"],function($,layui,path,pages,num,api){
+require(["jquery","layui","path","page","num","api","downList","boot-dropdown"],function($,layui,path,pages,num,api,downList){
   var layer = layui.layer;
   var form = layui.form;
-  var room_num = "";
-  var school_classify = 1;
-  var school_id = "";
-  var is_ss = true;
   var loading;
+  //查询必备参数
+  var room_num = ""; //教室
+  var school_classify = 1; //是否中心校
+  var school_id = ""; //学校id
+
 
   ui();
   initPage(1);
 
+
 form.on('select(city)', function(data){
-     renderArea(data.value)
-    $("#inputText").val("");
-    $("#rebox").hide();
-    school_id = "";
+    if(data.value) {
+        downList.renderArea(data.value)
+        $("#inputText").val("");
+        $("#rebox").hide();
+    }else {
+        $("select[name=area]").html('<option value="">全部</option>');
+        form.render('select');
+    }
+     school_id = "";
 }); 
 
 
- form.on('select(area)', function(data){
-     // console.log(data.value)
+form.on('select(area)', function(data){
       $("#inputText").val("");
       $("#rebox").hide();
       school_id = "";
@@ -27,7 +33,7 @@ form.on('select(city)', function(data){
 
 
 
-
+//年级关联学科
 form.on('select(grade)', function(data){
    // console.log(data.value);
    var url = path.api + "/api/getSubjectCodeList";
@@ -43,7 +49,6 @@ form.on('select(grade)', function(data){
              html += '<option value="'+ list[i].ss_id +'">'+ list[i].ss_name+'</option>'
           }
          $("select[name=subject]").html(html);
-          console.log(html);
          $("select[name=subject]").val(" ");
           form.render('select');
        }
@@ -52,10 +57,11 @@ form.on('select(grade)', function(data){
      $("select[name=subject]").html('<option value="">全部</option>');
      form.render('select');
    }
-
 });   
       
-   //搜索school_classify1:中心校,2:教学点
+
+
+//搜索school_classify1:中心校,2:教学点
 $("#searchBt").click(function(){
     var keyword = $("#inputText").val();
     if(keyword){
@@ -79,7 +85,6 @@ $("#searchBt").click(function(){
                   $("select[name=ssrez]").html('<option value="">0 条搜索结果</option>');
                   form.render('select');
                }
-              
               $("#rebox").show();
         })
     }
@@ -90,9 +95,10 @@ $("#searchBt").click(function(){
 
 
 $("#searchBtBig").click(function(){
-    loading = layer.load(5);
+    loading = layer.load(3);
     initPage(1);
 })
+
 
 
 form.on('select(ssrez)', function(data){
@@ -108,11 +114,9 @@ form.on('select(ssrez)', function(data){
       $("select[name=city]").val(cityId);
       renderArea(cityId,area);
       form.render('select');
-
    }else{
       $("#inputText").val("");
    }
-     // $("#inputText").css("background","#fff");
      $("#rebox").hide();
 });   
 
@@ -123,8 +127,8 @@ $(".tagItem").click(function(){
       return;
    }
    room_num = $(this).attr("room_num");
-
 })
+
 
 $(".tagItem2").click(function(){
    if($(this).hasClass('active')){
@@ -176,7 +180,7 @@ $(".tagItem2").click(function(){
       })
      
     function buildTable(list) {
-      console.log(list);
+      // console.log(list);
     if (list.type == "success") {
       var data = list.data.data.list.map(function(item) {
         return {
@@ -217,8 +221,10 @@ $(".tagItem2").click(function(){
 
     }
     if(list.type == "error") {
-        var mun = goPage - 1;
-        pages.gotopage.call(page,mun,false);
+       if( goPage != 1){
+          var mun = goPage - 1;
+          pages.gotopage.call(page,mun,false);
+       }
     }
   }
  }
@@ -244,11 +250,7 @@ $(".tagItem2").click(function(){
 
 
  
-  // function init() {
-  //     $("select[name=city]").val("");
-  //     $("select[name=area]").html('<option value="">全部</option>');
-  //     form.render('select');
-  // }
+ 
 
 
   function renderArea(cityId,value){

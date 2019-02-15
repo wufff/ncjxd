@@ -251,7 +251,7 @@ function initPage (goPage){
         + '</td><td>' + curItem.is_interact + '</td><td>' + curItem.centre_school_name + '</td></tr>' + ht;
     }
      
-   let firstItem = dt[0];// 由于循环没有到第一条，所以必须单独补上第一条
+   var firstItem = dt[0];
    ht = '<tr><td  rowspan="' + mergeColumns[0].rspan + '">' + firstItem.city_name + '</td><td rowspan="' + mergeColumns[1].rspan + '">' 
    + firstItem.town_name + '</td><td>' +  firstItem.id + '</td><td>' + firstItem.school_name + '</td><td>' + firstItem.course_actual_count 
    + '</td><td>' + firstItem.course_plan_count+ '</td><td>' + firstItem.course_percent

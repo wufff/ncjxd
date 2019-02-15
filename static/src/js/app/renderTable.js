@@ -8,7 +8,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
     term_id: "",
     room_name: "",
     week: "",
-    weekData: (new Date()).toLocaleDateString().replace(/\//g, '-'),
+    weekData: tools.fomartTime(new Date().getTime()/1000),
     totWeek: "",
     school_name: "",
     tpye_class: 0,

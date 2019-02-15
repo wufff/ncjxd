@@ -107,10 +107,11 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
     case 3: //学校管理员
       cTable.school_id = school_id_authority;
       cTable.school_name = $("#school_name").val();
+      var school_classify = $("#school_classify").val();
       city_id = city_id_authority;
       town_id = town_id_authority;
       var url = "/api/getAreaList";
-      var schoolvalue = cTable.school_id + '|' + is_center_school;
+      var schoolvalue = cTable.school_id + '|' + school_classify;
       downList.renderArea(city_id_authority, town_id_authority, town_id_authority);
       downList.renderShool(town_id_authority,schoolvalue,cTable.school_id,is_center_school);
       // $("select[name=school]").val(schoolvalue);

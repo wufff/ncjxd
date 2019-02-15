@@ -27,11 +27,14 @@ define(['layui','api','path'],function(layui,api,path){
 			             $("select[name=area]").val("");
 			         }
 			          form.render('select');
-			       }
-			     })
+			       }else{
+				       $("select[name=area]").html('<option value="">此地区无区县数据</option>');
+				          form.render('select');
+				     }
+			       })
 			     }else{
-			       $("select[name=area]").html('<option value="">此地区无数据</option>');
-			          form.render('select');
+			       // $("select[name=area]").html('<option value="">请选择市</option>');
+			       //    form.render('select');
 			     }
 			  },
 	renderShool:function(areId,value,nodeId,is_center_school){             //生成学校前提[name=school]
