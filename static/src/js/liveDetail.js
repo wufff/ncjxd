@@ -6,21 +6,19 @@
  * @version $Id$
  */
  
-require(["jquery","ckplayer","api","path","layui","star","boot-dropdown"],function($,ckplayer,api,path,layui){
- vidoe();
+require(["jquery","api","path","layui","star","boot-dropdown"],function($,api,path,layui){
+ // vidoe();
  var layer = layui.layer;
  var activity_id = $("input[name=activity_id]").val(); 
  var user_score = $("#user_score").val();  
  var player;
  var is_play = false;
- function  vidoe () {
-   /*初始化*/ 
-    var mp4_rec = $("#aboutVidoe a").eq(0).attr("download");
-    var as = $("#aboutVidoe a");
-    as.each(function(index, el) {
-       console.log($(el).attr("data-status"));
+ var example = "http://images.dev.dodoedu.com/resource/77c3a6512aea3519.mp4";
+ var as = $("#aboutVidoe a");
+
+ //处理播放还是等待
+  as.each(function(index, el) {
        if($(el).attr("data-status") == 1){
-             console.log(123);
               if(!is_play){
                     $(el).addClass('active');
                     var mp4_rec =$(el).attr("download");
@@ -40,9 +38,20 @@ require(["jquery","ckplayer","api","path","layui","star","boot-dropdown"],functi
              var str = text.slice(0,5) + "... " + "视频转换中..稍后刷新可观看";
              $(el).text(str);
        }
-    });
-   
-   $("#aboutVidoe a").click(function(){
+   });
+
+
+
+ 
+setTimeout(function(){
+            star();
+  },100)
+
+
+
+
+ //切换播放
+  $("#aboutVidoe a").click(function(){
        if($(this).attr("data-status") == 0) {
           return;
        }
@@ -52,64 +61,52 @@ require(["jquery","ckplayer","api","path","layui","star","boot-dropdown"],functi
        changeVideo(videSrc,player);
     })
 
-}
 
-      function changeVideo(videoUrl,player) {
-        if(!player && player !=0) {
-            var videoObject = {
-                container: '#video',//“#”代表容器的ID，“.”或“”代表容器的class
-                variable: 'player',//该属性必需设置，值等于下面的new chplayer()的对象
-                flashplayer:false,//如果强制使用flashplayer则设置成true
-                video:videoUrl,//视频地址
-                logo:null
-            };
-              player = new ckplayer(videoObject);
-        }else {
-          var newVideoObject = {
-          container: '#video', //容器的ID
-          variable: 'player',
-          autoplay: true, //是否自动播放
-          // loaded: 'loadedHandler', //当播放器加载后执行的函数
-          flashplayer:false,
-          logo:null,
-          video: videoUrl
-        }
-          if(player.playerType == 'html5video') {
-          if(player.getFileExt(videoUrl) == '.flv' || player.getFileExt(videoUrl) == '.m3u8' || player.getFileExt(videoUrl) == '.f4v' || videoUrl.substr(0, 4) == 'rtmp') {
-            player.removeChild();
-            player = null;
-            player = new ckplayer();
-            player.embed(newVideoObject);
-          } else {
-            player.newVideo(newVideoObject);
-          }
-        } else {
-          if(player.getFileExt(videoUrl) == '.mp4' || player.getFileExt(videoUrl) == '.webm' || player.getFileExt(videoUrl) == '.ogg') {
-            player = null;
-            player = new ckplayer();
-            player.embed(newVideoObject);
-          } else {
-            player.newVideo(newVideoObject);
-          }
-        }
-        }
-
-        //判断是需要重新加载播放器还是直接换新地
+  function changeVideo(videoUrl, player) {
+    if (!player && player != 0) {
+      var videoObject = {
+        container: '#video', //“#”代表容器的ID，“.”或“”代表容器的class
+        variable: 'player', //该属性必需设置，值等于下面的new chplayer()的对象
+        flashplayer: false, //如果强制使用flashplayer则设置成true
+        video: videoUrl, //视频地址
+        logo: null
+      };
+      player = new ckplayer(videoObject);
+    } else {
+      var newVideoObject = {
+        container: '#video', //容器的ID
+        variable: 'player',
+        autoplay: true, //是否自动播放
+        // loaded: 'loadedHandler', //当播放器加载后执行的函数
+        flashplayer: false,
+        logo: null,
+        video: videoUrl
       }
+      if (player.playerType == 'html5video') {
+        if (player.getFileExt(videoUrl) == '.flv' || player.getFileExt(videoUrl) == '.m3u8' || player.getFileExt(videoUrl) == '.f4v' || videoUrl.substr(0, 4) == 'rtmp') {
+          player.removeChild();
+          player = null;
+          player = new ckplayer();
+          player.embed(newVideoObject);
+        } else {
+          player.newVideo(newVideoObject);
+        }
+      } else {
+        if (player.getFileExt(videoUrl) == '.mp4' || player.getFileExt(videoUrl) == '.webm' || player.getFileExt(videoUrl) == '.ogg') {
+          player = null;
+          player = new ckplayer();
+          player.embed(newVideoObject);
+        } else {
+          player.newVideo(newVideoObject);
+        }
+      }
+    }
+  }
      
 
 
-    
-
-      
-   
-setTimeout(function(){
-            star();
-       },100)
-
-      
   
-       function star(){
+  function star(){
         var _star = $("#star-score");
         if( user_score == "0"){
           _star.raty({
@@ -164,11 +161,6 @@ setTimeout(function(){
            starReadOnly(user_score/2);    
         }
        }
-
-
-
-
-
 
     function starReadOnly(num){
         var _star = $("#star-score");
