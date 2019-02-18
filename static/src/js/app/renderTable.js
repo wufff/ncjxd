@@ -422,6 +422,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
   //     });
   //  }
   function hoverUi() {
+      var color;
       $("td").mouseenter(function(event) {
           var info = $(this).find(".info");
           var positon = $(this).attr("positon");
@@ -443,6 +444,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
                info.addClass('rightInfo');
                info.removeClass('leftInfo');
             }
+            color = $(this).css("background");
             $(this).css("background","#fff0d7");
             // alert(info.html());
             // $(".infoTitle").css("color","#fbb432eb");
@@ -453,7 +455,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
         var info = $(this).find(".info");
         var _this = this;
          if(info.length == 1) {
-            $(_this).css("background","#fff");
+            $(_this).css("background",color);
             info.hide();
          }
      }); 
