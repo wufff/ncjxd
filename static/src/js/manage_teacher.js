@@ -52,9 +52,24 @@ form.on('select(grade)', function(data){
       });
     })
 
+//删除
+// 删除老师http://wangyong.ncjxd.dev.dodoedu.com/api/delSchoolTeacher
+// user_id
   $("body").on("click",".del",function(){
-        layer.confirm('确定删除此条推荐吗?', {icon: 3, title:'提示'}, function(index){
-        layer.close(index);
+        var _this = this;
+        layer.confirm('确定删除该老师吗?', {icon: 3, title:'提示'}, function(index){
+          var tr = $(_this).parents("tr");
+          var uid = tr.attr("data-user");
+          var url = path.api + "/api/delSchoolTeacher";
+          api.ajaxGet(url,{user_id:uid},function(res){
+              if(res.type == "success"){
+                  layer.msg('删除成功');
+                  layer.close(index);
+                  refrechData();
+              }else{
+                 layer.msg(res.message,{icon:5});
+              } 
+          })
       });
   })
 
