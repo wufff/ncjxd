@@ -80,16 +80,18 @@ require(["Swiper","jquery","viewPhoto","api","layui","boot-dropdown"],function(S
 
 
 $("a").click(function(){
-   var length = $(".nav li").length; 
-   if (length == 8) {
-      login();
-      return false;
+   if(this.hasClass('noLogin')){
+      return true;
+   }else{
+      var length = $(".nav li").length; 
+       if (length == 8) {
+          login();
+          return false;
+       }
    }
 })
  
- $("#goto3").click(function(){
-      return true;
- })
+
 
 
 
