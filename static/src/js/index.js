@@ -80,7 +80,7 @@ require(["Swiper","jquery","viewPhoto","api","layui","boot-dropdown"],function(S
 
 
 $("a").click(function(){
-   if(this.hasClass('noLogin')){
+   if($(this).hasClass('noLogin')){
       return true;
    }else{
       var length = $(".nav li").length; 
