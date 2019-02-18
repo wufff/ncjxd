@@ -389,7 +389,7 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
       console.log(res);
       if (res.type == "success") {
         var list = res.data.data.time_info;
-        st_is_modify = res.data.data.st_is_modify ? res.data.data.st_is_modify : 2;
+        st_is_modify = res.data.data.st_is_modify;
         if (list && list.length > 0) {
           var up = res.data.data.noon_count.up;
           var down = res.data.data.noon_count.down;
@@ -450,15 +450,17 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
 
         }
         //st_is_modify 0 计划中  1 可以 2学期不存在
-        if (st_is_modify == 0) {
+        var haverTime = $("#table_header").css("display");
+      
+        if (haverTime == "none") {
           $(".timeInput").attr("disabled", true);
-          $("#titlePont").text("课程在计划中,暂时不能修改时间");
+          $("#titlePont").text("不能设置上课时间，因为没有设置学期，请先设置学期");
           $("#titlePont").show();
           $("#upAddbt").hide();
           $("#downAddbt").hide();
-        } else if (st_is_modify == 2) {
+        } else if (!st_is_modify) {
           $(".timeInput").attr("disabled", true);
-          $("#titlePont").text("不能设置上课时间，因为没有设置学期，请先设置学期");
+          $("#titlePont").text("课程在计划中,暂时不能修改时间");
           $("#titlePont").show();
           $("#upAddbt").hide();
           $("#downAddbt").hide();
