@@ -87,6 +87,9 @@ $("a").click(function(){
    }
 })
  
+ $("#goto3").click(function(){
+      return true;
+ })
 
 
 
