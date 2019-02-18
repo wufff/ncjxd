@@ -135,7 +135,7 @@ form.on('select(grade)', function(data){
         var url = path.api+"/api/getUserInfoByDodoId"
         api.ajaxGet(url,{user_name:works},function(res){
            if(res.type == "success"){
-             console.log(res);
+             // console.log(res);
              var data = res.data.data;
              $(".text").html("匹配成功,教师名为: <span class='red'>"+res.data.data.dodo_user_realname+"</span>");
              $("#dodo_user_id").val(data.dodo_user_id)
@@ -218,7 +218,7 @@ form.on('select(grade)', function(data){
            var url = path.api+"/api/addSchoolTeacher";
            var loading = layer.load(3);
            api.ajaxGet(url,getData,function(res){
-              console.log(res);
+              // console.log(res);
               if(res.type == "success") {
                 layer.msg("修改成功！",{time:1200});
                 refrechData();
