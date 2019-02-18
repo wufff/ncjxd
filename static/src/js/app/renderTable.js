@@ -20,6 +20,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
     is_over:0, //是否过了确认期
     totClass:0, //总课程
     renderCumWeek:true,
+    schoolType:1,  //1中心校   2教学点 判断渲染教室类型 
     renderClassRoom: function(school_id, weekData, callbcak) {
       loading = layer.load(3);
       var getData = {
@@ -33,10 +34,9 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
            text:"渲染教室",
            res:res
         }
-        console.log(obj);
+        // console.log(obj);
         if (res.type == "success") {
           var list = res.data.data.list;
-
           var html = "";
           for (var i = 0; i < list.length; i++) {
             if (i == 0) {
@@ -49,8 +49,16 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
             }
           }
           $(".classRoom").html(html);
-          $(".classType").html('<span class="active" data-tpye="0">发起</span><span data-tpye="1">接收</span>')
-          type = 0;
+          console.log(my.schoolType);
+          if(my.schoolType == 1) {
+              $(".classType").html('<span class="active" data-tpye="0">发起</span><span data-tpye="1">接收</span>');
+              my.tpye_class = 0;
+          }else {
+              $(".classType").html('<span data-tpye="1" class="active">接收</span>');
+              my.tpye_class = 1;
+          }
+      
+         
           if (callbcak) {
             callbcak();
           }

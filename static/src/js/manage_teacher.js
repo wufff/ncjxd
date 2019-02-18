@@ -195,12 +195,12 @@ form.on('select(grade)', function(data){
          layer.msg("请至少选中一个学科",{icon:5})
          return false;
        }
-      console.log(getData);
+      // console.log(getData);
        if(controlTpye == 0) {
            var url = path.api+"/api/addSchoolTeacher";
            var loading = layer.load(3);
            api.ajaxGet(url,getData,function(res){
-              console.log(res);
+              // console.log(res);
               if(res.type == "success") {
                 layer.msg("添加成功！",{time:1200});
                 refrechData();

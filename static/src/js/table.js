@@ -112,11 +112,10 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
       town_id = town_id_authority;
       var url = "/api/getAreaList";
       var schoolvalue = cTable.school_id + '|' + school_classify;
+      cTable.schoolType = school_classify;
       downList.renderArea(city_id_authority, town_id_authority, town_id_authority);
       downList.renderShool(town_id_authority,schoolvalue,cTable.school_id,is_center_school);
-      // $("select[name=school]").val(schoolvalue);
-      // console.log(text);
-       cTable.renderClassRoom(cTable.school_id, cTable.weekData, function() {
+      cTable.renderClassRoom(cTable.school_id, cTable.weekData, function() {
             cTable.studyTime(cTable.school_id, cTable.weekData);
       });
       break;
@@ -178,6 +177,7 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
     cTable.school_name = text;
     cTable.school_id = data.value.split("|")[0];
     class_isCenter = data.value.split("|")[1];
+    cTable.schoolType = class_isCenter;
     if (data.value != "") {
       $(".schoolName").text(cTable.school_name);
     } else {
@@ -259,6 +259,7 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
       var area = arry[1];
       cTable.school_id = arry[2];
       var classify = arry[3];
+      cTable.schoolType = classify;
       $("select[name=city]").val(cityId);
       downList.renderArea(cityId, area);
       downList.renderShool(area, cTable.school_id + '|' + classify);
@@ -298,6 +299,7 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
     if (cTable.tpye_class == 1) {
       // $(".editeFormWrap").css("visibility","hidden");
       $(".editeFormWrap").hide();
+
     } else {
       // $(".editeFormWrap").css("visibility","visible");
       var value =  $("select[name=school]").val().split('|');
