@@ -204,11 +204,11 @@ form.on('select(grade)', function(data){
               if(res.type == "success") {
                 layer.msg("添加成功！",{time:1200});
                 refrechData();
-                layer.close(loading);
+                layer.close(loading)
                 layer.close(dialog);
               }else{
-                 alert(res.message);
-                 console.log(res);
+                 layer.msg(res.message,{icon:5});
+                  layer.close(loading)
               }
           });
          return false; 
@@ -225,7 +225,8 @@ form.on('select(grade)', function(data){
                 layer.close(loading);
                 layer.close(dialog);
               }else{
-                 alert(res.type);
+                 layer.msg(res.message,{icon:5});
+                  layer.close(loading)
               }
           });
          return false; 
@@ -367,7 +368,7 @@ function refrechData() {
       $("#tbody").html(html);
      
     }
-    if(list.type == "error") {
+    if(list.type == "error" && goPage != 1) {
         var mun = goPage - 1;
         pages.gotopage.call(page,mun,false);
     }
