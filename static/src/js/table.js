@@ -20,8 +20,6 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
   //权限控制 显示开课
   var c20c30 = $("#c20c30").val();
 
-
-
 //设置权限 ==============================================================================================================================
 
   if (school_id_authority && school_id_authority != 0) {
