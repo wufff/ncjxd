@@ -594,7 +594,6 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
       title: "设置学期",
       content: $('#controlstudyTimelang'),
       area: ["900px", "600px"],
-      btn: ["确认", "取消"],
       yes: function(index, layero) {
         layer.close(index);
       }
@@ -796,7 +795,6 @@ function initstudyTimelang() {
       title: "设置填报时间",
       content: $('#controlTimeComfirm'),
       area: ["800px", "500px"],
-      btn: ["确认", "取消"],
       yes: function(index, layero) {
         layer.close(index)
       }
