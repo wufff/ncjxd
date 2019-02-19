@@ -519,10 +519,15 @@ function initContorlRoom (data){
         html += '<td class="recive_class_count">' + data[i].recive_class_count + '</td>'
         html += '<td class="teacher_count">' + data[i].teacher_count + '</td>'
         html += '<td class="user_user"> <a class="editUser" encrypt_school_id ="'+ data[i].encrypt_school_id+ '" user_user="' + data[i].user_user + '">查看与编辑</a></td>'
+
+        var htmltempt = "";
+        if(!data[i].kd_school_id){
+            htmltempt = '<a class="edit" encrypt_school_id ="'+ data[i].encrypt_school_id+ '">编辑教室</a>'
+        }
         if(data[i].school_classify == 2){
-         html += '<td> <a class="edit" encrypt_school_id ="'+ data[i].encrypt_school_id+ '">编辑教室</a></td>'  
+         html += '<td> '+ htmltempt +'</td>'  
        }else{
-          html += '<td> <a class="edit" encrypt_school_id ="'+ data[i].encrypt_school_id+ '" >编辑教室</a>  <a class="related">关联学校</a> </td>'
+          html += '<td> '+  htmltempt +' <a class="related">关联学校</a> </td>'
        }
        
       }
