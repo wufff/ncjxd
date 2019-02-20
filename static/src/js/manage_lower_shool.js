@@ -8,9 +8,6 @@ require(["layui","path","page","api","boot-dropdown"], function(layui,path,pages
     var county_id = $(".table_b").attr("county_id");
     initPage (1,county_id);
 
-
-
-
  $("body").on("click",".edit",function(){
       var tr = $(this).parents("tr");
       uid = tr.attr("data-id");

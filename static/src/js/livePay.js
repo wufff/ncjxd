@@ -6,7 +6,8 @@
  * @version $Id$
  */
 
-require(["jquery","boot-dropdown"],function($){
+require(["layui","boot-dropdown"],function(layui){
+     var $ = jQuery = layui.jquery; 
      var RecType = $(".mediaBox").data("type");
      var res = $(".mediaBox").data("res");
      // var res = "http://img.ksbbs.com/asset/Mon_1703/d0897b4e9ddd9a5.mp4";
