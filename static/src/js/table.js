@@ -723,6 +723,7 @@ function initstudyTimelang() {
         layer.msg("删除成功", {
           time: 500
         });
+        cTable.studyTime(cTable.school_id, cTable.weekData);
         redenerHoildForm();
       } else {
         layer.msg(res.message, {
