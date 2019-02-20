@@ -211,7 +211,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
               }
 
               var weeks = num.Hanzi(str) == '七' ? '日' : num.Hanzi(str)
-              html += '<th id="' + isToday + '" class="' + className + '" position="0,' + (i + 1) + '">星期' + weeks + '<br/><span class="date_time">' + data[i].date_time + '</span></th>'
+              html += '<th id="' + isToday + '" class="' + className + '" position="0,' + (i + 1) + '"><div class="classCell">星期' + weeks + '<br/><span class="date_time">' + data[i].date_time + '</span></div></th>'
             }
             $("#theadtr").html(html);
           }
@@ -382,10 +382,12 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
     if (boonlean) {
       $("#table_header_none").hide();
       $("#table_header").show();
+      $(".noneTd2").hide();
     } else {
       $("#table_header_none").show();
       $("#table_header").hide();
       $("#tbody").html('<tr><td colspan="9" class="noneTd">暂无课表信息~！</td></td>');
+       $(".noneTd2").hide();
     }
   }
  //假期ui

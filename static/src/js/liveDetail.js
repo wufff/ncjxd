@@ -22,7 +22,6 @@ require(["jquery","api","path","layui","star","boot-dropdown"],function($,api,pa
               if(!is_play){
                     $(el).addClass('active');
                     var mp4_rec =$(el).attr("download");
-                    console.log(mp4_rec);
                     var videoObject = {
                     container: '#video',//“#”代表容器的ID，“.”或“”代表容器的class
                     variable: 'player',//该属性必需设置，值等于下面的new chplayer()的对象

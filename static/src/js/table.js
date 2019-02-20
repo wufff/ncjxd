@@ -138,15 +138,20 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
     } else if (data.value == "") {
       intInfo();
       $("select[name=area]").html('<option value="">请先选择市</option>');
+      $("select[name=area]").html('<option value="">请先选区县</option>');
       form.render('select');
       city_id = data.value;
       $("#inputText").val("");
+      $("#tbody").html("");
     } else {
       intInfo();
       downList.renderArea(data.value)
       city_id = data.value;
+      $("select[name=school]").html('<option value="">请先选区县</option>');
+       form.render('select');
       $("#inputText").val("");
       $("#rebox").hide();
+       $("#tbody").html("");
     }
   });
 
@@ -157,12 +162,14 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
       intInfo();
       $("select[name=school]").html('<option value="">请先选择地区</option>');
       form.render('select');
-      town_id = data.value;
+      $("#tbody").html("");
       $("#inputText").val("");
       $("#rebox").hide();
     } else {
       town_id = data.value;
       downList.renderShool(data.value);
+      $("#tbody").html("");
+      intInfo();
     }
     $("#inputText").val("");
   });
@@ -200,7 +207,8 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
      $("#schoolTerm").html(" ");
      $("#week_time").html(" ");
      $("#week").text(" ");
-     $("#tbody").html('<tr><td colspan="9" class="noneTd">请选择学校查询对应课表~！</td></td>');
+     // $("#tbody").html('<tr><td colspan="9" class="noneTd">请选择学校查询对应课表~！</td></td>');
+     $(".noneTd2").show();
      $("#table_header").hide(); 
      $(".schoolName").text("");
    }
@@ -498,7 +506,7 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
           times: array.join(","),
           school_id: cTable.school_id
         }, function(res) {
-          console.log(res);
+          // console.log(res);
           if (res.type == "success") {
             layer.msg("设置成功", {
               time: 600
@@ -584,7 +592,7 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
 
 
 
-  //======================编辑学期弹窗===================
+//======================编辑学期弹窗===================
 
   $(".configStudeyTimeBt").click(function() {
     initstudyTimelang();
@@ -643,7 +651,6 @@ function initstudyTimelang() {
   }
 
 
-
   //设置学校学期
   $("#addtimedaysbt").click(function() {
     var Start_time = $("#studyStart_time").val();
@@ -671,9 +678,7 @@ function initstudyTimelang() {
     }
   })
 
-
-
-  //学校设置假日
+//学校设置假日
   $("#addHolidaysbt").click(function() {
     var holiday = $("#holiday").val();
     var End_time = $("#holidayEnd_time").val();
@@ -687,9 +692,8 @@ function initstudyTimelang() {
       var url = '/api/setSchoolHoliday'
       api.ajaxGet(url, getData, function(res) {
         if (res.type == "success") {
-          layer.msg("设置成功", {
-            time: 800
-          });
+          layer.msg("设置成功", {time: 800});
+           cTable.studyTime(cTable.school_id, cTable.weekData);
           redenerHoildForm();
           $("#holiday").val("");
           $("#holidayEnd_time").val("");
@@ -753,8 +757,6 @@ function initstudyTimelang() {
   ////======================编辑学期结束===================
 
   //======================编辑计划确认时间===================
-
-
   // controlTimeComfirm
 
   $(".configConfirmTimeBt").click(function() {
