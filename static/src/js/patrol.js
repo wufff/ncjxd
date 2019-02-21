@@ -1,4 +1,4 @@
-require(["jquery","layui","path","page","num","api","downList","boot-dropdown"],function($,layui,path,pages,num,api,downList){
+require(["jquery","layui","path","page","num","api","downList","auth","boot-dropdown"],function($,layui,path,pages,num,api,downList,auth){
   var layer = layui.layer;
   var form = layui.form;
   var loading;
@@ -7,14 +7,13 @@ require(["jquery","layui","path","page","num","api","downList","boot-dropdown"],
   var room_num = ""; //教室
   var school_classify = 1; //是否中心校
   var school_id = ""; //学校id
-
-
   ui();
   initPage(1);
-
-
 form.on('select(city)', function(data){
-    if(data.value) {
+   if ($("#selectCity").find("option").length < 3) {
+      return;
+    }
+    else if(data.value) {
         downList.renderArea(data.value)
         $("#inputText").val("");
         $("#rebox").hide();
@@ -22,14 +21,14 @@ form.on('select(city)', function(data){
         $("select[name=area]").html('<option value="">全部</option>');
         form.render('select');
     }
-     school_id = "";
+     school_id = ""; //复位搜索过的ie 
 }); 
 
 
 form.on('select(area)', function(data){
       $("#inputText").val("");
       $("#rebox").hide();
-      school_id = "";
+      school_id = "";  //复位搜索过的ie
 }); 
 
 

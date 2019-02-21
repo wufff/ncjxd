@@ -23,7 +23,8 @@ require.config({
 			"star":"./lib/star",
 			"cTable":"./app/renderTable",
 			"downList":"./app/downList",
-			"checkTab":"./app/checkTab"
+			"checkTab":"./app/checkTab",
+			"auth":"./app/authority"
 	},
 	shim: {
 

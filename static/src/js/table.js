@@ -1,10 +1,9 @@
-require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-dropdown"], function(layui, path, downList, tools, num, api, cTable) {
+require(["layui","path","downList", "tools", "num", "api", "cTable","auth","boot-dropdown"], function(layui, path, downList, tools, num, api, cTable,auth) {
   var layer = layui.layer;
   var form = layui.form;
   var $ = jQuery = layui.jquery;
   var laydate = layui.laydate;
   var loading;
- 
   var class_isCenter;
   //是否可以修改时间
   var st_is_modify;
@@ -12,61 +11,20 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
   var studytype ="";
   var commitTitle = "";
   //权限控制 0省 1市 2县 3学校
-  var city_id_authority = $("#city_id").val();
-  var town_id_authority = $("#town_id").val();
-  var school_id_authority = $("#school_id").val();
-  var is_center_school = $("#is_center_school").val();
-  var authority = 0;
   //权限控制 显示开课
   var c20c30 = $("#c20c30").val();
 //设置权限 ==============================================================================================================================
-  if (school_id_authority && school_id_authority != 0) {
-    authority = 3;
-  } else if (town_id_authority && town_id_authority != 0) {
 
-    authority = 2;
-  } else if (city_id_authority && city_id_authority != 0) {
-
-    authority = 1;
-  }
-
-  console.log("权限" + authority)
-  switch (authority) {
-    case 1:
-      downList.renderArea(city_id_authority);
-      break;
-    case 2:
-      downList.renderArea(city_id_authority,town_id_authority,town_id_authority);
-      downList.renderShool(town_id_authority,null,null,is_center_school);
-      break;
-    case 3: //学校管理员
-      cTable.school_id = school_id_authority;
-      cTable.school_name = $("#school_name").val();
-      var school_classify = $("#school_classify").val();
-      city_id = city_id_authority;
-      town_id = town_id_authority;
-      var schoolvalue = cTable.school_id + '|' + school_classify;
-      cTable.schoolType = school_classify;
-      downList.renderArea(city_id_authority, town_id_authority, town_id_authority);
-      downList.renderShool(town_id_authority,schoolvalue,cTable.school_id,is_center_school);
-      cTable.renderClassRoom(cTable.school_id, cTable.weekData, function() {
-            cTable.studyTime(cTable.school_id, cTable.weekData);
-      });
-      break;
-    default:
-      break;
-  }
 
   if (c20c30 == 0) {
     $(".configConfirmTimeBt").parents("li").css("display", "none");
   }
   //判断editeFormWrap,根据两个维度 1.身份是可以is_center_school，2 选择的学校是否是中心校 class_isCenter
-  if (is_center_school == 0) {
+  if (auth.is_center_school == 0) {
     $(".editeFormWrap").hide();
   }
 
 
-  //设置权限 结束==============================================
   form.on('select(city)', function(data) {
     if ($("#selectCity").find("option").length < 3) {
       return;
@@ -123,7 +81,7 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
       $(".schoolName").text("");
     }
 
-    if (class_isCenter == 1 && is_center_school != 0) {
+    if (class_isCenter == 1 && auth.is_center_school != 0) {
       $(".editeFormWrap").show();
     } else {
       $(".editeFormWrap").hide();
@@ -239,12 +197,11 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
     if (cTable.tpye_class == 1) {
       // $(".editeFormWrap").css("visibility","hidden");
       $(".editeFormWrap").hide();
-
     } else {
       // $(".editeFormWrap").css("visibility","visible");
       var value =  $("select[name=school]").val().split('|');
       class_isCenter = value[1];
-      if (class_isCenter == 1 && is_center_school != 0) {
+      if (class_isCenter == 1 && auth.is_center_school != 0) {
         $(".editeFormWrap").show();
       } else {
         $(".editeFormWrap").hide();
