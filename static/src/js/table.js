@@ -19,11 +19,8 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
   var authority = 0;
   //权限控制 显示开课
   var c20c30 = $("#c20c30").val();
-
 //设置权限 ==============================================================================================================================
-
   if (school_id_authority && school_id_authority != 0) {
-
     authority = 3;
   } else if (town_id_authority && town_id_authority != 0) {
 
@@ -36,71 +33,11 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
   console.log("权限" + authority)
   switch (authority) {
     case 1:
-      city_id = city_id_authority;
-      var url = "/api/getAreaList";
-      var getData = {
-        area_id: city_id_authority,
-        type: 3,
-
-      }
-      api.ajaxGet(url, getData, function(res) {
-        console.log(res);
-        if (res.type == "success") {
-          var list = res.data.data.list;
-          var html = '<option value="">请选择</option>';
-          for (var i = 0; i < list.length; i++) {
-            html += '<option value="' + list[i].node_encrypt_id + '">' + list[i].node_name + '</option>'
-          }
-          $("select[name=area]").html(html);
-          $("select[name=area]").val("");
-          form.render('select');
-        }
-      })
+      downList.renderArea(city_id_authority);
       break;
     case 2:
-      town_id = town_id_authority;
-      city_id = city_id_authority;
-      var url = "/api/getAreaList";
-      var getData = {
-        area_id: city_id_authority,
-        type: 3,
-        node_id: town_id_authority
-      }
-      api.ajaxGet(url, getData, function(res) {
-        console.log(res);
-        if (res.type == "success") {
-          var list = res.data.data.list;
-          var html = '';
-          for (var i = 0; i < list.length; i++) {
-            html += '<option value="' + list[i].node_encrypt_id + '">' + list[i].node_name + '</option>'
-          }
-          $("select[name=area]").html(html);
-          form.render('select');
-        }
-      })
-
-      var getData2 = {
-        area_id: town_id_authority,
-        is_all: is_center_school
-      }
-
-      var url2 = path.api + "/api/getSchoolListByAreaId";
-      api.ajaxGet(url2, getData2, function(res) {
-        // console.log(res);
-        if (res.type == "success") {
-          var list = res.data.data.list;
-          var html = '<option value="">请选择</option>';
-          for (var i = 0; i < list.length; i++) {
-            html += '<option value="' + list[i].school_encrypt_id + '">' + list[i].school_name + '</option>'
-          }
-          $("select[name=school]").html(html);
-          $("select[name=school]").val("");
-          form.render('select');
-        } else {
-          $("select[name=school]").html('<option value="">此地区无数据</option>');
-          form.render('select');
-        }
-      })
+      downList.renderArea(city_id_authority,town_id_authority,town_id_authority);
+      downList.renderShool(town_id_authority,null,null,is_center_school);
       break;
     case 3: //学校管理员
       cTable.school_id = school_id_authority;
@@ -108,7 +45,6 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
       var school_classify = $("#school_classify").val();
       city_id = city_id_authority;
       town_id = town_id_authority;
-      var url = "/api/getAreaList";
       var schoolvalue = cTable.school_id + '|' + school_classify;
       cTable.schoolType = school_classify;
       downList.renderArea(city_id_authority, town_id_authority, town_id_authority);
@@ -125,7 +61,6 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
     $(".configConfirmTimeBt").parents("li").css("display", "none");
   }
   //判断editeFormWrap,根据两个维度 1.身份是可以is_center_school，2 选择的学校是否是中心校 class_isCenter
-
   if (is_center_school == 0) {
     $(".editeFormWrap").hide();
   }
@@ -154,7 +89,6 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
        $("#tbody").html("");
     }
   });
-
   form.on('select(area)', function(data) {
     if ($("#area").find("option").length < 3) {
       return;
@@ -362,8 +296,8 @@ require(["layui", "path", "downList", "tools", "num", "api", "cTable","boot-drop
       range: '-',
       value: value
     });
-
   });
+  
   $(".downtimeInput").each(function(index, el) {
     if (index == 0) {
       var value = "14:00 - 14:45"

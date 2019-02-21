@@ -1,8 +1,8 @@
-require(["Swiper","jquery","viewPhoto","api","layui","boot-dropdown"],function(Swiper,$,view,api,layui){
+require(["Swiper","viewPhoto","api","layui","boot-dropdown"],function(Swiper,view,api,layui){
   //登录切换
 
   var layer = layui.layer;
-  var layui_$ = jQuery = layui.jquery; 
+  var $ = jQuery = layui.jquery; 
   var dialog;
   view.viewimg("#spot");
   $(".white_black .h4").click(function() {
@@ -111,7 +111,7 @@ $("a").click(function(){
        dialog = layer.open({
             type: 1,
             title:"<span style='color:#1b6bb1;'>欢迎登录</span>",
-            content: layui_$('#login_dialog'),
+            content: $('#login_dialog'),
             area:["365px","416px"]
       });
   }

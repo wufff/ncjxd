@@ -2,6 +2,7 @@ require(["jquery","layui","path","page","num","api","downList","boot-dropdown"],
   var layer = layui.layer;
   var form = layui.form;
   var loading;
+   var $ = jQuery = layui.jquery;
   //查询必备参数
   var room_num = ""; //教室
   var school_classify = 1; //是否中心校
@@ -102,17 +103,16 @@ $("#searchBtBig").click(function(){
 
 
 form.on('select(ssrez)', function(data){
-  console.log(data.value)
    if(data.value){
       var text = $("select[name=ssrez]").find("option:selected").text();
       $("#inputText").val(text);
-
       var arry = data.value.split('|');
       var cityId = arry[0];
       var area = arry[1];
       school_id = arry[2]
       $("select[name=city]").val(cityId);
-      renderArea(cityId,area);
+       $("#rebox").hide();
+      downList.renderArea(cityId,area);
       form.render('select');
    }else{
       $("#inputText").val("");
@@ -248,41 +248,6 @@ $(".tagItem2").click(function(){
   }
 
 
-
- 
- 
-
-
-  function renderArea(cityId,value){
-      var url = "/api/getAreaList";
-    if(cityId != ""){
-     var getData = {
-        area_id:cityId,
-        type:3
-     }
-      api.ajaxGet(url,getData,function(res){
-        if(res.type == "success") {
-          var list = res.data.data.list;
-          var html = '<option value="">选择区县</option>';
-          for(var i=0;i<list.length;i++){
-             html += '<option value="'+ list[i].node_encrypt_id +'">'+ list[i].node_name+'</option>'
-          }
-           
-         $("select[name=area]").html(html);
-         if(value){
-           $("select[name=area]").val(value);
-         }else {
-             $("select[name=area]").val("");
-         }
-          form.render('select');
-       }
-     })
-     }else{
-       $("select[name=area]").html('<option value="">全部</option>');
-          form.render('select');
-     }
-
-  }
 })
 
 

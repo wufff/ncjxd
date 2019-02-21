@@ -15,7 +15,11 @@ define(['layui','api','path'],function(layui,api,path){
 			      api.ajaxGet(url,getData,function(res){
 			        if(res.type == "success") {
 			          var list = res.data.data.list;
-			          var html = '<option value="">选择区县</option>';
+			           if(nodeId){
+		                      var html = '';
+				          }else{
+				          	  var html = '<option value="">请选择</option>';
+				        }
 			          for(var i=0;i<list.length;i++){
 			             html += '<option value="'+ list[i].node_encrypt_id +'">'+ list[i].node_name+'</option>'
 			          }
@@ -49,13 +53,18 @@ define(['layui','api','path'],function(layui,api,path){
 		     	getData.is_all = is_center_school;
 		     }
              if(nodeId){
-                 	 getData.school_id = nodeId;
+                 	getData.school_id = nodeId;
               }
+
 		      api.ajaxGet(url,getData,function(res){
 		        console.log(res);
 		        if(res.type == "success") {
 		          var list = res.data.data.list;
-		          var html = '<option value="">请选择</option>';
+		          if(nodeId){
+		                    var html = '';
+				      }else{
+				          	var html = '<option value="">请选择</option>';
+				   }
 		          for(var i=0;i<list.length;i++){
 		             html += '<option value="'+ list[i].school_encrypt_id +'|'+list[i].school_classify+'">'+ list[i].school_name+'</option>'
 		          }
@@ -72,11 +81,7 @@ define(['layui','api','path'],function(layui,api,path){
 		          form.render('select');
 		       }
 		     })
-		   }
-		 
-		 
-		   // var text = $("select[name=school]").parents("dd").find('input.layui-unselect');
-		
+		   }    
 		}		  
     }
     return obj
