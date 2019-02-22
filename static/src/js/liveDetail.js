@@ -146,7 +146,7 @@ setTimeout(function(){
                         if(res.type == "success") {
                             layer.msg("评分成功");
                             user_score = myConde;
-                            var average_score = res.data.average_score;
+                            var average_score = res.data.data.average_score;
                             $("#total_code").text(average_score);
                             starReadOnly(user_score/2);     
                         }else{
