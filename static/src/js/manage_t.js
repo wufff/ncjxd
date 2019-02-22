@@ -41,7 +41,7 @@ require(["layui","path","page","upLoad","api","viewPhoto","boot-dropdown"], func
         obj.goto_url = tr.find(".goto_url").text();
         obj.img = tr.find(".img").attr("src");
         obj.cover_img = "";
-        console.log(obj);
+        //console.log(obj);
         $("#previewImage").attr("src",obj.img);
         initContorl (obj);
         dialog = layer.open({
@@ -84,7 +84,7 @@ require(["layui","path","page","upLoad","api","viewPhoto","boot-dropdown"], func
        var url = path.api + '/api/addManageRecommend';
        var getData = data.field;
        getData.type = 1;
-       // console.log(getData);
+       // //console.log(getData);
        if(controlTpye == 0) {
           if(getData.cover_img == ""){
              layer.msg("没有上传图片",{icon:5,time:1200})
@@ -106,9 +106,9 @@ require(["layui","path","page","upLoad","api","viewPhoto","boot-dropdown"], func
           var url = path.api+"/api/modifyManageRecommendData";
           var loading = layer.load(3);
           getData.id = editeId;
-          console.log(getData);
+          //console.log(getData);
            api.ajaxGet(url,getData,function(res){
-              console.log(res);
+              //console.log(res);
               if(res.data.code == 1000) {
                 layer.msg("修改成功！",{time:1200});
                 refrechData();

@@ -57,7 +57,7 @@ define(['layui','api','path'],function(layui,api,path){
               }
 
 		      api.ajaxGet(url,getData,function(res){
-		        console.log(res);
+		        //console.log(res);
 		        if(res.type == "success") {
 		          var list = res.data.data.list;
 		          if(nodeId){

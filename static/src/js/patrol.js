@@ -35,13 +35,13 @@ form.on('select(area)', function(data){
 
 //年级关联学科
 form.on('select(grade)', function(data){
-   // console.log(data.value);
+   // //console.log(data.value);
    var url = path.api + "/api/getSubjectCodeList";
    var getData = {};
    getData.grade_id = data.value;
    if(data.value){
        api.ajaxGet(url,getData,function(data){
-        // console.log(data);
+        // //console.log(data);
        if(data.type == "success") {
           var list = data.data.data.list;
           var html = '<option value="">选择学科</option>';
@@ -68,10 +68,10 @@ $("#searchBt").click(function(){
         // $("#inputText").css("background","#fffbe9");
         var  url = path.api+"/api/getSchoolAreaData";
         api.ajaxGet(url,{keyword:keyword},function(res){
-                console.log(res);
+                //console.log(res);
                if(res.type == "success") {
                   var list = res.data.data;
-                  console.log(list);
+                  //console.log(list);
                   var length = list.length;
                   var html = '<option value="">'+length+'条 搜索结果</option>';
                   for(var i=0;i<list.length;i++){
@@ -162,9 +162,9 @@ $(".tagItem2").click(function(){
           var url = path.api + "/api/getTodaySchoolPiliList";
      }
       var getData = "&page=1&page_count=12&city_id="+data.city_id+"&area_id="+data.area_id+"&school_id="+school_id+"&stage_id="+data.stage_id+"&subject_id="+data.subject_id+"&room_num="+data.room_num+"&v="+ new Date().getTime();
-      // console.log(getData);
+      // //console.log(getData);
       pages.getAjax(url,getData,function(data){
-          // console.log(data);
+          // //console.log(data);
          if( data.type == "success"){
              var total = data.data.data.total;
              page =  new pages.jsPage(total,"pageNum","12",url,getData,buildTable,goPage,null);
@@ -179,7 +179,7 @@ $(".tagItem2").click(function(){
       })
      
     function buildTable(list) {
-      // console.log(list);
+      // //console.log(list);
     if (list.type == "success") {
       var data = list.data.data.list.map(function(item) {
         return {

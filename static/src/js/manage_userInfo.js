@@ -67,7 +67,7 @@ require(["layui", "path","api","boot-dropdown"], function(layui, path,api) {
           user_idcard:user_idcard,
           user_avatar:user_avatar
       }
-      // console.log(postData);
+      // //console.log(postData);
       if(user_email){
          if(!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(user_email)){
             layer.msg("邮箱格式不正确！",{icon:5});

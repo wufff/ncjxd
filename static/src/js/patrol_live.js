@@ -23,7 +23,7 @@ require(["jquery","layui","path","ckplayer","boot-dropdown"],function($,layui,pa
   	  var id = $(this).attr("id");
       obj[id] = videojs(id,{autoplay: true});
       obj[id].play();
-      console.log(obj);
+      //console.log(obj);
   })
 
    // var file_key = $(".video").eq(0).attr("data-hls");

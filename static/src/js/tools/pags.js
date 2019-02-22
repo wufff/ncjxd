@@ -49,7 +49,7 @@ define(['path','layui'], function(path,layui) {
 						 return;
 					}
 					_newobj = data;	
-					console.log(_newobj);				
+					//console.log(_newobj);				
 					$("body").attr({"httpType":"postAjax","requestData":requestData});	
 					if(SuccessCallback != undefined){
 						SuccessCallback(data, null);

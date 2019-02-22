@@ -3311,7 +3311,7 @@ var PlaybackWatcher = (function () {
     }
 
     /**
-     * A debugging logger noop that is set to console.log only if debugging
+     * A debugging logger noop that is set to //console.log only if debugging
      * is enabled globally
      *
      * @private
@@ -6981,7 +6981,7 @@ var SegmentLoader = (function (_videojs$EventTarget) {
     }
 
     /**
-     * A debugging logger noop that is set to console.log only if debugging
+     * A debugging logger noop that is set to //console.log only if debugging
      * is enabled globally
      *
      * @private
@@ -7859,7 +7859,7 @@ var SyncController = (function (_videojs$EventTarget) {
     }
 
     /**
-     * A debugging logger noop that is set to console.log only if debugging
+     * A debugging logger noop that is set to //console.log only if debugging
      * is enabled globally
      *
      * @private
@@ -13847,7 +13847,7 @@ MetadataStream = function(options) {
           chunk.data[2] !== '3'.charCodeAt(0))) {
       if (settings.debug) {
         // eslint-disable-next-line no-console
-        console.log('Skipping unrecognized metadata packet');
+        //console.log('Skipping unrecognized metadata packet');
       }
       return;
     }
@@ -13907,7 +13907,7 @@ MetadataStream = function(options) {
       frameSize = parseSyncSafeInteger(tag.data.subarray(frameStart + 4, frameStart + 8));
       if (frameSize < 1) {
          // eslint-disable-next-line no-console
-        return console.log('Malformed ID3 frame encountered. Skipping metadata parsing.');
+        return //console.log('Malformed ID3 frame encountered. Skipping metadata parsing.');
       }
       frameHeader = String.fromCharCode(tag.data[frameStart],
                                         tag.data[frameStart + 1],

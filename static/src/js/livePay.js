@@ -6,7 +6,7 @@
  * @version $Id$
  */
 
-require(["layui","boot-dropdown"],function(layui){
+require(["layui","headLogin"],function(layui){
      var $ = jQuery = layui.jquery; 
      var RecType = $(".mediaBox").data("type");
      var res = $(".mediaBox").data("res");
@@ -46,8 +46,5 @@ require(["layui","boot-dropdown"],function(layui){
      $("#addlive").click(function(){
         window.location.href = "/live/add";
      })
-     //登录按钮
-     $("#header_loginBt").click(function(){
-        window.location.href = "/";
-     })
+    
 })

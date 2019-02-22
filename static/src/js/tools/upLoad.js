@@ -57,7 +57,7 @@ define(["jquery","path"],function($,path){
 			uploader.bind('FileUploaded', function(uploader, file, responseObject) {
 				var msg = JSON.parse(responseObject.response);
 				if (msg.code == 1000) {
-					// console.log(msg.data);
+					// //console.log(msg.data);
 					document.getElementById('img_file_path').value = msg.data.file_path;
 					// doument.getElementById('img_str').value = document.getElementById('img_str').value + msg.data.file_path + ",";
 
@@ -117,11 +117,11 @@ define(["jquery","path"],function($,path){
 					},
 
 					FilesAdded: function(up, files) {
-						// console.log(uploader.files.length);
+						// //console.log(uploader.files.length);
             //             if(uploader.files.length>8){ // 最多上传8张图
 				        //     uploader.splice(8,999);
 				        // }
-				        // console.log(uploader.files.length);
+				        // //console.log(uploader.files.length);
       //                   var arry = [];
       //                   var html ="";
 						// plupload.each(files, function(file) {

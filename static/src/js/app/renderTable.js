@@ -34,7 +34,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
            text:"渲染教室",
            res:res
         }
-        // console.log(obj);
+        // //console.log(obj);
         if (res.type == "success") {
           var list = res.data.data.list;
           var html = "";
@@ -49,7 +49,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
             }
           }
           $(".classRoom").html(html);
-          console.log(my.schoolType);
+          //console.log(my.schoolType);
           if(my.schoolType == 1) {
               $(".classType").html('<span class="active" data-tpye="0">发起</span><span data-tpye="1">接收</span>');
               my.tpye_class = 0;
@@ -84,7 +84,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
           text: "学期和周",
           content: res
         }
-        console.log(obj);
+        //console.log(obj);
         if (res.type == "success") {
            my.formHeadtime(my.school_id, my.weekData);
           var data = res.data.data;
@@ -190,7 +190,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
           text: "表头日期",
           res: res
         }
-        console.log(obj);
+        //console.log(obj);
         if (res.type == "success") {
           var data = res.data.data;
           my.holidays = [];
@@ -229,12 +229,12 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
         type: type
       }
       api.ajaxGet(classUrl, getClassDate, function(res) {
-        // console.log(res);
+        // //console.log(res);
         var obj = {
           text: "渲染课程",
           res: res
         }
-        // console.log(obj);
+        // //console.log(obj);
         if (res.type == "success") {
           if (res.data.data.list.length > 0) {
             var list = res.data.data.list;
@@ -326,7 +326,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
              var plan_id = $(this).parents(".confirMitem").attr("cp_encrypt_id");
              var geturl = path.api + "/api/confirmCoursePlan";
              var day = $(this).parents(".confirMitem").attr("day");
-             console.log(geturl);
+             //console.log(geturl);
              api.ajaxGet(geturl,{plan_id:plan_id,day:day},function(res){
                 if(res.type == "success") {
                    layer.msg("操作成功",{time:600});
@@ -392,7 +392,7 @@ define(["layui", "num", "path", "api","tools"], function(layui, num, path, api,t
   }
  //假期ui
   function ui_holiday() {
-    // console.log(holidays);
+    // //console.log(holidays);
     if (my.holidays.length > 0) {
       for (var i = 0; i < my.holidays.length; i++) {
         $("td[positon$='," + my.holidays[i] + "']").removeClass().addClass("holidayTd");
@@ -556,8 +556,8 @@ $("body").on("click","td",function(){
             var sdate = new Date(Date.parse(currtTd.replace(/-/g, "/")));
             var nextDate = currtTime;
             var Weekradio = $('input[name="week"]:checked').val();
-            // console.log(sdate);
-            // console.log(nextDate);
+            // //console.log(sdate);
+            // //console.log(nextDate);
 
             if(Weekradio == "all"){
                 var weekArry = [];
@@ -573,7 +573,7 @@ $("body").on("click","td",function(){
               var weekArry = [];
                //拦截自定义未选择周
              var tags3 = $("#weekTagbox").find(".tag-selected");
-             console.log(tags3);
+             //console.log(tags3);
              tags3.find(".del").each(function(index, el) {
                    var id = $(el).attr("data-id");
                    weekArry.push(id);
@@ -586,7 +586,7 @@ $("body").on("click","td",function(){
                    }
                 });
                 weekValue=weekArry.join("|");
-                console.log(weekValue);
+                //console.log(weekValue);
             }
 
             // 授课学校集合
@@ -624,9 +624,9 @@ $("body").on("click","td",function(){
             getData.today=my.weekData;  //课程计划时间戳；
             getData.type = my.tpye_class;
             var url = path.api + "/api/setSchoolRoomCourcePlan";
-            // console.log(getData);
+            // //console.log(getData);
             api.ajaxGet(url,getData,function(res){
-                   console.log(res);
+                   //console.log(res);
                    if (res.type == "success"){
                       layer.msg("操作成功！");
                       my.studyTime (my.school_id,my.weekData);

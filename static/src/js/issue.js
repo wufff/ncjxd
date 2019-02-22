@@ -23,7 +23,7 @@ require(["jquery","layui","path","ZeroClipboard","upLoad","tools","api","boot-dr
         api.ajaxGet(url,{notice_id:notice_id},function(res){
         	if (res.type == "success") {
                 var list = res.data.data;
-                // console.log(list);
+                // //console.log(list);
                 var file_info = list.file_info;
                     $("#title").val(list.n_title);
                     $('input[name=type][value='+ list.n_type +']').prop("checked",true);
@@ -102,7 +102,7 @@ require(["jquery","layui","path","ZeroClipboard","upLoad","tools","api","boot-dr
              getData.file_names = doc_names.join(",");
         });
         } 
-        console.log(getData);
+        //console.log(getData);
 
        
       if(tpye == 0){
@@ -115,7 +115,7 @@ require(["jquery","layui","path","ZeroClipboard","upLoad","tools","api","boot-dr
            getData.del_ids = del_ids.join(",");
         }
         api.ajaxGet(url,getData,function(res){
-        	// console.log(res);
+        	// //console.log(res);
           if(res.type == "success") {
              layer.msg(str)
              setTimeout(function(){

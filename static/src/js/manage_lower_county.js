@@ -20,7 +20,7 @@ require(["layui","path","page","api","boot-dropdown"], function(layui,path,pages
           user_status:tr.find('.user_status').attr("user_status")
       }
      initContorl (data);
-     console.log(data);
+     //console.log(data);
     dialog = layer.open({
         type: 1,
         title:"编辑",
@@ -69,7 +69,7 @@ $("#searchBt").click(function(){
    var cityId = $("#city").val();
    var county_id = $("#area").val();
    if (cityId){
-       // console.log(cityId);
+       // //console.log(cityId);
       loading = layer.load(5);
       initPage (1,city_id,county_id);
    }
@@ -88,7 +88,7 @@ $("#searchBt").click(function(){
   form.on('submit(control)', function(data){
             var getData = data.field;
             getData.uid = uid;
-            console.log(getData)
+            //console.log(getData)
             var url = '/UserManage/ajaxEditManageUser';
             api.ajaxPost(url,getData,function(res){
                 if(res.type == "success"){
@@ -112,7 +112,7 @@ $("#searchBt").click(function(){
         getData += "&county_id="+county_id;
       }
       pages.getAjax(url,getData,function(res){
-          // console.log(res);
+          // //console.log(res);
           if(res.data.data.length == 0){
                   $("#tbody").html('<tr><td colspan="7" class="noneDataTd">暂无数据~！</td></td>');
                   $(".tableLoading").html('');
@@ -128,7 +128,7 @@ $("#searchBt").click(function(){
     function buildTable(res) {
     if (res.type == "success") {
       var data = res.data.data;
-      // console.log(data);
+      // //console.log(data);
       if(res.data.count == 0){
           ("#tbody").html('<tr><td colspan="8"  class="noneDataTd">暂无数据~！</td></td>');
           $(".tableLoading").html('');

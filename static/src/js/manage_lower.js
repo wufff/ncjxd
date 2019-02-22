@@ -21,7 +21,7 @@ require(["layui","path","page","api","boot-dropdown"], function(layui,path,pages
           user_status:tr.find('.user_status').attr("user_status")
       }
      initContorl (data);
-     console.log(data);
+     //console.log(data);
     dialog = layer.open({
         type: 1,
         title:"编辑",
@@ -50,7 +50,7 @@ function initContorl (data){
   form.on('submit(control)', function(data){
             var getData = data.field;
             getData.uid = uid;
-            console.log(getData)
+            //console.log(getData)
             var url = '/UserManage/ajaxEditManageUser';
             api.ajaxPost(url,getData,function(res){
                 if(res.type == "success"){
@@ -70,7 +70,7 @@ function initContorl (data){
       var url = $("#seciton").attr("url");
       var getData = "page=1&v="+ new Date().getTime() ;
       pages.getAjax(url,getData,function(res){
-          console.log(res);
+          //console.log(res);
          if(res.data.data.length == 0){
                   $("#tbody").html('<tr><td colspan="7" class="noneDataTd">暂无数据~！</td></td>');
                   $(".tableLoading").html('');
@@ -85,7 +85,7 @@ function initContorl (data){
     function buildTable(res) {
     if (res.type == "success") {
       var data = res.data.data;
-      console.log(data);
+      //console.log(data);
       if(res.data.count == 0){
           ("#tbody").html('<tr><td colspan="7"  class="noneDataTd" >暂无数据~！</td></td>');
           $(".tableLoading").html('');

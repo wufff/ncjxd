@@ -14,7 +14,7 @@ form.on('select(city)', function(data){
    if ($("#selectCity").find("option").length < 3) {
       return;
     } else if (data.value){ 
-          console.log(data.value);
+          //console.log(data.value);
           $("#inputText").val("");
           downList.renderArea(data.value);
      }else{
@@ -39,7 +39,7 @@ $("#searchBt").click(function(){
       loading = layer.load(5);
      var url = path.api + "/api/getCityAreaInfoByKeyWord";
      api.ajaxGet(url,{keyword:words},function(res){
-          console.log(res);
+          //console.log(res);
           if(res.type == "success"){
             var list = res.data.data;
             var town_id = list.town_id
@@ -48,7 +48,7 @@ $("#searchBt").click(function(){
               var getData = {area_id:list.city_id,type:3}
               var url = "/api/getAreaList";
               api.ajaxGet(url,getData,function(res2){
-                   console.log(res);
+                   //console.log(res);
                   if(res2.type == "success") {
                     var list2 = res2.data.data.list;
                     var html = '<option value="">全部</option>';
@@ -56,7 +56,7 @@ $("#searchBt").click(function(){
                        html += '<option value="'+ list2[i].node_encrypt_id +'">'+ list2[i].node_name+'</option>'
                     }
                    $("select[name=area]").html(html);
-                   console.log(list.town_id);
+                   //console.log(list.town_id);
                    $("select[name=area]").val(town_id);
                     form.render('select');
                     initPage (1);
@@ -93,7 +93,7 @@ function initPage (goPage){
       var getData = "area_id="+area_id+"&city_id="+city_id+"&end_time="+end_time+"&start_time="+start_time;
           getData += "&page=1&page_count=25&v="+ new Date().getTime();
       pages.getAjax(url,getData,function(data){
-          console.log(data)
+          //console.log(data)
          if( data.type == "success"){
              var total = data.data.data.total;
              page =  new pages.jsPage(total, "pageNum","25",url,getData,buildTable,goPage,null);

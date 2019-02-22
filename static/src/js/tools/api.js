@@ -97,7 +97,7 @@ define(["layui","path"], function(layui,path) {
                     type:"ajax返回错误",
                     data:res
             	 }
-                console.log(obj);
+                //console.log(obj);
                 layer.msg("网络错误，请联系管理员",{time:800});
             }
         });

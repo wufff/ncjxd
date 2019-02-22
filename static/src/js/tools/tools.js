@@ -22,7 +22,7 @@ define(['layui','path'],function(layui,path){
          },
          get:function(key){
             if($("#wf"+key).length == 0){
-                console.log("key不存在")
+                //console.log("key不存在")
             }
             var value = $("#wf"+key).val();
             return value;

@@ -21,7 +21,7 @@ require(["layui", "path","page","api","boot-dropdown"], function(layui, path,pag
             user_type:tr.find(".user_operate").attr("user_type")
          };
         
-         // console.log(obj);
+         // //console.log(obj);
          initContorl(obj);
          type = 1; 
         dialog = layer.open({
@@ -57,7 +57,7 @@ require(["layui", "path","page","api","boot-dropdown"], function(layui, path,pag
 
 
 form.on('select(search_type)', function(data){
-   // console.log(data.value);
+   // //console.log(data.value);
    var url = path.api + "/api/getSubjectCodeList";
    var getData = {};
    search_type = data.value;
@@ -81,7 +81,7 @@ $("body").on("click",".del",function(){
          }
         var url = "/userManage/ajaxDelUser";
         api.ajaxPost(url,postData,function(res){
-                console.log(res);
+                //console.log(res);
                 if(res.type == "success"){
                    layer.close(index);
                    layer.msg(res.message,{time:800})
@@ -121,9 +121,9 @@ $("body").on("click",".del",function(){
        if(type == 1){
            var url = '/userManage/ajaxEditUser';
             getData.uid = $("#uid").val();
-            console.log(getData);
+            //console.log(getData);
             api.ajaxPost(url,getData,function(res){
-                // console.log(res);
+                // //console.log(res);
                 if(res.type == "success"){
                    layer.msg("编辑成功",{time:800})
                    layer.close(dialog);
@@ -171,9 +171,9 @@ $("body").on("click",".del",function(){
   function initPage (goPage){
       var url = "/UserManage/ajaxManageList/";
       var getData = "page=1&page_count=15&search_type="+ search_type + "&search_name="+ $("#search_name").val() + "&v="+ new Date().getTime() ;
-     /* console.log(getData);*/
+     /* //console.log(getData);*/
       pages.getAjax(url,getData,function(data){
-        console.log(data);
+        //console.log(data);
          if( data.type == "success"){
              if(data.data.data.length == 0){
                   $("#tbody").html('<tr><td colspan="7" class="noneDataTd">暂无数据~！</td></td>');
@@ -205,7 +205,7 @@ $("body").on("click",".del",function(){
           sn:item.sel
         }
       })
-      // console.log(data);
+      // //console.log(data);
       var html = '';
       for (var i = 0; i < data.length; i++) {
         html += '<tr data-uid="' + data[i].uid + '" user_mobile="' + data[i].mobile + '"  user_position="' + data[i].position + '">'

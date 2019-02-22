@@ -24,7 +24,7 @@ require(["jquery","layui","path","tools","page","api","boot-dropdown"],function(
        authority = 1;
     }
  
-  console.log(authority);
+  //console.log(authority);
  
     switch(authority)
         {
@@ -37,7 +37,7 @@ require(["jquery","layui","path","tools","page","api","boot-dropdown"],function(
 
               }
               api.ajaxGet(url, getData,function(res){
-                   console.log(res);
+                   //console.log(res);
                   if(res.type == "success") {
                     var list = res.data.data.list;
                     var html = '<option value="">请选择</option>';
@@ -60,7 +60,7 @@ require(["jquery","layui","path","tools","page","api","boot-dropdown"],function(
                    node_id:town_id_authority
               }
               api.ajaxGet(url, getData,function(res){
-                   console.log(res);
+                   //console.log(res);
                   if(res.type == "success") {
                     var list = res.data.data.list;
                     var html = '';
@@ -86,7 +86,7 @@ form.on('select(city)', function(data){
       if(city_id == data.value){
          return;
       }
-     console.log(data.value)
+     //console.log(data.value)
      var getData = {
       area_id:data.value,
       type:3
@@ -95,7 +95,7 @@ form.on('select(city)', function(data){
      var url = "/api/getAreaList";
      if(data.value){
       api.ajaxGet(url,getData,function(res){
-         // console.log(res);
+         // //console.log(res);
         if(res.type == "success") {
           var list = res.data.data.list;
           var html = '<option value="">全部</option>';
@@ -209,7 +209,7 @@ form.on('select(studyTime)', function(data){
               var getData = {area_id:list.city_id,type:3}
               var url = "/api/getAreaList";
               api.ajaxGet(url,getData,function(res2){
-                   // console.log(res);
+                   // //console.log(res);
                   if(res2.type == "success") {
                     var list2 = res2.data.data.list;
                     var html = '<option value="">全部</option>';
@@ -217,7 +217,7 @@ form.on('select(studyTime)', function(data){
                        html += '<option value="'+ list2[i].node_encrypt_id +'">'+ list2[i].node_name+'</option>'
                     }
                    $("select[name=area]").html(html);
-                   console.log(list.town_id);
+                   //console.log(list.town_id);
                    $("select[name=area]").val(town_id);
                     form.render('select');
                     initPage (currentTpye);
@@ -283,7 +283,7 @@ form.on('select(studyTime)', function(data){
           $(".areaText").text(str);
        }
  
-      console.log(getData);
+      //console.log(getData);
       api.ajaxGet(url,getData,function(res){
           render(res,boolean)
       })
@@ -292,7 +292,7 @@ form.on('select(studyTime)', function(data){
 
 function  render(res,boolean) {
       $(".tableLoading").hide();
-      console.log(res);
+      //console.log(res);
      if(res.type == "error"){
         if(boolean){  
            $("#tbody_area").html('<tr><td colspan="4" style="padding:30px 0;">暂无数据~!</td></tr>')

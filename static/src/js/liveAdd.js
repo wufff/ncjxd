@@ -35,7 +35,7 @@ require(["layui", "path", "upLoad", "tools","api","boot-dropdown"], function(lay
          return false;;
       }
       var url = path.api + "/api/addManageActivity";
-      console.log(getData);
+      //console.log(getData);
       api.ajaxGet(url,getData,function(res){
          if(res.type == "success"){
             layer.msg("操作成功",{time:500});

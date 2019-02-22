@@ -1,46 +1,7 @@
-require(["Swiper","viewPhoto","api","layui","tools","boot-dropdown"],function(Swiper,view,api,layui,tools,){
-  //登录切换
-  
+require(["Swiper","viewPhoto","api","layui","tools","headLogin"],function(Swiper,view,api,layui,tools){
   var layer = layui.layer;
   var $ = jQuery = layui.jquery; 
-  var dialog;
   view.viewimg("#spot");
-  $(".white_black .h4").click(function() {
-        $(this).addClass('active');
-        $(this).siblings().removeClass('active');
-        if($(this).attr("id") == "manageLogin"){
-          $(".manageLogin").show();
-          $(".teacherLogin").hide();
-        }else{
-          $(".manageLogin").hide();
-          $(".teacherLogin").show();
-        }
-  });
-    
-//登录按钮
-  $("#loginBt").click(function(){
-     var user_name = $("#user_name").val();
-     var password = $("#user_pwd").val();
-     var autologin = $("#autologin").is(':checked')? 1 : 0
-    if(user_name && password) {
-    api.ajaxPost("/Login/loginPost",{
-        user_name:user_name,
-        user_pwd:password,
-        autologin:autologin
-     },function(res){
-        if(res.type == 'success'){
-          window.location.href = res.message;
-        }else{
-          $("#errInfo").html(res.message);
-        }
-     })
-    }
-     
-  });
-
-
-
-
   new Swiper('#spotRound', {
 	     loop : true,
        slidesPerView : 'auto',
@@ -61,8 +22,6 @@ require(["Swiper","viewPhoto","api","layui","tools","boot-dropdown"],function(Sw
        prevButton: '.banner-pre',
   })
 
-
-
 //轮播样式
  $("#bannerRound").mouseover(function(){
                   $(".banner-bar").show();
@@ -73,52 +32,5 @@ require(["Swiper","viewPhoto","api","layui","tools","boot-dropdown"],function(Sw
   $(".banner-bar").mouseover(function(){
                   $(".banner-bar").show();
               })
-
-
-
-
-
-
-$("a").click(function(){
-   if($(this).hasClass('noLogin')){
-      return true;
-   }else{
-      var length = $("#header_loginBt").length; 
-      console.log(length);
-       if (length > 0) {
-          login();
-          return false;
-       }
-   }
-})
- 
-
-
-
-
-
-//登录样式  
-  $("#user_name").focus(function(){
-    $("#errInfo").html("");
-  })
-  $("#user_pwd").focus(function(){
-     $("#errInfo").html("");
-  })
-  
-
-   
-    
-  function login(){
-       dialog = layer.open({
-            type: 1,
-            title:"<span style='color:#1b6bb1;'>欢迎登录</span>",
-            content: $('#login_dialog'),
-            area:["365px","416px"]
-      });
-  }
-
-
-
-
 
 });

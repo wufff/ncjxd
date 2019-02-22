@@ -13,13 +13,13 @@ require(["layui", "path","page","tools","api","num","boot-dropdown"], function(l
 
 //年级出学科
 form.on('select(grade)', function(data){
-   // console.log(data.value);
+   // //console.log(data.value);
    var url = path.api + "/api/getSubjectCodeList";
    var getData = {};
    getData.grade_id = data.value;
    if(data.value){
        api.ajaxGet(url,getData,function(data){
-        // console.log(data);
+        // //console.log(data);
        if(data.type == "success") {
           var list = data.data.data.list;
           var html = '<option value="">选择学科</option>';
@@ -135,7 +135,7 @@ form.on('select(grade)', function(data){
         var url = path.api+"/api/getUserInfoByDodoId"
         api.ajaxGet(url,{user_name:works},function(res){
            if(res.type == "success"){
-             // console.log(res);
+             // //console.log(res);
              var data = res.data.data;
              $(".text").html("匹配成功,教师名为: <span class='red'>"+res.data.data.dodo_user_realname+"</span>");
              $("#dodo_user_id").val(data.dodo_user_id)
@@ -195,12 +195,12 @@ form.on('select(grade)', function(data){
          layer.msg("请至少选中一个学科",{icon:5})
          return false;
        }
-      // console.log(getData);
+      // //console.log(getData);
        if(controlTpye == 0) {
            var url = path.api+"/api/addSchoolTeacher";
            var loading = layer.load(3);
            api.ajaxGet(url,getData,function(res){
-              // console.log(res);
+              // //console.log(res);
               if(res.type == "success") {
                 layer.msg("添加成功！",{time:1200});
                 refrechData();
@@ -218,7 +218,7 @@ form.on('select(grade)', function(data){
            var url = path.api+"/api/addSchoolTeacher";
            var loading = layer.load(3);
            api.ajaxGet(url,getData,function(res){
-              // console.log(res);
+              // //console.log(res);
               if(res.type == "success") {
                 layer.msg("修改成功！",{time:1200});
                 refrechData();
@@ -264,7 +264,7 @@ function refrechData() {
   // function getUserListBySchoolId (){
   //   var url = path.api+'/api/getUserListBySchoolId';
   //   api.ajaxGet(url,{},function(data){
-  //      // console.log(data);
+  //      // //console.log(data);
   //     if(data.type == 'success'){
   //         var list = data.data.data;
   //         var html = "";
@@ -284,7 +284,7 @@ function refrechData() {
           var getData = {};
           getData.grade_id = 1;
           api.ajaxGet(url,getData,function(data){
-             // console.log(data);
+             // //console.log(data);
              if(data.type == "success"){
                 var list = data.data.data.list;
                 var html = "";
@@ -307,13 +307,13 @@ function refrechData() {
       var grade = $("select[name=grade]").val();
       var subject = $("select[name=subject]").val();
       var name = $("input[name=name]").val();
-      // console.log(grade);
-      // console.log(subject);
-      // console.log(name);
+      // //console.log(grade);
+      // //console.log(subject);
+      // //console.log(name);
       var getData = "grade="+ grade + "&subject=" + subject + "&name="+ name + baseData;
-      // console.log(getData);
+      // //console.log(getData);
       pages.getAjax(url,getData,function(data){
-         console.log(data);
+         //console.log(data);
          if( data.type == "success"){
              var total = data.data.data.total;
              page =  new pages.jsPage(total, "pageNum","5",url,getData,buildTable,goPage,null);
@@ -330,7 +330,7 @@ function refrechData() {
      
     function buildTable(list) {
     if (list.type == "success") {
-       // console.log(list);
+       // //console.log(list);
       var data = list.data.data.list.map(function(item) {
         return {
           id:item.st_id,

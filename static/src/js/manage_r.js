@@ -38,7 +38,7 @@ require(["layui", "path","page","api","boot-dropdown"], function(layui, path,pag
                  layer.close(index);
                  refrechData();
              }else{
-                console.log(res);
+                //console.log(res);
              }
             
          })
@@ -79,7 +79,7 @@ require(["layui", "path","page","api","boot-dropdown"], function(layui, path,pag
            var url = path.api+"/api/addManageRecommend";
            var loading = layer.load(3);
            api.ajaxGet(url,getData,function(res){
-              // console.log(res);
+              // //console.log(res);
               if(res.type == "success") {
                 layer.msg("添加成功！",{time:1200});
                 refrechData();

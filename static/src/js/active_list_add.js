@@ -1,6 +1,7 @@
-require(["jquery","layui","path","upLoad","tools","api","boot-dropdown"], function($,layui,path,upLoad,tools,api) {
+require(["layui","path","upLoad","tools","api","boot-dropdown"], function(layui,path,upLoad,tools,api) {
     var layer = layui.layer;
     var form = layui.form;
+    var $ = jQuery = layui.jquery; 
     var laydate = layui.laydate;
     var layer = layui.layer;
     var loading;
@@ -18,7 +19,7 @@ require(["jquery","layui","path","upLoad","tools","api","boot-dropdown"], functi
               if(res.type == "success"){
                  var list = res.data.data;
                  var timeValue = list.ai_start_time.slice(0,10);
-                  console.log(res);
+                  //console.log(res);
                  var dos =  list.list[0]
                  var medias =  list.list[1]
                  var medias_html = "";
@@ -47,7 +48,7 @@ require(["jquery","layui","path","upLoad","tools","api","boot-dropdown"], functi
                    dos_html +=       '</div>'
                   
                  }
-                 // console.log(dos);
+                 // //console.log(dos);
                 $("#mp4list").html(medias_html);
                 $("#doclist").html(dos_html);
               }
@@ -137,7 +138,7 @@ require(["jquery","layui","path","upLoad","tools","api","boot-dropdown"], functi
         getData.mp4_paths = mp4_paths.join(",");
         getData.mp4_names = mp4_names.join(",");
         if(off == true){
-          // console.log(getData);
+          // //console.log(getData);
           loading = layer.load(3);
           api.ajaxGet("/api/addManageActivity",getData,function(res){
             if(res.type == "success") {
@@ -201,12 +202,12 @@ require(["jquery","layui","path","upLoad","tools","api","boot-dropdown"], functi
 
        
         getData.del_ids = del_ids.join(",");
-        console.log(getData);
+        //console.log(getData);
         if(off == true){
           loading = layer.load(3);
           var url = path.api + "/api/modifyManageActivityData";
         api.ajaxGet(url,getData,function(res){
-          console.log(res);
+          //console.log(res);
           if(res.type == "success") {
               layer.close(loading);
               layer.msg("修改成功");

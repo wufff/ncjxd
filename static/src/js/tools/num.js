@@ -23,7 +23,7 @@ define(function () {
         var num = String(num);
         var len = num.length;
         if(len > 4){
-            console.log('该函数只处理千位及以下');
+            //console.log('该函数只处理千位及以下');
             return null;
         }
         var hanzi = '';

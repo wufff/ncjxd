@@ -1,5 +1,6 @@
 require.config({
 	baseUrl: "http://ncjxd.images.dev.dodoedu.com/static/src/js",
+	// baseUrl: "http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/js",
 	// urlArgs: "v=" + new Date().getTime(),
 	paths: {
 			"jquery": "./lib/jquery/jquery",
@@ -24,7 +25,8 @@ require.config({
 			"cTable":"./app/renderTable",
 			"downList":"./app/downList",
 			"checkTab":"./app/checkTab",
-			"auth":"./app/authority"
+			"auth":"./app/authority",
+			"headLogin":"./app/headerLogin"
 	},
 	shim: {
 

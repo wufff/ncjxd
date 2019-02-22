@@ -14,7 +14,7 @@ define(["layui","downList","cTable"], function(layui,downList,cTable) {
     } else if (city_id_authority && city_id_authority != 0) {
       authority = 1;
     }
-    console.log("权限" + authority);
+    //console.log("权限" + authority);
    switch (authority) {
     case 1:
       downList.renderArea(city_id_authority);

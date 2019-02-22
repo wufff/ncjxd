@@ -17,7 +17,7 @@ require(["layui", "path","tools","page","api","boot-dropdown"], function(layui, 
 
        element.on('tab(docDemoTabBrief)', function(data){
 		  current = data.index + 1;
-		  console.log(current);
+		  //console.log(current);
 		});
 
 		$("body").on("click",".del",function(){
@@ -27,9 +27,9 @@ require(["layui", "path","tools","page","api","boot-dropdown"], function(layui, 
 		        var notice_id = $(_this).parents("tr").data("id");
 		        var url = path.api + '/api/delManageNoticeData';
                 var current = $("#pageNum_"+type).find(".current").text();
-                console.log(current);
+                //console.log(current);
 		        api.ajaxGet(url,{notice_id:notice_id},function(res){
-		        	 console.log(res);
+		        	 //console.log(res);
 		        	if(res.data.code == 1000){
 		        		layer.msg("删除成功~！",{time:500})
 		        		initPage (type,current);
@@ -63,7 +63,7 @@ require(["layui", "path","tools","page","api","boot-dropdown"], function(layui, 
       var url = path.api + '/api/getManageNoticeList';
       var getData = "type="+tpye+"&page=1&page_count=12";
       pages.getAjax(url,getData,function(data){
-      	console.log(data);
+      	//console.log(data);
       	 if(true){
            	 var total = data.data.data.total;
            	 switch(tpye)
@@ -89,7 +89,7 @@ require(["layui", "path","tools","page","api","boot-dropdown"], function(layui, 
       })
      
     function buildTable(list) {
-    	 console.log(list);
+    	 //console.log(list);
 		if (true) {
 			$(".tableLoading").html('');
 			var data = list.data.data.list.map(function(item) {

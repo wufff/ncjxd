@@ -1,6 +1,6 @@
 require(["layui", "path","viewPhoto","page","api","boot-dropdown"], function(layui, path,view,pages,api) {
     var layer = layui.layer;
-    var $ = jQuery = layui.jquery; //用他的jquey否则弹窗会有问题
+    var $ = jQuery = layui.jquery; 
     var page;
 
 

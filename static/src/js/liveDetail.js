@@ -142,7 +142,7 @@ setTimeout(function(){
                         score:myConde
                     }
                     api.ajaxGet(url,getData,function(res){
-                          console.log(res);
+                          //console.log(res);
                         if(res.type == "success") {
                             layer.msg("评分成功");
                             user_score = myConde;

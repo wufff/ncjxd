@@ -118,7 +118,7 @@ require(["layui","path","downList", "tools", "num", "api", "cTable","auth","boot
       }, function(res) {
         if (res.type == "success") {
           var list = res.data.data;
-          console.log(list);
+          //console.log(list);
           var length = list.length;
           var html = '<option value="" disabled>' + length + '条 搜索结果</option>';
           for (var i = 0; i < list.length; i++) {
@@ -146,7 +146,7 @@ require(["layui","path","downList", "tools", "num", "api", "cTable","auth","boot
   })
 
   form.on('select(ssrez)', function(data) {
-    // console.log(data.value)
+    // //console.log(data.value)
     if (data.value) {
       var text = $("select[name=ssrez]").find("option:selected").text();
       cTable.school_name = text;
@@ -285,14 +285,14 @@ require(["layui","path","downList", "tools", "num", "api", "cTable","auth","boot
     api.ajaxGet(url, {
       school_id: cTable.school_id
     }, function(res) {
-      console.log(res);
+      //console.log(res);
       if (res.type == "success") {
         var list = res.data.data.time_info;
         st_is_modify = res.data.data.st_is_modify;
         if (list && list.length > 0) {
           var up = res.data.data.noon_count.up;
           var down = res.data.data.noon_count.down;
-          console.log(st_is_modify);
+          //console.log(st_is_modify);
           var tat = up + down;
           //渲染上午
           $(".up").html("");
@@ -397,7 +397,7 @@ require(["layui","path","downList", "tools", "num", "api", "cTable","auth","boot
           times: array.join(","),
           school_id: cTable.school_id
         }, function(res) {
-          // console.log(res);
+          // //console.log(res);
           if (res.type == "success") {
             layer.msg("设置成功", {
               time: 600
@@ -513,7 +513,7 @@ function initstudyTimelang() {
     api.ajaxGet(url, {
       school_id: cTable.school_id
     }, function(res) {
-      console.log(res);
+      //console.log(res);
       if (res.type == "success") {
         var list = res.data.data;
         $(".studyTime_title").html(list.title);
@@ -555,7 +555,7 @@ function initstudyTimelang() {
       }
 
       api.ajaxGet(url, getData, function(res) {
-        console.log(res);
+        //console.log(res);
         if (res.type == 'success') {
           layer.msg("设置成功", {
             time: 800
@@ -604,7 +604,7 @@ function initstudyTimelang() {
   $("#holidayTbody").on("click", ".del", function() {
     var url = path.api + "/api/delSchoolHolidayData";
     var id = $(this).attr("id");
-    // console.log(cTable.school_id);
+    // //console.log(cTable.school_id);
     var getData = {
       holiday_id: id,
       school_id: cTable.school_id
@@ -633,7 +633,7 @@ function initstudyTimelang() {
     }, function(res) {
       if (res.type == "success") {
         var list = res.data.data.list;
-        // console.log(list);
+        // //console.log(list);
         for (var i = 0; i < list.length; i++) {
           var html = "<tr>";
           html += "<td>" + list[i].sh_name + "</td>";
@@ -657,7 +657,7 @@ function initstudyTimelang() {
     api.ajaxGet(url, {
       school_id: cTable.school_id
     }, function(res) {
-      console.log(res);
+      //console.log(res);
       if (res.type == "success") {
         var list = res.data.data;
         studytype = list.term;

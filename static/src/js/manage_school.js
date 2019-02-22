@@ -55,7 +55,7 @@ $("body").on("click",".Untying",function(){
     api.ajaxPost(url,{school_classify:classfily,school_id:id},function(res){
          if( res.type == "success") {
              var data = res.message;
-             console.log(data);
+             //console.log(data);
              var html = '';
             for (var i = 0; i < data.length; i++) {
               html += '<tr >'
@@ -97,7 +97,7 @@ $("body").on("click",".Untying",function(){
                 }
                var url = "/SchoolManage/ajaxDelCenterSchoolRelation"     
 
-                // console.log(getData);
+                // //console.log(getData);
           
                api.ajaxPost(url,getData,function(res){
                        if(res.type == "success"){
@@ -135,7 +135,7 @@ $("body").on("click",".related",function (){
         api.ajaxPost(url,{county_id:county_id},function(res){
             if(res.type == "success") {
             var data = res.message;
-             console.log(data);
+             //console.log(data);
              var html = '';
             for (var i = 0; i < data.length; i++) {
               html += '<tr >'
@@ -162,7 +162,7 @@ $("body").on("click",".related",function (){
               //添加关联教学点:/SchoolManage/ajaxAddRelationSchool  post  center_school_id  jxd_school_id(多个用逗号隔开)
               if ($("#addShooltbody").find('active'))
               var actives = $("#addShooltbody").find('.acitve');
-               // console.log(actives.length);
+               // //console.log(actives.length);
               if (actives.length > 0) {
                  var postData = {
                     jxd_school_id:[],
@@ -179,7 +179,7 @@ $("body").on("click",".related",function (){
                          layer.msg("关联成功",{time:500});
                          var url = path.api+"/api/syncSchoolTermData";
                          api.ajaxGet(url,{school_id:centerID},function(res){
-                               // console.log(res);
+                               // //console.log(res);
                          })
                          layer.close(index); 
                       }
@@ -209,7 +209,7 @@ $("#SoolchsearchBt").click(function(res){
       }
        var url = "/SchoolManage/ajaxSearchJxdSchool";
        api.ajaxPost(url,{county_id:county_id,school_name:school_name},function(res){
-            // console.log(res);
+            // //console.log(res);
            if(res.type == "success") {
                if(res.message.length == 0){
                   layer.msg("此关键字无搜索结果",{icon:5});
@@ -242,7 +242,7 @@ $("#SoolchsearchBt").click(function(res){
      currctScoolId = id;
      var tr = $(this).parents("tr");
      var school_classify = tr.find(".school_classify").attr("school_classify");
-      // console.log(school_classify);
+      // //console.log(school_classify);
      if (school_classify == 1) //中心校
       {
            $("select[name=is_receive]").html('<option value="0" >主讲教室</option><option value="1">接收教室</option>')
@@ -271,7 +271,7 @@ $("#SoolchsearchBt").click(function(res){
 
 
   $("body").on("click",".editClass",function (){
-     // console.log(currctScoolId);
+     // //console.log(currctScoolId);
     $("input[name=roomType]").val(1);
      var tr = $(this).parents("tr");
      $("#room_id").val($(this).attr("sr_encrypt_id"));
@@ -387,7 +387,7 @@ function initContorlRoom (data){
             }
          
             api.ajaxGet(url,getData,function(res){
-               // console.log(res);
+               // //console.log(res);
                if(res.type == "success"){
                    layer.msg(msg,{time:800})
                    layer.close(mindialog);
@@ -409,12 +409,12 @@ function initContorlRoom (data){
           var c=  reg.test(Number(getData.male_count));
           var d = reg.test(Number(getData.female_count));
           var e = Number(getData.male_count) + Number(getData.female_count);
-          console.log(e);
+          //console.log(e);
           if(a && b && c && d){
             if(getData.student_count == e ){
                var url = " /schoolManage/ajaxAddSchoolMemberCount";
                getData.school_id = $("#user_school_id").val();
-               console.log(getData);
+               //console.log(getData);
                api.ajaxPost(url,getData,function(res){
                   if(res.type == "success"){
                      layer.msg("操作成功！",{time:800});
@@ -440,7 +440,7 @@ function initContorlRoom (data){
                 if(res.type == "success"){
                       var data = res.data.data.list;
                       var html = '';
-                      // console.log(data);
+                      // //console.log(data);
                       for (var i = 0; i < data.length; i++) {
                         html += '<tr>'
                         html += '<td class="sn">' + (i+1) + '</td>'
@@ -482,7 +482,7 @@ function initContorlRoom (data){
           getData += "&school_classify="+ school_classify +"&school_name="+ school_name;
           getData += "&page=1&page_count=15&v="+ new Date().getTime();
       pages.getAjax(url,getData,function(data){
-          console.log(data);
+          //console.log(data);
          if( data.type == "success"){
              var total = data.message.count;
              page =  new pages.jsPage(total, "pageNum","15",url,getData,buildTable,goPage,null);
@@ -601,10 +601,10 @@ function initContorlRoom (data){
    //  zTreeObj = $.fn.zTree.init($("#tree"), setting, zNodes);
    // //获得所被选中的节点
    // var nodes = zTreeObj.getNodes(); //获得所有节点
-   // // console.log(zTreeObj.transformToArray(nodes)); //转换成统计数组
+   // // //console.log(zTreeObj.transformToArray(nodes)); //转换成统计数组
    
 
    // $(".getTree").click(function(){
    //   var checkedNode = zTreeObj.getCheckedNodes();
-   //   console.log(checkedNode);
+   //   //console.log(checkedNode);
    // })

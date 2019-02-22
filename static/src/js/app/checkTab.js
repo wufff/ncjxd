@@ -73,7 +73,7 @@ $("#timeforopen").click(function(){
            var zh = $(this).text();
            var url = path.api + "/api/getSchoolTeacherList";
            api.ajaxGet(url,{school_id:my.school_id,grade:grade,subject:subject},function(res){
-                 // console.log(res);
+                 // //console.log(res);
                 if(res.type == "success"){
                     $(".tagTabContentWrap").each(function(index, item) {
 
@@ -126,13 +126,13 @@ $("#timeforopen").click(function(){
         var oder = $(this).parent().data("oder");
         if( oder == 0 ){
               var id = $(this).attr("data-id");
-              // console.log(id);
+              // //console.log(id);
               api.ajaxGet("/api/getAreaList", {
                 area_id:id,
                 type:3,
                 node_id:area_id
               }, function(res) {
-               // console.log(res);
+               // //console.log(res);
                 if (res.type == "success") {
                     $(_this).siblings().removeClass('active');
                     $(_this).addClass('active');
@@ -143,7 +143,7 @@ $("#timeforopen").click(function(){
                   }) 
                   var list = res.data.data.list;
                   var html = '';
-                  // console.log(list);
+                  // //console.log(list);
                   for (var i = 0; i < list.length; i++) {
                       html += '<span class="tag" data-area="' + id + '" data-area2="' + list[i].node_encrypt_id + '">' + list[i].node_name + '</span>'
                   }
@@ -161,9 +161,9 @@ $("#timeforopen").click(function(){
        if (oder == 1)   {
            var area2 = $(this).attr("data-area2");
            var url = path.api+"/api/getSchoolListByAreaId";
-           console.log(school_id)
+           //console.log(school_id)
            api.ajaxGet(url,{area_id:area2,school_id:school_id,is_all:1},function(res){
-                 console.log(res);
+                 //console.log(res);
                 if(res.type == "success"){
                     $(_this).siblings().removeClass('active');
                     $(_this).addClass('active');
@@ -174,7 +174,7 @@ $("#timeforopen").click(function(){
                    }) 
                     var list = res.data.data.list;
                     var html = "";
-                    // console.log(list);
+                    // //console.log(list);
                     for (var i = 0; i < list.length; i++) {
                       if(list[i].school_encrypt_id == tools.queryString("school_id")){
                        
@@ -199,7 +199,7 @@ $("#timeforopen").click(function(){
            var school_name = $(this).text();
            var url = "/api/getRoomListBySchoolId";
           api.ajaxGet(url,{school_id:res_school_id,date:my.weekData},function(res){
-                 // console.log(res);
+                 // //console.log(res);
                 if(res.type == "success"){
                     $(_this).siblings().removeClass('active');
                     $(_this).addClass('active');
@@ -210,7 +210,7 @@ $("#timeforopen").click(function(){
                    }) 
                     var list = res.data.data.list;
                     var html = "";
-                    // console.log(list);
+                    // //console.log(list);
                     for (var i = 0; i < list.length; i++) {
                       html += '<span class="tag" data-class="' + list[i].sr_encrypt_id + '" data-school="' + res_school_id + '" data-schoolZb="' + school_name + '">' 
                       html += list[i].sr_name + '</span>'
@@ -235,7 +235,7 @@ $("#timeforopen").click(function(){
 
           var url = "/api/getSchoolTeacherList";
           api.ajaxGet(url,{school_id:school_id},function(res){
-                 // console.log(res);
+                 // //console.log(res);
                 if(res.type == "success"){
                     $(_this).siblings().removeClass('active');
                     $(_this).addClass('active');
@@ -246,7 +246,7 @@ $("#timeforopen").click(function(){
                    }) 
                     var list = res.data.data.list;
                     var html = "";
-                    // console.log(list);
+                    // //console.log(list);
                   for (var i = 0; i < list.length; i++) {
                        var roomsTags =$("#roomsTag").find(".del");
                        if(roomsTags.length > 0){
@@ -295,7 +295,7 @@ $("#timeforopen").click(function(){
               html +=        '<span class="inner">'+schoolname+'-'+room +'-'+ teacher +'</span>'
               html +=            '<span class="del" data-class="'+ roomId +'" data-teacher="'+teacher_id+'" data-school="'+ school_id +'">×</span>'
               html +=      '</span>'
-          // console.log(html)    
+          // //console.log(html)    
          var selected = $("#roomsTag").find('.tag-selected');
          //最多选中3个;
          if(selected.length<3){
@@ -370,7 +370,7 @@ $("#teachersTag").on("click",".del",function(){
 $("#roomTagBt").click(function() {
      //外面没选中的就清空弹窗
        var tags =  $("#roomTag").find(".tag-selected");
-       // console.log(tags.length)
+       // //console.log(tags.length)
        if(tags.length == 0){
           $(".tagTabContentWrap_room").each(function(index, item) {
               if (index > 0 ){
@@ -418,7 +418,7 @@ $("#roomTagBt").click(function() {
 $("#roomsTag").on("click",".del",function(){
     $(this).parent().remove();
     var thisTeacherId = $(this).attr("data-teacher");
-    console.log(thisTeacherId);
+    //console.log(thisTeacherId);
     //去掉弹窗里面active
     $(".lastRoomTag").each(function(index, el) {
        if($(el).attr("data-teacher") == thisTeacherId){
@@ -436,7 +436,7 @@ $("#roomTag").on("click",".del",function(){
     var index = tags.index($(this));
     tagsIncontrol.eq(index).remove();
     $(this).parent().remove();
-     console.log(tags.length)
+     //console.log(tags.length)
     if(tags.length == 1){
         $(".tagTabContentWrap_room").each(function(index, item) {
             if (index > 0 ){
@@ -502,8 +502,8 @@ $("#roomTag").on("click",".del",function(){
        var id = $(this).attr("data-id");
        $("#tagWeekWrap .tag").each(function(index, el) {
            var tagId = $(el).attr("data-id");
-           // console.log(tagId);
-           // console.log(id);
+           // //console.log(tagId);
+           // //console.log(id);
            if(id ==  tagId){
               $(el).removeClass('active');
            }

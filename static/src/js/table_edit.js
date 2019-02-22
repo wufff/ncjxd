@@ -30,7 +30,7 @@ require(["layui","path","tools","num","api","cTable","checkTab","boot-dropdown"]
           layer.alert(is_kd_html,{icon: 7,title:"提示",anim:-1});
       }
 
-      // console.log(school_name);
+      // //console.log(school_name);
       $(".schoolName").html(cTable.school_name);
       $(".roomName").html(cTable.room_name);
       cTable.studyTime(cTable.school_id,cTable.weekData);
