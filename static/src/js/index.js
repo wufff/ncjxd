@@ -1,6 +1,6 @@
-require(["Swiper","viewPhoto","api","layui","boot-dropdown"],function(Swiper,view,api,layui){
+require(["Swiper","viewPhoto","api","layui","tools","boot-dropdown"],function(Swiper,view,api,layui,tools,){
   //登录切换
-
+  
   var layer = layui.layer;
   var $ = jQuery = layui.jquery; 
   var dialog;
@@ -16,7 +16,7 @@ require(["Swiper","viewPhoto","api","layui","boot-dropdown"],function(Swiper,vie
           $(".teacherLogin").show();
         }
   });
-
+    tools.cookie("isLogin",1);
 //登录按钮
   $("#loginBt").click(function(){
      var user_name = $("#user_name").val();
@@ -83,8 +83,9 @@ $("a").click(function(){
    if($(this).hasClass('noLogin')){
       return true;
    }else{
-      var length = $(".nav li").length; 
-       if (length == 8) {
+      var length = $("#header_loginBt").length; 
+      console.log(length);
+       if (length > 0) {
           login();
           return false;
        }
