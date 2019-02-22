@@ -16,7 +16,7 @@ require(["Swiper","viewPhoto","api","layui","tools","boot-dropdown"],function(Sw
           $(".teacherLogin").show();
         }
   });
-    tools.cookie("isLogin",1);
+    
 //登录按钮
   $("#loginBt").click(function(){
      var user_name = $("#user_name").val();

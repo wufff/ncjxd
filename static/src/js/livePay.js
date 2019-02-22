@@ -24,7 +24,7 @@ require(["layui","boot-dropdown"],function(layui){
                 // var file_key = "http://pili-live-hls.dodoedu.com/dodoedu/ncjxd-98ui76yhbgtfdser175m.m3u8?sign=ff0d06746b589e2995d8df906e71720f&t=5c3eaa73";
                 var html =  '<video id="videjs"  class="video-js vjs-big-play-centered vjs-fluid" controls preload="auto" poster=""><source src="'+ file_key +'" type="application/x-mpegURL"></video>'
                 $(".mediaBox").html(html);
-                var player = videojs('videjs');
+                var player = videojs('videjs',{autoplay:true});
                 player.play();
           }
           break;
@@ -45,5 +45,9 @@ require(["layui","boot-dropdown"],function(layui){
      //添加直播
      $("#addlive").click(function(){
         window.location.href = "/live/add";
+     })
+     //登录按钮
+     $("#header_loginBt").click(function(){
+        window.location.href = "/";
      })
 })
