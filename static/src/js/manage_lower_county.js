@@ -76,6 +76,15 @@ $("#searchBt").click(function(){
   
 })
 
+function refrechData() {
+    var current = $("#pageNum").find(".current").text();
+    if (current) {
+      initPage(current);
+    } else {
+      initPage(1);
+    }
+  }
+
 
  function initContorl (data){
     form.val("control",data);

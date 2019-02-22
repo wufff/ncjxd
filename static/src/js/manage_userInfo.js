@@ -15,7 +15,8 @@ require(["layui", "path","api","boot-dropdown"], function(layui, path,api) {
     }
     ,done: function(res){
        if(res.type == "success"){
-          $("#layui-upload-img").attr("src",res.message);
+          $("#layui-upload-img").css("background-image",'url('+res.message+')');
+
           $("#imgPath").val(res.message);
        }else{
           layer.msg("上失败请检查网络",{icon:5})

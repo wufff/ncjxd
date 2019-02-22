@@ -56,7 +56,7 @@ function initContorl (data){
                 if(res.type == "success"){
                    layer.msg("修改成功",{time:800})
                    layer.close(dialog);
-                   initPage (1);
+                   refrechData();
                 }else{
                    layer.msg(res.message,{time:800})
                 }
@@ -66,7 +66,17 @@ function initContorl (data){
 
 
 
-   function initPage (goPage){
+  function refrechData() {
+    var current = $("#pageNum").find(".current").text();
+    if (current) {
+      initPage(current);
+    } else {
+      initPage(1);
+    }
+  }
+
+
+  function initPage (goPage){
       var url = $("#seciton").attr("url");
       var getData = "page=1&v="+ new Date().getTime() ;
       pages.getAjax(url,getData,function(res){
