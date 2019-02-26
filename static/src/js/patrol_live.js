@@ -1,35 +1,38 @@
-
-/**
- * 
- * @authors Your Name (you@example.org)
- * @date    2019-01-07 08:50:59
- * @version $Id$
- */
- 
-require(["jquery","layui","path","ckplayer","boot-dropdown"],function($,layui,path,ckplayer){
-  var layer = layui.layer;
-  var form = layui.form;
-  var obj = {};
+require(["jquery","boot-dropdown"],function($){
+  var videoBox = [];
  $(".video").each(function(index, el) {
-               var file_key = $(this).attr("data-hls");
-                // var file_key = "http://pili-live-hls.dodoedu.com/dodoedu/ncjxd-98ui76yhbgtfdser175m.m3u8?sign=ff0d06746b589e2995d8df906e71720f&t=5c3eaa73";
-                var html =  '<video id="id_'+index+'"  class="video-js vjs-big-play-centered vjs-fluid" controls preload="auto" poster=""><source src="'+ file_key +'" type="application/x-mpegURL"></video>'
-                $(this).html(html);          
+        var file_key = $(this).attr("data-hls");    
+        if (file_key){
+          var id =  $(this).attr("id"); 
+          var videoObject = {
+              //playerID:'ckplayer01',//播放器ID，第一个字符不能是数字，用来在使用多个播放器时监听到的函数将在所有参数最后添加一个参数用来获取播放器的内容
+              container: '#'+id, //容器的ID或className
+              variable: 'player', //播放函数名称
+              autoplay: true, //是否自动播放
+              config: '', //指定配置函数
+              debug: true, //是否开启调试模式
+              flashplayer: true, //强制使用flashplayer
+              //mobileCkControls:true,//是否在移动端（包括ios）环境中显示控制栏
+              //live:true,//是否是直播视频，true=直播，false=点播
+              live:true,
+              video: file_key 
+          }
+          videoBox[index] = new ckplayer(videoObject);
+        }
    });
-
-               // arry[index] = videojs('videjs');
-               //  arry[index].play();
-  $(".video-js").each(function(index,el){
-  	  var id = $(this).attr("id");
-      obj[id] = videojs(id,{autoplay: true});
-      obj[id].play();
-      //console.log(obj);
-  })
-
-   // var file_key = $(".video").eq(0).attr("data-hls");
-   // var html =  '<video id="videjs"  class="video-js vjs-big-play-centered vjs-fluid" controls preload="auto" poster=""><source src="'+ file_key +'" type="application/x-mpegURL"></video>'
-   // $(".video").eq(0).html(html); 
-   // var player = videojs('videjs');
-   // player.play();
-
+    // var videoObject = {
+    //     //playerID:'ckplayer01',//播放器ID，第一个字符不能是数字，用来在使用多个播放器时监听到的函数将在所有参数最后添加一个参数用来获取播放器的内容
+    //     container: '#video', //容器的ID或className
+    //     variable: 'player', //播放函数名称
+    //     autoplay: true, //是否自动播放
+    //     config: '', //指定配置函数
+    //     debug: true, //是否开启调试模式
+    //     flashplayer: true, //强制使用flashplayer
+    //     //mobileCkControls:true,//是否在移动端（包括ios）环境中显示控制栏
+    //     //live:true,//是否是直播视频，true=直播，false=点播
+    //     live:true,
+    //     video: rec 
+    //   };
+    //   var player = new ckplayer(videoObject);
+  console.log(videoBox);
 })
