@@ -7,4 +7,5 @@ static/ftp/test.js
 static/build/*
 test.html
 sftp-config.json
+static/src/js/test.js
 

@@ -129,7 +129,7 @@
                    </dl>
               </div>
         <div class="body table_b">
-                  <table class="layui-table" style="margin-top: 0">
+                  <!-- <table class="layui-table" style="margin-top: 0">
                       <thead>
                           <tr>
                              <th></th>
@@ -163,7 +163,73 @@
                               </td>
                            </tr>
                       </tbody>
-                  </table>
+                  </table> -->
+<div id="conrolEditClassEdit" style="width: 600px;height:600px;background-color: #fff;overflow: hidden;">
+     <form class="control layui-form" lay-filter="my">
+          <div class="layui-form-item">
+            <label class="layui-form-label">
+                <span class="red">*</span> 教室类型：
+            </label>
+            <div class="layui-input-block selectClass">
+               <select name="roomType">
+                  <option value="0">请选择</option>
+                  <option value="1">主讲教室</option>
+                  <option value="2">接收教室</option>
+               </select>
+           </div>
+          </div>
+          <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="red">*</span> 教室名称：
+              </label>
+              <div class="layui-input-block ">
+                 <input type="text" name="titleName" class="layui-input">
+             </div>
+          </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="red">*</span> 是否：
+              </label>
+              <div class="layui-input-block num">
+                  <input type="checkbox" name="off_on" lay-skin="switch" lay-text="开启|关闭">
+             </div>
+          </div>
+          <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="red">*</span> 状态：
+              </label>
+              <div class="layui-input-block">
+                 <input type="radio" name="status" value="normal" title="正常" checked>
+                 <input type="radio" name="status" value="dis" title="禁用">
+             </div>
+          </div>
+          <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="white">*</span> 多选：
+              </label>
+              <div class="layui-input-block">
+                 <input type="checkbox" name="dx[xz]" title="写作" value="xz"  checked>
+                 <input type="checkbox" name="dx[fd]" title="发呆" value="fd"> 
+                 <input type="checkbox" name="dx[ks]" title="看书" value="ks">
+                 <input type="checkbox" name="dx[dq]" title="打球" value="dq"> 
+                 <input type="checkbox" name="dx[sw]" title="上网" value="sw">
+                 <input type="checkbox" name="dx[sd]" title="扫地" value="sd"> 
+                 <input type="checkbox" name="dx[td]" title="拖地" value="td"> 
+             </div>
+          </div>
+          <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="white">*</span> 文本域：
+              </label>
+              <div class="layui-input-block">
+                  <textarea  class="layui-textarea" name="wb"></textarea>
+             </div>
+          </div>
+          <button lay-submit lay-filter="my">提交</button>
+     </form>
+     <button class="layui-btn layui-btn-primary" id="c1">赋值1</button>
+     <button class="layui-btn layui-btn-primary" id="c2">赋值空</button>
+  </div>
            </div>
                 
   	  </div>
@@ -232,8 +298,6 @@
                      <a class="editClass">编辑</a>
                    </td>
                 </tr>
-                
-              
              </tbody>
          </table>
      </div>
@@ -242,15 +306,15 @@
 
 
   <div id="conrolEditClassAdd" style="display: none;">
-     <div class="control layui-form">
+     <form class="control layui-form" layui-filter="control1">
           <div class="layui-form-item">
             <label class="layui-form-label">
                 <span class="red">*</span> 教室类型：
             </label>
             <div class="layui-input-block selectClass">
                <select>
-                  <option>主讲教室</option>
-                  <option>接收教室</option>
+                  <option value="0">主讲教室</option>
+                  <option >接收教室</option>
                </select>
            </div>
           </div>
@@ -287,60 +351,13 @@
                  <input type="text" name="title" required  lay-verify="required" placeholder="互动地址" autocomplete="off" class="layui-input">
              </div>
           </div>
-     </div>
+     </form>
   </div>
 
 
- <div id="conrolEditClassEdit" style="display: none;">
-     <div class="control layui-form">
-          <div class="layui-form-item">
-            <label class="layui-form-label">
-                <span class="red">*</span> 教室类型：
-            </label>
-            <div class="layui-input-block selectClass">
-               <select>
-                  <option>主讲教室</option>
-                  <option>接收教室</option>
-               </select>
-           </div>
-          </div>
-          <div class="layui-form-item">
-              <label class="layui-form-label">
-                  <span class="red">*</span> 教室名称：
-              </label>
-              <div class="layui-input-block ">
-                 <input type="text" name="title" required  lay-verify="required" placeholder="排序" autocomplete="off" class="layui-input" value="8">
-             </div>
-          </div>
-            <div class="layui-form-item">
-              <label class="layui-form-label">
-                  <span class="red">*</span> 学生人数：
-              </label>
-              <div class="layui-input-block num">
-                 <input type="text" name="title" required  lay-verify="required" placeholder="排序" autocomplete="off" class="layui-input" value="8">
-             </div>
-          </div>
-          <div class="layui-form-item">
-              <label class="layui-form-label">
-                  <span class="red">*</span> 状态：
-              </label>
-              <div class="layui-input-block">
-                 <input type="radio" name="status" value="normal" title="正常" checked>
-                 <input type="radio" name="status" value="dis" title="禁用">
-             </div>
-          </div>
-             <div class="layui-form-item">
-              <label class="layui-form-label">
-                  <span class="white">*</span> 互动地址：
-              </label>
-              <div class="layui-input-block">
-                 <input type="text" name="title" required  lay-verify="required" placeholder="互动地址" autocomplete="off" class="layui-input">
-             </div>
-          </div>
-     </div>
-  </div>
+ 
 </body>
 <script src="../static/src/js/lib/require.js"></script>
 <script src="../static/src/js/re-config.js"></script>
-<script src="../static/src/js/manage_school.js"></script>
+<script src="../static/src/js/test.js"></script>
 </html>
