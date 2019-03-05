@@ -10,7 +10,7 @@ require(["layui","headLogin"],function(layui){
      var $ = jQuery = layui.jquery; 
      var RecType = $(".mediaBox").data("type");
      var res = $(".mediaBox").data("res");
-     // var res = "http://img.ksbbs.com/asset/Mon_1703/d0897b4e9ddd9a5.mp4";
+     var res = "http://img.ksbbs.com/asset/Mon_1703/d0897b4e9ddd9a5.mp4";
      switch(RecType)
      {
         case 1:     //直播    
