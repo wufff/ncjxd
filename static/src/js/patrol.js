@@ -194,7 +194,7 @@ $(".tagItem2").click(function(){
           statusClass:"status_"+item.cn_status,
           status:num.patrolStatus(item.cn_status),
           id:item.cn_encrypt_id,
-          cn_kd_school_id:cn_kd_school_id
+          cn_kd_school_id:item.cn_kd_school_id
         }
       })
      
