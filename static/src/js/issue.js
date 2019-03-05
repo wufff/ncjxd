@@ -114,7 +114,7 @@ require(["jquery","layui","path","ZeroClipboard","upLoad","tools","api","boot-dr
            var str ="修改成功";
            getData.del_ids = del_ids.join(",");
         }
-        api.ajaxGet(url,getData,function(res){
+        api.ajaxPost(url,getData,function(res){
         	// //console.log(res);
           if(res.type == "success") {
              layer.msg(str)
