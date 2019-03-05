@@ -193,7 +193,8 @@ $(".tagItem2").click(function(){
           cn_num:item.cn_num,
           statusClass:"status_"+item.cn_status,
           status:num.patrolStatus(item.cn_status),
-          id:item.cn_encrypt_id
+          id:item.cn_encrypt_id,
+          cn_kd_school_id:cn_kd_school_id
         }
       })
      
@@ -210,9 +211,9 @@ $(".tagItem2").click(function(){
         html += '<td>' + data[i].cn_num + '</td>'
         html += '<td class="'+data[i].statusClass+'">' + data[i].status + '</td>'
         if(data[i].status == "进行中"){
-           html += '<td><a href="/Patrol/details?node_id='+ data[i].id +'" class="open">进入课堂</a><a href="'+ goUrl +'" class="go">发起互动</a></td>'
+           html += '<td><a href="/Patrol/details?node_id='+ data[i].id +'" class="open">进入课堂</a><ahref="'+ goUrl +'?schoolId='+data[i].cn_kd_school_id+'" class="go">发起互动</a></td>'
         }else{
-           html += '<td><a href="'+ goUrl +'" class="go">发起互动</a></td>'
+           html += '<td><a href="'+ goUrl +'?schoolId='+data[i].cn_kd_school_id+'" class="go">发起互动</a></td>'
         }
         html += ' </tr>'
       }
