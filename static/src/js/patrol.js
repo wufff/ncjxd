@@ -7,6 +7,7 @@ require(["jquery","layui","path","page","num","api","downList","auth","boot-drop
   var room_num = ""; //教室
   var school_classify = 1; //是否中心校
   var school_id = ""; //学校id
+  var dialog
   ui();
   initPage(1);
 form.on('select(city)', function(data){
@@ -137,13 +138,35 @@ $(".tagItem2").click(function(){
 })
 
 
+//发起互动
+$("#tbody").on("click",".go",function(){
+    var roomList = $(this).attr("data-room");
+    var school = $(this).attr("data-school");
+    var room_List = JSON.parse(roomList);
+    var html = '';
+    for(var i=0;i<room_List.length;i++){
+         html += '<a cn_room_kd_id='+ room_List[i].cn_room_kd_id +' cn_kd_school_id="'+ school+'">'+ room_List[i].cn_room_name+'</a>'
+    }
+    $("#control .inner").html(html);
+    dialog = layer.open({
+              type: 1,
+              title:"请选择互动教室",
+              content: $('#control'),
+              area:["300px","160px"]
+      });
+})
+
+//选择教后按钮
+  $("#control").on("click","a",function(){
+      var school = $(this).attr("cn_kd_school_id");
+      var room =  $(this).attr("cn_room_kd_id");
+      window.location.href = "/patrol/meeting?school_id="+school+"&room="+room;
+  })
 
 
 
 
-
-
-  function initPage (goPage,cumdata){
+  function initPage (goPage){
       var data = {
          city_id:$("select[name=city]").val(),
          area_id:$("select[name=area]").val(),
@@ -179,7 +202,7 @@ $(".tagItem2").click(function(){
       })
      
     function buildTable(list) {
-      // //console.log(list);
+      console.log(list);
       var goUrl = $("#kd_url").val();
     if (list.type == "success") {
       var data = list.data.data.list.map(function(item) {
@@ -194,7 +217,8 @@ $(".tagItem2").click(function(){
           statusClass:"status_"+item.cn_status,
           status:num.patrolStatus(item.cn_status),
           id:item.cn_encrypt_id,
-          cn_kd_school_id:item.cn_kd_school_id
+          cn_kd_school_id:item.cn_kd_school_id,
+          cn_room_list:item.cn_room_list
         }
       })
      
@@ -210,10 +234,14 @@ $(".tagItem2").click(function(){
         html += '<td >' + data[i].teacher + '</td>'
         html += '<td>' + data[i].cn_num + '</td>'
         html += '<td class="'+data[i].statusClass+'">' + data[i].status + '</td>'
+        var temp = '';
+        if(data[i].cn_kd_school_id) {
+            temp = '<a  class="go" data-room=' + JSON.stringify(data[i].cn_room_list)+' data-school="'+ data[i].cn_kd_school_id+'">发起互动</a>'
+        }
         if(data[i].status == "进行中"){
-           html += '<td><a href="/Patrol/details?node_id='+ data[i].id +'" class="open">进入课堂</a><ahref="'+ goUrl +'?schoolId='+data[i].cn_kd_school_id+'" class="go">发起互动</a></td>'
+           html += '<td><a href="/Patrol/details?node_id='+ data[i].id +'" class="open">进入课堂</a>'+ temp +'</td>'
         }else{
-           html += '<td><a href="'+ goUrl +'?schoolId='+data[i].cn_kd_school_id+'" class="go">发起互动</a></td>'
+           html += '<td>'+ temp +'</td>'
         }
         html += ' </tr>'
       }

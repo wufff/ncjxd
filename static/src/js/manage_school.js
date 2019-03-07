@@ -13,7 +13,6 @@ require(["layui", "path","api","page","boot-dropdown"], function(layui,path,api,
     var currctScoolId;
     initPage (1);
   
-
   form.on('select(city)', function(data){
      var postData = {
       city_id:data.value
@@ -37,15 +36,10 @@ require(["layui", "path","api","page","boot-dropdown"], function(layui,path,api,
 });
 
    
-
-
-
 $("#searchBt").click(function(){
     loading = layer.load(5);
     initPage (1);
 })
-
-
 
 $("body").on("click",".Untying",function(){
     var tr = $(this).parents("tr");
