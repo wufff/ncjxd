@@ -160,7 +160,7 @@ $("#tbody").on("click",".go",function(){
   $("#control").on("click","a",function(){
       var school = $(this).attr("cn_kd_school_id");
       var room =  $(this).attr("cn_room_kd_id");
-      window.location.href = "/patrol/meeting?school_id="+school+"&room="+room;
+      window.location.href = "/patrol/meeting?school_id="+school+"&room_id="+room;
   })
 
 
