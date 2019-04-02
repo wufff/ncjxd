@@ -7,6 +7,7 @@ require(["layui", "path","tools","page","api","boot-dropdown"], function(layui, 
             var page_3;
             var dialog;
             var current = 1;
+            console.log("本地");
         initPage (1,1);
         setTimeout(function(){
         	initPage (2,1);
@@ -63,13 +64,13 @@ require(["layui", "path","tools","page","api","boot-dropdown"], function(layui, 
       var url = path.api + '/api/getManageNoticeList';
       var getData = "type="+tpye+"&page=1&page_count=12";
       pages.getAjax(url,getData,function(data){
-      
-      	 if(data.code == 1000){
+             console.log(data);
+      	 if(data.data.code == 1000){
            	 var total = data.data.data.total;
            	 switch(tpye)
 				{
 				case 1:
-				  page_1 =  new pages.jsPage(total, "pageNum_"+tpye,"12",url,getData,buildTable,goPage,null);
+				   page_1 =  new pages.jsPage(total, "pageNum_"+tpye,"12",url,getData,buildTable,goPage,null);
                    pages.pageMethod.call(page_1); 
 				  break;
 				case 2:
@@ -91,7 +92,7 @@ require(["layui", "path","tools","page","api","boot-dropdown"], function(layui, 
       })
      
     function buildTable(list) {
-    	 //console.log(list);
+    	 console.log(list);
 		if (true) {
 			$(".tableLoading").html('');
 			var data = list.data.data.list.map(function(item) {
