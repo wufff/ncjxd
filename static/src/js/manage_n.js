@@ -63,8 +63,8 @@ require(["layui", "path","tools","page","api","boot-dropdown"], function(layui, 
       var url = path.api + '/api/getManageNoticeList';
       var getData = "type="+tpye+"&page=1&page_count=12";
       pages.getAjax(url,getData,function(data){
-      	//console.log(data);
-      	 if(true){
+      
+      	 if(data.code == 1000){
            	 var total = data.data.data.total;
            	 switch(tpye)
 				{
@@ -84,7 +84,9 @@ require(["layui", "path","tools","page","api","boot-dropdown"], function(layui, 
 				  return
 			  }   
            }else{
-           	 $("#Tab_"+tpye).html('<tr><td colspan="4">暂无数据~！</td></td>');
+           	 $("#Tab_"+tpye).html('<tr><td colspan="4" class="noneDataTd">暂无数据~！</td></td>');
+           	 
+           	  $(".tableLoading").html("");
          }
       })
      

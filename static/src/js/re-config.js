@@ -1,6 +1,7 @@
 require.config({
-	baseUrl: "http://ncjxd.images.dev.dodoedu.com/static/src/js",
+	// baseUrl: "http://ncjxd.images.boosun.net:8090/src/js",
 	// baseUrl: "http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/js",
+    baseUrl: "http://ncjxd.images.dev.dodoedu.com/static/src/js",
 	// urlArgs: "v=" + new Date().getTime(),
 	paths: {
 			"jquery": "./lib/jquery/jquery",
@@ -9,7 +10,6 @@ require.config({
 			"Swiper":"./lib/swiper.min",
 			"dialog": "./ui/dialog",
 			"path":"./tools/path",
-			"page": "./tools/pags",
 			"ckplayer":"./lib/ckplay/ckplayer/ckplayer",
 			"viewPhoto":"./ui/viewPhoto",
 			"layui":"../layui/layui.all",
@@ -26,7 +26,8 @@ require.config({
 			"downList":"./app/downList",
 			"checkTab":"./app/checkTab",
 			"auth":"./app/authority",
-			"headLogin":"./app/headerLogin"
+			"headLogin":"./app/headerLogin",
+			"page":"./tools/page"
 	},
 	shim: {
 

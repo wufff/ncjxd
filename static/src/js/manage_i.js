@@ -81,9 +81,11 @@ require(["layui","path","page","upLoad","api","viewPhoto","boot-dropdown"], func
                  layer.msg("删除成功！",{time:1200});
                  layer.close(index);
                  refrechData();
+             }else{
+                  layer.msg(res.message);
              }
-            
-         })
+          }
+         )
       });
    })
     

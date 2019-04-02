@@ -6,7 +6,7 @@ define(["jquery","path"],function($,path){
 				browse_button: button,
 				// container: document.getElementById('upImgWrap'),
 				multi_selection: false, //是否多选
-				url: location.protocol + '//' + document.domain + '/upload',
+				url: path.upLoad,
 				flash_swf_url: '../static/plupload/js/Moxie.swf',
 				silverlight_xap_url: '../static/plupload/js/Moxie.xap',
 				max_file_size: '30mb', // 文件上传最大限制。
@@ -98,7 +98,7 @@ define(["jquery","path"],function($,path){
 				browse_button: button,
 				// container: document.getElementById('upImgWrap'),
 				multi_selection: true, //是否多选
-				url: location.protocol + '//' + document.domain + '/upload',
+			    url: path.upLoad,
 				flash_swf_url: '../static/plupload/js/Moxie.swf',
 				silverlight_xap_url: '../static/plupload/js/Moxie.xap',
 				max_file_size: '30mb', // 文件上传最大限制。
@@ -212,7 +212,7 @@ define(["jquery","path"],function($,path){
 			    runtimes : 'html5,flash,silverlight,html4',
 			    browse_button : button,
 			    // container: document.getElementById('container'),
-			    url : location.protocol + '//' + document.domain + '/upload',
+			    url: path.upLoad,
 			    flash_swf_url : '../static/plupload/js/Moxie.swf',
 			    silverlight_xap_url : '../static/plupload/js/Moxie.xap',
 			    max_file_size : '1024mb',  // 文件上传最大限制。
@@ -273,7 +273,7 @@ define(["jquery","path"],function($,path){
 				runtimes: 'html5,flash,silverlight,html4',
 				browse_button: button,
 				// container: document.getElementById('container'),
-				url: location.protocol + '//' + document.domain + '/upload',
+				url: path.upLoad,
 				flash_swf_url: '../static/plupload/js/Moxie.swf',
 				silverlight_xap_url: '../static/plupload/js/Moxie.xap',
 				max_file_size: '100mb', // 文件上传最大限制。

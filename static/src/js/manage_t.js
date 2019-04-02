@@ -11,7 +11,6 @@ require(["layui","path","page","upLoad","api","viewPhoto","boot-dropdown"], func
     view.viewimg("#tbody");
     upLoad.img('upImg','previewImage');
     
-
     $("#add").click(function() {
       $("#controlTpye").val(0);
       initContorl (null);
@@ -27,9 +26,6 @@ require(["layui","path","page","upLoad","api","viewPhoto","boot-dropdown"], func
         }
       });
     })
-
-
-
 
    $("body").on("click",".change",function(){
         $("#controlTpye").val(1);

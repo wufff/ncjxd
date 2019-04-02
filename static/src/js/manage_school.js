@@ -476,7 +476,7 @@ function initContorlRoom (data){
           getData += "&school_classify="+ school_classify +"&school_name="+ school_name;
           getData += "&page=1&page_count=15&v="+ new Date().getTime();
       pages.getAjax(url,getData,function(data){
-          //console.log(data);
+        
          if( data.type == "success"){
              var total = data.message.count;
              page =  new pages.jsPage(total, "pageNum","15",url,getData,buildTable,goPage,null);

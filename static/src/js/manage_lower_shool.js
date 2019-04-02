@@ -19,7 +19,6 @@ require(["layui","path","page","api","boot-dropdown"], function(layui,path,pages
           user_status:tr.find('.user_status').attr("user_status"),
           school_name:tr.find('.school_name').text()
       }
-
     initContorl (data);
     dialog = layer.open({
         type: 1,

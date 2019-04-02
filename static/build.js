@@ -1,7 +1,7 @@
 ({
    appDir:"./src",
    baseUrl:"./js",
-   dir:"./build1.0",
+   dir:"./build/build1.0",
    mainConfigFile:"./src/js/re-config.js",
    optimizeCss:"standard",
    removeCombined:false,
@@ -30,20 +30,29 @@
         name:"livePay",
        excludeShallow:["layui"]
       },{
+        name:"manage_lower",
+       excludeShallow:["layui"]
+      },{
         name:"manage_lower_county",
       excludeShallow:["layui"]
       },{
-          name:"manage_lower_shool",
+      name:"manage_lower_shool",
       excludeShallow:["layui"]
       },{
          name:"manage_manager",
       excludeShallow:["layui"]
       },{
-           name:"manage_school",
+      name:"manage_school",
       excludeShallow:["layui"]
       },{
-           name:"manage_t",
+      name:"manage_i",
       excludeShallow:["layui"]
+      },{
+      name:"manage_n",
+      excludeShallow:["layui"]
+      },{
+         name:"manage_t",
+         excludeShallow:["layui"]
       },{
          name:"manage_teacher",
       excludeShallow:["layui"]
