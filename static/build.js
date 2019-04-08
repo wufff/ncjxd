@@ -1,7 +1,7 @@
 ({
    appDir:"./src",
    baseUrl:"./js",
-   dir:"./build/build1.0",
+   dir:"./build/build1.0/src",
    mainConfigFile:"./src/js/re-config.js",
    optimizeCss:"standard",
    removeCombined:false,

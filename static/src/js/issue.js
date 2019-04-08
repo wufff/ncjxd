@@ -123,7 +123,18 @@ require(["jquery","layui","path","ZeroClipboard","upLoad","tools","api","boot-dr
               window.history.go(-1);
              },500)
           }else{
-             layer.msg("没有修改，返回请点击返回",{icon:5})
+
+             var str = res.message;
+             if(str == "无修改"){
+                 layer.msg("发布成功");
+                 setTimeout(function(){
+                  // window.location.reload();
+                  window.history.go(-1);
+                 },500)
+             }else{
+                  layer.msg(str,{icon:5});
+             }
+           
           }
         }) 
         return false;

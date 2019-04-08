@@ -70,7 +70,7 @@ $("#searchBt").click(function(){
    var county_id = $("#area").val();
    if (cityId){
        // //console.log(cityId);
-      loading = layer.load(5);
+      // loading = layer.load(5);
       initPage (1,city_id,county_id);
    }
   
@@ -125,6 +125,7 @@ function refrechData() {
           if(res.data.data.length == 0){
                   $("#tbody").html('<tr><td colspan="7" class="noneDataTd">暂无数据~！</td></td>');
                   $(".tableLoading").html('');
+                   $("#pageNum").html("")
                    layer.close(loading);
                    return;
              }
@@ -141,6 +142,7 @@ function refrechData() {
       if(res.data.count == 0){
           ("#tbody").html('<tr><td colspan="8"  class="noneDataTd">暂无数据~！</td></td>');
           $(".tableLoading").html('');
+          $("#pageNum").html("");
           return;
       }
       var html = '';

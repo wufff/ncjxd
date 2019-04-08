@@ -15,17 +15,13 @@
 
 
 
-
-
-
-
 // 登录
 #banner { position: relative; height: 400px;  width: 100%; }
 #banner .swiper-container { height: 400px; }
 #banner .swiper-slide {
       background-repeat: no-repeat;
       background-position: center;
-      background-size: cover;
+      background-size: auto 100%;
       background-color:#ddd;
       height: 400px;
 }
@@ -37,6 +33,7 @@
 
 .banner-bar{
    position: absolute;
+   display: none;
    top: 158px;
    font-size: 32px;
    z-index: 50;
@@ -105,7 +102,7 @@
       background-color: @module_color;
         i {
            font-size: 18px;
-           color: #5bc0de;
+           color:#3871e1;
            margin-right: 2px;
          }
    }
@@ -140,7 +137,7 @@
       padding: 25px 0;
       padding-top: 30px;
       font-size: 14px;
-      background-color: #5bc0de;
+      background-color: #3871e1;
       border-bottom:2px solid #cccccc; 
       color:#fff;
       .space { margin-bottom: 30px;}

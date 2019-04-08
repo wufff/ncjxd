@@ -1,39 +1,38 @@
 define(['path','layui'], function(path,layui) {
 	var layer = layui.layer;
 	var $ = jQuery = layui.jquery;
-	var getStatu = 0;
 	var _newobj = "",
 		_self   = {
 		//ajax调用公共方法
-		getAjax: function(requestUrl,requestData,SuccessCallback){	
-			var pageNum_now = queryString (requestData,"page");
-			var pageStore =  $("body").attr("page");
-			if($("body").attr("requestData") == 1 && pageNum_now ==  pageStore){
+		loading:null,
+		getAjax: function(requestUrl, requestData, SuccessCallback) {
+			if ($("body").attr("requestData") == 0) {
 				SuccessCallback(_newobj, null);
-				$("body").attr({"requestData":0});
-			}else{
-			  if(path.is_local) {
-				requestData += "&jump=1";
-			   }
-				$.get(requestUrl,requestData,function(data){
-					if(data.type == "login"){
-						 layer.msg("请先登录！",{anim:-1});
-						 setTimeout(function(){
-						 	window.location.href ="/";
-						 },300)
-						 return;
+				$("body").attr({
+					"requestData": 1
+				});
+			} else {
+				   _self.loading = layer.load(5);
+				if (path.is_local) {
+					requestData += "&jump=1";
+				}
+				$.get(requestUrl, requestData, function(data) {
+					if (data.type == "login") {
+						layer.msg("请先登录！", {
+							anim: -1
+						});
+						setTimeout(function() {
+							window.location.href = "/";
+						}, 300)
+						return;
 					}
-					_newobj = data;	
-                   	getStatu = 1;
-					var pageNum = queryString (requestData,"page");
-					$("body").attr({"httpType":"getAjax","requestData":1,"page":pageNum});
-					if(SuccessCallback != undefined){
-						if(data.type == "error") {
-							 $("body").attr({"requestData":0});
-						}
-						SuccessCallback(data, null);
-					}
-				},"json");
+					_newobj = data;
+					$("body").attr({"httpType": "getAjax"});
+					if (data.type == "error") {
+					$("body").attr({"requestData": 0});
+				    }
+					SuccessCallback(data, null);
+				}, "json");
 			}
 		},
 		postAjax: function(requestUrl,requestData,SuccessCallback){
@@ -60,6 +59,7 @@ define(['path','layui'], function(path,layui) {
 				},"json");
 			}
 		},
+
 		//跳转至哪一页
 		gotopage: function(target, isBack) {
 			this.cpage = target; //把页面计数定位到第几页
@@ -71,9 +71,9 @@ define(['path','layui'], function(path,layui) {
 		ready2go: function(isBack) {
 			var obj = this;
 			$("#"+obj.page_obj_id).off("click","a").on("click","a", function() {
-				if($(".tableLoading").length > 0){
-					$(".tableLoading").html('<div>表格数据加载中...</div>');
-				}
+				// if($(".tableLoading").length > 0){
+				// 	$(".tableLoading").html('<div>表格数据加载中...</div>');
+				// }
 			    if($("#tbody").length > 0){
 			    	$("#tbody").html("");
 			    }
@@ -284,3 +284,70 @@ define(['path','layui'], function(path,layui) {
             return theRequest[paramName];
    }
 });
+
+
+//分页样式
+// .comm-page {
+//   text-align: center;
+//   clear: both;
+// }
+// .comm-page div {
+//   width: auto;
+//   overflow: hidden;
+//   text-align: right;
+// }
+// .comm-page b {
+//   position: relative;
+//   top: 2px;
+// }
+// .comm-page a {
+//   color: #666;
+//   display: inline-block;
+//   padding: 6px 12px;
+//   margin: 5px 3px;
+//   border: 1px solid #d4d4d4;
+//   background: #fff;
+//   vertical-align: middle;
+//   border-radius: 5px;
+// }
+// .comm-page a:hover {
+//   text-decoration: none;
+//   background: #e6f4ff;
+//   border: 1px solid #e6f4ff;
+// }
+// .comm-page .current,
+// .comm-page .pagenum {
+//   display: inline-block;
+//   padding: 6px 12px;
+//   border: 1px solid #e6f4ff;
+//   background: #e6f4ff;
+//   vertical-align: middle;
+//   border-radius: 5px;
+// }
+// .comm-page .pagenum {
+//   color: #666;
+//   background: #d4d4d4;
+//   border: 1px solid #ccc;
+//   font-style: normal;
+//   font-weight: normal;
+// }
+// .comm-page .goPageCell {
+//   margin:0  15px;
+// }
+// .comm-page .goPageCell {
+//   color: #666;
+// }
+// .comm-page .goPageCell #goBageText {
+//   width: 36px;
+//   text-align: center;
+//   margin: 0 10px;
+// }
+// .comm-page .goPageCell #goBageBt {
+//    margin-left: 10px;
+//    padding: 3px 6px;
+//    border:1px solid #d4d4d4;
+//    background-color: #fff;
+// }
+// .comm-page .goPageCell #goBageBt:hover {
+//    background-color:  #e6f4ff;
+// }

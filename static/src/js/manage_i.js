@@ -143,9 +143,9 @@ require(["layui","path","page","upLoad","api","viewPhoto","boot-dropdown"], func
              page =  new pages.jsPage(total, "pageNum","8",url,getData,buildTable,goPage,null);
              pages.pageMethod.call(page); 
            }else{
-            $("#tbody").html('<tr><td colspan="7">暂无数据~！</td></td>');
+            $(".layui-row").html('<div style="color:#777777;padding:25px;">暂无数据！</div>');
             $(".tableLoading").html('');
-             return
+            return
          }
       })
      

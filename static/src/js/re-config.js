@@ -1,7 +1,7 @@
 require.config({
 	// baseUrl: "http://ncjxd.images.boosun.net:8090/src/js",
-	// baseUrl: "http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/js",
-    baseUrl: "http://ncjxd.images.dev.dodoedu.com/static/src/js",
+	baseUrl: "http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/js",
+    // baseUrl: "http://ncjxd.images.dev.dodoedu.com/static/src/js",
 	// urlArgs: "v=" + new Date().getTime(),
 	paths: {
 			"jquery": "./lib/jquery/jquery",
@@ -27,10 +27,10 @@ require.config({
 			"checkTab":"./app/checkTab",
 			"auth":"./app/authority",
 			"headLogin":"./app/headerLogin",
-			"page":"./tools/page"
+			"page":"./tools/page",
+			"page2":"./tools/page2"
 	},
 	shim: {
-
 		 "Swiper":["jquery"],
          "bootstrap":["jquery"],
          "boot-dropdown":["jquery"],

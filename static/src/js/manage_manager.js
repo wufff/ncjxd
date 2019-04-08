@@ -5,6 +5,7 @@ require(["layui", "path","page","api","boot-dropdown"], function(layui, path,pag
     var type = 0;
     var dialog;
     var search_type = 1;
+    var loading;
     initPage (1)
    $("body").on("click",".change",function(){
          var tr = $(this).parents("tr");
@@ -66,6 +67,7 @@ form.on('select(search_type)', function(data){
 
 
 $("#searchBt").click(function(){
+   loading = layer.load(5);
    initPage (1);
 })
 
@@ -178,6 +180,7 @@ $("body").on("click",".del",function(){
              if(data.data.data.length == 0){
                   $("#tbody").html('<tr><td colspan="7" class="noneDataTd">暂无数据~！</td></td>');
                   $(".tableLoading").html('');
+                  layer.close(loading)
                    return;
              }
              var length = data.data.data.length;
@@ -220,6 +223,7 @@ $("body").on("click",".del",function(){
       }
       $(".tableLoading").html(' ');
       $("#tbody").html(html);
+       layer.close(loading)
     }else  if(list.type == "login") {
        window.location.href = res.msg;
     }

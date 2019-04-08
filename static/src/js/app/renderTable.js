@@ -621,7 +621,7 @@ $("body").on("click","td",function(){
             getData.receive_school_id = school_ids.join("|");  //学校id
             getData.receive_room_id = class_ids.join("|");
             getData.receive_teacher_id = teacher_ids.join("|");;
-            getData.today=my.weekData;  //课程计划时间戳；
+            getData.today=currtTd;  //课程计划时间戳；
             getData.type = my.tpye_class;
             var url = path.api + "/api/setSchoolRoomCourcePlan";
             // //console.log(getData);

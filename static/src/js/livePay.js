@@ -6,11 +6,13 @@
  * @version $Id$
  */
 
-require(["layui","headLogin"],function(layui){
+require(["layui","page","path","headLogin"],function(layui,pages,path){
      var $ = jQuery = layui.jquery; 
      var RecType = $(".mediaBox").data("type");
      var res = $(".mediaBox").data("res");
-     var res = "http://img.ksbbs.com/asset/Mon_1703/d0897b4e9ddd9a5.mp4";
+     var loading;
+     var page;
+     initPage(1);
      switch(RecType)
      {
         case 1:     //直播    
@@ -47,4 +49,59 @@ require(["layui","headLogin"],function(layui){
         window.location.href = "/live/add";
      })
     
+
+
+
+    
+   
+    function initPage (goPage){
+      // loading = layer.load(5);
+
+      var url = path.api+"/api/getLiveList";
+      // var url = "http://wangyong.ncjxd.dev.dodoedu.com/api/getLiveList"
+      var getData = "page=1&page_count=4";
+      pages.getAjax(url,getData,function(data){
+         if( data.type == "success"){
+             // console.log(data.data.data.list);
+              console.log(data);
+             if(data.data.data.list.length == 0){
+                $("#tbody").hmtl("<tr><td>无数据<td></tr>")
+                $("#pageNum").html(""); 
+                return;
+             }
+             var total = data.data.data.total;
+             // console.log(total)
+             console.log(total);
+             page =  new pages.jsPage(total,"pageNum","4",url,getData,buildTable,goPage,null);
+             pages.pageMethod.call(page); 
+           }else{
+             layer.msg(data.msg)
+             return;
+         }
+      })
+    function buildTable(data) {
+    if (data.type == "success") {
+      var data = data.data.data.list;
+      console.log(data);
+      var html = '';
+      for (var i = 0; i < data.length; i++) {
+       html +=     '<div class="col-md-6 item">'
+       html +=     ' <div class="media">'
+       html +=          '<a class="pull-left" href="/live/detail/'+data[i].ai_encrypt_id+'">'
+       html +=              '<img class="media-object" src="'+ data[i].ai_cover_url+'" >'
+       html +=          '</a>'
+       html +=         ' <div class="media-body">'
+       html +=              '<h5 class="media-heading">'+ data[i].ai_title+'</h5>'
+       html +=              '<div class="title_min">'+ data[i].ai_describe +'</div>'
+       html +=              '<div class="title_beizhu">'+ data[i].ai_start_time_chs+'</div>'
+       html +=          '</div>'
+       html +=      '</div>'
+       html +=  '</div>'
+      }
+      $("#row").html(html);
+      layer.close(loading);
+    }
+  }
+ }
+
 })

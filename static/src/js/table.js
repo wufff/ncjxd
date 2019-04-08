@@ -344,13 +344,11 @@ require(["layui","path","downList", "tools", "num", "api", "cTable","auth","boot
               range: '-',
               value: value
             });
-
           }
-
         }
-        //st_is_modify 0 计划中  1 可以 2学期不存在
+
+        //st_is_modify 0计划中  1可以  2学期不存在
         var haverTime = $("#table_header").css("display");
-      
         if (haverTime == "none") {
           $(".timeInput").attr("disabled", true);
           $("#titlePont").text("不能设置上课时间，因为没有设置学期，请先设置学期");

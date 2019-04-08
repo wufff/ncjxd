@@ -20,6 +20,7 @@ require(["layui", "path","api","page","boot-dropdown"], function(layui,path,api,
      var url = "/SchoolManage/ajaxCountyListByCityId";
      if(data.value != 0 && $("#city").find("option").length > 2){
       api.ajaxPost(url,postData,function(res){
+         console.log(res);
         if(res.type == "success") {
           var list = res.message;
           var html = '<option value="">全部</option>';

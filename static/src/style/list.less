@@ -40,6 +40,7 @@
 	li{
 		position: relative;
 		border-bottom:1px dashed #ddd; 
+    padding: 10px 0; 
 		color:@font_color;
 		&.nohave {
 			border-bottom:none;
@@ -48,7 +49,7 @@
 	li span {
 		 position: absolute;
 		 right:0;
-		 top:10px;
+		 top:18px;
 		 color:@font_color_date;
 		 font-size: 14px;
 	}
@@ -56,11 +57,18 @@
 	   color:@color_main;
 	   font-size: 20px;
 	   margin-right: 7px;
+     position: relative;
+     top:-4px;
 	}
 	li  a{
-		height: 40px;
-		line-height: 40px;
+	  margin-top: 7px;
 		color:@font_color;
+    max-width: 614px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+
 	}
 }
 
@@ -119,14 +127,19 @@
      .singleText();
      color:@font_color;
    }
-
+   
    a {
       color:@font_color;
       height: 35px;
       line-height: 35px;
       font-size: 15px;
+     
       
    } 
+   li.active{
+     color: #337ab7;
+     a { color: #337ab7; }
+   }
 }
 
 

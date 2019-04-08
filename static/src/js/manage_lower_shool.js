@@ -1,4 +1,4 @@
-require(["layui","path","page","api","boot-dropdown"], function(layui,path,pages,api) {
+require(["layui","path","page2","api","boot-dropdown"], function(layui,path,pages,api) {
     var layer = layui.layer;
     var $ = jQuery = layui.jquery; 
     var form = layui.form;
@@ -69,8 +69,6 @@ $("#searchBt").click(function(){
    var cityId = $("#city").val();
    var county_id = $("#area").val();
    if (cityId){
-      loading = layer.load(5);
-       // //console.log(cityId);
        initPage (1,county_id,cityId);
    }
 })
@@ -111,35 +109,24 @@ $("#searchBt").click(function(){
 
 
 
-   function initPage (goPage,county_id,city_id){
+function initPage (goPage,county_id,city_id){
       var url = $("#seciton").attr("url");
       var getData = "county_id="+ county_id +"&page=1&v="+ new Date().getTime() ;
       if (city_id){
           getData += "&city_id="+city_id
       }
       pages.getAjax(url,getData,function(res){
-          // //console.log(res);
-         if(res.data.data.length == 0){
-                  $("#tbody").html('<tr><td colspan="7" class="noneDataTd">暂无数据~！</td></td>');
-                  $(".tableLoading").html('');
-                  layer.close(loading);
-                   return;
-             }
+             $("body").attr({"requestData": 0});
              var length = res.data.data.length;
              var total = res.data.count;
-             page =  new pages.jsPage(total, "pageNum",length,url,getData,buildTable,goPage,null);
+             page =  new pages.jsPage(total,"pageNum",length,url,getData,buildTable,goPage,null);
              pages.pageMethod.call(page); 
       })
 
-    function buildTable(res) {
+  function buildTable(res) {
     if (res.type == "success") {
       var data = res.data.data;
-      // //console.log(data);
-      if(res.data.count == 0){
-          $("#tbody").html('<tr><td colspan="8"  class="noneDataTd">暂无数据~！</td></td>');
-          $(".tableLoading").html('');
-          return;
-      }
+      var noneDom = '<tr><td colspan="8"  class="noneDataTd">暂无数据~！</td></td>'
       var html = '';
       for (var i = 0; i < data.length; i++) {
         html += '<tr data-id="'+ data[i].uid +'" data-mobile="'+ data[i].user_mobile +'" data-email="'+data[i].user_email +'">'
@@ -156,15 +143,18 @@ $("#searchBt").click(function(){
         }
         html += ' </tr>'
       }
-      $(".tableLoading").html(' ');
-      $("#tbody").html(html);
-      layer.close(loading);
-    }
      
+     if(data.length == 0){
+         $("#tbody").html(noneDom);
+      }else{
+         $("#tbody").html(html);
+      }
+
+      $(".tableLoading").html(" ");
+      layer.close(pages.loading);
+    }
   }
  }
-
-
 })
 
 

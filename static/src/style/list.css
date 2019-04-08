@@ -3903,6 +3903,7 @@ html {
 .section li {
   position: relative;
   border-bottom: 1px dashed #ddd;
+  padding: 10px 0;
   color: #666;
 }
 .section li.nohave {
@@ -3911,7 +3912,7 @@ html {
 .section li span {
   position: absolute;
   right: 0;
-  top: 10px;
+  top: 18px;
   color: #888;
   font-size: 14px;
 }
@@ -3919,11 +3920,17 @@ html {
   color: #1E9FFF;
   font-size: 20px;
   margin-right: 7px;
+  position: relative;
+  top: -4px;
 }
 .section li a {
-  height: 40px;
-  line-height: 40px;
+  margin-top: 7px;
   color: #666;
+  max-width: 614px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
 }
 .article .list {
   border: 1px solid #ddd;

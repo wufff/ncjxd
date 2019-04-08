@@ -1,0 +1,12 @@
+({
+   appDir:"./src",
+   baseUrl:"./js",
+   dir:"./build/repair",
+   mainConfigFile:"./src/js/re-config.js",
+   optimizeCss:"standard",
+   removeCombined:false,
+   modules:[{
+       name:"manage_n",
+       excludeShallow:["layui"]
+      }]
+})

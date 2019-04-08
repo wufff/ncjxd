@@ -23,14 +23,14 @@ require(["Swiper","viewPhoto","api","layui","tools","headLogin"],function(Swiper
   })
 
 //轮播样式
- $("#bannerRound").mouseover(function(){
+ if($(".swiper-pagination-bullet").length > 1) {
+     $("#bannerRound").mouseover(function(){
                   $(".banner-bar").show();
               }).mouseout(function(){
-                 
                   $(".banner-bar").hide();
               });
-  $(".banner-bar").mouseover(function(){
+    $(".banner-bar").mouseover(function(){
                   $(".banner-bar").show();
               })
-
+   }
 });

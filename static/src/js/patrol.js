@@ -10,6 +10,7 @@ require(["jquery","layui","path","page","num","api","downList","auth","boot-drop
   var dialog
   ui();
   initPage(1);
+
 form.on('select(city)', function(data){
    if ($("#selectCity").find("option").length < 3) {
       return;
