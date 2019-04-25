@@ -1,4 +1,5 @@
-require(["layui","path","upLoad","tools","api","boot-dropdown"], function(layui,path,upLoad,tools,api) {
+require(["layui","path","ZeroClipboard","upLoad","tools","api","boot-dropdown"], function(layui,path,ZeroClipboard,upLoad,tools,api) {
+    window['ZeroClipboard'] = ZeroClipboard;
     var layer = layui.layer;
     var form = layui.form;
     var $ = jQuery = layui.jquery; 
@@ -8,7 +9,7 @@ require(["layui","path","upLoad","tools","api","boot-dropdown"], function(layui,
     var off = true;
     var type = 0;
     var del_ids = [];
-   
+    var ue = UE.getEditor('editor');
     var activity_id = tools.request("id");
 
     if (activity_id){
@@ -101,6 +102,8 @@ require(["layui","path","upLoad","tools","api","boot-dropdown"], function(layui,
        var mp4_names = [];
        var doc_paths = [];
        var doc_names = [];
+       var html = ue.getContent();
+       getData.describe = html;
        if($(".vidoePath").length == 0 ){
           layer.msg("未上传活动视频",{icon:5});
           return false;
@@ -124,7 +127,6 @@ require(["layui","path","upLoad","tools","api","boot-dropdown"], function(layui,
         $(".mp4Name").each(function(index, el) {
             mp4_names.push($(el).text());
         });
-        
         if($(".doc_item").length != 0)  {
              $(".fileName").each(function(index, el) {
              doc_names.push($(el).text());
@@ -138,7 +140,6 @@ require(["layui","path","upLoad","tools","api","boot-dropdown"], function(layui,
         getData.mp4_paths = mp4_paths.join(",");
         getData.mp4_names = mp4_names.join(",");
         if(off == true){
-          // //console.log(getData);
           loading = layer.load(3);
           api.ajaxGet("/api/addManageActivity",getData,function(res){
             if(res.type == "success") {
