@@ -1,7 +1,7 @@
 require.config({
 	// baseUrl: "http://ncjxd.images.boosun.net:8090/src/js",
-	baseUrl: "http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/js",
-    // baseUrl: "http://ncjxd.images.dev.dodoedu.com/static/src/js",
+	// baseUrl: "http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/js",
+    baseUrl: "http://ncjxd.images.dev.dodoedu.com/static/src/js",
 	// urlArgs: "v=" + new Date().getTime(),
 	paths: {
 			"jquery": "./lib/jquery/jquery",
@@ -31,11 +31,11 @@ require.config({
 			"page2":"./tools/page2"
 	},
 	shim: {
-		 "Swiper":["jquery"],
+		 "Swiper":["jquery"], //声明依赖简写
          "bootstrap":["jquery"],
          "boot-dropdown":["jquery"],
           "layui":{
-          	exports:"layui"
+          	exports:"layui" //导出全局
           },
          "ZeroClipboard":{
          	exports:"ZeroClipboard"
@@ -44,7 +44,7 @@ require.config({
          	exports:"ckplayer"
          },
          "zTree":{
-         	deps:['jquery']
+         	deps:['jquery'] //声明依赖
          },
 	}
 });

@@ -1,6 +1,7 @@
 define(['layui','path'],function(layui,path){
      var $ = jQuery = layui.jquery;
      return {
+         //存储
          set:function(str,value){
             var key = $("#wuf"+key);
             if (key.length > 0) {
@@ -27,7 +28,7 @@ define(['layui','path'],function(layui,path){
             var value = $("#wf"+key).val();
             return value;
          },
-
+        //格式化
          fomartTime:function(timestamp){
          	    var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
 		        var Y = date.getFullYear() + '-';
@@ -45,6 +46,8 @@ define(['layui','path'],function(layui,path){
          	  	return a;
          	  }
          },
+
+         //时间
         prevWeek:function(dateStr){
                 var sdate = new Date(Date.parse(dateStr.replace(/-/g, "/")))
                 var prevDate = new Date(sdate.getTime() - 7 * 24 *60 *60 *1000);
@@ -113,6 +116,7 @@ define(['layui','path'],function(layui,path){
             }
             return theRequest[paramName];
           },
+       //获得url   
         request:function  (name) {
         var args = getQueryStringArgs ()
         var result = "";
@@ -127,6 +131,7 @@ define(['layui','path'],function(layui,path){
         }
         return result;
        },
+       //jueryCook
     cookie:function(name, value, options) {
     if (typeof value != 'undefined') { // name and value given, set cookie
         options = options || {};
@@ -169,6 +174,7 @@ define(['layui','path'],function(layui,path){
         return cookieValue;
     }
 },
+    //时间上下午
       formatminutesUp:function (date) {                                   //格式化时间基于layui上午
             $(".laydate-time-text").eq(0).html("上课时间");
             $(".laydate-time-text").eq(1).html("下课时间");
