@@ -6,7 +6,7 @@
    optimizeCss:"standard",
    removeCombined:false,
    modules:[{
-       name:"manage_n",
+       name:"active_list_add",
        excludeShallow:["layui"]
       }]
 })

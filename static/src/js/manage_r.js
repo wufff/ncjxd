@@ -20,10 +20,6 @@ require(["layui", "path","page","api","boot-dropdown"], function(layui, path,pag
     initPage (1);
 
 
-
-
-
-
     $("body").on("click",".del",function(){
      var id = $(this).parents("tr").data("id");
      layer.confirm('确定删除此条推荐吗?', {icon: 3, title:'提示'}, 

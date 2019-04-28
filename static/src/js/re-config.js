@@ -1,7 +1,7 @@
 require.config({
-	// baseUrl: "http://ncjxd.images.boosun.net:8090/src/js",
+	baseUrl: "http://ncjxd.images.boosun.net:8090/src/js",
 	// baseUrl: "http://wufff.static.dev.dodoedu.com/ncjxdPage/static/src/js",
-    baseUrl: "http://ncjxd.images.dev.dodoedu.com/static/src/js",
+    // baseUrl: "http://ncjxd.images.dev.dodoedu.com/static/src/js",
 	// urlArgs: "v=" + new Date().getTime(),
 	paths: {
 			"jquery": "./lib/jquery/jquery",

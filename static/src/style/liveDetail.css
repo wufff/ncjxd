@@ -4433,10 +4433,8 @@ a:focus {
   color: #777;
 }
 .liveDetail_bottom .cell p.dec {
-  font-size: 14px;
   color: #777;
-  padding: 10px;
-  line-height: 1.9;
+  line-height: 1.5;
   padding-top: 0;
 }
 .liveDetail_bottom .textarea {

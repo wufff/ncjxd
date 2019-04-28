@@ -18,6 +18,7 @@ require(["layui","path","ZeroClipboard","upLoad","tools","api","boot-dropdown"],
          var url = path.api + "/api/getManageActivityInfo"
          api.ajaxGet(url,{activity_id:activity_id},function(res){
               if(res.type == "success"){
+                console.log(res);
                  var list = res.data.data;
                  var timeValue = list.ai_start_time.slice(0,10);
                   //console.log(res);
@@ -28,11 +29,14 @@ require(["layui","path","ZeroClipboard","upLoad","tools","api","boot-dropdown"],
                  $("input[name=title]").val(list.ai_title);
                  $("input[name=name]").val(list.ai_teacher_name);
                  $("#previewImage").attr("src",list.ai_cover_url);
-                 $("textarea[name=describe]").val(list.ai_describe);
                     laydate.render({
                        elem: '#dataInput',
                        value:timeValue
                     });  
+
+                       setTimeout(function(){   
+                          ue.setContent(list.ai_describe);
+                    },200)  
                  for(var i=0;i<medias.length;i++){
                   
                    medias_html +=       '<div class="vidoe_item">'
@@ -105,15 +109,22 @@ require(["layui","path","ZeroClipboard","upLoad","tools","api","boot-dropdown"],
        var html = ue.getContent();
        getData.describe = html;
        if($(".vidoePath").length == 0 ){
-          layer.msg("未上传活动视频",{icon:5});
+          layer.msg("未上传活动视频！",{icon:5});
           return false;
        }
 
        if(!$("#img_file_path").val()){
-          layer.msg("未上活动封面图片",{icon:5});
+          layer.msg("未上活动封面图片！",{icon:5});
           return false;
        } 
      
+       if(!getData.describe){
+          layer.msg("请填写活动简介！",{icon:5});
+          return false;
+       } 
+
+
+
         $(".vidoePath").each(function(index, el) {
            if($(el).val() == ""){
                 layer.alert("还有未上传完的视频，请等待上传完毕，或者删除未上传完的视频再提交",{icon:3});
